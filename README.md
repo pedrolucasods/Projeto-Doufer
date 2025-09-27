@@ -46,11 +46,17 @@ http://localhost:3000
 🛠️ Tecnologias usadas:
 
 • Node.js
+
 • JavaScript
+
 • Electron
+
 • Express.js
+
 • Sequelize ORM
+
 • SQLite
+
 • Handlebars
 
 
