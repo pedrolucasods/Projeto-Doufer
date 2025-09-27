@@ -1,0 +1,36 @@
+#homepage{
+    display: grid;
+    margin: 0 auto;
+    justify-items: center;
+    justify-content: center;
+}
+
+#opcoes{
+    display: flex;
+    justify-items: center;
+    justify-content: space-between;
+    padding: 20px;
+    background-color: rgb(178, 178, 240);
+    width: auto;
+    height: auto;
+    padding: 8px;
+    flex-wrap: wrap;
+}
+
+#opcaocliente,#opcaopedido{
+    width: auto;
+    padding: 10px;
+    
+}
+
+#opcaocliente{
+    background-color: purple;
+}
+
+#opcaopedido{
+    background-color: goldenrod;
+}
+
+button{
+    cursor: pointer;
+}
