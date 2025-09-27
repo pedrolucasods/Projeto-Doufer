@@ -1,7 +1,7 @@
 
 Doufer - Sistema de Gerenciamento
 
-📋 Descrição  
+## 📋 Descrição  
 Sistema desktop exclusivo para a loja Doufer, focado no cadastro, edição, consulta e exclusão de clientes e pedidos, além de adicionar fotos aos pedidos. Funciona como aplicação desktop via Electron ou no navegador para desenvolvimento.
 
 ▶️ Como executar (Modo Desktop)  
@@ -44,20 +44,13 @@ http://localhost:3000
 ```
 
 🛠️ Tecnologias usadas:
-
-• Node.js
-
-• JavaScript
-
-• Electron
-
-• Express.js
-
-• Sequelize ORM
-
-• SQLite
-
-• Handlebars
+• Node.js 
+• JavaScript 
+• Electron 
+• Express.js 
+• Sequelize ORM 
+• SQLite 
+• Handlebars 
 
 
 👨‍💻 Autor
