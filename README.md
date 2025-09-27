@@ -43,16 +43,16 @@ Abra o navegador no endereço:
 http://localhost:3000
 ```
 
-🛠️ Tecnologias usadas
-Node.js
-JavaScript
-Electron
-Express.js
-Sequelize ORM
-SQLite
-Handlebars
+🛠️ Tecnologias usadas:
 
-🤝 Contribuições não são aceitas, pois o sistema é exclusivo para uso interno da loja.
+• Node.js
+• JavaScript
+• Electron
+• Express.js
+• Sequelize ORM
+• SQLite
+• Handlebars
+
 
 👨‍💻 Autor
 Pedro Lucas
