@@ -1,7 +1,7 @@
 const buttonaddcliente = document.getElementById('newcliente');
 const buttonback = document.getElementById('back');
 
-let idClienteParaExcluir = null; // 🟡 usado para guardar o ID temporariamente
+let idClienteParaExcluir = null; // usado para guardar o ID temporariamente
 
 document.addEventListener('DOMContentLoaded', function () {
   const select = document.getElementById('fieldsearch');
@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', function () {
     input.placeholder = `digite o ${selectvalue}...`;
   });
 
-  // ✅ AQUI: Corrige o input travado no Electron após carregamento
+  // AQUI: Corrige o input travado no Electron após carregamento
   setTimeout(() => {
     const input = document.getElementById('inputsearch');
     if (input) input.focus();
