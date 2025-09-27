@@ -1,0 +1,61 @@
+<button id="back"><i class="fas fa-home"></i></button>
+<div id="fundo">
+    <h1 id="title">Clientes</h1>
+    <div id="opcoes">
+        <select id="fieldsearch">
+            <option value="nome">Nome</option>
+            <option value="id">Id</option>
+            <option value="telefone">Telefone</option>
+        </select>
+        <input id="inputsearch" type="search" placeholder="digite o nome...">
+        <button ><i class="fas fa-search"></i></button>
+        <button ><i id="newcliente" class="fas fa-user-plus"></i></button>
+        <br><br>
+        <h1>Lista de Clientes</h1>
+
+
+        <div id="table">
+            <table border="1">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Nome</th>
+                        <th>Telefone</th>
+                        <th>Cpf</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#each clientes}}
+                        <tr>
+                            <td>{{this.id}}</td>
+                            <td>{{this.nome}}</td>
+                            <td>{{this.telefone}}</td>
+                            <td>{{this.cpf}}</td>
+                            <td><button onclick="deletarCliente({{this.id}})">Excluir</button></a></td>
+                        </tr>
+                        
+                    {{/each}}
+                </tbody>
+            </table>
+        </div>
+
+
+<!-- confirmaçcao da exclusão -->
+
+        <div id="modalConfirm" style="display: none; position: fixed; top: 0; left: 0; 
+            width: 100%; height: 100%; background-color: rgba(0,0,0,0.6); 
+            z-index: 999; justify-content: center; align-items: center;">
+
+            <div style="background-color: white; padding: 20px; border-radius: 10px; text-align: center;">
+                <h2>Tem certeza que deseja excluir este cliente?</h2>
+                <br>
+                <button onclick="confirmarExclusao()">Sim</button>
+                <button onclick="fecharModal()">Cancelar</button>
+            </div>
+        </div>
+
+            
+        </div>
+    </div>
+    
+</div>
