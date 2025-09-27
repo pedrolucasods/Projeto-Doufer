@@ -24,7 +24,7 @@ Execute o sistema:
 npx electron main.js
 ```
 
-▶️ Como executar (Modo Navegador)
+## ▶️ Como executar (Modo Navegador)
 Entre na pasta do backend:
 
 ```bash
