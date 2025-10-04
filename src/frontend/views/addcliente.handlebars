@@ -1,9 +1,10 @@
 <div>
     <h1>Cadastro Cliente</h1>
     <div>
-        <form action="/clientes/newcliente/cadcliente" method="post">
+        <form id="formaddcliente" action="/clientes/newcliente/cadcliente" method="post">
         <p>Nome: </p>
         <input id="inputnome" type="text" name="namecliente" required>
+        <span id="spanname"></span>
         <p>Telefone: </p>
         <input id="telefone" name="telefonecliente" required placeholder="(00) 00000-0000..."></input>
         <p>CPF: </p>
