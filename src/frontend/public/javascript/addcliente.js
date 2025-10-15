@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded',function(){
     form.addEventListener('submit',function(event){
     let inputname = document.getElementById('inputnome').value
     let inputphone = document.getElementById('telefone').value
-    let inputcpf = document.getElementById('cpf').value
+    
     if(!validatename(inputname)){
         spanname.innerHTML = 'Erro, nome inválido!'
         event.preventDefault()
@@ -40,6 +40,7 @@ document.addEventListener('DOMContentLoaded',function(){
 
     checkbox.addEventListener('change', function () {
       cpfContainer.style.display = this.checked ? 'block' : 'none';
+      cpfinput.required = checked
     });
 
 })
