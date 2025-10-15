@@ -2,14 +2,25 @@
     <h1>Cadastro Cliente</h1>
     <div>
         <form id="formaddcliente" action="/clientes/newcliente/cadcliente" method="post">
-        <p>Nome: </p>
-        <input id="inputnome" type="text" name="namecliente" required>
-        <span id="spanname"></span>
-        <p>Telefone: </p>
-        <input id="telefone" name="telefonecliente" required placeholder="(00) 00000-0000..."></input>
-        <p>CPF: </p>
-        <input id="cpf" name="cpfcliente" placeholder="000.000.000-00..."><br><br>
-        <button type="submit">Cadastrar cliente</button>
-    </form>
+            <p>Nome: </p>
+            <input id="inputnome" type="text" name="namecliente" required>
+            <span id="spanname"></span>
+            <p>Telefone: </p>
+            <input id="telefone" name="telefonecliente" required placeholder="(00) 00000-0000..."></input>
+            <span id="spanphone"></span>
+
+            <p>
+                Deseja inserir CPF?
+                <input type="checkbox" id="toggleCpf" name="inserirCpf">
+            </p>
+
+            <div id="cpfContainer" style="display: none;">
+                <p>CPF:</p>
+                <input type="text" name="cpfcliente" id="cpfInput" placeholder="000.000.000-00">
+            </div>
+            <br>
+            <button type="submit">Cadastrar cliente</button>
+         </form>
     </div>
+</div>
  
