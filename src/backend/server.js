@@ -5,6 +5,7 @@ const express = require('express')
 const path = require('path')
 const db = require('./database')
 const cliente = require('./models/cliente')
+const pedido = require('./models/pedidos')
 const app = express()
 const bodyParser = require('body-parser')
 const handlebars = require('express-handlebars')
@@ -57,6 +58,11 @@ function startServer(port = 3000) {
   }).catch(function(erro){
     console.log('erro : '+erro)
   })
+
+  // pedido.sync().then(function(){
+  //   console.log('Table adicionada!')     Criação de tabelas
+  // })
+
 
   return new Promise((resolve, reject) => {
     const server = app.listen(port, () => {
