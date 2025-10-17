@@ -4,11 +4,18 @@
 const express = require('express')
 const path = require('path')
 const db = require('./database')
-const cliente = require('./models/cliente')
-const pedido = require('./models/pedidos')
 const app = express()
 const bodyParser = require('body-parser')
 const handlebars = require('express-handlebars')
+
+
+// puxando models
+const cliente = require('./models/cliente')
+const pedido = require('./models/pedidos')
+const itenspedidos = require('./models/itensPedidos')
+
+// puxando a associação
+const association = require('./associations/associations')
 
 
 
@@ -60,7 +67,7 @@ function startServer(port = 3000) {
   })
 
   // pedido.sync().then(function(){
-  //   console.log('Table adicionada!')     Criação de tabelas
+  //   console.log('Table adicionada!')     //Criação de tabelas
   // })
 
 
