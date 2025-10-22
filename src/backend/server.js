@@ -59,6 +59,8 @@ app.use('/clientes',deletarcliente)
 const editarcliente = require('./routes/editarcliente')
 app.use('/clientes',editarcliente)
 
+const updatecliente = require('./routes/updatecliente')
+app.use('/sucesso',updatecliente)
 
 // Exporta tanto o app quanto a função para startar o servidor
 function startServer(port = 3000) {
