@@ -4,7 +4,7 @@ const clientemodel = require('../models/cliente')
 
 router.get('/',function(req,res){
     clientemodel.findAll().then(function(clients){
-        res.render('cliente',{stylesheet:'stylecliente', script:'scriptcliente.js', layout:'main', clientes:clients})
+        res.render('cliente',{stylesheet:'stylecliente.css', script:'scriptcliente.js', layout:'main.handlebars', clientes:clients})
     })
     
 })
