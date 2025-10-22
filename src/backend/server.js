@@ -56,6 +56,9 @@ app.use('/clientes/newcliente/cadcliente',cadastrocliente)
 const deletarcliente = require('./routes/deletarcliente')
 app.use('/clientes',deletarcliente)
 
+const editarcliente = require('./routes/editarcliente')
+app.use('/clientes',editarcliente)
+
 
 // Exporta tanto o app quanto a função para startar o servidor
 function startServer(port = 3000) {
