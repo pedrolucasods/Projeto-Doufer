@@ -27,6 +27,42 @@ document.addEventListener('DOMContentLoaded', function () {
       console.warn('Electron remote não disponível. Ignorado.');
     }
   }, 300);
+
+
+
+
+
+  //Busca de clientes
+  const selectcliente = document.getElementById('fieldsearch');
+  const inputsearch = document.getElementById('inputsearch');
+
+  inputsearch.addEventListener('input', filtrarCards);
+
+  function filtrarCards() {
+    const campo = selectcliente.value; // nome, id ou telefone
+    const termo = inputsearch.value.trim().toLowerCase();
+    const cards = document.querySelectorAll('.card');
+
+    cards.forEach(card => {
+      let textoComparacao = '';
+
+      if (campo === 'nome') {
+        textoComparacao = card.querySelector('.campo-nome').textContent.toLowerCase();
+      } else if (campo === 'id') {
+        textoComparacao = card.querySelector('.campo-id').textContent.toLowerCase();
+      } else if (campo === 'telefone') {
+        textoComparacao = card.querySelector('.campo-telefone').textContent.toLowerCase();
+      }
+
+      if (textoComparacao.includes(termo)) {
+        card.style.display = 'block';
+      } else {
+        card.style.display = 'none';
+      }
+    });
+  }
+
+
 });
 
 buttonaddcliente.addEventListener('click', function () {
