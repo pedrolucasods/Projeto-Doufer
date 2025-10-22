@@ -23,12 +23,12 @@
                     <p><strong>ID:</strong> <span class="campo-id">{{this.id}}</span></p>
                     <p><strong>Telefone:</strong> <span class="campo-telefone">{{this.telefone}}</span></p>
                     <p><strong>CPF:</strong> {{this.cpf}}</p>
-                    <button onclick="deletarCliente({{this.id}})">Excluir</button>
                     {{#if this.cpf}}
                         <a href="clientes/editar/{{this.id}}/{{this.nome}}/{{this.telefone}}/{{this.cpf}}"><button>Editar</button></a>
                     {{else}}
-                        <a href="clientes/editar/{{this.id}}/{{this.nome}}/{{this.telefone}}/00000000000"><button>Editar</button></a>
+                        <a href="clientes/editar/{{this.id}}/{{this.nome}}/{{this.telefone}}/0"><button>Editar</button></a>
                     {{/if}}
+                    <button onclick="deletarCliente({{this.id}})">Excluir</button>
                 </div>
             {{/each}}
             </div>
