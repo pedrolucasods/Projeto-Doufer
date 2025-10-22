@@ -1,7 +1,7 @@
 <div>
     <h1>Editar Cliente</h1>
     <div>
-        <form id="formeditcliente" action="/clientes/update/:id" method="post">
+        <form id="formeditcliente" action="/sucesso/update/{{idparam}}" method="post">
             <p>Nome: </p>
             <input value="{{nomeparam}}" id="inputnome" type="text" name="namecliente" required>
             <span id="spanname"></span>
@@ -13,11 +13,17 @@
                 Deseja inserir CPF?
                 <input type="checkbox" id="toggleCpf" name="inserirCpf">
             </p>
-
-            <div id="cpfContainer" style="display: none;">
-                <p>CPF:</p>
-                <input value="{{cpfparam}}" type="text" name="cpfcliente" id="cpfInput" placeholder="000.000.000-00">
-            </div>
+            {{#if cpfparam.length}}
+                <div id="cpfContainer" style="display: none;">
+                    <p>CPF:</p>
+                    <input value="{{cpfparam}}" type="text" name="cpfcliente" id="cpfInput" placeholder="000.000.000-00">
+                </div>
+            {{else}}
+                <div id="cpfContainer" style="display: none;">
+                    <p>CPF:</p>
+                    <input type="text" name="cpfcliente" id="cpfInput" placeholder="000.000.000-00">
+                </div>
+            {{/if}}
             <br>
             <button type="submit">Editar cliente</button>
          </form>
