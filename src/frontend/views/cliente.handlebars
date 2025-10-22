@@ -12,8 +12,9 @@
         <button ><i id="newcliente" class="fas fa-user-plus"></i></button>
         <br><br>
     </div>
-    <h2>Clientes Cadastrados</h2>
+    <hr>
     {{#if clientes.length}}
+    <h2>Clientes Cadastrados</h2>
         <div id="exibirclientes">
             <div class="card-container">
             {{#each clientes}}
@@ -23,12 +24,17 @@
                     <p><strong>Telefone:</strong> <span class="campo-telefone">{{this.telefone}}</span></p>
                     <p><strong>CPF:</strong> {{this.cpf}}</p>
                     <button onclick="deletarCliente({{this.id}})">Excluir</button>
+                    {{#if this.cpf}}
+                        <a href="clientes/editar/{{this.id}}/{{this.nome}}/{{this.telefone}}/{{this.cpf}}"><button>Editar</button></a>
+                    {{else}}
+                        <a href="clientes/editar/{{this.id}}/{{this.nome}}/{{this.telefone}}/00000000000"><button>Editar</button></a>
+                    {{/if}}
                 </div>
             {{/each}}
             </div>
         </div>
     {{else}}
-        <h2>Não tem clientes cadastrados</h2>
+        <h2>Você ainda não cadastrou nenhum cliente!</h2>
     {{/if}}
         
     
