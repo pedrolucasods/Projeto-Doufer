@@ -11,38 +11,42 @@
         <button ><i class="fas fa-search"></i></button>
         <button ><i id="newcliente" class="fas fa-user-plus"></i></button>
         <br><br>
-        <h1>Lista de Clientes</h1>
-
-
-        <div class="card-container">
-        {{#each clientes}}
-            <div class="card">
-                <h3 class="campo-nome">{{this.nome}}</h3>
-                <p><strong>ID:</strong> <span class="campo-id">{{this.id}}</span></p>
-                <p><strong>Telefone:</strong> <span class="campo-telefone">{{this.telefone}}</span></p>
-                <p><strong>CPF:</strong> {{this.cpf}}</p>
-                <button onclick="deletarCliente({{this.id}})">Excluir</button>
+    </div>
+    <h2>Clientes Cadastrados</h2>
+    {{#if clientes.length}}
+        <div id="exibirclientes">
+            <div class="card-container">
+            {{#each clientes}}
+                <div class="card">
+                    <h3 class="campo-nome">{{this.nome}}</h3>
+                    <p><strong>ID:</strong> <span class="campo-id">{{this.id}}</span></p>
+                    <p><strong>Telefone:</strong> <span class="campo-telefone">{{this.telefone}}</span></p>
+                    <p><strong>CPF:</strong> {{this.cpf}}</p>
+                    <button onclick="deletarCliente({{this.id}})">Excluir</button>
+                </div>
+            {{/each}}
             </div>
-        {{/each}}
         </div>
-
+    {{else}}
+        <h2>Não tem clientes cadastrados</h2>
+    {{/if}}
+        
+    
 
 <!-- confirmaçcao da exclusão -->
 
-        <div id="modalConfirm" style="display: none; position: fixed; top: 0; left: 0; 
-            width: 100%; height: 100%; background-color: rgba(0,0,0,0.6); 
-            z-index: 999; justify-content: center; align-items: center;">
+    <div id="modalConfirm" style="display: none; position: fixed; top: 0; left: 0; 
+        width: 100%; height: 100%; background-color: rgba(0,0,0,0.6); 
+        z-index: 999; justify-content: center; align-items: center;">
 
-            <div style="background-color: white; padding: 20px; border-radius: 10px; text-align: center;">
-                <h2>Tem certeza que deseja excluir este cliente?</h2>
-                <br>
-                <button onclick="confirmarExclusao()">Sim</button>
-                <button onclick="fecharModal()">Cancelar</button>
-            </div>
-        </div>
-
-            
+        <div style="background-color: white; padding: 20px; border-radius: 10px; text-align: center;">
+            <h2>Tem certeza que deseja excluir este cliente?</h2>
+            <br>
+            <button onclick="confirmarExclusao()">Sim</button>
+            <button onclick="fecharModal()">Cancelar</button>
         </div>
     </div>
+
+            
     
 </div>
