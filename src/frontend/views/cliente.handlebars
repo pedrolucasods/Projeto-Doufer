@@ -14,29 +14,16 @@
         <h1>Lista de Clientes</h1>
 
 
-        <div id="table">
-            <table border="1">
-                <thead>
-                    <tr>
-                        <th>Id</th>
-                        <th>Nome</th>
-                        <th>Telefone</th>
-                        <th>Cpf</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {{#each clientes}}
-                        <tr>
-                            <td>{{this.id}}</td>
-                            <td>{{this.nome}}</td>
-                            <td>{{this.telefone}}</td>
-                            <td>{{this.cpf}}</td>
-                            <td><button onclick="deletarCliente({{this.id}})">Excluir</button></a></td>
-                        </tr>
-                        
-                    {{/each}}
-                </tbody>
-            </table>
+        <div class="card-container">
+        {{#each clientes}}
+            <div class="card">
+                <h3 class="campo-nome">{{this.nome}}</h3>
+                <p><strong>ID:</strong> <span class="campo-id">{{this.id}}</span></p>
+                <p><strong>Telefone:</strong> <span class="campo-telefone">{{this.telefone}}</span></p>
+                <p><strong>CPF:</strong> {{this.cpf}}</p>
+                <button onclick="deletarCliente({{this.id}})">Excluir</button>
+            </div>
+        {{/each}}
         </div>
 
 
