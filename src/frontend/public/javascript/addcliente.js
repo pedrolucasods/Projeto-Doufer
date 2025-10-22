@@ -138,7 +138,7 @@ function mascara(){
 
     //Mascara campo cpf
 
-    const cpfinput = document.getElementById('cpf')
+    const cpfinput = document.getElementById('cpfInput')
     if(cpfinput){
         IMask(cpfinput,{
             mask:'000.000.000-00'
