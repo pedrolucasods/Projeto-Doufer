@@ -71,7 +71,7 @@ function startServer(port = 3000) {
     console.log('erro : '+erro)
   })
 
-  // pedido.sync().then(function(){
+  // db.sync({force:true}).then(function(){
   //   console.log('Table adicionada!')     //Criação de tabelas
   // })
 
