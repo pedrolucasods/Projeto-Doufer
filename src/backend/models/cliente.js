@@ -6,6 +6,10 @@ const Cliente = db.define('clientes',{
         type: Sequelize.STRING,
         allowNull: false
     },
+    nome_empresa:{
+        type: Sequelize.STRING,
+        allowNull: false,
+    },
     telefone:{
         type: Sequelize.STRING,
         allowNull: false
