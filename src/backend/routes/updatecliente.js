@@ -7,10 +7,12 @@ router.post('/update/:id',function(req,res){
     let nomecliente = req.body.namecliente
     let telefonecliente = req.body.telefonecliente
     let cpfcliente = req.body.cpfcliente
+    let nomeclienteEmpresa = req.body.empresacliente
     cliente.update({
         nome:nomecliente,
         telefone: telefonecliente,
-        cpf: cpfcliente
+        cpf: cpfcliente,
+        nome_empresa: nomeclienteEmpresa
     },{
         where:{
             id: idcliente
