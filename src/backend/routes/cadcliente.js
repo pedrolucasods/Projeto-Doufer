@@ -6,10 +6,13 @@ router.post('/', function(req,res){
     const nomecliente = req.body.namecliente
     const telefonecliente = req.body.telefonecliente
     const cpf = req.body.cpfcliente
+    const nomeempresa = req.body.empresacliente
+    console.log(typeof(nomeempresa))
     clientemodel.create({
         nome:nomecliente,
         telefone: telefonecliente,
-        cpf: cpf
+        cpf: cpf,
+        nome_empresa: nomeempresa
     }).then(function(){
         res.send(`
             <!DOCTYPE html>
