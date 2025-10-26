@@ -5,6 +5,16 @@
             <p>Nome: </p>
             <input id="inputnome" type="text" name="namecliente" required>
             <span id="spanname"></span>
+
+            <p>
+                Deseja Nome da Empresa?
+                <input type="checkbox" id="toggleempresa" name="inserirempresa">
+            </p>
+            <div id="empresaContainer" style="display: none;">
+                <p>Nome da empresa:</p>
+                <input type="text" name="empresacliente" id="empresaInput">
+            </div>
+
             <p>Telefone: </p>
             <input id="telefone" name="telefonecliente" required placeholder="(00) 00000-0000..."></input>
             <span id="spanphone"></span>
