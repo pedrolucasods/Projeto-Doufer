@@ -43,6 +43,21 @@ document.addEventListener('DOMContentLoaded',function(){
       cpfinput.required = checked
     });
 
+    // verificação do se quer inserir nome da empresa
+    const empresainput = document.getElementById('empresaInput')
+    const checkboxempresa = document.getElementById('toggleempresa');
+    const empresaContainer = document.getElementById('empresaContainer');
+    if (!checkboxempresa || !empresaContainer) {
+      console.warn('Elementos não encontrados no DOM');
+      return;
+    }
+    empresaContainer.style.display = checkbox.checked ? 'block' : 'none';
+
+    checkboxempresa.addEventListener('change', function () {
+      empresaContainer.style.display = this.checked ? 'block' : 'none';
+      empresainput.required = checked
+    });
+
 })
 
 // Validações
