@@ -4,6 +4,7 @@
     <div id="opcoes">
         <select id="fieldsearch">
             <option value="nome">Nome</option>
+            <option value="nome_empresa">Nome da Empresa</option>
             <option value="id">Id</option>
             <option value="telefone">Telefone</option>
         </select>
@@ -23,7 +24,7 @@
                     <p><strong>ID:</strong> <span class="campo-id">{{this.id}}</span></p>
                     <p><strong>Telefone:</strong> <span class="campo-telefone">{{this.telefone}}</span></p>
                     <p><strong>CPF:</strong> {{this.cpf}}</p>
-                    <p><strong>Nome da Empresa :</strong> {{this.nome_empresa}}</p>
+                    <p><strong>Nome da Empresa :</strong> <span class="campo-nome-empresa">{{this.nome_empresa}}</span></p>
                     {{#if this.cpf}}
                         {{#if this.nome_empresa}}
                             <a href="clientes/editar/{{this.id}}/{{this.nome}}/{{this.telefone}}/{{this.cpf}}/{{this.nome_empresa}}"><button>Editar</button></a>
