@@ -52,6 +52,8 @@ document.addEventListener('DOMContentLoaded', function () {
         textoComparacao = card.querySelector('.campo-id').textContent.toLowerCase();
       } else if (campo === 'telefone') {
         textoComparacao = card.querySelector('.campo-telefone').textContent.toLowerCase();
+      } else if(campo === 'nome_empresa'){
+        textoComparacao = card.querySelector('.campo-nome-empresa').textContent.toLowerCase()
       }
 
       if (textoComparacao.includes(termo)) {
