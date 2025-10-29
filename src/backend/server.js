@@ -41,26 +41,33 @@ const association = require('./associations/associations')
 
   
 // Rotas
-const homeroute = require('./routes/home')
-app.use('/',homeroute)
 
-const clienteroute = require('./routes/cliente')
-app.use('/clientes',clienteroute)
+  // home
+  const homeroute = require('./routes/home')
+  app.use('/',homeroute)
 
-const cadformcliente = require('./routes/addcliente')
-app.use('/clientes/newcliente',cadformcliente)
+  // Rotas dos clientes
+  const clienteroute = require('./routes/cliente')
+  app.use('/clientes',clienteroute)
 
-const cadastrocliente = require('./routes/cadcliente')
-app.use('/clientes/newcliente/cadcliente',cadastrocliente)
+  const cadformcliente = require('./routes/addcliente')
+  app.use('/clientes/newcliente',cadformcliente)
 
-const deletarcliente = require('./routes/deletarcliente')
-app.use('/clientes',deletarcliente)
+  const cadastrocliente = require('./routes/cadcliente')
+  app.use('/clientes/newcliente/cadcliente',cadastrocliente)
 
-const editarcliente = require('./routes/editarcliente')
-app.use('/clientes',editarcliente)
+  const deletarcliente = require('./routes/deletarcliente')
+  app.use('/clientes',deletarcliente)
 
-const updatecliente = require('./routes/updatecliente')
-app.use('/sucesso',updatecliente)
+  const editarcliente = require('./routes/editarcliente')
+  app.use('/clientes',editarcliente)
+
+  const updatecliente = require('./routes/updatecliente')
+  app.use('/sucesso',updatecliente)
+
+  // Rotas dos Pedidos
+  const pedidoroute = require('./routes/pedido')
+  app.use('/pedidos',pedidoroute)
 
 // Exporta tanto o app quanto a função para startar o servidor
 function startServer(port = 3000) {
