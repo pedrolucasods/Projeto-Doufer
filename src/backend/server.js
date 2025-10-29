@@ -69,6 +69,9 @@ const association = require('./associations/associations')
   const pedidoroute = require('./routes/pedido')
   app.use('/pedidos',pedidoroute)
 
+  const RouteAddpedido = require('./routes/addpedido')
+  app.use('/pedidos/newpedido',RouteAddpedido)
+
 // Exporta tanto o app quanto a função para startar o servidor
 function startServer(port = 3000) {
 
