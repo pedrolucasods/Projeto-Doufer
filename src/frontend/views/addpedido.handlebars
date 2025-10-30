@@ -1,11 +1,15 @@
 <div>
-    <h1>Criar Pedido</h1>
-    <form id="formaddpedido" action="#" method="post">
-        <label for="selectcliente">Cliente:</label>
-        <select id="selectcliente" name="cliente">
-            {{#each clientes}}
-                <option value="{{this.id}}">{{this.nome}}</option>
-            {{/each}}
-        </select>
-    </form>
+    {{#if clientes.length}}
+        <h1>Criar Pedido</h1>
+        <form id="formaddpedido" action="#" method="post">
+            <label for="selectcliente">Cliente:</label>
+            <select id="selectcliente" name="cliente">
+                {{#each clientes}}
+                    <option value="{{this.id}}">{{this.nome}}</option>
+                {{/each}}
+            </select>
+        </form>
+    {{else}}
+        <h1>Você não possui nenhum cliente cadastrado para criar um pedido!</h1>
+    {{/if}}
 </div>
