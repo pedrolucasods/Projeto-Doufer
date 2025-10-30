@@ -8,8 +8,21 @@
                     <option value="{{this.id}}">{{this.nome}}</option>
                 {{/each}}
             </select>
+            <br><br>
+            <label for="data_pedido">Data pedido!</label>
+            <input type="date" required value="{{hoje}}">
+            <br><br>
+            <hr>
+            <h3>Itens do Pedido</h3>
+            <div id="itens-container"></div>
+            <button type="button" id="btn-add-item">
+                <i class="fa-solid fa-plus"></i> Adicionar Item
+            </button>
+            <hr>
+            <button type="submit">Salvar Pedido!</button>
         </form>
     {{else}}
         <h1>Você não possui nenhum cliente cadastrado para criar um pedido!</h1>
     {{/if}}
+
 </div>
