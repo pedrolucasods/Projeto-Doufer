@@ -36,7 +36,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         // Validação básica
         if (!produto || isNaN(quantidade) || quantidade <= 0 || isNaN(precounit)) {
-            alert("Preencha corretamente o nome do produto, quantidade e preço unitário!")
+            mostrarAviso()
             return
         }
 
@@ -193,6 +193,16 @@ document.addEventListener("DOMContentLoaded", () => {
         itemParaExcluir = null
         modalConfirm.style.display = "none" // fecha modal
     })
+
+    // Modal aviso
+    const modalAviso = document.getElementById('modalAviso')
+    const bntok = document.getElementById('btnOK')
+    function mostrarAviso(){
+        modalAviso.style.display = 'flex'
+        bntok.addEventListener('click',function(){
+            modalAviso.style.display = 'none'
+        })
+    }
 
     // =====================================
     // ENVIO DO FORMULÁRIO
