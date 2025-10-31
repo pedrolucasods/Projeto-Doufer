@@ -14,13 +14,66 @@
             <br><br>
             <hr>
             <h3>Itens do Pedido</h3>
-            <div id="itens-container"></div>
-            <button type="button" id="btn-add-item">
-                <i class="fa-solid fa-plus"></i> Adicionar Item
-            </button>
+            <div id="itens-container">
+                <label>Produto:</label>
+                <input id="nome-produto">
+                <br><br>
+
+                <label>Cor:</label>
+                <input id="cor-produto">
+                <br><br>
+
+                <label>Tecido:</label>
+                <input id="tecido-produto">
+                <br><br>
+
+                <label>Tamanho:</label>
+                <input id="tamanho-produto">
+                <br><br>
+
+                <label>Detalhes</label>
+                <input id="detalhes-produto">
+                <br><br>
+
+                <label>Quantidade:</label>
+                <input id="quantidade-produto" type="number">
+                <br><br>
+
+                <label>Modelo do Produto:</label>
+                <input id="modelo-produto">
+                <br><br>
+
+                <label>Preço Unitário:</label>
+                <input id="precouni-produto">
+                <br><br>
+
+                <label>Complemento:</label>
+                <input id="complemento-produto">
+                <br><br>
+
+                <button type="button" id="btn-add-item">
+                    <i class="fa-solid fa-plus"></i> Adicionar Item
+                </button>
+
+                <div id="itens"></div>
+            </div>
+            
             <hr>
             <button type="submit">Salvar Pedido!</button>
         </form>
+        
+        <!-- Modal de confirmação -->
+        <div id="modalConfirm" style="display: none; position: fixed; top: 0; left: 0; 
+                width: 100%; height: 100%; background-color: rgba(0,0,0,0.6); 
+                z-index: 999; justify-content: center; align-items: center;">
+
+            <div style="background-color: white; padding: 20px; border-radius: 10px; text-align: center;">
+                <h2 id="modalMensagem">Tem certeza que deseja excluir este item?</h2>
+                <br>
+                <button id="btnConfirmar">Sim</button>
+                <button id="btnCancelar">Cancelar</button>
+            </div>
+        </div>
     {{else}}
         <h1>Você não possui nenhum cliente cadastrado para criar um pedido!</h1>
     {{/if}}
