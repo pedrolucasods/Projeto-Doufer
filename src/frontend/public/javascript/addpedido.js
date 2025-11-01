@@ -208,10 +208,11 @@ document.addEventListener("DOMContentLoaded", () => {
     // ENVIO DO FORMULÁRIO
     // =====================================
     form.addEventListener('submit', (e) => {
-        e.preventDefault()
+        
 
         if (itens.length === 0) {
             alert("Adicione pelo menos um item ao pedido!")
+            e.preventDefault()
             return
         }
 
@@ -223,6 +224,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         console.log("Pedido final:", pedido)
+        console.log(JSON.stringify(pedido.itens, null, 2))
         alert("Pedido salvo com sucesso! Confira o console.")
     })
 })
