@@ -223,6 +223,12 @@ document.addEventListener("DOMContentLoaded", () => {
             itens: itens
         }
 
+        // Pega o input hidden
+        const inputHidden = document.getElementById('input-pedido-json')
+
+        // converte o array em String Json e coloca no campo
+        inputHidden.value = JSON.stringify(pedido)
+
         console.log("Pedido final:", pedido)
         console.log(JSON.stringify(pedido.itens, null, 2))
         alert("Pedido salvo com sucesso! Confira o console.")
