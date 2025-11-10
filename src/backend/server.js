@@ -36,9 +36,6 @@ const association = require('./associations/associations')
   
   app.use(express.static(path.join(__dirname,'../frontend/public')))
 
-  //Body Parser
-  app.use(bodyParser.urlencoded({extended: false}))
-  app.use(bodyParser.json())
 
 
   
@@ -73,6 +70,9 @@ const association = require('./associations/associations')
 
   const RouteAddpedido = require('./routes/addpedido')
   app.use('/pedidos/newpedido',RouteAddpedido)
+
+  const cadastroPedido = require('./routes/cadastroPedidos')
+  app.use('/pedidos/newPedido/CadastroPedidos', cadastroPedido)
 
 // Exporta tanto o app quanto a função para startar o servidor
 function startServer(port = 3000) {
