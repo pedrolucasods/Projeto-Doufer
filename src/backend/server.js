@@ -18,7 +18,9 @@ const itenspedidos = require('./models/itensPedidos')
 const association = require('./associations/associations')
 
 
-
+//Body Parser
+  app.use(bodyParser.urlencoded({extended: true}))
+  app.use(bodyParser.json())
 
 //config
   // Configura Handlebars, public, etc.
