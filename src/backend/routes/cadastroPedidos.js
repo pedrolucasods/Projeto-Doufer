@@ -3,7 +3,7 @@ const router = express.Router()
 const Pedido = require('../models/pedidos')
 const ItensPedido = require('../models/itensPedidos')
 
-router.post('/', function(req,res){
+router.post('/', async function(req,res){
   try {
     if (req.body.pedido) {
         let pedido = []
