@@ -21,7 +21,50 @@
     
     {{#if pedidos.length}}
         <h2>Pedidos Registrados</h2>
+        <div class="card-container">
 
+            {{#each pedidos}}
+            <div class="card">
+
+                <div class="topo-card">
+                    <h3>Pedido #{{id}}</h3>
+                    <span class="status {{status}}">
+                        {{status}}
+                    </span>
+                </div>
+
+                <p><strong>Cliente:</strong>
+                    {{#each ../clientes}}
+                        {{#if (eq this.id ../cliente_id)}}
+                            {{this.nome}}
+                        {{/if}}
+                    {{/each}}
+                </p>
+
+                <p><strong>Data:</strong> {{data}}</p>
+
+                <hr>
+
+                <p><strong>Itens:</strong></p>
+
+                <ul class="lista-itens">
+                    {{#each itens}}
+                    <li>
+                        {{quantidade}}x {{produto}}
+                        <small>({{modelo_produto}})</small>
+                    </li>
+                    {{/each}}
+                </ul>
+
+                <hr>
+
+                <p class="total">
+                    Total: <span>R$ {{total}}</span>
+                </p>
+            </div>
+            {{/each}}
+
+        </div>
     {{else}}
         <h2>Você ainda não registrou nenhum pedido !</h2>
     
