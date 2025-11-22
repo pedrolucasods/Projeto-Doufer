@@ -85,6 +85,9 @@ app.use('/pedidos/newpedido',RouteAddpedido)
 const cadastroPedido = require('./routes/cadastroPedidos')
 app.use('/pedidos/newPedido/CadastroPedidos', cadastroPedido)
 
+const DeletarPedido = require('./routes/deletarpedido')
+app.use('/pedidos', DeletarPedido)
+
 // Exporta tanto o app quanto a função para startar o servidor
 function startServer(port = 3000) {
 
