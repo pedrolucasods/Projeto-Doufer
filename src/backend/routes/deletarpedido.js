@@ -15,7 +15,7 @@ router.delete('/deletar/:id',async function(req,res){
                     Cliente Deletado com sucesso!
                 </h1>
                 <br><br>
-                <a href="/clientes"><button id="voltar">Voltar ao menu</button></a>
+                <a href="/pedidos"><button id="voltar">Voltar ao menu</button></a>
                 
                 <script>
                 </script>    
