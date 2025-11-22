@@ -70,4 +70,16 @@
         <h2>Você ainda não registrou nenhum pedido !</h2>
     
     {{/if}}
+    <!-- Modal de confirmação -->
+    <div id="modalConfirm" style="display: none; position: fixed; top: 0; left: 0; 
+            width: 100%; height: 100%; background-color: rgba(0,0,0,0.6); 
+            z-index: 999; justify-content: center; align-items: center;">
+
+        <div style="background-color: white; padding: 20px; border-radius: 10px; text-align: center;">
+            <h2 id="modalMensagem">Tem certeza que deseja excluir este item?</h2>
+            <br>
+            <button id="btnConfirmar" onclick="confirmarExclusao()">Sim</button>
+            <button id="btnCancelar" onclick="fecharModal()">Cancelar</button>
+        </div>
+    </div>
 </div>
