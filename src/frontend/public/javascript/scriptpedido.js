@@ -1,6 +1,6 @@
 const newpedidobtn = document.getElementById('newpedido')
 let idDeletarPedido = null
-
+let idEditarPedido = null
 newpedidobtn.addEventListener('click', function(){
     window.location.href = 'pedidos/newpedido'
 })
@@ -28,4 +28,10 @@ function confirmarExclusao(){
 
 function fecharModal(){
     document.getElementById('modalConfirm').style.display = 'none'
+}
+
+async function editarPedido(id){
+    idEditarPedido = await id
+    window.location.href = `/pedidos/editar/${idEditarPedido}`
+    
 }
