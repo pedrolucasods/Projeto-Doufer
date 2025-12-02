@@ -1,0 +1,93 @@
+<div>
+    <a href="/pedidos"><button id="back"><i class="fas fa-home"></i></button></a>
+    <h1>Editar Pedido</h1>
+    <form id="formaddpedido" action="#" method="post">
+        <label for="selectcliente">Cliente:</label>
+        <select id="selectcliente" name="cliente">
+                <option value="{{pedido_cliente_id}}">{{nome}}</option>
+        </select>
+        <br><br>
+        <label for="data_pedido">Data pedido!</label>
+        <input type="date" required value="{{pedido_data}}">
+        <br><br>
+        <hr>
+        <h3>Itens do Pedido</h3>
+        <div id="itens-container">
+            <label>Produto:</label>
+            <input id="nome-produto">
+            <br><br>
+
+            <label>Cor:</label>
+            <input id="cor-produto">
+            <br><br>
+
+            <label>Tecido:</label>
+            <input id="tecido-produto">
+            <br><br>
+
+            <label>Tamanho:</label>
+            <input id="tamanho-produto">
+            <br><br>
+
+            <label>Detalhes</label>
+            <input id="detalhes-produto">
+            <br><br>
+
+            <label>Quantidade:</label>
+            <input id="quantidade-produto" type="number">
+            <br><br>
+
+            <label>Modelo do Produto:</label>
+            <input id="modelo-produto">
+            <br><br>
+
+            <label>Preço Unitário:</label>
+            <input id="precouni-produto">
+            <br><br>
+
+            <label>Complemento:</label>
+            <input id="complemento-produto">
+            <br><br>
+
+            <button type="button" id="btn-add-item">
+                <i class="fa-solid fa-plus"></i> Adicionar Item
+            </button>
+
+            <div id="itens">
+            </div>
+
+            <input type="hidden" id="itensAntigo" value="{{ItensPedido}}">
+            
+        </div>
+        
+        <hr>
+        <!-- Campo Que receberá o Json com os itens -->
+        <input type="hidden" name="pedido" id="input-pedido-json">
+        <button type="submit">Salvar Pedido!</button>
+    </form>
+
+    <!-- Modal de confirmação -->
+    <div id="modalConfirm" style="display: none; position: fixed; top: 0; left: 0; 
+            width: 100%; height: 100%; background-color: rgba(0,0,0,0.6); 
+            z-index: 999; justify-content: center; align-items: center;">
+
+        <div style="background-color: white; padding: 20px; border-radius: 10px; text-align: center;">
+            <h2 id="modalMensagem">Tem certeza que deseja excluir este item?</h2>
+            <br>
+            <button id="btnConfirmar">Sim</button>
+            <button id="btnCancelar">Cancelar</button>
+        </div>
+    </div>
+    <!-- Modal Aviso -->
+    <div id="modalAviso" style="display: none; position: fixed; top: 0; left: 0; 
+            width: 100%; height: 100%; background-color: rgba(0,0,0,0.6); 
+            z-index: 999; justify-content: center; align-items: center;">
+
+        <div style="background-color: white; padding: 20px; border-radius: 10px; text-align: center;">
+            <h2 id="avisoMensagem">Preencha corretamente o nome do produto, quantidade e preço unitário!</h2>
+            <br>
+            <button id="btnOK">Ok</button>
+        </div>
+    </div>
+
+</div>
