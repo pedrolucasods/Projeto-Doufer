@@ -34,7 +34,8 @@ app.engine('handlebars', handlebars.engine({
     gte: (a, b) => a >= b,
     lte: (a, b) => a <= b,
     and: (a, b) => a && b,
-    or: (a, b) => a || b
+    or: (a, b) => a || b,
+    json: (context) => JSON.stringify(context)
   },
   runtimeOptions: {
     allowProtoPropertiesByDefault: true,
