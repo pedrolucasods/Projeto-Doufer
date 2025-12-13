@@ -6,10 +6,13 @@
         // VARIÁVEIS PRINCIPAIS
         // =====================================
         let itens = []          // Array que guarda todos os itens do pedido
+        let itensatu = []
+        let novosItens = []
         console.log('array reiniciado', itens.length)
         carregarItensAtuais()
         function carregarItensAtuais(){
             itens = []
+            itensatu = []
             const itensAtuais = JSON.parse(document.getElementById('itensAntigo').value || "[]")
             itensAtuais.forEach(itensobject =>{
             let objeto = {
@@ -27,6 +30,7 @@
                 total: itensobject.quantidade * itensobject.preco_unitario
             }
             itens.push(objeto)
+            itensatu.push(objeto)
         })
             atualizarTabela()
         }
@@ -91,11 +95,14 @@
             // Se estamos editando, substitui o item existente
             if (editIndex !== null) {
                 itens[editIndex] = item
+                itensatu[editIndex] = item
+                novosItens[editIndex] = item
                 editIndex = null
                 btnAdd.textContent = "Adicionar Item"
             } else {
                 // Caso seja novo item, adiciona no array
                 itens.push(item)
+                novosItens.push(item)
             }
 
             atualizarTabela() // Atualiza a visualização da tabela
@@ -212,6 +219,8 @@
         btnConfirmar.addEventListener('click', () => {
             if (itemParaExcluir !== null) {
                 itens.splice(itemParaExcluir, 1) // remove item do array
+                itensatu.splice(itemParaExcluir,1)
+                novosItens.splice(itemParaExcluir,1)
                 atualizarTabela() // atualiza tabela
                 limparCampos()    // limpa inputs
                 itemParaExcluir = null
@@ -254,6 +263,8 @@
             const pedido = {
                 clienteId: document.getElementById('selectcliente').value,
                 data: document.querySelector('input[type="date"]').value,
+                itensatuais: itensatu,
+                novoItem:novosItens,
                 itens: itens
             }
 

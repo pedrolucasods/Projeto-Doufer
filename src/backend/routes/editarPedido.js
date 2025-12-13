@@ -31,7 +31,72 @@ router.get('/editar/:id', async function(req,res){
     //Info Itens Pedido
 
     
-    res.render('editarPedido', {script:'editarpedido.js', pedido_status, pedido_id_cliente, pedido_data,nome, ItensPedido:JSON.stringify(arraydeItens)})
+    res.render('editarPedido', {script:'editarpedido.js',Pedidoid, pedido_status, pedido_id_cliente, pedido_data,nome, ItensPedido:JSON.stringify(arraydeItens)})
+})
+
+router.post('/alterar/:id/',async function(req,res){
+    try {
+    if (req.body.pedido) {
+        let pedido = []
+        pedidojson = JSON.parse(req.body.pedido)
+        pedido.push(pedidojson);
+        
+
+        for(const informacoes_pedido of pedido){
+          let total = 0
+          await modelPedido.update({
+              cliente_id:informacoes_pedido.clienteId,
+              data: informacoes_pedido.data,
+              status:'aberto'
+            },{where:{id:req.params.id}})
+            
+            for(const valor_total of informacoes_pedido.itens){
+              total += valor_total.total
+            }
+
+            if(informacoes_pedido.itensatuais){
+                for(const items_pedido of informacoes_pedido.itensatuais){
+                    modelItensPedido.update({
+                        id_pedido: items_pedido.id_pedido,
+                        preco: items_pedido.total,
+                        produto: items_pedido.produto,
+                        cor: items_pedido.cor,
+                        tecido: items_pedido.tecido,
+                        tamanho: items_pedido.tamanho,
+                        detalhes: items_pedido.detalhes,
+                        quantidade: items_pedido.quantidade,
+                        preco_unitario: items_pedido.precounit,
+                        produto_modelo: items_pedido.modelo,
+                        complemento: items_pedido.complemento
+                    },{where:{id:items_pedido.id}})
+                }
+            }
+
+            if(informacoes_pedido.novoIten){
+                for(const items_pedido of informacoes_pedido.novoIten){
+                    modelItensPedido.create({
+                        id_pedido: req.params.id,
+                        preco: items_pedido.total,
+                        produto: items_pedido.produto,
+                        cor: items_pedido.cor,
+                        tecido: items_pedido.tecido,
+                        tamanho: items_pedido.tamanho,
+                        detalhes: items_pedido.detalhes,
+                        quantidade: items_pedido.quantidade,
+                        preco_unitario: items_pedido.precounit,
+                        produto_modelo: items_pedido.modelo,
+                        complemento: items_pedido.complemento
+                    })
+                }
+            }
+            
+        }
+        return res.send(pedido)
+    }
+    
+  } catch (err) {
+    return res.status(400).send('Erro ao converter itens: ' + err.message);
+  }
 })
 
 module.exports = router
