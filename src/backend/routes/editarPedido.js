@@ -54,7 +54,7 @@ router.post('/alterar/:id/',async function(req,res){
               total += valor_total.total
             }
 
-            if(informacoes_pedido.itensatuais.lenght){
+            if(Array.isArray(informacoes_pedido.itensatuais) && informacoes_pedido.itensatuais.length>0){
                 for(const items_pedido of informacoes_pedido.itensatuais){
                     modelItensPedido.update({
                         id_pedido: items_pedido.id_pedido,
@@ -71,22 +71,27 @@ router.post('/alterar/:id/',async function(req,res){
                     },{where:{id:items_pedido.id}})
                 }
             }else{
-                for(const items_excluir of informacoes_pedido.ItensExcluir){
-                    modelItensPedido.destroy({
-                        where:{
-                            id:items_excluir.id
-                        }
-                    })
-                    modelPedido.destroy({
-                        where:{
-                            id:items_excluir.id_pedido
-                        }
-                    })
+                if(informacoes_pedido.ItensExcluir.length>0 && Array.isArray(informacoes_pedido.ItensExcluir)){
+                    for(const items_excluir of informacoes_pedido.ItensExcluir){
+                        modelItensPedido.destroy({
+                            where:{
+                                id:items_excluir.id
+                            }
+                        })
+                        modelPedido.destroy({
+                            where:{
+                                id:items_excluir.id_pedido
+                            }
+                        })
+                    }
+                }else{
+
                 }
+                
             }
 
-            if(informacoes_pedido.novoIten){
-                for(const items_pedido of informacoes_pedido.novoIten){
+            if(Array.isArray(informacoes_pedido.novoItem) && informacoes_pedido.novoItem.length > 0){
+                for(const items_pedido of informacoes_pedido.novoItem){
                     modelItensPedido.create({
                         id_pedido: req.params.id,
                         preco: items_pedido.total,
