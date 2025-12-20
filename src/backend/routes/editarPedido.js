@@ -54,7 +54,7 @@ router.post('/alterar/:id/',async function(req,res){
               total += valor_total.total
             }
 
-            if(informacoes_pedido.itensatuais){
+            if(informacoes_pedido.itensatuais.lenght){
                 for(const items_pedido of informacoes_pedido.itensatuais){
                     modelItensPedido.update({
                         id_pedido: items_pedido.id_pedido,
@@ -69,6 +69,19 @@ router.post('/alterar/:id/',async function(req,res){
                         produto_modelo: items_pedido.modelo,
                         complemento: items_pedido.complemento
                     },{where:{id:items_pedido.id}})
+                }
+            }else{
+                for(const items_excluir of informacoes_pedido.ItensExcluir){
+                    modelItensPedido.destroy({
+                        where:{
+                            id:items_excluir.id
+                        }
+                    })
+                    modelPedido.destroy({
+                        where:{
+                            id:items_excluir.id_pedido
+                        }
+                    })
                 }
             }
 
@@ -88,6 +101,8 @@ router.post('/alterar/:id/',async function(req,res){
                         complemento: items_pedido.complemento
                     })
                 }
+            }else{
+                
             }
             
         }
