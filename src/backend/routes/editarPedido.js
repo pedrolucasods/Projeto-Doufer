@@ -10,7 +10,7 @@ router.get('/editar/:id', async function(req,res){
     const Pedidoid = await req.params.id
     const Pedido = await modelPedido.findAll({where: {'id':Pedidoid}})
     const itens = await modelItensPedido.findAll({where: {'id_pedido':Pedidoid}})
-    await arraydeItens.push(itens[0])
+    await arraydeItens.push(...itens)
 
     //Info Pedido
     let pedido_status = await null
@@ -30,7 +30,7 @@ router.get('/editar/:id', async function(req,res){
         nome = await infoCliente.nome
     //Info Itens Pedido
 
-    
+
     res.render('editarPedido', {script:'editarpedido.js',Pedidoid, pedido_status, pedido_id_cliente, pedido_data,nome, ItensPedido:JSON.stringify(arraydeItens)})
 })
 
