@@ -6,10 +6,21 @@
         // VARIÁVEIS PRINCIPAIS
         // =====================================
         let itens = []          // Array que guarda todos os itens do pedido
-        let itensatu = []
-        let novosItens = []
+        let itensatu = []       // Itens que já existiam
+        let novosItens = []     // Apenas itens novos
+        let excluirItens = null
+        let itensOriginais = []
+
+        let contador = 0        
+        let editIndex = null    
+        let itemParaExcluir = null 
+
         console.log('array reiniciado', itens.length)
         carregarItensAtuais()
+        // Inicializa contador para não colidir com IDs de itens antigos
+        contador = Math.max(0, ...itens.map(i => Number.isInteger(i.id) ? i.id : 0))
+
+
         function carregarItensAtuais(){
             itens = []
             itensatu = []
@@ -27,33 +38,23 @@
                 modelo: itensobject.modelo_produto,
                 precounit: itensobject.preco_unitario,
                 complemento: itensobject.complemento,
-                total: itensobject.quantidade * itensobject.preco_unitario
+                total: itensobject.quantidade * itensobject.preco_unitario,
+                isNovo: false   // 🔑 flag indicando que veio do banco
             }
+            itensOriginais.push(objeto)
             itens.push(objeto)
             itensatu.push(objeto)
         })
             atualizarTabela()
         }
+    
         
-        
-        console.log("objetos : " ,itens)
-        console.log("tamanho objeto: " ,itens.length)
 
-        let contador = 0        // Contador para gerar ID único para cada item
-        let editIndex = null    // Índice do item que está sendo editado
-        let itemParaExcluir = null // Índice do item que será removido via modal
-
-        // Referências aos elementos do DOM
         const btnAdd = document.getElementById('btn-add-item')
-        
         const form = document.getElementById('formaddpedido')
-
-        // Modal de confirmação
         const modalConfirm = document.getElementById('modalConfirm')
         const btnConfirmar = document.getElementById('btnConfirmar')
         const btnCancelar = document.getElementById('btnCancelar')
-
-        // Laço de repetição que percorre o array e adiciona no itens
 
         // =====================================
         // ADICIONAR OU ATUALIZAR ITEM
@@ -89,14 +90,29 @@
                 modelo,
                 precounit,
                 complemento,
-                total: quantidade * precounit
+                total: quantidade * precounit,
+                isNovo: editIndex !== null ? itens[editIndex].isNovo : true
             }
 
             // Se estamos editando, substitui o item existente
             if (editIndex !== null) {
+                // Atualiza na lista geral
                 itens[editIndex] = item
-                itensatu[editIndex] = item
-                novosItens[editIndex] = item
+
+                if (!item.isNovo) {
+                    // Atualiza em itensatu por ID
+                    const idxAtual = itensatu.findIndex(i => i.id === item.id)
+                    if (idxAtual >= 0) itensatu[idxAtual] = item
+                } else {
+                    // Atualiza em novosItens por ID
+                    const idxNovo = novosItens.findIndex(i => i.id === item.id)
+                    if (idxNovo >= 0) {
+                        novosItens[idxNovo] = item       // substitui o existente
+                    } else {
+                        novosItens.push(item)            // se por algum motivo não existir, insere
+                    }
+                }
+
                 editIndex = null
                 btnAdd.textContent = "Adicionar Item"
             } else {
@@ -218,11 +234,18 @@
         // =====================================
         btnConfirmar.addEventListener('click', () => {
             if (itemParaExcluir !== null) {
-                itens.splice(itemParaExcluir, 1) // remove item do array
-                itensatu.splice(itemParaExcluir,1)
-                novosItens.splice(itemParaExcluir,1)
-                atualizarTabela() // atualiza tabela
-                limparCampos()    // limpa inputs
+                const itemRemovido = itens[itemParaExcluir]
+
+                itens.splice(itemParaExcluir, 1)
+
+                if (!itemRemovido.isNovo) {
+                    itensatu = itensatu.filter(i => i.id !== itemRemovido.id)
+                } else {
+                    novosItens = novosItens.filter(i => i.id !== itemRemovido.id)
+                }
+
+                atualizarTabela()
+                limparCampos()
                 itemParaExcluir = null
             }
             modalConfirm.style.display = "none" // fecha modal
@@ -259,13 +282,19 @@
                 return
             }
 
+            if(itensatu.length === 0){
+                excluirItens = itensOriginais
+            }else{
+                excluirItens = null
+            }
             // Monta objeto do pedido
             const pedido = {
                 clienteId: document.getElementById('selectcliente').value,
                 data: document.querySelector('input[type="date"]').value,
                 itensatuais: itensatu,
                 novoItem:novosItens,
-                itens: itens
+                itens: itens,
+                ItensExcluir: excluirItens
             }
 
             // Pega o input hidden
