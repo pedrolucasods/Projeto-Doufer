@@ -71,24 +71,19 @@ router.post('/alterar/:id/',async function(req,res){
                     },{where:{id:items_pedido.id}})
                 }
             }else{
-                if(informacoes_pedido.ItensExcluir.length>0 && Array.isArray(informacoes_pedido.ItensExcluir)){
+            if(informacoes_pedido.ItensExcluir.length>0 && Array.isArray(informacoes_pedido.ItensExcluir)){
                     for(const items_excluir of informacoes_pedido.ItensExcluir){
                         modelItensPedido.destroy({
                             where:{
                                 id:items_excluir.id
                             }
                         })
-                        modelPedido.destroy({
-                            where:{
-                                id:items_excluir.id_pedido
-                            }
-                        })
-                    }
-                }else{
 
+                    }
+                }else {
+                    
+                    
                 }
-                
-            }
 
             if(Array.isArray(informacoes_pedido.novoItem) && informacoes_pedido.novoItem.length > 0){
                 for(const items_pedido of informacoes_pedido.novoItem){

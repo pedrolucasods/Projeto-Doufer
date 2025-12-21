@@ -8,7 +8,7 @@
         let itens = []          // Array que guarda todos os itens do pedido
         let itensatu = []       // Itens que já existiam
         let novosItens = []     // Apenas itens novos
-        let excluirItens = null
+        let excluirItens = []
         let itensOriginais = []
 
         let contador = 0        
@@ -239,6 +239,7 @@
                 itens.splice(itemParaExcluir, 1)
 
                 if (!itemRemovido.isNovo) {
+                    excluirItens.push(itemRemovido)
                     itensatu = itensatu.filter(i => i.id !== itemRemovido.id)
                 } else {
                     novosItens = novosItens.filter(i => i.id !== itemRemovido.id)
@@ -282,11 +283,6 @@
                 return
             }
 
-            if(itensatu.length === 0){
-                excluirItens = itensOriginais
-            }else{
-                excluirItens = null
-            }
             // Monta objeto do pedido
             const pedido = {
                 clienteId: document.getElementById('selectcliente').value,
