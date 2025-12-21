@@ -43,75 +43,79 @@ router.post('/alterar/:id/',async function(req,res){
         
 
         for(const informacoes_pedido of pedido){
-          let total = 0
-          await modelPedido.update({
-              cliente_id:informacoes_pedido.clienteId,
-              data: informacoes_pedido.data,
-              status:'aberto'
-            },{where:{id:req.params.id}})
-            
-            for(const valor_total of informacoes_pedido.itens){
-              total += valor_total.total
-            }
-
-            if(Array.isArray(informacoes_pedido.itensatuais) && informacoes_pedido.itensatuais.length>0){
-                for(const items_pedido of informacoes_pedido.itensatuais){
-                    modelItensPedido.update({
-                        id_pedido: items_pedido.id_pedido,
-                        preco: items_pedido.total,
-                        produto: items_pedido.produto,
-                        cor: items_pedido.cor,
-                        tecido: items_pedido.tecido,
-                        tamanho: items_pedido.tamanho,
-                        detalhes: items_pedido.detalhes,
-                        quantidade: items_pedido.quantidade,
-                        preco_unitario: items_pedido.precounit,
-                        produto_modelo: items_pedido.modelo,
-                        complemento: items_pedido.complemento
-                    },{where:{id:items_pedido.id}})
-                }
-            }else{
-            if(informacoes_pedido.ItensExcluir.length>0 && Array.isArray(informacoes_pedido.ItensExcluir)){
-                    for(const items_excluir of informacoes_pedido.ItensExcluir){
-                        modelItensPedido.destroy({
-                            where:{
-                                id:items_excluir.id
-                            }
-                        })
-
-                    }
-                }else {
-                    
-                    
-                }
-
-            if(Array.isArray(informacoes_pedido.novoItem) && informacoes_pedido.novoItem.length > 0){
-                for(const items_pedido of informacoes_pedido.novoItem){
-                    modelItensPedido.create({
-                        id_pedido: req.params.id,
-                        preco: items_pedido.total,
-                        produto: items_pedido.produto,
-                        cor: items_pedido.cor,
-                        tecido: items_pedido.tecido,
-                        tamanho: items_pedido.tamanho,
-                        detalhes: items_pedido.detalhes,
-                        quantidade: items_pedido.quantidade,
-                        preco_unitario: items_pedido.precounit,
-                        produto_modelo: items_pedido.modelo,
-                        complemento: items_pedido.complemento
-                    })
-                }
-            }else{
+            let total = 0
+            await modelPedido.update({
+                cliente_id:informacoes_pedido.clienteId,
+                data: informacoes_pedido.data,
+                status:'aberto'
+                },{where:{id:req.params.id}})
                 
-            }
+                for(const valor_total of informacoes_pedido.itens){
+                total += valor_total.total
+                }
+
+                if(Array.isArray(informacoes_pedido.itensatuais) && informacoes_pedido.itensatuais.length>0){
+                    for(const items_pedido of informacoes_pedido.itensatuais){
+                        modelItensPedido.update({
+                            id_pedido: items_pedido.id_pedido,
+                            preco: items_pedido.total,
+                            produto: items_pedido.produto,
+                            cor: items_pedido.cor,
+                            tecido: items_pedido.tecido,
+                            tamanho: items_pedido.tamanho,
+                            detalhes: items_pedido.detalhes,
+                            quantidade: items_pedido.quantidade,
+                            preco_unitario: items_pedido.precounit,
+                            produto_modelo: items_pedido.modelo,
+                            complemento: items_pedido.complemento
+                        },{where:{id:items_pedido.id}})
+                    }
+                }else{
+                if(informacoes_pedido.ItensExcluir.length>0 && Array.isArray(informacoes_pedido.ItensExcluir)){
+                        for(const items_excluir of informacoes_pedido.ItensExcluir){
+                            modelItensPedido.destroy({
+                                where:{
+                                    id:items_excluir.id
+                                }
+                            })
+
+                        }
+                    }else {
+                        
+                        
+                    }
+                }
+
+                if(Array.isArray(informacoes_pedido.novoItem) && informacoes_pedido.novoItem.length > 0){
+                    for(const items_pedido of informacoes_pedido.novoItem){
+                        modelItensPedido.create({
+                            id_pedido: req.params.id,
+                            preco: items_pedido.total,
+                            produto: items_pedido.produto,
+                            cor: items_pedido.cor,
+                            tecido: items_pedido.tecido,
+                            tamanho: items_pedido.tamanho,
+                            detalhes: items_pedido.detalhes,
+                            quantidade: items_pedido.quantidade,
+                            preco_unitario: items_pedido.precounit,
+                            produto_modelo: items_pedido.modelo,
+                            complemento: items_pedido.complemento
+                        })
+                    }
+                }else{
+                    
+                }
+                
             
+            return res.send(pedido)
         }
-        return res.send(pedido)
-    }
     
-  } catch (err) {
-    return res.status(400).send('Erro ao converter itens: ' + err.message);
-  }
+        } 
+    } catch (err) {
+        return res.status(400).send('Erro ao converter itens: ' + err.message);
+    }
+
 })
+
 
 module.exports = router
