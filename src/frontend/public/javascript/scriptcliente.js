@@ -68,7 +68,7 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 buttonaddcliente.addEventListener('click', function () {
-  window.location.href = '/clientes/newcliente';
+  window.location.href = '/clientes/cadastro';
 });
 
 buttonback.addEventListener('click', function () {

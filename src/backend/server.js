@@ -54,27 +54,14 @@ app.use(express.static(path.join(__dirname,'../frontend/public')))
 // Rotas
 
 // home
-const homeroute = require('./routes/home')
+const homeroute = require('./routes/homecontroller')
 app.use('/',homeroute)
 
 // Rotas dos clientes
-const clienteroute = require('./routes/cliente')
+const clienteroute = require('./routes/clientecontroller')
 app.use('/clientes',clienteroute)
 
-const cadformcliente = require('./routes/addcliente')
-app.use('/clientes/newcliente',cadformcliente)
 
-const cadastrocliente = require('./routes/cadcliente')
-app.use('/clientes/newcliente/cadcliente',cadastrocliente)
-
-const deletarcliente = require('./routes/deletarcliente')
-app.use('/clientes',deletarcliente)
-
-const editarcliente = require('./routes/editarcliente')
-app.use('/clientes',editarcliente)
-
-const updatecliente = require('./routes/updatecliente')
-app.use('/sucesso',updatecliente)
 
 // Rotas dos Pedidos
 const pedidoroute = require('./routes/pedido')

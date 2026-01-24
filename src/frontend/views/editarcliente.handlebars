@@ -1,19 +1,19 @@
 <div>
     <h1>Editar Cliente</h1>
     <div>
-        <form id="formeditcliente" action="/sucesso/update/{{idparam}}" method="post">
+        <form id="formeditcliente" action="/clientes/editar/{{cliente.id}}" method="post">
             <p>Nome: </p>
-            <input value="{{nomeparam}}" id="inputnome" type="text" name="namecliente" required>
+            <input value="{{cliente.nome}}" id="inputnome" type="text" name="namecliente" required>
             <span id="spanname"></span>
 
             <p>
                 Deseja Alterar o Nome da Empresa?
                 <input type="checkbox" id="toggleempresa" name="inserirempresa">
             </p>
-            {{#if nomeempresaParam.length}}
+            {{#if cliente.nome_empresa.length}}
                 <div id="empresaContainer" style="display: none;">
                     <p>Nome da empresa:</p>
-                    <input value="{{nomeempresaParam}}" type="text" name="empresacliente" id="empresaInput">
+                    <input value="{{cliente.nome_empresa}}" type="text" name="empresacliente" id="empresaInput">
                 </div>
             {{else}}
                 <div id="empresaContainer" style="display: none;">
@@ -23,16 +23,16 @@
             {{/if}}
 
             <p>Telefone: </p>
-            <input value="{{telefoneparam}}" id="telefone" name="telefonecliente" required placeholder="(00) 00000-0000..."></input>
+            <input value="{{cliente.telefone}}" id="telefone" name="telefonecliente" required placeholder="(00) 00000-0000..."></input>
             <span id="spanphone"></span>
             <p>
                 Deseja Alterar o CPF?
                 <input type="checkbox" id="toggleCpf" name="inserirCpf">
             </p>
-            {{#if cpfparam.length}}
+            {{#if cliente.cpf.length}}
                 <div id="cpfContainer" style="display: none;">
                     <p>CPF:</p>
-                    <input value="{{cpfparam}}" type="text" name="cpfcliente" id="cpfInput" placeholder="000.000.000-00">
+                    <input value="{{cliente.cpf}}" type="text" name="cpfcliente" id="cpfInput" placeholder="000.000.000-00">
                 </div>
             {{else}}
                 <div id="cpfContainer" style="display: none;">
