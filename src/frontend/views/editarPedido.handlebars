@@ -1,7 +1,7 @@
 <div>
     <a href="/pedidos"><button id="back"><i class="fas fa-home"></i></button></a>
     <h1>Editar Pedido</h1>
-    <form id="formaddpedido" action="/pedidos/alterar/{{Pedidoid}}" method="POST">
+    <form id="formaddpedido" action="/pedidos/editar/{{Pedidoid}}" method="POST">
         <label for="selectcliente">Cliente:</label>
         <select id="selectcliente" name="cliente">
                 <option value="{{pedido_id_cliente}}">{{nome}}</option>

@@ -1,7 +1,7 @@
 <div>
     {{#if clientes.length}}
         <h1>Criar Pedido</h1>
-        <form id="formaddpedido" action="/pedidos/newPedido/CadastroPedidos" method="post">
+        <form id="formaddpedido" action="/pedidos/cadastrarPedido" method="post">
             <label for="selectcliente">Cliente:</label>
             <select id="selectcliente" name="cliente">
                 {{#each clientes}}

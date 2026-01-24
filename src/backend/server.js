@@ -61,23 +61,10 @@ app.use('/',homeroute)
 const clienteroute = require('./routes/clientecontroller')
 app.use('/clientes',clienteroute)
 
-
-
 // Rotas dos Pedidos
-const pedidoroute = require('./routes/pedido')
+const pedidoroute = require('./routes/pedidocontroller')
 app.use('/pedidos',pedidoroute)
 
-const RouteAddpedido = require('./routes/addpedido')
-app.use('/pedidos/newpedido',RouteAddpedido)
-
-const cadastroPedido = require('./routes/cadastroPedidos')
-app.use('/pedidos/newPedido/CadastroPedidos', cadastroPedido)
-
-const DeletarPedido = require('./routes/deletarpedido')
-app.use('/pedidos', DeletarPedido)
-
-const EditarPedido = require('./routes/editarPedido')
-app.use('/pedidos', EditarPedido)
 
 // Exporta tanto o app quanto a função para startar o servidor
 function startServer(port = 3000) {

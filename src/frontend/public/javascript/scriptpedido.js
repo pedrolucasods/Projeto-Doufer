@@ -2,7 +2,7 @@ const newpedidobtn = document.getElementById('newpedido')
 let idDeletarPedido = null
 let idEditarPedido = null
 newpedidobtn.addEventListener('click', function(){
-    window.location.href = 'pedidos/newpedido'
+    window.location.href = 'pedidos/cadastrarPedido'
 })
 
 function deletarPedido(id){
