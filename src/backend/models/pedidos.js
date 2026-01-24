@@ -1,17 +1,22 @@
 const db = require('../database')
-const Sequelize = require('sequelize')
+const {DataTypes} = require('sequelize')
 
 const Pedidos = db.define('pedidos',{
     cliente_id:{
-        type: Sequelize.INTEGER,
-        allowNull: false
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        references:{
+            model:'clientes',
+            key:'id'
+        },
+        onDelete:'CASCADE'
     },
     data:{
-        type: Sequelize.DATEONLY,
+        type: DataTypes.DATEONLY,
         allowNull:false
     },
     status:{
-        type: Sequelize.ENUM('aberto','finalizado','cancelado'),
+        type: DataTypes.ENUM('aberto','finalizado','cancelado'),
         allowNull: false
     }
 

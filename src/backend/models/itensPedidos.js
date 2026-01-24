@@ -1,40 +1,45 @@
 const db = require('../database')
-const Sequelize = require('sequelize')
+const {DataTypes} = require('sequelize')
 
 const ItensPedidos = db.define('itens_pedidos',{
     id_pedido:{
-        type: Sequelize.INTEGER,
-        allowNull: false
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        referens:{
+            model:'pedido',
+            key:'id'
+        },
+        onDelete: 'CASCADE'
     },
     preco:{
-        type: Sequelize.FLOAT
+        type: DataTypes.FLOAT
     },
     produto:{
-        type: Sequelize.STRING
+        type: DataTypes.STRING
     },
     cor:{
-        type: Sequelize.STRING
+        type: DataTypes.STRING
     },
     tecido:{
-        type: Sequelize.STRING
+        type: DataTypes.STRING
     },
     tamanho:{
-        type: Sequelize.STRING
+        type: DataTypes.STRING
     },
     detalhes:{
-        type: Sequelize.STRING
+        type: DataTypes.STRING
     },
     quantidade:{
-        type: Sequelize.INTEGER
+        type: DataTypes.INTEGER
     },
     preco_unitario:{
-        type: Sequelize.FLOAT
+        type: DataTypes.FLOAT
     },
     modelo_produto:{
-        type: Sequelize.STRING
+        type: DataTypes.STRING
     },
     complemento:{
-        type: Sequelize.STRING
+        type: DataTypes.STRING
     }
 })
 

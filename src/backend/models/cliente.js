@@ -1,21 +1,21 @@
 const db = require('../database')
-const Sequelize = require('sequelize')
+const {DataTypes} = require('sequelize')
 
 const Cliente = db.define('clientes',{
     nome:{
-        type: Sequelize.STRING,
+        type: DataTypes.STRING,
         allowNull: false
     },
     nome_empresa:{
-        type: Sequelize.STRING,
+        type: DataTypes.STRING,
         allowNull: false,
     },
     telefone:{
-        type: Sequelize.STRING,
+        type: DataTypes.STRING,
         allowNull: false
     },
     cpf:{
-        type: Sequelize.STRING,
+        type: DataTypes.STRING,
         allowNull: false
     }
 })
