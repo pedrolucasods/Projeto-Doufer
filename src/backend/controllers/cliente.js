@@ -1,11 +1,12 @@
 const modelCliente = require('../models/cliente')
+const ClienteService = require('../services/cliente')
 
 class Cliente{
 
     // listar clientes
     async clientes(req,res){
         try {
-            const clientes = await modelCliente.findAll()
+            const clientes = await ClienteService.listarTodos()
             return res.render('cliente',
                 {
                     stylesheet:'stylecliente.css',
@@ -40,12 +41,7 @@ class Cliente{
             const nomeempresa = req.body.empresacliente
             console.log(typeof(nomeempresa))
 
-            await modelCliente.create({
-                nome:nomecliente,
-                telefone: telefonecliente,
-                cpf: cpf,
-                nome_empresa: nomeempresa
-            })
+            await ClienteService.cadastrar(nomecliente,telefonecliente,cpf,nomeempresa)
 
             return res.send(`
             <!DOCTYPE html>
