@@ -34,11 +34,7 @@
                 </div>
 
                 <p><strong>Cliente:</strong>
-                    {{#each ../clientes}}
-                        {{#if (eq this.id ../cliente_id)}}
-                            {{this.nome}}
-                        {{/if}}
-                    {{/each}}
+                    {{clientes.nome}}
                 </p>
 
                 <p><strong>Data:</strong> {{data}}</p>

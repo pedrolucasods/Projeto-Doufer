@@ -69,9 +69,7 @@ class Cliente{
     async formEditar(req,res){
         try {
             let clienteId = req.params.id
-            const cliente = await modelCliente.findOne({where:{
-                'id': clienteId
-            }})
+            const cliente = await ClienteService.buscarCliente(clienteId)
             return res.render('editarcliente',
                 {
                     stylesheet:'editarcliente.css',
@@ -92,16 +90,7 @@ class Cliente{
             let telefonecliente = req.body.telefonecliente
             let cpfcliente = req.body.cpfcliente
             let nomeclienteEmpresa = req.body.empresacliente
-            await modelCliente.update({
-                nome:nomecliente,
-                telefone: telefonecliente,
-                cpf: cpfcliente,
-                nome_empresa: nomeclienteEmpresa
-            },{
-                where:{
-                    id: idcliente
-                }
-            })
+            await ClienteService.editar(idcliente,nomecliente,telefonecliente,cpfcliente,nomeclienteEmpresa)
             return res.send(`
                 <!DOCTYPE html>
                 <html>
@@ -126,7 +115,7 @@ class Cliente{
     async deletar(req,res){
         try {
             const idcliente = req.params.id
-            await modelCliente.destroy({where:{'id':idcliente}})
+            await ClienteService.deletar(idcliente)
             return res.send(`
                 <!DOCTYPE html>
                 <html>
