@@ -20,4 +20,7 @@ router.post('/editar/:id', ClienteController.editar)
 // deletar cliente
 router.delete('/deletar/:id', ClienteController.deletar)
 
+// detalhes cliente
+router.get('/detalhes/:id', ClienteController.detalhes)
+
 module.exports = router

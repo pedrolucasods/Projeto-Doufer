@@ -35,6 +35,12 @@ class ClienteService{
     deletar(idcliente){
         return modelCliente.destroy({where:{'id':idcliente}})
     }
+
+    detalhes(id){
+        return modelCliente.findOne({where:{
+                'id':id
+            }})
+    }
 }
 
 module.exports = new ClienteService()

@@ -133,6 +133,21 @@ class Cliente{
             return res.status(500).send(`Erro ao deletar cliente ${error}`)
         }
     }
+
+    // Detalhes Cliente
+    async detalhes(req,res){
+        try {
+            const cliente = await ClienteService.detalhes(req.params.id)
+            return res.render('detalhesCliente',{
+                stylesheet:'detalhesCliente.css',
+                script:'detalhesCliente.js',
+                cliente
+            })
+
+        } catch (error) {
+            return res.status(500).send(`Erro ao carregar os dados do cliente: ${error}`)
+        }
+    }
 }
 
 module.exports = new Cliente()

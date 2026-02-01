@@ -1,0 +1,19 @@
+<button id="back"><i class="fas fa-home"></i></button>
+<div id="container">
+    <div id="container-detalhes">
+        <p><strong>Identificação: </strong>{{cliente.id}}</p>
+        <p><strong>Nome: </strong>{{cliente.nome}}</p>
+        <p><strong>Telefone: </strong></p>
+        {{#if cliente.cpf}}
+            <p><strong>Cpf: </strong>{{cliente.cpf}}</p>
+        {{else}}
+            <p><strong>Cpf: </strong> Nenhum cpf cadastrado!!</p>
+        {{/if}}
+        
+        {{#if cliente.nome_empresa}}
+            <p><strong>Empresa: </strong>{{cliente.nome_empresa}}</p>
+        {{else}}
+            <p><strong>Empresa: </strong>Nenhuma empresa cadastrada!</p>
+        {{/if}}
+    </div>
+</div>
