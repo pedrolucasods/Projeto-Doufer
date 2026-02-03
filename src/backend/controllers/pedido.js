@@ -101,6 +101,19 @@ class Pedido{
             return res.status(500).send(`Erro ao deletar pedido: ${error}`)
         }
     }
+
+    async pedidosCliente(req,res){
+        try {
+            const pedidosFormatados = await PedidoService.pedidosCliente(req.params.id)
+            return res.render('pedidos-cliente',{
+                script:'pedidos-cliente.js',
+                stylesheet:'pedidos-cliente.css',
+                pedidos: pedidosFormatados
+            })
+        } catch (error) {
+            return res.status(500).send(`Erro ao listar os pedidos do cliente: ${error}`)
+        }
+    }
 }
 
 module.exports = new Pedido()

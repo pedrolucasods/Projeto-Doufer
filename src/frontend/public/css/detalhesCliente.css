@@ -2,5 +2,32 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh; /* ISSO AQUI é o segredo */
+    min-height: 100vh;
 }
+
+#container-detalhes{
+    width: 700px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    max-height: 90vh;
+    border-radius: 20px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    overflow: auto;
+
+}
+
+#cliente-detalhes{
+    margin-bottom: 20px;
+    padding: 20px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    border: 1px solid #ccc;
+    border-radius: 20px;
+}
+#pedido-detalhes{
+    height: 150px;
+    padding: 20px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    border: 1px solid #ccc;
+    border-radius: 20px;
+}
+

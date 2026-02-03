@@ -1,5 +1,6 @@
 const modelCliente = require('../models/cliente')
 const ClienteService = require('../services/cliente')
+const PedidoService = require('../services/pedido')
 
 class Cliente{
 
@@ -138,10 +139,13 @@ class Cliente{
     async detalhes(req,res){
         try {
             const cliente = await ClienteService.detalhes(req.params.id)
+            const Pedidos = await PedidoService.pedidosCliente(req.params.id)
+            const qtdPedidos = Pedidos.length
             return res.render('detalhesCliente',{
                 stylesheet:'detalhesCliente.css',
                 script:'detalhesCliente.js',
-                cliente
+                cliente,
+                qtdPedidos
             })
 
         } catch (error) {
