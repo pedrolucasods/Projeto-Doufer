@@ -1,0 +1,82 @@
+<a href="/"><button id="back"><i class="fas fa-home"></i></button></a>
+
+<div id="fundo">
+    <h1 id="title">Pedidos</h1>
+
+    <div id="opcoes">
+        <select id="fieldsearch">
+            <option value="id">ID do Pedido</option>
+            <option value="cliente">Cliente</option>
+            <option value="data">Data</option>
+            <option value="status">Status</option>
+        </select>
+        <input id="inputsearch" type="search" placeholder="Digite o termo da busca...">
+        <button id="btnsearch"><i class="fas fa-search"></i></button>
+        <button id="newpedido"><i class="fas fa-cart-plus"></i></button>
+        <br><br>
+    </div>
+
+    <hr>
+
+    
+    {{#if pedidos.length}}
+        <h2>Pedidos Registrados</h2>
+        <div class="card-container">
+
+            {{#each pedidos}}
+            <div class="card">
+
+                <div class="topo-card">
+                    <h3>Pedido #{{id}}</h3>
+                    <span class="status {{status}}">
+                        {{status}}
+                    </span>
+                </div>
+
+                <p><strong>Cliente:</strong>
+                    {{clientes.nome}}
+                </p>
+
+                <p><strong>Data:</strong> {{data}}</p>
+
+                <hr>
+
+                <p><strong>Itens:</strong></p>
+
+                <ul class="lista-itens">
+                    {{#each itens}}
+                    <li>
+                        {{quantidade}}x {{produto}}
+                        <small>({{modelo_produto}})</small>
+                    </li>
+                    {{/each}}
+                </ul>
+
+                <hr>
+
+                <p class="total">
+                    Total: <span>R$ {{total}}</span>
+                </p>
+                <button id="deletar" onclick="deletarPedido({{id}})">Excluir</button>
+                <button id="editar" onclick="editarPedido({{id}})">Editar</button>
+            </div>
+            {{/each}}
+
+        </div>
+    {{else}}
+        <h2>Você ainda não registrou nenhum pedido !</h2>
+    
+    {{/if}}
+    <!-- Modal de confirmação -->
+    <div id="modalConfirm" style="display: none; position: fixed; top: 0; left: 0; 
+            width: 100%; height: 100%; background-color: rgba(0,0,0,0.6); 
+            z-index: 999; justify-content: center; align-items: center;">
+
+        <div style="background-color: white; padding: 20px; border-radius: 10px; text-align: center;">
+            <h2 id="modalMensagem">Tem certeza que deseja excluir este item?</h2>
+            <br>
+            <button id="btnConfirmar" onclick="confirmarExclusao()">Sim</button>
+            <button id="btnCancelar" onclick="fecharModal()">Cancelar</button>
+        </div>
+    </div>
+</div>

@@ -178,6 +178,40 @@ class Pedido{
     async deletar(pedido_id){
         await modelPedido.destroy({where:{'id':pedido_id}})
     }
+
+    async pedidosCliente(id){
+        const pedidos = await modelPedido.findAll({where:{
+            "id":id
+            },
+            order: [["id","DESC"]],
+            include:[
+                {
+                    model: modelItensPedido,
+                    as:"itens",
+                    attributes:["id","preco_unitario","quantidade","modelo_produto"]
+                },
+                {
+                    model: modelCliente,
+                    as:"clientes",
+                    attributes:["nome"]
+                }
+            ]
+        })
+        // Criar array formatado com total calculado
+        const pedidosFormatados = pedidos.map(p=>{
+            const itens = p.itens || []
+            const total = itens.reduce((soma, item) => {
+                return soma +(item.preco_unitario * item.quantidade)
+            }, 0)
+            return {
+                ...p.dataValues,
+                cliente: p.clientes,
+                itens,
+                total
+            }
+        })
+        return pedidosFormatados
+    }
 }
 
 module.exports = new Pedido()
