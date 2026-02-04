@@ -8,7 +8,7 @@ Sistema desktop exclusivo para a loja Doufer, focado no cadastro, edição, cons
 Certifique-se de ter o Node.js instalado em sua máquina.  
 Clone o repositório:  
 ```bash
-git clone https://github.com/pedrolucasods/doufer.git
+git clone https://github.com/pedrolucasods/Projeto-Doufer.git
 cd doufer
 ````
 
