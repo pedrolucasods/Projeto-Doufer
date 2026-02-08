@@ -31,7 +31,13 @@ function fecharModal(){
 }
 
 async function editarPedido(id){
-    idEditarPedido = await id
+    let idEditarPedido = await id
     window.location.href = `/pedidos/editar/${idEditarPedido}`
     
+}
+
+
+function detalhesPedido(id){
+    let idDetalhesPedido = id
+    window.location.href = `/pedidos/detalhes/${idDetalhesPedido}`
 }

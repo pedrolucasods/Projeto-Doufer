@@ -3,6 +3,7 @@
 //puxando dependencias
 const express = require('express')
 const path = require('path')
+require('dotenv').config({ path: path.resolve(__dirname, '../../.env') });
 const db = require('./database')
 const app = express()
 const bodyParser = require('body-parser')
@@ -67,8 +68,7 @@ app.use('/pedidos',pedidoroute)
 
 
 // Exporta tanto o app quanto a função para startar o servidor
-function startServer(port = 3000) {
-
+function startServer(port =process.env.PORT) {
   db.authenticate().then(function(){
     console.log('Banco de dados Sincronizado')
   }).catch(function(erro){
