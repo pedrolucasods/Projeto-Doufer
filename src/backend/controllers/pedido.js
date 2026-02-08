@@ -114,6 +114,27 @@ class Pedido{
             return res.status(500).send(`Erro ao listar os pedidos do cliente: ${error}`)
         }
     }
+
+    async detalhesPedido(req,res){
+        try {
+            const {arraydeItens,Pedidoid,pedido_status,pedido_id_cliente,pedido_data,nome} = await PedidoService.formEditar(req.params.id)
+            //Info Itens Pedido
+            // return res.send(arraydeItens[0],Pedidoid,pedido_status,pedido_id_cliente,pedido_data,nome)
+            return res.render('detalhes-pedido', {
+                    script:'detalhes-pedido.js',
+                    stylesheet:'detalhes-pedido.css',
+                    Pedidoid,
+                    pedido_status,
+                    pedido_id_cliente,
+                    pedido_data,
+                    nome, 
+                    arraydeItens
+                }
+                )
+        } catch (error) {
+            return res.status(500).send(`Erro ao exibir os detalhes do pedido!: ${error}`)
+        }
+    }
 }
 
 module.exports = new Pedido()

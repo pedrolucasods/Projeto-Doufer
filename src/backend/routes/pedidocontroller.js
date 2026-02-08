@@ -23,4 +23,7 @@ router.delete('/deletar/:id', controllerPedido.deletarPedido)
 // rota para listar pedidos de um cliente específico
 router.get('/PedidosCliente/:id', controllerPedido.pedidosCliente)
 
+// rota detalhes pedido
+router.get('/detalhes/:id', controllerPedido.detalhesPedido)
+
 module.exports = router
