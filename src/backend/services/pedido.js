@@ -5,36 +5,71 @@ const modelItensPedido = require('../models/itensPedidos')
 class Pedido{
 
     // listar e formatar
-    async listarTodos(){
-        const pedidos = await modelPedido.findAll({
-            order: [["id","DESC"]],
-            include:[
-                {
-                    model: modelItensPedido,
-                    as:"itens",
-                    attributes:["id","preco_unitario","quantidade","modelo_produto"]
-                },
-                {
-                    model: modelCliente,
-                    as:"clientes",
-                    attributes:["nome"]
-                }
-            ]
-        })
-        // Criar array formatado com total calculado
-        const pedidosFormatados = pedidos.map(p=>{
+    async listarTodos(id){
+        if(id){
+                const pedidos = await modelPedido.findAll({
+                    where:{
+                        'cliente_id':id
+                    },
+                    order: [["id","DESC"]],
+                    include:[
+                        {
+                            model: modelItensPedido,
+                            as:"itens",
+                            attributes:["id","preco_unitario","quantidade","modelo_produto"]
+                        },
+                        {
+                            model: modelCliente,
+                            as:"clientes",
+                            attributes:["nome"]
+                        }
+                    ]
+                })
+                const pedidosFormatados = pedidos.map(p=>{
+                const itens = p.itens || []
+                const total = itens.reduce((soma, item) => {
+                    return soma +(item.preco_unitario * item.quantidade)
+                    }, 0)
+                    return {
+                        ...p.dataValues,
+                        cliente: p.clientes,
+                        itens,
+                        total
+                    }
+                })
+                return pedidosFormatados
+
+        }else{
+                const pedidos = await modelPedido.findAll({
+                order: [["id","DESC"]],
+                include:[
+                    {
+                        model: modelItensPedido,
+                        as:"itens",
+                        attributes:["id","preco_unitario","quantidade","modelo_produto"]
+                    },
+                    {
+                        model: modelCliente,
+                        as:"clientes",
+                        attributes:["nome"]
+                    }
+                ]
+            })
+            const pedidosFormatados = pedidos.map(p=>{
             const itens = p.itens || []
-            const total = itens.reduce((soma, item) => {
-                return soma +(item.preco_unitario * item.quantidade)
-            }, 0)
-            return {
-                ...p.dataValues,
-                cliente: p.clientes,
-                itens,
-                total
-            }
-        })
-        return pedidosFormatados
+                const total = itens.reduce((soma, item) => {
+                    return soma +(item.preco_unitario * item.quantidade)
+                }, 0)
+                return {
+                    ...p.dataValues,
+                    cliente: p.clientes,
+                    itens,
+                    total
+                }
+            })
+            return pedidosFormatados
+        }
+        
     }
 
     // Cadastrar pedidos
