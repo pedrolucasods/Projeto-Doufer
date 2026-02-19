@@ -1,17 +1,78 @@
 .card-container {
   display: flex;
-  flex-wrap: wrap;
-  gap: 15px;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 15px;
 }
 
-#inputsearch{
-  width: 200px;
-}
 .card {
   border: 1px solid #ccc;
   border-radius: 8px;
-  padding: 15px;
-  width: 250px;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  padding: 12px 15px;
   background: #fff;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.08);
+}
+
+.linha-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.coluna {
+  font-size: 14px;
+}
+
+.id-col {
+  width: 100px;
+}
+
+.cliente-col {
+  width: 180px;
+}
+
+.data-col {
+  width: 120px;
+}
+
+.total-col {
+  width: 120px;
+  font-weight: bold;
+}
+
+.acoes-col {
+  display: flex;
+  gap: 5px;
+}
+
+.linha-card button {
+  padding: 4px 6px;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.status {
+  padding: 3px 6px;
+  border-radius: 5px;
+  font-size: 12px;
+}
+
+/* Exemplo de status */
+.status.aprovado {
+  background-color: #d4edda;
+  color: #155724;
+}
+
+.status.pendente {
+  background-color: #fff3cd;
+  color: #856404;
+}
+
+.status.cancelado {
+  background-color: #f8d7da;
+  color: #721c24;
+}
+
+#inputsearch {
+  width: 200px;
 }
