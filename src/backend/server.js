@@ -14,40 +14,43 @@ const handlebars = require('express-handlebars')
 const cliente = require('./models/cliente')
 const pedido = require('./models/pedidos')
 const itenspedidos = require('./models/itensPedidos')
+const medidas_cliente = require('./models/medidas_cliente')
 
 // puxando a associação
 const association = require('./associations/associations')
 
 
 //Body Parser
-app.use(bodyParser.urlencoded({extended: true}))
+app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
 
 //config
 // Configura Handlebars, public, etc.
 app.engine('handlebars', handlebars.engine({
-  defaultLayout: 'main', 
-  helpers: {  // adicionado helpers para eq e outros
-    eq: (a, b) => a == b,
-    ne: (a, b) => a != b,
-    gt: (a, b) => a > b,
-    lt: (a, b) => a < b,
-    gte: (a, b) => a >= b,
-    lte: (a, b) => a <= b,
-    and: (a, b) => a && b,
-    or: (a, b) => a || b,
-    json: (context) => JSON.stringify(context)
-  },
-  runtimeOptions: {
-    allowProtoPropertiesByDefault: true,
-      allowProtoMethodsByDefault: true,}}))
+    defaultLayout: 'main',
+    helpers: {  // adicionado helpers para eq e outros
+        eq: (a, b) => a == b,
+        ne: (a, b) => a != b,
+        gt: (a, b) => a > b,
+        lt: (a, b) => a < b,
+        gte: (a, b) => a >= b,
+        lte: (a, b) => a <= b,
+        and: (a, b) => a && b,
+        or: (a, b) => a || b,
+        json: (context) => JSON.stringify(context)
+    },
+    runtimeOptions: {
+        allowProtoPropertiesByDefault: true,
+        allowProtoMethodsByDefault: true,
+    }
+}))
 
 app.set('view engine', 'handlebars')
 
 
-app.set('views', path.join(__dirname,'../frontend/views'))
-  
-app.use(express.static(path.join(__dirname,'../frontend/public')))
+app.set('views', path.join(__dirname, '../frontend/views'))
+
+app.use(express.static(path.join(__dirname, '../frontend/public')))
 
 
 
@@ -56,38 +59,39 @@ app.use(express.static(path.join(__dirname,'../frontend/public')))
 
 // home
 const homeroute = require('./routes/homecontroller')
-app.use('/',homeroute)
+app.use('/', homeroute)
 
 // Rotas dos clientes
 const clienteroute = require('./routes/clientecontroller')
-app.use('/clientes',clienteroute)
+app.use('/clientes', clienteroute)
 
 // Rotas dos Pedidos
 const pedidoroute = require('./routes/pedidocontroller')
-app.use('/pedidos',pedidoroute)
+app.use('/pedidos', pedidoroute)
 
 
 // Exporta tanto o app quanto a função para startar o servidor
-function startServer(port =process.env.PORT) {
-  db.authenticate().then(function(){
-    console.log('Banco de dados Sincronizado')
-  }).catch(function(erro){
-    console.log('erro : '+erro)
-  })
-
-  // db.sync({force:true}).then(function(){
-  //   console.log('Table adicionada!')     //Criação de tabelas
-  // })
-
-
-  return new Promise((resolve, reject) => {
-    const server = app.listen(port, () => {
-      console.log(`Servidor Express rodando em http://localhost:${port}`);
-      resolve(server);
+function startServer(port = process.env.PORT) {
+    db.authenticate().then(function () {
+        console.log('Banco de dados Sincronizado')
+    }).catch(function (erro) {
+        console.log('erro : ' + erro)
     })
 
-    server.on('error', reject)
-  })
+    // medidas_cliente.drop()
+    // db.sync().then(function(){
+    //   console.log('Table adicionada!')     //Criação de tabelas
+    // })
+
+
+    return new Promise((resolve, reject) => {
+        const server = app.listen(port, () => {
+            console.log(`Servidor Express rodando em http://localhost:${port}`);
+            resolve(server);
+        })
+
+        server.on('error', reject)
+    })
 }
 
 startServer()
