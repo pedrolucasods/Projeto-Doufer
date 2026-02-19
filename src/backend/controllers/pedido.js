@@ -8,15 +8,13 @@ class Pedido{
     // listar Pedidos
     async pedidos(req,res){
         try {
-            let verificador = 0
             // Carrega pedidos mais recentes primeiro
             const pedidosFormatados = await PedidoService.listarTodos()
             return res.render('pedido', {
                 stylesheet: 'stylepedido.css',
                 script: 'scriptpedido.js',
                 layout: 'main.handlebars',
-                pedidos: pedidosFormatados,
-                verificador
+                pedidos: pedidosFormatados
                 
             })
         } catch (error) {
@@ -106,13 +104,16 @@ class Pedido{
 
     async pedidosCliente(req,res){
         try {
-            let verificador = 1
             const pedidosFormatados = await PedidoService.listarTodos(req.params.id)
-            return res.render('pedido',{
-                script:'scriptpedido.js',
-                stylesheet:'stylepedido.css',
+            let nome
+            for(const info of pedidosFormatados){
+                nome = info.clientes.nome
+            }
+            return res.render('pedidos-cliente-especifico',{
+                script:'pedidos-cliente-especifico.js',
+                stylesheet:'pedidos-cliente-especifico.css',
                 pedidos: pedidosFormatados,
-                verificador
+                nome: nome
             })
         } catch (error) {
             return res.status(500).send(`Erro ao listar os pedidos do cliente: ${error}`)

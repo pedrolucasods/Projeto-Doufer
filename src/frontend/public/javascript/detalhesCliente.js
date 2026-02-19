@@ -4,5 +4,5 @@ btnback.addEventListener('click', function(){
 })
 
 function pedidosCliente(id){
-    window.location.href = `/pedidos/PedidosCliente/${id}`
+    window.location.href = `/pedidos/cliente/${id}`
 }

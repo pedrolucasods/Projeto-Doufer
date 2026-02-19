@@ -21,7 +21,7 @@ router.post('/editar/:id', controllerPedido.editarPedido)
 router.delete('/deletar/:id', controllerPedido.deletarPedido)
 
 // rota para listar pedidos de um cliente específico
-router.get('/PedidosCliente/:id', controllerPedido.pedidosCliente)
+router.get('/cliente/:id', controllerPedido.pedidosCliente)
 
 // rota detalhes pedido
 router.get('/detalhes/:id', controllerPedido.detalhesPedido)
