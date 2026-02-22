@@ -23,4 +23,7 @@ router.delete('/deletar/:id', ClienteController.deletar)
 // detalhes cliente
 router.get('/detalhes/:id', ClienteController.detalhes)
 
+// cadastrar medidas cliente
+router.post('/medidas/:id', ClienteController.cadastrarMedidas)
+
 module.exports = router

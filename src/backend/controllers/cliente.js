@@ -1,7 +1,7 @@
 const modelCliente = require('../models/cliente')
 const ClienteService = require('../services/cliente')
 const PedidoService = require('../services/pedido')
-
+const MedidasService = require('../services/medidas_cliente')
 class Cliente{
 
     // listar clientes
@@ -150,6 +150,18 @@ class Cliente{
 
         } catch (error) {
             return res.status(500).send(`Erro ao carregar os dados do cliente: ${error}`)
+        }
+    }
+
+    // Cadastrar  medidas cliente
+    async cadastrarMedidas(req,res){
+        try {
+            const clienteid = req.params.id
+            const medidas = req.body
+            await MedidasService.cadastrar(medidas,clienteid)
+            return res.send('Cadastro com sucesso!!')
+        } catch (error) {
+            return res.status(500).send(`Erro ao cadastrar as medidas: ${error}`)
         }
     }
 }
