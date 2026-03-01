@@ -1,3 +1,4 @@
+const { where } = require('sequelize')
 const modelMedidas = require('../models/medidas_cliente')
 
 class MedidasCliente{
@@ -9,7 +10,7 @@ class MedidasCliente{
             busto: medidas.busto,
             cintura: medidas.cintura,
             quadril: medidas.quadril,
-            comprimento: medidas.quadril,
+            comprimento: medidas.comprimento,
             ombro: medidas.ombro,
             costas: medidas.costas,
             comprimento_da_manga: medidas.comprimento_da_manga,
@@ -18,6 +19,15 @@ class MedidasCliente{
         })
         return cadastroMedidas
         
+    }
+
+    listar(cliente_id){
+        let mediddasCliente = modelMedidas.findOne({
+            where:{
+                'id':cliente_id
+            }
+        })
+        return mediddasCliente
     }
 }
 
