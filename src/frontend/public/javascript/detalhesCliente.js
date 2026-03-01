@@ -6,3 +6,7 @@ btnback.addEventListener('click', function(){
 function pedidosCliente(id){
     window.location.href = `/pedidos/PedidosCliente/${id}`
 }
+
+function cadastrarMedidas(id){
+    window.location.href = `/clientes/medidas/${id}`
+}

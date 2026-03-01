@@ -3,21 +3,34 @@
     <div id="container-detalhes">
         <h1 class="title">Informações</h1>
         <div id="cliente-detalhes">
-            <h2>cliente</h2>
-            <p><strong>Identificação: </strong>{{cliente.id}}</p>
-            <p><strong>Nome: </strong>{{cliente.nome}}</p>
-            <p><strong>Telefone: </strong></p>
-            {{#if cliente.cpf}}
-                <p><strong>Cpf: </strong>{{cliente.cpf}}</p>
-            {{else}}
-                <p><strong>Cpf: </strong> Nenhum cpf cadastrado!!</p>
-            {{/if}}
+            <div id="info-clientes">
+                <h2>cliente</h2>
+                <p><strong>Identificação: </strong>{{cliente.id}}</p>
+                <p><strong>Nome: </strong>{{cliente.nome}}</p>
+                <p><strong>Telefone: </strong></p>
+                {{#if cliente.cpf}}
+                    <p><strong>Cpf: </strong>{{cliente.cpf}}</p>
+                {{else}}
+                    <p><strong>Cpf: </strong> Nenhum cpf cadastrado!!</p>
+                {{/if}}
+                
+                {{#if cliente.nome_empresa}}
+                    <p><strong>Empresa: </strong>{{cliente.nome_empresa}}</p>
+                {{else}}
+                    <p><strong>Empresa: </strong>Nenhuma empresa cadastrada!</p>
+                {{/if}}
+            </div>
+            <div id="medidas">
+                <h2>Medidas</h2>
+                <button>Consultar Medidas</button>
+                <br><br>
+                {{#if MedidasCliente}}
+                    <button>Atualizar Medidas</button>
+                {{else}}
+                    <button onclick="cadastrarMedidas({{cliente.id}})">Adicionar Medidas</button>
+                {{/if}}
+            </div>
             
-            {{#if cliente.nome_empresa}}
-                <p><strong>Empresa: </strong>{{cliente.nome_empresa}}</p>
-            {{else}}
-                <p><strong>Empresa: </strong>Nenhuma empresa cadastrada!</p>
-            {{/if}}
         </div>
         <div id="pedido-detalhes">
             <h2 class="title">Pedidos</h2>
