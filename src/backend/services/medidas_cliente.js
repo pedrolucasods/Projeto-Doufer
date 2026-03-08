@@ -24,7 +24,7 @@ class MedidasCliente{
     listar(cliente_id){
         let mediddasCliente = modelMedidas.findOne({
             where:{
-                'id':cliente_id
+                'cliente_id':cliente_id
             }
         })
         return mediddasCliente
