@@ -26,3 +26,6 @@ Thumbs.db
 .cache/
 logs/
 *.log
+
+#tests
+tests/
