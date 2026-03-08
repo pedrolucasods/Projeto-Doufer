@@ -1,7 +1,7 @@
 const modelCliente = require('../models/cliente')
 const ClienteService = require('../services/cliente')
 const PedidoService = require('../services/pedido')
-
+const MedidasService = require('../services/medidas_cliente')
 class Cliente{
 
     // listar clientes
@@ -140,16 +140,52 @@ class Cliente{
         try {
             const cliente = await ClienteService.detalhes(req.params.id)
             const Pedidos = await PedidoService.pedidosCliente(req.params.id)
+            const MedidasCliente = await MedidasService.listar(req.params.id)
             const qtdPedidos = Pedidos.length
             return res.render('detalhesCliente',{
                 stylesheet:'detalhesCliente.css',
                 script:'detalhesCliente.js',
                 cliente,
-                qtdPedidos
+                qtdPedidos,
+                MedidasCliente
             })
 
         } catch (error) {
             return res.status(500).send(`Erro ao carregar os dados do cliente: ${error}`)
+        }
+    }
+
+    // Cadastrar  medidas cliente
+    async cadastrarMedidas(req,res){
+        try {
+            const clienteid = req.params.id
+            const medidas = req.body
+            await MedidasService.cadastrar(medidas,clienteid)
+            return res.send('Cadastro com sucesso!!')
+        } catch (error) {
+            return res.status(500).send(`Erro ao cadastrar as medidas: ${error}`)
+        }
+    }
+
+    // Formulário cadastrar medidas
+    formCadastrar_Medidas(req,res){
+        try {
+            const clienteId = req.params.id
+            return res.render('addMedida',{
+                stylesheet:'addMedida.css',
+                script:'addMedida.js',
+                clienteId
+            })
+        } catch (error) {
+            res.status(400).send(`Erro ao acessar essa rota: ${error}`)
+        }
+    }
+    async listarMedidas(req,res){
+        try {
+            const MedidasCliente = await MedidasService.listar(req.params.id)
+            return res.send(MedidasCliente)
+        } catch (error) {
+            return res.status(500).send(`Erro ao listar as medidas: ${error}`)
         }
     }
 }

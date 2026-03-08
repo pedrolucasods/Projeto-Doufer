@@ -17,11 +17,13 @@
 }
 
 #cliente-detalhes{
+    display: flex;
     margin-bottom: 20px;
     padding: 20px;
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
     border: 1px solid #ccc;
     border-radius: 20px;
+    gap: 150px;
 }
 #pedido-detalhes{
     height: 150px;
@@ -31,3 +33,12 @@
     border-radius: 20px;
 }
 
+#medidas{
+    margin-bottom: 20px;
+    padding: 20px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    width: 130px;
+    height: 150px   ;
+}
