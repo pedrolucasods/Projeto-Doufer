@@ -1,0 +1,52 @@
+
+#container-ids{
+    border-top: 1px solid #ccc;;
+    display: flex;
+    gap: 220px;
+    justify-content: center;
+}
+
+#medidas-corpo{
+    border-top: 1px solid #ccc;;
+    display: flex;
+    gap: 220px;
+    justify-content: center;
+}
+
+#medidas-manga{
+    border-top: 1px solid #ccc;;
+    display: flex;
+    gap: 220px;
+    justify-content: center;
+}
+
+#container-buttons{
+    border-top: 1px solid #ccc;;
+    display: flex;
+    gap: 220px;
+    justify-content: center;
+}
+
+#title-cliente{
+    font-size: 28px;
+    font-weight: 600;
+    text-align: center;
+    color: #2c3e50;
+    margin-bottom: 20px;
+}
+
+#title-corpo{
+    font-size: 28px;
+    font-weight: 600;
+    text-align: center;
+    color: #2c3e50;
+    margin-bottom: 20px;
+}
+
+#title-manga{
+    font-size: 28px;
+    font-weight: 600;
+    text-align: center;
+    color: #2c3e50;
+    margin-bottom: 20px;
+}

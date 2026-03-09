@@ -37,7 +37,8 @@ app.engine('handlebars', handlebars.engine({
         lte: (a, b) => a <= b,
         and: (a, b) => a && b,
         or: (a, b) => a || b,
-        json: (context) => JSON.stringify(context)
+        json: (context) => JSON.stringify(context),
+        mostrar:(valor) =>{return valor?valor:"-"}
     },
     runtimeOptions: {
         allowProtoPropertiesByDefault: true,
