@@ -29,6 +29,25 @@ class MedidasCliente{
         })
         return mediddasCliente
     }
+
+    editar(medidas,cliente_id){
+        let editarMedida = modelMedidas.update({
+            busto: medidas.busto,
+            cintura: medidas.cintura,
+            quadril: medidas.quadril,
+            comprimento: medidas.comprimento,
+            ombro: medidas.ombro,
+            costas: medidas.costas,
+            comprimento_da_manga: medidas.comprimento_da_manga,
+            largura_da_manga: medidas.largura_da_manga
+        },{
+            where:{
+                'cliente_id':cliente_id
+            }
+        })
+
+        return editarMedida
+    }
 }
 
 module.exports = new MedidasCliente()

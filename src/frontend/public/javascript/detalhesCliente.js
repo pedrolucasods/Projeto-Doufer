@@ -10,3 +10,8 @@ function pedidosCliente(id){
 function cadastrarMedidas(id){
     window.location.href = `/clientes/medidas/${id}`
 }
+
+function atualizarMedidas(id){
+    window.location.href = `/clientes/medidas/editar/${id}`
+}
+
