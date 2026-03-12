@@ -19,6 +19,8 @@ const medidas_cliente = require('./models/medidas_cliente')
 // puxando a associação
 const association = require('./associations/associations')
 
+//configurando bootstrap
+
 
 //Body Parser
 app.use(bodyParser.urlencoded({ extended: true }))
@@ -52,6 +54,7 @@ app.set('view engine', 'handlebars')
 app.set('views', path.join(__dirname, '../frontend/views'))
 
 app.use(express.static(path.join(__dirname, '../frontend/public')))
+app.use('/bootstrap', express.static(path.join(__dirname, '../../node_modules/bootstrap/dist')));
 
 
 
