@@ -1,32 +1,32 @@
-<div id="container">
-    <p id="title-cliente">Medidas de Nomecliente</p>
+<button class="btn btn-primary" onclick="voltar({{Cliente.id}})">Voltar</button>
+<div id="container" class="card p-5">
+    <p id="title-cliente">Medidas de {{Cliente.nome}}</p>
     <div id="container-ids">
-        <p>MEDIDA ID: 00</p>
-        <p>CLIENTE ID: 00</p>
+        <p>MEDIDA ID: {{medidas.id}}</p>
+        <p>CLIENTE ID: {{Cliente.id}}</p>
     </div>
-    <div id="container-medidas">
+    <div id="container-medidas" class="mb-4 border border-2 p-4 rounded-3">
         <p id="title-corpo">Medidas do corpo</p>
-        <div id="medidas-corpo">
+        <div id="medidas-corpo" class="border p-3 rounded">
             <div id="medidas-coluna1">
-                <p>Busto: 123</p>
-                <p>Cintura: 123</p>
-                <p>Quadril: 123</p>
-                <p>Comprimento: 123</p>
+                <p>Busto: {{mostrar medidas.busto}}</p>
+                <p>Cintura: {{mostrar medidas.cintura}}</p>
+                <p>Quadril: {{mostrar medidas.quadril}}</p>
+                <p>Comprimento: {{mostrar medidas.comprimento}}</p>
             </div>
             <div id="medidas-coluna2">
-                <p>Ombro: </p>
-                <p>Costas: &mdash;</p>
+                <p>Ombro: {{mostrar medidas.ombro}}</p>
+                <p>Costas: {{mostrar medidas.costas}}</p>
             </div>
         </div>
         <p id="title-manga">Medidas da manga</p>
-        <div id="medidas-manga">
-                <p>Comprimento da Manga: 12</p>
-                <p>Largura da Manga: 12</p>
+        <div id="medidas-manga" class="border p-3 rounded">
+                <p>Comprimento da Manga: {{mostrar medidas.comprimento_da_manga}}</p>
+                <p>Largura da Manga: {{mostrar medidas.largura_da_manga}}</p>
         </div>
     </div>
     <div id="container-buttons">
-        <button>Voltar</button>
-        <button>Limpar</button>
-        <button>Atualizar</button>
+        <button class="btn btn-danger">Limpar</button>
+        <button class="btn btn-success">Atualizar</button>
     </div>
 </div>
