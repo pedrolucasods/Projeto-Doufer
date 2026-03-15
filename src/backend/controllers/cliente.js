@@ -188,6 +188,30 @@ class Cliente{
             return res.status(500).send(`Erro ao listar as medidas: ${error}`)
         }
     }
+
+    // Fomulário editar medidas
+    async formEditar_medidas(req,res){
+        try {
+            const MedidasCliente = await MedidasService.listar(req.params.id)
+            return res.render('formEditarMedidas',{
+                stylesheet:'formEditarMedidas.css',
+                script:'formEditarMedidas.js',
+                MedidasCliente
+            })
+        } catch (error) {
+            res.status(404).send(`Erro, pagina não encontrada: ${error}`)
+        }
+    }
+
+    async editarMedidas(req,res){
+        try {
+            let medidas = req.body
+            let EdicaoMedidas = await MedidasService.editar(medidas,req.params.id)
+            return res.redirect(303,`/clientes/detalhes/${req.params.id}`)
+        } catch (error) {
+            return res.status(500).send(`Erro ao editar as medidas: ${error}`)
+        }
+    }
 }
 
 module.exports = new Cliente()
