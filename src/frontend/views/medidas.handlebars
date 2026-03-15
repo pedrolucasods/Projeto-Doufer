@@ -27,6 +27,10 @@
     </div>
     <div id="container-buttons">
         <button class="btn btn-danger">Limpar</button>
-        <button class="btn btn-success">Atualizar</button>
+        {{#if medidas}}
+            <button class="btn btn-success">Atualizar</button>
+        {{else}}
+            <button class="btn btn-success">Adicionar</button>
+        {{/if}}
     </div>
 </div>
