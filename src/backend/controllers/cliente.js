@@ -183,7 +183,14 @@ class Cliente{
     async listarMedidas(req,res){
         try {
             const MedidasCliente = await MedidasService.listar(req.params.id)
-            return res.send(MedidasCliente)
+            const Cliente = await ClienteService.buscarCliente(req.params.id)
+            //return res.send(MedidasCliente)
+            return res.render("medidas",{
+                stylesheet:'medidas.css',
+                script:'medidas.js',
+                medidas:MedidasCliente,
+                Cliente
+            })
         } catch (error) {
             return res.status(500).send(`Erro ao listar as medidas: ${error}`)
         }
