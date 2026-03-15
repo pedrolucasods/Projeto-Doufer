@@ -32,4 +32,11 @@ router.get('/medidas/:id', ClienteController.formCadastrar_Medidas)
 // listar medidas cliente
 router.get('/medidas/listar/:id', ClienteController.listarMedidas)
 
+// editar medidas cliente
+router.get('/medidas/editar/:id', ClienteController.formEditar_medidas)
+
+// editar medidas no banco
+router.put('/medidas/editar/:id', ClienteController.editarMedidas)
+
+
 module.exports = router

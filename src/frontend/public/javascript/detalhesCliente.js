@@ -14,3 +14,7 @@ function cadastrarMedidas(id){
 function listarMedidas(id){
     window.location.href = `/clientes/medidas/listar/${id}`
 }
+function atualizarMedidas(id){
+    window.location.href = `/clientes/medidas/editar/${id}`
+}
+
