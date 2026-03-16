@@ -1,4 +1,16 @@
 <button class="btn btn-primary" onclick="voltar({{Cliente.id}})">Voltar</button>
+{{#if msg}}
+<div id="msg" class="d-flex gap-3 alert alert-success alert-dismissible fade show position-fixed top-0 end-0 me-5 m-3">
+    <i class="bi bi-check-square-fill text-success"></i>
+    <p class="fw-bold mb-0">{{msg}}</p>
+</div>
+{{/if}}
+{{#if error}}
+<div id="errordiv" class="d-flex gap-3 alert alert-danger alert-dismissible fade show position-fixed top-0 end-0 me-5 m-3">
+    <i class="bi bi-x-square-fill text-danger"></i>
+    <p class="fw-bold mb-0">{{error}}</p>
+</div>
+{{/if}}
 <div id="container" class="card p-5">
     <p id="title-cliente">Medidas de {{Cliente.nome}}</p>
     <div id="container-ids">
@@ -21,16 +33,36 @@
         </div>
         <p id="title-manga">Medidas da manga</p>
         <div id="medidas-manga" class="border p-3 rounded">
-                <p>Comprimento da Manga: {{mostrar medidas.comprimento_da_manga}}</p>
-                <p>Largura da Manga: {{mostrar medidas.largura_da_manga}}</p>
+            <p>Comprimento da Manga: {{mostrar medidas.comprimento_da_manga}}</p>
+            <p>Largura da Manga: {{mostrar medidas.largura_da_manga}}</p>
         </div>
     </div>
     <div id="container-buttons">
-        <button class="btn btn-danger">Limpar</button>
+        
         {{#if medidas}}
-            <button class="btn btn-success">Atualizar</button>
+        <button class="btn btn-danger" onclick="abrirModal()">Limpar</button>
+        <button class="btn btn-success" onclick="atualizarMedidas({{Cliente.id}})">Atualizar</button>
         {{else}}
-            <button class="btn btn-success">Adicionar</button>
+        <button class="btn btn-secondary" disabled>Limpar</button>
+        <button class="btn btn-success" onclick="cadastrarMedidas({{Cliente.id}})">Adicionar</button>
         {{/if}}
+    </div>
+
+    <div class="modal" tabindex="-1" id="meumodal">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Confirmação de exclusão</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Essa ação não poderá ser desfeita.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-danger" onclick="limparMedidas({{medidas.id}},{{Cliente.id}})">Excluir</button>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
