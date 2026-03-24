@@ -38,5 +38,8 @@ router.get('/medidas/editar/:id', ClienteController.formEditar_medidas)
 // editar medidas no banco
 router.put('/medidas/editar/:id', ClienteController.editarMedidas)
 
+// limpar medidas
+router.delete('/medidas/limpar/:id', ClienteController.limparMedidas)
+
 
 module.exports = router

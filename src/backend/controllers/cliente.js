@@ -189,7 +189,9 @@ class Cliente{
                 stylesheet:'medidas.css',
                 script:'medidas.js',
                 medidas:MedidasCliente,
-                Cliente
+                Cliente,
+                error:req.query.error || null,
+                msg: req.query.msg || null
             })
         } catch (error) {
             return res.status(500).send(`Erro ao listar as medidas: ${error}`)
@@ -217,6 +219,15 @@ class Cliente{
             return res.redirect(303,`/clientes/detalhes/${req.params.id}`)
         } catch (error) {
             return res.status(500).send(`Erro ao editar as medidas: ${error}`)
+        }
+    }
+
+    async limparMedidas(req,res){
+        try {
+            await MedidasService.limpar(req.params.id)
+            return res.json({"msg":"Medida limpada com sucesso!"})
+        } catch (error) {
+            return res.status(500).json({"Erro":`${error}`})
         }
     }
 }

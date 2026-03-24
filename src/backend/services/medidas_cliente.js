@@ -1,5 +1,6 @@
 const { where } = require('sequelize')
 const modelMedidas = require('../models/medidas_cliente')
+const { moveEmitHelpers } = require('typescript')
 
 class MedidasCliente{
     // cadastro
@@ -30,6 +31,15 @@ class MedidasCliente{
         return mediddasCliente
     }
 
+    listarIdmedida(idmedida){
+        let medidas = modelMedidas.findOne({
+            where:{
+                'id':idmedida
+            }
+        })
+        return medidas
+    }
+
     editar(medidas,cliente_id){
         let editarMedida = modelMedidas.update({
             busto: medidas.busto,
@@ -47,6 +57,15 @@ class MedidasCliente{
         })
 
         return editarMedida
+    }
+
+    limpar(idmedida){
+        let deletarMedidas = modelMedidas.destroy({
+            where:{
+                "id":idmedida
+            }
+        })
+        return deletarMedidas
     }
 }
 

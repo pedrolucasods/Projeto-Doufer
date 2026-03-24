@@ -10,20 +10,53 @@ form.addEventListener('submit', async function (e) {
     const clienteId = partes[partes.length - 1]
     console.log(`${url}\n${partes}\n${clienteId}`)
     // montando o body
+    let busto = document.getElementById('inputBusto').value
+    let cintura = document.getElementById('inputCintura').value
+    let quadril = document.getElementById('inputQuadril').value
+    let comprimento = document.getElementById('inputComprimento').value
+    let ombro = document.getElementById('inputOmbro').value
+    let costas = document.getElementById('inputCostas').value
+    let comprimento_da_manga = document.getElementById('inputCManga').value
+    let largura_da_manga = document.getElementById('inputLManga').value
+
+    let medidaId = document.getElementById('medidaId').value
+
     const Medidas = {
-        busto: document.getElementById('inputBusto').value,
-        cintura: document.getElementById('inputCintura').value,
-        quadril: document.getElementById('inputQuadril').value,
-        comprimento: document.getElementById('inputComprimento').value,
-        ombro: document.getElementById('inputOmbro').value,
-        costas: document.getElementById('inputCostas').value,
-        comprimento_da_manga: document.getElementById('inputCManga').value,
-        largura_da_manga: document.getElementById('inputLManga').value
+        busto: (busto != null) ? busto : null,
+        cintura: (cintura != null) ? cintura : null,
+        quadril: (quadril != null) ? quadril : null,
+        comprimento: (comprimento != null) ? comprimento : null,
+        ombro: (ombro != null) ? ombro : null,
+        costas: (costas != null) ? costas : null,
+        comprimento_da_manga: (comprimento_da_manga != null) ? comprimento_da_manga : null,
+        largura_da_manga: (largura_da_manga != null) ? largura_da_manga : null
     }
 
-    atualizarMedidas(clienteId, Medidas)
+    let contatador_medidas_vazias = 0
+    Object.values(Medidas).forEach( valor =>{
+        if(valor == ""){
+            contatador_medidas_vazias += 1
+        }
+    })
+    if(contatador_medidas_vazias == 8){
+        limparMedidas(medidaId,clienteId)
+    }else if(contatador_medidas_vazias < 8){
+        atualizarMedidas(clienteId, Medidas)
+    }
 
 })
+
+async function limparMedidas(medidaId, clienteId) {
+    try {
+        const response = await fetch(`/clientes/medidas/limpar/${medidaId}`,{
+            method:"DELETE"
+        })
+        const data = await response.json()
+        window.location.href = (`/clientes/medidas/listar/${clienteId}?msg=${data.msg}`)
+    } catch (error) {
+        window.location.href = (`/clientes/medidas/listar/${clienteId}?msg=${error}`)
+    }
+}
 
 async function atualizarMedidas(clienteId, Medidas) {
     try {
