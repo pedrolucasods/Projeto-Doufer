@@ -51,6 +51,9 @@ class Cliente{
             if(Dados.tipo_cliente === 'empresa' && Dados.nome_empresa === ''){
                 return res.status(400).json({'erro':'Informe o nome da empresa!'})
             }
+            if(Dados.tipo_cliente === 'pessoa' && Dados.nome === ''){
+                return res.status(400).json({'erro':'Informe seu nome!'})
+            }
             await ClienteService.cadastrar(Dados.nome,Dados.telefone,Dados.cpf,Dados.nome_empresa,Dados.tipo_cliente)
             return res.json({
                 "msg":"Cliente cadastrado!"
