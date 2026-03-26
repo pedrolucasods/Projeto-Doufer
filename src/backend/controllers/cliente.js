@@ -42,15 +42,20 @@ class Cliente{
         try {
             const Dados =  req.body
             console.log(Dados)
+            if(Dados.cpf){
+                let cpfregister = await ClienteService.buscarCliente(Dados.cpf)
+                if(cpfregister){
+                    return res.status(500).json({'erro':'Cpf ja cadastrado!'})
+                }
+            }
             if(Dados.tipo_cliente === 'empresa' && Dados.nome_empresa === ''){
                 return res.status(400).json({'erro':'Informe o nome da empresa!'})
-            }else{
-               await ClienteService.cadastrar(Dados.nome,Dados.telefone,Dados.cpf,Dados.nome_empresa,Dados.tipo_cliente)
-                return res.json({
-                    "msg":"Cliente cadastrado!"
-                }) 
             }
-
+            await ClienteService.cadastrar(Dados.nome,Dados.telefone,Dados.cpf,Dados.nome_empresa,Dados.tipo_cliente)
+            return res.json({
+                "msg":"Cliente cadastrado!"
+            }) 
+        
         } catch (error) {
             return res.status(500).json({"Erro":`${error}`})
         }
