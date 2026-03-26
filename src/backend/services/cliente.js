@@ -10,12 +10,13 @@ class ClienteService{
         return modelCliente.findOne({where:{'id':idcliente}})
     }
 
-    async cadastrar(nome,telefone,cpf,nome_empresa){
+    async cadastrar(nome,telefone,cpf,nome_empresa,tipo_cliente){
         return  modelCliente.create({
                     nome:nome,
                     telefone: telefone,
                     cpf: cpf,
-                    nome_empresa: nome_empresa
+                    nome_empresa: nome_empresa,
+                    tipo_cliente: tipo_cliente
                 })
     }
 
