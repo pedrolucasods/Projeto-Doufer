@@ -13,7 +13,9 @@ class Cliente{
                     stylesheet:'stylecliente.css',
                     script:'scriptcliente.js',
                     layout:'main.handlebars',
-                    clientes
+                    clientes,
+                    error:req.query.error || null,
+                    msg: req.query.msg || null
                 })
         } catch (error) {
             return res.status(500).send(`Erro ao listar os clientes: ${error}`)
@@ -26,7 +28,9 @@ class Cliente{
             return res.render('addcliente',
                 {
                     stylesheet: 'addcliente.css',
-                    script:'addcliente.js'
+                    script:'addcliente.js',
+                    error:req.query.error || null,
+                    msg: req.query.msg || null
                 })
         } catch (error) {
             return res.status(500).send(`Erro ao carregar o formulario de cadastro: ${error}`)
@@ -36,32 +40,27 @@ class Cliente{
     // cadastrar cliente
     async cadastro(req,res){
         try {
-            const nomecliente = req.body.namecliente
-            const telefonecliente = req.body.telefonecliente
-            const cpf = req.body.cpfcliente
-            const nomeempresa = req.body.empresacliente
-            console.log(typeof(nomeempresa))
-
-            await ClienteService.cadastrar(nomecliente,telefonecliente,cpf,nomeempresa)
-
-            return res.send(`
-            <!DOCTYPE html>
-            <html>
-                <h1>
-                    Cliente Cadastrado com sucesso!
-                </h1>
-                <br><br>
-                <button id="voltar">Voltar ao menu</button>
-                
-                <script>
-                    document.getElementById('voltar').addEventListener('click', function() {
-                        window.location.href = '/clientes'})
-                </script>   
-            </html>
-
-            `)
+            const Dados =  req.body
+            console.log(Dados)
+            if(Dados.cpf){
+                let cpfregister = await ClienteService.buscarCliente(Dados.cpf)
+                if(cpfregister){
+                    return res.status(500).json({'erro':'Cpf ja cadastrado!'})
+                }
+            }
+            if(Dados.tipo_cliente === 'empresa' && Dados.nome_empresa === ''){
+                return res.status(400).json({'erro':'Informe o nome da empresa!'})
+            }
+            if(Dados.tipo_cliente === 'pessoa' && Dados.nome === ''){
+                return res.status(400).json({'erro':'Informe seu nome!'})
+            }
+            await ClienteService.cadastrar(Dados.nome,Dados.telefone,Dados.cpf,Dados.nome_empresa,Dados.tipo_cliente)
+            return res.json({
+                "msg":"Cliente cadastrado!"
+            }) 
+        
         } catch (error) {
-            return res.status(500).send(`Erro ao cadastrar cliete: ${error}`)
+            return res.status(500).json({"Erro":`${error}`})
         }
     }
     

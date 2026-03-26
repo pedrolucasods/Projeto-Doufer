@@ -6,16 +6,20 @@ class ClienteService{
         return cliente
     }
 
-    buscarCliente(idcliente){
-        return modelCliente.findOne({where:{'id':idcliente}})
+    buscarCliente(parametro){
+        if(parametro.includes('.') && parametro.includes('-')){
+            return modelCliente.findOne({where:{'cpf':parametro}})
+        }
+        return modelCliente.findOne({where:{'id':parametro}})
     }
 
-    async cadastrar(nome,telefone,cpf,nome_empresa){
+    async cadastrar(nome,telefone,cpf,nome_empresa,tipo_cliente){
         return  modelCliente.create({
                     nome:nome,
                     telefone: telefone,
                     cpf: cpf,
-                    nome_empresa: nome_empresa
+                    nome_empresa: nome_empresa,
+                    tipo_cliente: tipo_cliente
                 })
     }
 
