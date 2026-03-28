@@ -74,7 +74,9 @@ class Cliente{
                 {
                     stylesheet:'editarcliente.css',
                     script:'editarcliente.js',
-                    cliente
+                    cliente,
+                    error:req.query.error || null,
+                    msg: req.query.msg || null
                 })
         } catch (error) {
             return res.status(500).send(`Erro ao carregar ao editar cliente: ${error}`)
@@ -86,28 +88,27 @@ class Cliente{
     async editar(req,res){
         try {
             let idcliente = req.params.id
-            let nomecliente = req.body.namecliente
-            let telefonecliente = req.body.telefonecliente
-            let cpfcliente = req.body.cpfcliente
-            let nomeclienteEmpresa = req.body.empresacliente
-            await ClienteService.editar(idcliente,nomecliente,telefonecliente,cpfcliente,nomeclienteEmpresa)
-            return res.send(`
-                <!DOCTYPE html>
-                <html>
-                    <h1>
-                        Cliente Editado com sucesso!
-                    </h1>
-                    <br><br>
-                    <button id="voltar">Voltar ao menu</button>
-                    
-                    <script>
-                        document.getElementById('voltar').addEventListener('click', function() {
-                            window.location.href = '/clientes'})
-                    </script>   
-                </html>
-            `)
+            const Cliente = await ClienteService.buscarCliente(idcliente)
+            const Dados = req.body
+            console.log(Dados, '\n',idcliente,'\n',Cliente)
+            if(Dados.cpf){
+                let cpfregister = await ClienteService.buscarCliente(Dados.cpf)
+                if(cpfregister && cpfregister.id != idcliente){
+                    return res.status(500).json({'erro':'Cpf ja cadastrado!'})
+                }
+            }
+            if(Dados.tipo_cliente === 'empresa' && Dados.nome_empresa === ''){
+                return res.status(400).json({'erro':'Informe o nome da empresa!'})
+            }
+            if(Dados.tipo_cliente === 'pessoa' && Dados.nome === ''){
+                return res.status(400).json({'erro':'Informe seu nome!'})
+            }
+            await ClienteService.editar(idcliente,Dados.nome,Dados.telefone,Dados.cpf,Dados.nome_empresa, Dados.tipo_cliente)
+            return res.json({
+                "msg":"Cliente editado!"
+            }) 
         } catch (error) {
-            return res.status(500).send(`Erro ao editar cliente: ${error}`)
+            return res.status(500).json({"Erro":`${error}`})
         }
     }
 

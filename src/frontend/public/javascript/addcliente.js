@@ -206,7 +206,7 @@ async function cadastrarCliente(formData){
             tipo_cliente : formData.tipo_cliente
         }
 
-        const response = await fetch('/clientes/cadastro',{
+        const response = await fetch('/api/clientes',{
             method: 'POST',
             headers:{
                 "Content-Type": "application/json"
