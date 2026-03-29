@@ -117,21 +117,11 @@ class Cliente{
         try {
             const idcliente = req.params.id
             await ClienteService.deletar(idcliente)
-            return res.send(`
-                <!DOCTYPE html>
-                <html>
-                    <h1>
-                        Cliente Deletado com sucesso!
-                    </h1>
-                    <br><br>
-                    <a href="/clientes"><button id="voltar">Voltar ao menu</button></a>
-                    
-                    <script>
-                    </script>    
-                </html>
-            `)
+            return res.json({
+                "msg":"Cliente deletado!"
+            }) 
         } catch (error) {
-            return res.status(500).send(`Erro ao deletar cliente ${error}`)
+            return res.status(500).json({"Erro":`${error}`})
         }
     }
 
@@ -147,7 +137,9 @@ class Cliente{
                 script:'detalhesCliente.js',
                 cliente,
                 qtdPedidos,
-                MedidasCliente
+                MedidasCliente,
+                error:req.query.error || null,
+                msg: req.query.msg || null
             })
 
         } catch (error) {
@@ -205,10 +197,12 @@ class Cliente{
             return res.render('formEditarMedidas',{
                 stylesheet:'formEditarMedidas.css',
                 script:'formEditarMedidas.js',
-                MedidasCliente
+                MedidasCliente,
+                error:req.query.error || null,
+                msg: req.query.msg || null
             })
         } catch (error) {
-            res.status(404).send(`Erro, pagina não encontrada: ${error}`)
+            return res.status(404).json({"Erro":`${error}`})
         }
     }
 
@@ -216,9 +210,11 @@ class Cliente{
         try {
             let medidas = req.body
             let EdicaoMedidas = await MedidasService.editar(medidas,req.params.id)
-            return res.redirect(303,`/clientes/detalhes/${req.params.id}`)
+            return res.json({
+                "msg":"Medidas editada!"
+            })
         } catch (error) {
-            return res.status(500).send(`Erro ao editar as medidas: ${error}`)
+            return res.status(500).json({"Erro":`${error}`})
         }
     }
 
