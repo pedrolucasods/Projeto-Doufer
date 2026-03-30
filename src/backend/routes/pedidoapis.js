@@ -6,9 +6,9 @@ const controllerPedido = require('../controllers/pedido')
 router.post('/', controllerPedido.cadastrarPedido)
 
 // rota editar pedido
-router.post('/editar/:id', controllerPedido.editarPedido)
+router.put('/:id', controllerPedido.editarPedido)
 
 // rota deletar pedido
-router.delete('/deletar/:id', controllerPedido.deletarPedido)
+router.delete('/:id', controllerPedido.deletarPedido)
 
 module.exports = router

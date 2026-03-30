@@ -175,7 +175,7 @@ class Pedido{
     }
 
     async deletar(pedido_id){
-        await modelPedido.destroy({where:{'id':pedido_id}})
+        return modelPedido.destroy({where:{'id':pedido_id}})
     }
 
     async pedidosCliente(id){

@@ -45,15 +45,12 @@ class Pedido{
     async cadastrarPedido(req,res){
         try {
             if (req.body) {
-                console.log(req.body)
                 let pedido = await PedidoService.cadastrar(req.body)
-                console.log(pedido)
                 return res.json({
                 "msg":"Pedido Adicionado!"
             }) 
             }
         } catch (error) {
-            console.log(error)
             return res.status(500).json({"Erro":`${error}`})
         }
     }
@@ -92,22 +89,14 @@ class Pedido{
 
     async deletarPedido(req,res){
         try {
-            await PedidoService.deletar(req.params.id)
-            return res.send(`
-                <!DOCTYPE html>
-                <html>
-                    <h1>
-                        Cliente Deletado com sucesso!
-                    </h1>
-                    <br><br>
-                    <a href="/pedidos"><button id="voltar">Voltar ao menu</button></a>
-                    
-                    <script>
-                    </script>    
-                </html>
-            `)
+            const PedidoId = req.params.id
+            await PedidoService.deletar(PedidoId)
+            return res.json({
+                "msg":"Pedido Deletado!"
+            }) 
         } catch (error) {
-            return res.status(500).send(`Erro ao deletar pedido: ${error}`)
+            console.log(error)
+            return res.status(500).json({"Erro":`${error}`})
         }
     }
 
