@@ -1,7 +1,19 @@
+{{#if msg}}
+    <div id="msg" class="d-flex gap-3 alert alert-success alert-dismissible fade show position-fixed top-0 end-0 me-5 m-3">
+        <i class="bi bi-check-square-fill text-success"></i>
+        <p class="fw-bold mb-0">{{msg}}</p>
+    </div>
+{{/if}}
+{{#if error}}
+    <div id="errordiv" class="d-flex gap-3 alert alert-danger alert-dismissible fade show position-fixed top-0 end-0 me-5 m-3">
+        <i class="bi bi-x-square-fill text-danger"></i>
+        <p class="fw-bold mb-0">{{error}}</p>
+    </div>
+{{/if}}
 <div>
     {{#if clientes.length}}
         <h1>Criar Pedido</h1>
-        <form id="formaddpedido" action="/pedidos/cadastrarPedido" method="post">
+        <form id="formaddpedido">
             <label for="selectcliente">Cliente:</label>
             <select id="selectcliente" name="cliente">
                 {{#each clientes}}
@@ -57,11 +69,7 @@
 
                 <div id="itens"></div>
             </div>
-            
             <hr>
-            <!-- Campo Que receberá o Json com os itens -->
-            <input type="hidden" name="pedido" id="input-pedido-json">
-            <button type="submit">Salvar Pedido!</button>
         </form>
 
         <!-- Modal de confirmação -->

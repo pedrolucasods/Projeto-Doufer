@@ -40,8 +40,7 @@ class Pedido{
     // Cadastrar pedidos
     async cadastrar(pedidoiten){
         let pedido = []
-        let pedidojson = JSON.parse(pedidoiten)
-        pedido.push(pedidojson);
+        pedido.push(pedidoiten);
         
 
         for(const informacoes_pedido of pedido){

@@ -15,6 +15,8 @@ class Pedido{
                 script: 'scriptpedido.js',
                 layout: 'main.handlebars',
                 pedidos: pedidosFormatados,
+                error:req.query.error || null,
+                msg: req.query.msg || null
                 
             })
         } catch (error) {
@@ -30,7 +32,9 @@ class Pedido{
                 stylesheet:'styleaddpedido.css', 
                 script:'addpedido.js', 
                 layout:'main.handlebars', 
-                clientes})
+                clientes,
+                error:req.query.error || null,
+                msg: req.query.msg || null})
 
         } catch (error) {
             return res.status(500).send(`Erro ao criar um novo pedido: ${error}`)
@@ -40,12 +44,17 @@ class Pedido{
     // cadastrar pedido
     async cadastrarPedido(req,res){
         try {
-            if (req.body.pedido) {
-                let pedido = await PedidoService.cadastrar(req.body.pedido)
-                return res.send(pedido)
+            if (req.body) {
+                console.log(req.body)
+                let pedido = await PedidoService.cadastrar(req.body)
+                console.log(pedido)
+                return res.json({
+                "msg":"Pedido Adicionado!"
+            }) 
             }
         } catch (error) {
-            return res.status(400).send(`Erro ao cadastrar pedido: ${error}`)
+            console.log(error)
+            return res.status(500).json({"Erro":`${error}`})
         }
     }
 
