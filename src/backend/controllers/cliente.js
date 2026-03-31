@@ -153,9 +153,12 @@ class Cliente{
             const clienteid = req.params.id
             const medidas = req.body
             await MedidasService.cadastrar(medidas,clienteid)
-            return res.send('Cadastro com sucesso!!')
+            return res.json({
+                'msg':'Medida Adicionada!'
+            })
         } catch (error) {
-            return res.status(500).send(`Erro ao cadastrar as medidas: ${error}`)
+            console.log(error)
+            return res.status(500).json({'Erro':`${error}`})
         }
     }
 
@@ -166,7 +169,9 @@ class Cliente{
             return res.render('addMedida',{
                 stylesheet:'addMedida.css',
                 script:'addMedida.js',
-                clienteId
+                clienteId,
+                error:req.query.error || null,
+                msg: req.query.msg || null
             })
         } catch (error) {
             res.status(400).send(`Erro ao acessar essa rota: ${error}`)
