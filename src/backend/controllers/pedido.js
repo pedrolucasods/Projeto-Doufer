@@ -67,7 +67,10 @@ class Pedido{
                     pedido_id_cliente,
                     pedido_data,
                     nome, 
-                    ItensPedido:JSON.stringify(arraydeItens)})
+                    ItensPedido:JSON.stringify(arraydeItens),
+                    error:req.query.error || null,
+                    msg: req.query.msg || null
+                })
 
         } catch (error) {
             return res.status(500).send(`Erro ao editar pedido: ${error}`)
@@ -77,13 +80,14 @@ class Pedido{
     // editar pedido
     async editarPedido(req,res){
         try {
-            if (req.body.pedido) {
-                let pedido = await PedidoService.editarPedido(req.body.pedido,req.params.id)
-                return res.send(pedido)
-            
+            if (req.body) {
+                let pedido = await PedidoService.editarPedido(req.body,req.params.id)
+                return res.json({
+                    'msg':'Pedido editado!'
+                })
             }
         } catch (error) {
-            return res.status(500).send(`Erro ao editar pedido: ${error}`)
+            return res.status(500).json({'Erro':`${error}`})
         }
     }
 

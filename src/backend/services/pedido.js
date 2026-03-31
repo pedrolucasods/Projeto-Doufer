@@ -102,8 +102,7 @@ class Pedido{
 
     async editarPedido(reqbodypedido,reqparamsid){
         let pedido = []
-        let pedidojson = JSON.parse(reqbodypedido)
-        pedido.push(pedidojson);
+        pedido.push(reqbodypedido);
         
 
         for(const informacoes_pedido of pedido){
