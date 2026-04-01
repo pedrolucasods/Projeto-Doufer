@@ -1,26 +1,70 @@
+{{#if msg}}
+<div id="msg" class="d-flex gap-3 alert alert-success alert-dismissible fade show position-fixed top-0 end-0 me-5 m-3">
+    <i class="bi bi-check-square-fill text-success"></i>
+    <p class="fw-bold mb-0">{{msg}}</p>
+</div>
+{{/if}}
+{{#if error}}
+<div id="errordiv" class="d-flex gap-3 alert alert-danger alert-dismissible fade show position-fixed top-0 end-0 me-5 m-3">
+    <i class="bi bi-x-square-fill text-danger"></i>
+    <p class="fw-bold mb-0">{{error}}</p>
+</div>
+{{/if}}
 <div>
     <h1>Editar Cliente</h1>
     <div>
-        <form id="formeditcliente" action="/clientes/editar/{{cliente.id}}" method="post">
+        <form id="formeditcliente">
+            <p>Tipo do cliente</p>
+            <select name="tipo_cliente" id="tipo_cliente">
+                {{#if (eq cliente.tipo_cliente "pessoa")}}
+                    <option value="">Selecione o tipo</option>
+                    <option value="pessoa" selected>Pessoa</option>
+                    <option value="empresa">Empresa</option>
+                {{else if (eq cliente.tipo_cliente "empresa")}}
+                    <option value="">Selecione o tipo</option>
+                    <option value="pessoa">Pessoa</option>
+                    <option value="empresa" selected>Empresa</option>
+                {{/if}}
+            </select>
+            <span id="spanTipo_cliente"></span>
+
             <p>Nome: </p>
             <input value="{{cliente.nome}}" id="inputnome" type="text" name="namecliente" required>
             <span id="spanname"></span>
 
-            <p>
-                Deseja Alterar o Nome da Empresa?
-                <input type="checkbox" id="toggleempresa" name="inserirempresa">
-            </p>
-            {{#if cliente.nome_empresa.length}}
-                <div id="empresaContainer" style="display: none;">
-                    <p>Nome da empresa:</p>
-                    <input value="{{cliente.nome_empresa}}" type="text" name="empresacliente" id="empresaInput">
-                </div>
-            {{else}}
-                <div id="empresaContainer" style="display: none;">
-                    <p>Nome da empresa:</p>
-                    <input type="text" name="empresacliente" id="empresaInput">
-                </div>
+            {{#if  (eq cliente.tipo_cliente "empresa")}}
+                <p id="pnomeempresa" style="display: none;">Deseja Alterar o Nome da Empresa?</p>
+                <input type="checkbox" id="toggleempresa" name="inserirempresa" style="display: none;">
+                {{#if cliente.nome_empresa.length}}
+                    <div id="empresaContainer" style="display: block;">
+                        <p>Nome da empresa:</p>
+                        <input value="{{cliente.nome_empresa}}" type="text" name="empresacliente" id="empresaInput">
+                    </div>
+                {{else}}
+                    <div id="empresaContainer" style="display: block;">
+                        <p>Nome da empresa:</p>
+                        <input type="text" name="empresacliente" id="empresaInput">
+                    </div>
+                {{/if}}
+            {{else if  (eq cliente.tipo_cliente "pessoa")}}
+                {{#if cliente.nome_empresa}}
+                    <p id="pnomeempresa" style="display: block;">Deseja Alterar o Nome da Empresa?</p>
+                    <input type="checkbox" id="toggleempresa" name="inserirempresa" style="display: block;" checked>
+                    <div id="empresaContainer" style="display: block;">
+                        <p>Nome da empresa:</p>
+                        <input value="{{cliente.nome_empresa}}" type="text" name="empresacliente" id="empresaInput">
+                    </div>
+                {{else}}
+                    <p id="pnomeempresa" style="display: block;">Deseja Alterar o Nome da Empresa?</p>
+                    <input type="checkbox" id="toggleempresa" name="inserirempresa" style="display: block;">
+                    <div id="empresaContainer" style="display: none;">
+                        <p>Nome da empresa:</p>
+                        <input type="text" name="empresacliente" id="empresaInput">
+                    </div>
+                {{/if}}
             {{/if}}
+
+            
 
             <p>Telefone: </p>
             <input value="{{cliente.telefone}}" id="telefone" name="telefonecliente" required placeholder="(00) 00000-0000..."></input>

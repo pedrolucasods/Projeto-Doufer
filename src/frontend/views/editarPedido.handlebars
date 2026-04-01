@@ -1,7 +1,19 @@
+{{#if msg}}
+    <div id="msg" class="d-flex gap-3 alert alert-success alert-dismissible fade show position-fixed top-0 end-0 me-5 m-3">
+        <i class="bi bi-check-square-fill text-success"></i>
+        <p class="fw-bold mb-0">{{msg}}</p>
+    </div>
+{{/if}}
+{{#if error}}
+    <div id="errordiv" class="d-flex gap-3 alert alert-danger alert-dismissible fade show position-fixed top-0 end-0 me-5 m-3">
+        <i class="bi bi-x-square-fill text-danger"></i>
+        <p class="fw-bold mb-0">{{error}}</p>
+    </div>
+{{/if}}
 <div>
     <a href="/pedidos"><button id="back"><i class="fas fa-home"></i></button></a>
     <h1>Editar Pedido</h1>
-    <form id="formaddpedido" action="/pedidos/editar/{{Pedidoid}}" method="POST">
+    <form id="formaddpedido">
         <label for="selectcliente">Cliente:</label>
         <select id="selectcliente" name="cliente">
                 <option value="{{pedido_id_cliente}}">{{nome}}</option>
@@ -61,8 +73,6 @@
         </div>
         
         <hr>
-        <!-- Campo Que receberá o Json com os itens -->
-        <input type="hidden" name="pedido" id="input-pedido-json">
         <button type="submit">Salvar Pedido!</button>
     </form>
 
