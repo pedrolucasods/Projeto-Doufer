@@ -42,6 +42,9 @@ class Cliente{
         try {
             const Dados =  req.body
             console.log(Dados)
+            if((!Dados.tipo_cliente === '') || (Dados.tipo_cliente != 'empresa' && Dados.tipo_cliente != 'pessoa')){
+                return res.status(400).json({'erro':'Tipo do cliente inválido!'})
+            }
             if(Dados.cpf){
                 let cpfregister = await ClienteService.buscarCliente(Dados.cpf)
                 if(cpfregister){
@@ -91,6 +94,9 @@ class Cliente{
             const Cliente = await ClienteService.buscarCliente(idcliente)
             const Dados = req.body
             console.log(Dados, '\n',idcliente,'\n',Cliente)
+            if((!Dados.tipo_cliente === '') || (Dados.tipo_cliente != 'empresa' && Dados.tipo_cliente != 'pessoa')){
+                return res.status(400).json({'erro':'Tipo do cliente inválido!'})
+            }
             if(Dados.cpf){
                 let cpfregister = await ClienteService.buscarCliente(Dados.cpf)
                 if(cpfregister && cpfregister.id != idcliente){
