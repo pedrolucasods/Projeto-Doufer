@@ -206,7 +206,7 @@ async function cadastrarCliente(formData){
             tipo_cliente : formData.tipo_cliente
         }
 
-        const response = await fetch('/clientes/cadastro',{
+        const response = await fetch('/api/clientes',{
             method: 'POST',
             headers:{
                 "Content-Type": "application/json"
@@ -222,3 +222,17 @@ async function cadastrarCliente(formData){
         window.location.href = `/clientes/cadastro?error=${error}`
     }
 }
+
+setTimeout(() =>{
+    const msg = document.getElementById('msg')
+    msg.classList.add("fade")
+    msg.classList.remove("show")
+    window.history.replaceState({}, document.title, window.location.pathname)
+}, 5000)
+
+setTimeout(() =>{
+    const diverro = document.getElementById('errordiv')
+    diverro.classList.add("fade")
+    diverro.classList.remove("show")
+    window.history.replaceState({}, document.title, window.location.pathname)
+}, 5000)

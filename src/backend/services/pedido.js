@@ -40,8 +40,7 @@ class Pedido{
     // Cadastrar pedidos
     async cadastrar(pedidoiten){
         let pedido = []
-        let pedidojson = JSON.parse(pedidoiten)
-        pedido.push(pedidojson);
+        pedido.push(pedidoiten);
         
 
         for(const informacoes_pedido of pedido){
@@ -103,8 +102,7 @@ class Pedido{
 
     async editarPedido(reqbodypedido,reqparamsid){
         let pedido = []
-        let pedidojson = JSON.parse(reqbodypedido)
-        pedido.push(pedidojson);
+        pedido.push(reqbodypedido);
         
 
         for(const informacoes_pedido of pedido){
@@ -176,7 +174,7 @@ class Pedido{
     }
 
     async deletar(pedido_id){
-        await modelPedido.destroy({where:{'id':pedido_id}})
+        return modelPedido.destroy({where:{'id':pedido_id}})
     }
 
     async pedidosCliente(id){

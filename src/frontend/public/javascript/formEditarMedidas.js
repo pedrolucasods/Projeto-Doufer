@@ -48,7 +48,7 @@ form.addEventListener('submit', async function (e) {
 
 async function limparMedidas(medidaId, clienteId) {
     try {
-        const response = await fetch(`/clientes/medidas/limpar/${medidaId}`,{
+        const response = await fetch(`/api/clientes/medidas/${medidaId}`,{
             method:"DELETE"
         })
         const data = await response.json()
@@ -60,7 +60,7 @@ async function limparMedidas(medidaId, clienteId) {
 
 async function atualizarMedidas(clienteId, Medidas) {
     try {
-        const response = await fetch(`/clientes/medidas/editar/${clienteId}`, {
+        const response = await fetch(`/api/clientes/medidas/${clienteId}`, {
             method: 'PUT',
             headers: {
                 "Content-Type": "application/json"
@@ -70,9 +70,10 @@ async function atualizarMedidas(clienteId, Medidas) {
         if(!response.ok){
             throw new Error(`Erro na requisição: ${response.status}`)
         }
-        window.location.href = `/clientes/detalhes/${clienteId}`
+        const data = await response.json()
+        window.location.href = `/clientes/detalhes/${clienteId}?msg=${data.msg}`
     } catch (error) {
-        console.error(`Falha ao atualizar as medidas: ${error}`)
+        window.location.href = `/clientes/medidas/editar/${clienteId}?error=${error}`
     }
 
 }
