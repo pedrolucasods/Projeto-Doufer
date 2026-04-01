@@ -64,7 +64,7 @@ document.addEventListener('DOMContentLoaded', async function () {
     empresaContainer.style.display = checkbox.checked ? 'block' : 'none';
 
     checkboxempresa.addEventListener('change', function () {
-        empresaContainer.style.display = this.checked ? 'block' : 'none';
+        empresaContainer.style.display = checkboxempresa.checked ? 'block' : 'none';
         empresainput.required = this.checked
     });
 
@@ -179,49 +179,6 @@ function mascara() {
     }
 }
 
-
-function liberar_nome_da_empresa_select(selecttipo, inputempresa, checkbox, pempresa) {
-    selecttipo.addEventListener('change', (event) => {
-        let valorselect = event.target.value
-        if (valorselect === 'empresa') {
-            inputempresa.style.display = 'block'
-            inputempresa.required
-            checkbox.style.display = 'none'
-            pempresa.style.display = 'none'
-        } else {
-            inputempresa.style.display = 'none'
-            checkbox.style.display = 'block'
-            pempresa.style.display = 'block'
-        }
-    })
-}
-
-async function cadastrarCliente(formData){
-    try {
-        const Dados = {
-            nome : formData.namecliente,
-            nome_empresa : formData.empresacliente,
-            telefone : formData.telefonecliente,
-            cpf : formData.cpfcliente,
-            tipo_cliente : formData.tipo_cliente
-        }
-
-        const response = await fetch('/clientes/cadastro',{
-            method: 'POST',
-            headers:{
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(Dados)
-        })
-        const data = await response.json()
-        if(!response.ok){
-            throw new Error(data.erro)
-        }
-        window.location.href = `/clientes?msg=${data.msg}`
-    } catch (error) {
-        window.location.href = `/clientes/cadastro?error=${error}`
-    }
-}
 
 
 function liberar_nome_da_empresa_select(selecttipo, inputempresa, checkbox, pempresa) {
