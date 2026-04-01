@@ -23,12 +23,13 @@ class ClienteService{
                 })
     }
 
-    editar(idcliente,nomecliente,telefonecliente,cpfcliente,nomeclienteEmpresa){
+    editar(idcliente,nomecliente,telefonecliente,cpfcliente,nomeclienteEmpresa,tipo_cliente){
         return modelCliente.update({
                 nome:nomecliente,
                 telefone: telefonecliente,
                 cpf: cpfcliente,
-                nome_empresa: nomeclienteEmpresa
+                nome_empresa: nomeclienteEmpresa,
+                tipo_cliente: tipo_cliente
             },{
                 where:{
                     id: idcliente

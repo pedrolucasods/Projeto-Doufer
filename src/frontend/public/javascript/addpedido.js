@@ -207,9 +207,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // =====================================
     // ENVIO DO FORMULÁRIO
     // =====================================
-    form.addEventListener('submit', (e) => {
-        
-
+    form.addEventListener('submit', async (e) => {
         if (itens.length === 0) {
             alert("Adicione pelo menos um item ao pedido!")
             e.preventDefault()
@@ -222,15 +220,46 @@ document.addEventListener("DOMContentLoaded", () => {
             data: document.querySelector('input[type="date"]').value,
             itens: itens
         }
-
-        // Pega o input hidden
-        const inputHidden = document.getElementById('input-pedido-json')
-
-        // converte o array em String Json e coloca no campo
-        inputHidden.value = JSON.stringify(pedido)
-
+        e.preventDefault()
+        cadastrarPedido(pedido)
         console.log("Pedido final:", pedido)
         console.log(JSON.stringify(pedido.itens, null, 2))
-        alert("Pedido salvo com sucesso! Confira o console.")
+        
     })
 })
+
+async function cadastrarPedido(pedido){
+    try {
+        console.log(pedido)
+        const response = await fetch('/api/pedidos',{
+            method : 'POST',
+            headers:{
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(pedido)
+        })
+        const data = await response.json()
+        if(!response.ok){
+            console.log(data.erro)
+            throw new Error(data.erro)
+        }
+        window.location.href = `/pedidos?msg=${data.msg}`
+    } catch (error) {
+        console.log(error)
+        window.location.href = `/pedidos/cadastrarPedido?error=${error}`
+    }
+}
+
+setTimeout(() =>{
+    const msg = document.getElementById('msg')
+    msg.classList.add("fade")
+    msg.classList.remove("show")
+    window.history.replaceState({}, document.title, window.location.pathname)
+}, 5000)
+
+setTimeout(() =>{
+    const diverro = document.getElementById('errordiv')
+    diverro.classList.add("fade")
+    diverro.classList.remove("show")
+    window.history.replaceState({}, document.title, window.location.pathname)
+}, 5000)

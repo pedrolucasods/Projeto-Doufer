@@ -63,17 +63,22 @@ app.use('/icons', express.static(path.join(__dirname, '../../node_modules/bootst
 // Rotas
 
 // home
-const homeroute = require('./routes/homecontroller')
+const homeroute = require('./routes/homeroutes')
 app.use('/', homeroute)
 
 // Rotas dos clientes
-const clienteroute = require('./routes/clientecontroller')
+const clienteroute = require('./routes/clienteroutes')
 app.use('/clientes', clienteroute)
+// apis cliente
+const apicliente = require('./routes/clienteapis')
+app.use('/api/clientes', apicliente)
 
 // Rotas dos Pedidos
-const pedidoroute = require('./routes/pedidocontroller')
+const pedidoroute = require('./routes/pedidoroutes')
 app.use('/pedidos', pedidoroute)
-
+// api pedidos
+const apipedido = require('./routes/pedidoapis')
+app.use('/api/pedidos', apipedido)
 
 // Exporta tanto o app quanto a função para startar o servidor
 function startServer(port = process.env.PORT) {

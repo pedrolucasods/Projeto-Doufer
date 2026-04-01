@@ -19,7 +19,7 @@ function abrirModal(){
 
 async function limparMedidas(id,clienteid){
      try {
-        const response = await fetch(`/clientes/medidas/limpar/${id}`,{
+        const response = await fetch(`/api/clientes/medidas/${id}`,{
             method:"DELETE"
         })
         const data = await response.json()
