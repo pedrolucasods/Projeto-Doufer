@@ -21,7 +21,6 @@ Novas funcionalidades, melhorias na arquitetura e ajustes na estrutura do banco 
 * Edição de clientes
 * Exclusão de clientes
 * Cadastro de pedidos
-* Associação de imagens aos pedidos
 * Consulta de registros cadastrados
 * Versionamento da estrutura do banco utilizando **Sequelize Migrations**
 
