@@ -1,5 +1,11 @@
 
-Doufer - Sistema de Gerenciamento
+## 🚧 Projeto em desenvolvimento
+
+O desenvolvimento ativo deste projeto ocorre na branch:
+
+develop
+
+A branch `main` contém apenas versões mais estáveis do sistema.
 
 ## 📋 Descrição  
 Sistema desktop exclusivo para a loja Doufer, focado no cadastro, edição, consulta e exclusão de clientes e pedidos, além de adicionar fotos aos pedidos. Funciona como aplicação desktop via Electron ou no navegador para desenvolvimento.
