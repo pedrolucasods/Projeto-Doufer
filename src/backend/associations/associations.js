@@ -3,6 +3,8 @@ const pedido = require('../models/pedidos')
 const itenspedidos = require('../models/itensPedidos')
 const medidas_cliente = require('../models/medidas_cliente')
 const pagamento = require('../models/pagamento')
+const itempedido_medida = require('../models/item_pedido_medida')
+const ItensPedidos = require('../models/itensPedidos')
 
 cliente.hasMany(pedido,{
     foreignKey:'cliente_id',
@@ -49,5 +51,17 @@ pedido.hasMany(pagamento,{
 pagamento.belongsTo(pedido,{
     foreignKey:'pedido_id',
     as:'pedidos',
+    onDelete:'CASCADE'
+})
+
+itenspedidos.hasMany(itempedido_medida,{
+    foreignKey:'item_pedido_id',
+    as:'item_pedido_medidas',
+    onDelete:'CASCADE'
+})
+
+itempedido_medida.belongsTo(ItensPedidos,{
+    foreignKey:'item_pedido_id',
+    as:'itens',
     onDelete:'CASCADE'
 })
