@@ -80,6 +80,13 @@ app.use('/pedidos', pedidoroute)
 const apipedido = require('./routes/pedidoapis')
 app.use('/api/pedidos', apipedido)
 
+
+//Rotas das Medidas
+
+//api medidas
+const apimedida = require('./routes/medidasapis')
+app.use('/api/medidas', apimedida)
+
 // Exporta tanto o app quanto a função para startar o servidor
 function startServer(port = process.env.PORT) {
     db.authenticate().then(function () {
