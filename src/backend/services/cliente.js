@@ -1,3 +1,4 @@
+const cliente = require('../controllers/cliente')
 const modelCliente = require('../models/cliente')
 
 class ClienteService{
@@ -6,11 +7,19 @@ class ClienteService{
         return cliente
     }
 
-    buscarCliente(parametro){
+    async buscarCliente(parametro){
         if(parametro.includes('.') && parametro.includes('-')){
-            return modelCliente.findOne({where:{'cpf':parametro}})
+            const cliente = modelCliente.findOne({where:{'cpf':parametro}})
+            if(!cliente){
+                throw new Error('Erro, cliente não encontrado!')
+            }
+            return cliente
         }
-        return modelCliente.findOne({where:{'id':parametro}})
+        const cliente = modelCliente.findOne({where:{'id':parametro}})
+        if(!cliente){
+            throw new Error('Erro, cliente não encontrado!')
+        }
+        return cliente
     }
 
     async cadastrar(nome,telefone,cpf,nome_empresa,tipo_cliente){
