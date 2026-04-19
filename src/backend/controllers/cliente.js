@@ -1,7 +1,7 @@
 const modelCliente = require('../models/cliente')
 const ClienteService = require('../services/cliente')
 const PedidoService = require('../services/pedido')
-
+const MedidasService = require('../services/medidas_cliente')
 class Cliente{
 
     // listar clientes
@@ -13,7 +13,9 @@ class Cliente{
                     stylesheet:'stylecliente.css',
                     script:'scriptcliente.js',
                     layout:'main.handlebars',
-                    clientes
+                    clientes,
+                    error:req.query.error || null,
+                    msg: req.query.msg || null
                 })
         } catch (error) {
             return res.status(500).send(`Erro ao listar os clientes: ${error}`)
@@ -26,7 +28,9 @@ class Cliente{
             return res.render('addcliente',
                 {
                     stylesheet: 'addcliente.css',
-                    script:'addcliente.js'
+                    script:'addcliente.js',
+                    error:req.query.error || null,
+                    msg: req.query.msg || null
                 })
         } catch (error) {
             return res.status(500).send(`Erro ao carregar o formulario de cadastro: ${error}`)
@@ -36,32 +40,30 @@ class Cliente{
     // cadastrar cliente
     async cadastro(req,res){
         try {
-            const nomecliente = req.body.namecliente
-            const telefonecliente = req.body.telefonecliente
-            const cpf = req.body.cpfcliente
-            const nomeempresa = req.body.empresacliente
-            console.log(typeof(nomeempresa))
-
-            await ClienteService.cadastrar(nomecliente,telefonecliente,cpf,nomeempresa)
-
-            return res.send(`
-            <!DOCTYPE html>
-            <html>
-                <h1>
-                    Cliente Cadastrado com sucesso!
-                </h1>
-                <br><br>
-                <button id="voltar">Voltar ao menu</button>
-                
-                <script>
-                    document.getElementById('voltar').addEventListener('click', function() {
-                        window.location.href = '/clientes'})
-                </script>   
-            </html>
-
-            `)
+            const Dados =  req.body
+            console.log(Dados)
+            if((!Dados.tipo_cliente === '') || (Dados.tipo_cliente != 'empresa' && Dados.tipo_cliente != 'pessoa')){
+                return res.status(400).json({'erro':'Tipo do cliente inválido!'})
+            }
+            if(Dados.cpf){
+                let cpfregister = await ClienteService.buscarCliente(Dados.cpf)
+                if(cpfregister){
+                    return res.status(500).json({'erro':'Cpf ja cadastrado!'})
+                }
+            }
+            if(Dados.tipo_cliente === 'empresa' && Dados.nome_empresa === ''){
+                return res.status(400).json({'erro':'Informe o nome da empresa!'})
+            }
+            if(Dados.tipo_cliente === 'pessoa' && Dados.nome === ''){
+                return res.status(400).json({'erro':'Informe seu nome!'})
+            }
+            await ClienteService.cadastrar(Dados.nome,Dados.telefone,Dados.cpf,Dados.nome_empresa,Dados.tipo_cliente)
+            return res.json({
+                "msg":"Cliente cadastrado!"
+            }) 
+        
         } catch (error) {
-            return res.status(500).send(`Erro ao cadastrar cliete: ${error}`)
+            return res.status(500).json({"Erro":`${error}`})
         }
     }
     
@@ -75,7 +77,9 @@ class Cliente{
                 {
                     stylesheet:'editarcliente.css',
                     script:'editarcliente.js',
-                    cliente
+                    cliente,
+                    error:req.query.error || null,
+                    msg: req.query.msg || null
                 })
         } catch (error) {
             return res.status(500).send(`Erro ao carregar ao editar cliente: ${error}`)
@@ -87,28 +91,30 @@ class Cliente{
     async editar(req,res){
         try {
             let idcliente = req.params.id
-            let nomecliente = req.body.namecliente
-            let telefonecliente = req.body.telefonecliente
-            let cpfcliente = req.body.cpfcliente
-            let nomeclienteEmpresa = req.body.empresacliente
-            await ClienteService.editar(idcliente,nomecliente,telefonecliente,cpfcliente,nomeclienteEmpresa)
-            return res.send(`
-                <!DOCTYPE html>
-                <html>
-                    <h1>
-                        Cliente Editado com sucesso!
-                    </h1>
-                    <br><br>
-                    <button id="voltar">Voltar ao menu</button>
-                    
-                    <script>
-                        document.getElementById('voltar').addEventListener('click', function() {
-                            window.location.href = '/clientes'})
-                    </script>   
-                </html>
-            `)
+            const Cliente = await ClienteService.buscarCliente(idcliente)
+            const Dados = req.body
+            console.log(Dados, '\n',idcliente,'\n',Cliente)
+            if((!Dados.tipo_cliente === '') || (Dados.tipo_cliente != 'empresa' && Dados.tipo_cliente != 'pessoa')){
+                return res.status(400).json({'erro':'Tipo do cliente inválido!'})
+            }
+            if(Dados.cpf){
+                let cpfregister = await ClienteService.buscarCliente(Dados.cpf)
+                if(cpfregister && cpfregister.id != idcliente){
+                    return res.status(500).json({'erro':'Cpf ja cadastrado!'})
+                }
+            }
+            if(Dados.tipo_cliente === 'empresa' && Dados.nome_empresa === ''){
+                return res.status(400).json({'erro':'Informe o nome da empresa!'})
+            }
+            if(Dados.tipo_cliente === 'pessoa' && Dados.nome === ''){
+                return res.status(400).json({'erro':'Informe seu nome!'})
+            }
+            await ClienteService.editar(idcliente,Dados.nome,Dados.telefone,Dados.cpf,Dados.nome_empresa, Dados.tipo_cliente)
+            return res.json({
+                "msg":"Cliente editado!"
+            }) 
         } catch (error) {
-            return res.status(500).send(`Erro ao editar cliente: ${error}`)
+            return res.status(500).json({"Erro":`${error}`})
         }
     }
 
@@ -117,21 +123,11 @@ class Cliente{
         try {
             const idcliente = req.params.id
             await ClienteService.deletar(idcliente)
-            return res.send(`
-                <!DOCTYPE html>
-                <html>
-                    <h1>
-                        Cliente Deletado com sucesso!
-                    </h1>
-                    <br><br>
-                    <a href="/clientes"><button id="voltar">Voltar ao menu</button></a>
-                    
-                    <script>
-                    </script>    
-                </html>
-            `)
+            return res.json({
+                "msg":"Cliente deletado!"
+            }) 
         } catch (error) {
-            return res.status(500).send(`Erro ao deletar cliente ${error}`)
+            return res.status(500).json({"Erro":`${error}`})
         }
     }
 
@@ -140,16 +136,105 @@ class Cliente{
         try {
             const cliente = await ClienteService.detalhes(req.params.id)
             const Pedidos = await PedidoService.pedidosCliente(req.params.id)
+            const MedidasCliente = await MedidasService.listar(req.params.id)
             const qtdPedidos = Pedidos.length
             return res.render('detalhesCliente',{
                 stylesheet:'detalhesCliente.css',
                 script:'detalhesCliente.js',
                 cliente,
-                qtdPedidos
+                qtdPedidos,
+                MedidasCliente,
+                error:req.query.error || null,
+                msg: req.query.msg || null
             })
 
         } catch (error) {
             return res.status(500).send(`Erro ao carregar os dados do cliente: ${error}`)
+        }
+    }
+
+    // Cadastrar  medidas cliente
+    async cadastrarMedidas(req,res){
+        try {
+            const clienteid = req.params.id
+            const medidas = req.body
+            await MedidasService.cadastrar(medidas,clienteid)
+            return res.json({
+                'msg':'Medida Adicionada!'
+            })
+        } catch (error) {
+            console.log(error)
+            return res.status(500).json({'Erro':`${error}`})
+        }
+    }
+
+    // Formulário cadastrar medidas
+    formCadastrar_Medidas(req,res){
+        try {
+            const clienteId = req.params.id
+            return res.render('addMedida',{
+                stylesheet:'addMedida.css',
+                script:'addMedida.js',
+                clienteId,
+                error:req.query.error || null,
+                msg: req.query.msg || null
+            })
+        } catch (error) {
+            res.status(400).send(`Erro ao acessar essa rota: ${error}`)
+        }
+    }
+    async listarMedidas(req,res){
+        try {
+            const MedidasCliente = await MedidasService.listar(req.params.id)
+            const Cliente = await ClienteService.buscarCliente(req.params.id)
+            //return res.send(MedidasCliente)
+            return res.render("medidas",{
+                stylesheet:'medidas.css',
+                script:'medidas.js',
+                medidas:MedidasCliente,
+                Cliente,
+                error:req.query.error || null,
+                msg: req.query.msg || null
+            })
+        } catch (error) {
+            return res.status(500).send(`Erro ao listar as medidas: ${error}`)
+        }
+    }
+
+    // Fomulário editar medidas
+    async formEditar_medidas(req,res){
+        try {
+            const MedidasCliente = await MedidasService.listar(req.params.id)
+            return res.render('formEditarMedidas',{
+                stylesheet:'formEditarMedidas.css',
+                script:'formEditarMedidas.js',
+                MedidasCliente,
+                error:req.query.error || null,
+                msg: req.query.msg || null
+            })
+        } catch (error) {
+            return res.status(404).json({"Erro":`${error}`})
+        }
+    }
+
+    async editarMedidas(req,res){
+        try {
+            let medidas = req.body
+            let EdicaoMedidas = await MedidasService.editar(medidas,req.params.id)
+            return res.json({
+                "msg":"Medidas editada!"
+            })
+        } catch (error) {
+            return res.status(500).json({"Erro":`${error}`})
+        }
+    }
+
+    async limparMedidas(req,res){
+        try {
+            await MedidasService.limpar(req.params.id)
+            return res.json({"msg":"Medida limpada com sucesso!"})
+        } catch (error) {
+            return res.status(500).json({"Erro":`${error}`})
         }
     }
 }

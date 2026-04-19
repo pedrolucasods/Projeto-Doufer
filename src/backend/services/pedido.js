@@ -40,8 +40,7 @@ class Pedido{
     // Cadastrar pedidos
     async cadastrar(pedidoiten){
         let pedido = []
-        let pedidojson = JSON.parse(pedidoiten)
-        pedido.push(pedidojson);
+        pedido.push(pedidoiten);
         
 
         for(const informacoes_pedido of pedido){
@@ -77,34 +76,33 @@ class Pedido{
     
     async formEditar(id){
         const arraydeItens = []
-        const Pedidoid = await id
+        const Pedidoid = id
         const Pedido = await modelPedido.findAll({where: {'id':Pedidoid}})
         const itens = await modelItensPedido.findAll({where: {'id_pedido':Pedidoid}})
-        await arraydeItens.push(...itens)
+        arraydeItens.push(...itens)
 
         //Info Pedido
-        let pedido_status = await null
-        let pedido_id_cliente = await null
-        let pedido_data = await null
+        let pedido_status = null
+        let pedido_id_cliente = null
+        let pedido_data = null
         //For para adicionar os valores nas variaveis
         for (const Infos of Pedido){
-                pedido_status = await Infos.id
-                pedido_id_cliente = await Infos.cliente_id
-                pedido_data = await Infos.data
+                pedido_status = Infos.status
+                pedido_id_cliente = Infos.cliente_id
+                pedido_data = Infos.data
             }
 
         // Busca Nome cliente
         const Cliente = await modelCliente.findAll({where:{'id':pedido_id_cliente}})
-        let nome = await null
+        let nome = null
         for(const infoCliente of Cliente)
-            nome = await infoCliente.nome
+            nome = infoCliente.nome
         return {arraydeItens,Pedidoid,pedido_status,pedido_id_cliente,pedido_data,nome}
     }
 
     async editarPedido(reqbodypedido,reqparamsid){
         let pedido = []
-        let pedidojson = JSON.parse(reqbodypedido)
-        pedido.push(pedidojson);
+        pedido.push(reqbodypedido);
         
 
         for(const informacoes_pedido of pedido){
@@ -176,7 +174,7 @@ class Pedido{
     }
 
     async deletar(pedido_id){
-        await modelPedido.destroy({where:{'id':pedido_id}})
+        return modelPedido.destroy({where:{'id':pedido_id}})
     }
 
     async pedidosCliente(id){

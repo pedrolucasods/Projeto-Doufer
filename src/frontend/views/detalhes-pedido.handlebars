@@ -1,0 +1,33 @@
+<div id="container">
+    <div id="container-info-pedido">
+        <h1>Detalhes Pedido Nº{{PedidoId}}</h1>
+        <p><strong>Cliente:</strong>{{nome}}</p>
+        <p><strong>Data da Entrega:</strong>{{pedido_data}}</p>
+        <p><strong>Status do Pedido:</strong>{{pedido_status}}</p>
+    </div>
+    <br>
+    <div id="container-info-itens">
+        {{#each arraydeItens}}
+            <p><strong>Produto: </strong>{{produto}}</p>
+            <p><strong>Cor: </strong>{{this.cor}}</p>
+            <p><strong>Tecido: </strong>{{this.tecido}}</p>
+            <p><strong>Tamanho: </strong>{{this.tamanho}}cm</p>
+            {{#if this.detalhes}}
+                <p><strong>Detalhes: </strong>{{this.detalhes}}</p>
+            {{/if}}
+            <p><strong>Quantidade: </strong>{{this.quantidade}}</p>
+            <p><strong>Preço Unitário: </strong>R${{this.preco_unitario}}</p>
+            <p><strong>Modelo do Produto: </strong>{{this.modelo_produto}}</p>
+            {{#if this.complemento}}
+                <h3>Complemento:</h3>
+                <div id="container-info-itens-complemento">
+                    <p>{{this.complemento}}</p>
+                </div>
+            {{/if}}
+            <br>
+            <hr>
+            <br>
+            <h2>Preço total: <strong>R${{this.preco}}</strong></h2>
+        {{/each}}
+    </div>
+</div>

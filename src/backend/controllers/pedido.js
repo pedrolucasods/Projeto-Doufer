@@ -15,6 +15,8 @@ class Pedido{
                 script: 'scriptpedido.js',
                 layout: 'main.handlebars',
                 pedidos: pedidosFormatados,
+                error:req.query.error || null,
+                msg: req.query.msg || null
                 
             })
         } catch (error) {
@@ -30,7 +32,9 @@ class Pedido{
                 stylesheet:'styleaddpedido.css', 
                 script:'addpedido.js', 
                 layout:'main.handlebars', 
-                clientes})
+                clientes,
+                error:req.query.error || null,
+                msg: req.query.msg || null})
 
         } catch (error) {
             return res.status(500).send(`Erro ao criar um novo pedido: ${error}`)
@@ -40,12 +44,14 @@ class Pedido{
     // cadastrar pedido
     async cadastrarPedido(req,res){
         try {
-            if (req.body.pedido) {
-                let pedido = await PedidoService.cadastrar(req.body.pedido)
-                return res.send(pedido)
+            if (req.body) {
+                let pedido = await PedidoService.cadastrar(req.body)
+                return res.json({
+                "msg":"Pedido Adicionado!"
+            }) 
             }
         } catch (error) {
-            return res.status(400).send(`Erro ao cadastrar pedido: ${error}`)
+            return res.status(500).json({"Erro":`${error}`})
         }
     }
 
@@ -61,7 +67,10 @@ class Pedido{
                     pedido_id_cliente,
                     pedido_data,
                     nome, 
-                    ItensPedido:JSON.stringify(arraydeItens)})
+                    ItensPedido:JSON.stringify(arraydeItens),
+                    error:req.query.error || null,
+                    msg: req.query.msg || null
+                })
 
         } catch (error) {
             return res.status(500).send(`Erro ao editar pedido: ${error}`)
@@ -71,34 +80,27 @@ class Pedido{
     // editar pedido
     async editarPedido(req,res){
         try {
-            if (req.body.pedido) {
-                let pedido = await PedidoService.editarPedido(req.body.pedido,req.params.id)
-                return res.send(pedido)
-            
+            if (req.body) {
+                let pedido = await PedidoService.editarPedido(req.body,req.params.id)
+                return res.json({
+                    'msg':'Pedido editado!'
+                })
             }
         } catch (error) {
-            return res.status(500).send(`Erro ao editar pedido: ${error}`)
+            return res.status(500).json({'Erro':`${error}`})
         }
     }
 
     async deletarPedido(req,res){
         try {
-            await PedidoService.deletar(req.params.id)
-            return res.send(`
-                <!DOCTYPE html>
-                <html>
-                    <h1>
-                        Cliente Deletado com sucesso!
-                    </h1>
-                    <br><br>
-                    <a href="/pedidos"><button id="voltar">Voltar ao menu</button></a>
-                    
-                    <script>
-                    </script>    
-                </html>
-            `)
+            const PedidoId = req.params.id
+            await PedidoService.deletar(PedidoId)
+            return res.json({
+                "msg":"Pedido Deletado!"
+            }) 
         } catch (error) {
-            return res.status(500).send(`Erro ao deletar pedido: ${error}`)
+            console.log(error)
+            return res.status(500).json({"Erro":`${error}`})
         }
     }
 
@@ -112,6 +114,27 @@ class Pedido{
             })
         } catch (error) {
             return res.status(500).send(`Erro ao listar os pedidos do cliente: ${error}`)
+        }
+    }
+
+    async detalhesPedido(req,res){
+        try {
+            const {arraydeItens,Pedidoid,pedido_status,pedido_id_cliente,pedido_data,nome} = await PedidoService.formEditar(req.params.id)
+            //Info Itens Pedido
+            // return res.send(arraydeItens[0],Pedidoid,pedido_status,pedido_id_cliente,pedido_data,nome)
+            return res.render('detalhes-pedido', {
+                    script:'detalhes-pedido.js',
+                    stylesheet:'detalhes-pedido.css',
+                    Pedidoid,
+                    pedido_status,
+                    pedido_id_cliente,
+                    pedido_data,
+                    nome, 
+                    arraydeItens
+                }
+                )
+        } catch (error) {
+            return res.status(500).send(`Erro ao exibir os detalhes do pedido!: ${error}`)
         }
     }
 }

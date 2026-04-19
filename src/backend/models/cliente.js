@@ -17,6 +17,10 @@ const Cliente = db.define('clientes',{
     cpf:{
         type: DataTypes.STRING,
         allowNull: false
+    },
+    tipo_cliente:{
+        type: DataTypes.ENUM('pessoa','empresa'),
+        allowNull: true
     }
 })
 

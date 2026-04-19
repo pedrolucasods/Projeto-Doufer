@@ -13,6 +13,9 @@
   "description": "",
   "dependencies": {
     "body-parser": "^2.2.0",
+    "bootstrap": "^5.3.8",
+    "bootstrap-icons": "^1.13.1",
+    "dotenv": "^17.2.4",
     "electron": "^38.0.0",
     "express": "^5.1.0",
     "express-handlebars": "^8.0.3",
@@ -20,6 +23,7 @@
     "nodemon": "^3.1.11",
     "path": "^0.12.7",
     "sequelize": "^6.37.7",
+    "sequelize-cli": "^6.6.5",
     "sqlite3": "^5.1.7"
   }
 }
