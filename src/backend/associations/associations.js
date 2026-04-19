@@ -70,51 +70,51 @@ itempedido_medida.belongsTo(itenspedidos,{
 
 cliente.hasMany(MedidasSobMedida,{
     foreignKey:'cliente_id',
-    as: 'medidas_padrao',
-    onDelete: 'CASCADE'
+    as:'medidas_padrao',
+    onDelete:'CASCADE'
 })
 
 MedidasSobMedida.belongsTo(cliente,{
     foreignKey:'cliente_id',
-    as: 'clientes',
-    onDelete: 'CASCADE'
+    as:'clientes',
+    onDelete:'CASCADE'
 })
 
 
 itempedido_medida.hasMany(MedidasSobMedida,{
     foreignKey:'item_pedido_medida_id',
-    as: 'medidas_sob_medida',
-    onDelete: 'CASCADE'
+    as:'medidas_sob_medida',
+    onDelete:'CASCADE'
 })
 
 MedidasSobMedida.belongsTo(itenspedidos,{
     foreignKey:'item_pedido_medida_id',
-    as: 'itens_medidas',
-    onDelete: 'CASCADE'
+    as:'itens_medidas',
+    onDelete:'CASCADE'
 })
 
 cliente.hasMany(MedidasPadrao,{
     foreignKey:'cliente_id',
-    as: 'medidas_padrao',
-    onDelete: 'CASCADE'
+    as:'medidas_padrao_cliente',
+    onDelete:'CASCADE'
 })
 
 MedidasPadrao.belongsTo(cliente,{
     foreignKey:'cliente_id',
-    as: 'clientes',
-    onDelete: 'CASCADE'
+    as:'clientes',
+    onDelete:'CASCADE'
 })
 
 
 itempedido_medida.hasMany(MedidasPadrao,{
     foreignKey:'item_pedido_medida_id',
-    as: 'medidas_padrao',
-    onDelete: 'CASCADE'
+    as:'medidas_padrao_item',
+    onDelete:'CASCADE'
 })
 
 MedidasPadrao.belongsTo(itenspedidos,{
     foreignKey:'item_pedido_medida_id',
-    as: 'itens_medidas',
-    onDelete: 'CASCADE'
+    as:'itens_medidas',
+    onDelete:'CASCADE'
 })
 

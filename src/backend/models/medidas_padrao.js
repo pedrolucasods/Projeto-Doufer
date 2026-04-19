@@ -28,6 +28,8 @@ const Medidas_padrao = db.define('medidas_padrao', {
         type: DataTypes.TEXT,
         allowNull: true
     }
+},{
+    tableName: 'medidas_padrao'
 })
 
 module.exports = Medidas_padrao
