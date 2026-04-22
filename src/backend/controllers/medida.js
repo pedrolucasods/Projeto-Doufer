@@ -29,6 +29,28 @@ class Medida{
             return res.status(500).json({"Erro":`${error.message}`})
         }
     }
+
+    async cadastrar_medida_itemPedido(req,res){
+        try {
+            const dados = req.body
+            const campos = Object.keys(dados)
+            const totalCampos = campos.length
+            if(totalCampos>3 || totalCampos<3){
+                throw new Error("Erro ao cadastrar medida, campos inválidos!")
+            }
+            if(
+                !campos.includes("item_pedido_id")||
+                !campos.includes("tipo_medida")||
+                !campos.includes("quantidade")
+            ){
+                throw new Error("Erro ao cadastrar medida, campos inválidos!")
+            }
+            const cadastro = await ServiceItemPedidoMedida.cadastrar(dados)
+            return res.json({"msg":"Cadastro com sucesso!"})
+        } catch (error) {
+            return res.status(500).json({"Erro":`${error.message}`})
+        }
+    }
 }
 
 module.exports = new Medida()
