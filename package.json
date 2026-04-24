@@ -25,5 +25,8 @@
     "sequelize": "^6.37.7",
     "sequelize-cli": "^6.6.5",
     "sqlite3": "^5.1.7"
+  },
+  "devDependencies": {
+    "typescript": "^6.0.3"
   }
 }
