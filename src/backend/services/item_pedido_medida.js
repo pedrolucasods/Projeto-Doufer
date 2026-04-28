@@ -48,7 +48,7 @@ class ItemPedidoMedida{
                 throw new Error("Erro ao cadastrar a medida padrão!")
             }
 
-            // se for medida padrão faz iso
+            // se for medida padrão faz isso
             if(dados.tipo_medida=='padrao'){
                 let medidaPadrao = {}
                 for(const valores of dados.medidas){
