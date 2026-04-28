@@ -3,7 +3,6 @@ const modelItensPedido = require('../models/itensPedidos')
 const { where } = require('sequelize')
 const ServiceCliente = require('./cliente')
 const ServiceItens = require('./itenspedido')
-const ServiceItemPedidoMedida = require('./item_pedido_medida')
 
 class MedidaPadrao {
     async cadastrar(dados) {
@@ -23,10 +22,6 @@ class MedidaPadrao {
                     ajuste: dados.ajuste
                 })
             }else if(dados.item_medida_id) {
-                const buscaitem = await ServiceItemPedidoMedida.buscar(dados.item_medida_id)
-                if(!buscaitem) {
-                    throw new Error('Erro, item não encontrado!')
-                }
                 return ModelmedidasPadrao.create({
                     item_pedido_medida_id: dados.item_medida_id,
                     tamanho: dados.tamanho,
@@ -41,6 +36,10 @@ class MedidaPadrao {
 
     buscaPorClienteId(cliente_id){
         return ModelmedidasPadrao.findOne({where:{cliente_id:cliente_id}})
+    }
+
+    buscarPorItemPedidoMedidaIdETamanho(itemMedidaId,tamanho){
+        return ModelmedidasPadrao.findOne({where:{item_pedido_medida_id:itemMedidaId,tamanho:tamanho}})
     }
 
 }
