@@ -35,7 +35,7 @@ class Medida{
             const dados = req.body
             const campos = Object.keys(dados)
             const totalCampos = campos.length
-            if(totalCampos>3 || totalCampos<3){
+            if(totalCampos>4 || totalCampos<4){
                 throw new Error("Erro ao cadastrar medida, campos inválidos!")
             }
             if(
