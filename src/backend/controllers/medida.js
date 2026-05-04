@@ -1,7 +1,5 @@
-const ServiceMedidaPadrao = require('../services/medidaspadrao')
-const ServiceMedidaSobMedida = require('../services/medidassobmedida')
 const ServiceItemPedidoMedida = require('../services/item_pedido_medida')
-
+const ServiceMedidaCliente = require('../services/medidas_cliente')
 class Medida{
     formulario_cadastro_medidas_cliente_sob_medida(req,res){
         try {
@@ -26,47 +24,14 @@ class Medida{
             if(!campos.includes('tipo_medida') || !campos.includes('medidas')){
                 throw new Error('Erro ao cadastrar medida do cliente!')
             }
-            const infoMedidas = dados.medidas[0]
-            const camposMedidas = Object.keys(infoMedidas)
-            console.log(camposMedidas)
-            if(dados.tipo_medida == 'padrao'){
-                if(
-                    !camposMedidas.includes('cliente_id')||
-                    !camposMedidas.includes('tamanho')||
-                    !camposMedidas.includes('ajuste')
-                ){
-                    throw new Error("Erro ao cadastrar medida!")
-                }
-                if(camposMedidas.length !=3){
-                    throw new Error("Erro ao cadastrar medida!")
-                }
-                const cadMedidaPadrao = await ServiceMedidaPadrao.cadastrar(infoMedidas)
-                return res.send(cadMedidaPadrao)
-            }else if(dados.tipo_medida == 'sob_medida'){
-                if(camposMedidas.length!=9){
-                    throw new Error('Erro ao cadastrar medida')
-                }
-                if(
-                    !camposMedidas.includes('cliente_id')||
-                    !camposMedidas.includes('busto')||
-                    !camposMedidas.includes('cintura')||
-                    !camposMedidas.includes('quadril')||
-                    !camposMedidas.includes('comprimento')||
-                    !camposMedidas.includes('ombro')||
-                    !camposMedidas.includes('costas')||
-                    !camposMedidas.includes('comprimento_da_manga')||
-                    !camposMedidas.includes('largura_da_manga')
-                ){
-                    throw new Error('Erro ao cadastrar medida!')
-                }
-                const cadMedidaSobMedida = await ServiceMedidaSobMedida.cadastrar(infoMedidas)
-                return res.json({'boa':'boa'})
-            }else{
-                throw new Error('Tipo inválido!')
+            ///////////////////////////////////////////////////////////////////
+            const cadastroMedidas = await ServiceMedidaCliente.cadastrar_medidas(dados)
+            if(!cadastroMedidas){
+                throw new Error(`Falha ao cadastrar medida!`)
             }
-            
+            return res.json({'msg':'Medida Cadastrada com sucesso!'})
         } catch (error) {
-            return res.status(500).json({"Erro":`${error.message}`})
+            return res.status(500).json({"erro":`${error.message}`})
         }
     }
 
