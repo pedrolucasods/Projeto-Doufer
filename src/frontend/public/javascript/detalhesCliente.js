@@ -8,7 +8,8 @@ function pedidosCliente(id){
 }
 
 function cadastrarMedidas(id){
-    window.location.href = `/clientes/medidas/${id}`
+    sessionStorage.setItem('clienteId', id)
+    window.location.href = `/api/medidas/clientes`
 }
 
 function listarMedidas(id){

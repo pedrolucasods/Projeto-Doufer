@@ -3,6 +3,18 @@ const ServiceMedidaSobMedida = require('../services/medidassobmedida')
 const ServiceItemPedidoMedida = require('../services/item_pedido_medida')
 
 class Medida{
+    formulario_cadastro_medidas_cliente_sob_medida(req,res){
+        try {
+            return res.render('addMedidaSobMedida',{
+                stylesheet:'addMedidaSobMedida.css',
+                script:'addMedidaSobMedida.js',
+                error:req.query.error || null,
+                msg: req.query.msg || null
+            })
+        } catch (error) {
+            res.status(500).json({"Erro":`${error}`})
+        }
+    }
     async cadastrar_medida_cliente(req,res){
         try {
             const dados = req.body
