@@ -3,20 +3,28 @@ document.addEventListener('DOMContentLoaded',()=>{
     const form = document.getElementById('form')
     form.addEventListener('submit', (e)=>{
         e.preventDefault()
-        const medidas = {
-            busto : document.getElementById('inputBusto').value,
-            cintura : document.getElementById('inputCintura').value,
-            quadril : document.getElementById('inputQuadril').value,
-            comprimento : document.getElementById('inputComprimento').value,
-            ombro : document.getElementById('inputOmbro').value,
-            costas : document.getElementById('inputCostas').value,
-            comprimento_da_manga : document.getElementById('inputCManga').value,
-            largura_da_manga : document.getElementById('inputLManga').value
-        }
         const url = window.location.pathname
         const partes = url.split('/')
-        const clienteId = partes[partes.length - 1]
-        adicionarMedida(medidas,clienteId)
+        const clienteId = sessionStorage.getItem('clienteId')
+        const dados = {
+            tipo_medida:"sob_medida",
+            medidas:[
+                {
+                    cliente_id:clienteId,
+                    busto : document.getElementById('inputBusto').value,
+                    cintura : document.getElementById('inputCintura').value,
+                    quadril : document.getElementById('inputQuadril').value,
+                    comprimento : document.getElementById('inputComprimento').value,
+                    ombro : document.getElementById('inputOmbro').value,
+                    costas : document.getElementById('inputCostas').value,
+                    comprimento_da_manga : document.getElementById('inputCManga').value,
+                    largura_da_manga : document.getElementById('inputLManga').value
+                }
+            ]
+            
+        }
+        
+        adicionarMedida(dados,clienteId)
     })
 })
 
@@ -58,7 +66,7 @@ function mask(input){
 
 async function adicionarMedida(medidas,clienteId){
     try {
-        const response = await fetch(`/api/clientes/medidas/${clienteId}`,{
+        const response = await fetch(`/api/medidas/clientes`,{
             method: 'POST',
             headers:{
                 'Content-Type': 'application/json'
@@ -69,9 +77,11 @@ async function adicionarMedida(medidas,clienteId){
         if(!response.ok){
             throw new Error(data.erro)
         }
+        console.log(data,'\n',data.msg,'\n',response.ok)
         window.location.href = `/clientes/medidas/listar/${clienteId}?msg=${data.msg}`
     } catch (error) {
-        window.location.href = `/clientes/medidas/${clienteId}?error=${error}`
+        console.log(error)
+        window.location.href = `/api/medidas/clientes?error=${error}`
     }
 }
 

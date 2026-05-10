@@ -153,36 +153,6 @@ class Cliente{
         }
     }
 
-    // Cadastrar  medidas cliente
-    async cadastrarMedidas(req,res){
-        try {
-            const clienteid = req.params.id
-            const medidas = req.body
-            await MedidasService.cadastrar(medidas,clienteid)
-            return res.json({
-                'msg':'Medida Adicionada!'
-            })
-        } catch (error) {
-            console.log(error)
-            return res.status(500).json({'Erro':`${error}`})
-        }
-    }
-
-    // Formulário cadastrar medidas
-    formCadastrar_Medidas(req,res){
-        try {
-            const clienteId = req.params.id
-            return res.render('addMedida',{
-                stylesheet:'addMedida.css',
-                script:'addMedida.js',
-                clienteId,
-                error:req.query.error || null,
-                msg: req.query.msg || null
-            })
-        } catch (error) {
-            res.status(400).send(`Erro ao acessar essa rota: ${error}`)
-        }
-    }
     async listarMedidas(req,res){
         try {
             const MedidasCliente = await MedidasService.listar(req.params.id)

@@ -12,8 +12,7 @@ router.put('/:id', ClienteController.editar)
 // deletar cliente
 router.delete('/:id', ClienteController.deletar)
 
-// cadastrar medidas cliente
-router.post('/medidas/:id', ClienteController.cadastrarMedidas)
+
 
 // editar medidas no banco
 router.put('/medidas/:id', ClienteController.editarMedidas)
