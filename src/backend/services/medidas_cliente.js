@@ -78,6 +78,16 @@ class MedidasCliente {
         return mediddasCliente
     }
 
+    buscarMedidaPadraoPorCliente(clienteId){
+        let medidaPadrao = ServiceMedidaPadrao.buscaPorClienteId(clienteId)
+        return medidaPadrao
+    }
+
+    buscarMedidaSobMedidaPorCliente(clienteId){
+        let medidaSobMedida = ServiceMedidaSobMedida.buscarMedidaPorClienteId(clienteId)
+        return medidaSobMedida
+    }
+
     listarIdmedida(idmedida) {
         let medidas = modelMedidas.findOne({
             where: {

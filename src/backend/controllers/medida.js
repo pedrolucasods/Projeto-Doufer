@@ -35,6 +35,20 @@ class Medida{
         }
     }
 
+    async listar_medida_padrao_cliente(req,res){
+        try {
+            const clienteId = req.params.id
+            const MedidaPadrao = await ServiceMedidaCliente.buscarMedidaPadraoPorCliente(clienteId)
+            if(!MedidaPadrao){
+                return  res.status(404).json({"Erro":`Medida não encontrada`})
+            }
+            return res.send(MedidaPadrao)
+        } catch (error) {
+            res.status(500).json({"Erro":`${error}`})
+        }
+        
+    }
+
     async cadastrar_medida_itemPedido(req,res){
         try {
             const dados = req.body
