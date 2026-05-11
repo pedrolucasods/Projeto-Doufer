@@ -1,5 +1,6 @@
 const ServiceItemPedidoMedida = require('../services/item_pedido_medida')
 const ServiceMedidaCliente = require('../services/medidas_cliente')
+const ServiceCliente = require('../services/cliente')
 class Medida{
     formulario_cadastro_medidas_cliente_sob_medida(req,res){
         try {
@@ -47,6 +48,28 @@ class Medida{
             res.status(500).json({"Erro":`${error}`})
         }
         
+    }
+
+    async listar_medida_sobmedida_cliente(req,res){
+        try {
+            const clienteId = req.params.id
+            const MedidaSobMedida = await ServiceMedidaCliente.buscarMedidaSobMedidaPorCliente(clienteId)
+            const Cliente = await ServiceCliente.buscarCliente(clienteId)
+            if(!MedidaSobMedida){
+                return res.status(404).json({"Erro":"Medida não encontrada"})
+            }
+            return res.render("medidas",{
+                stylesheet:'medidas.css',
+                script:'medidas.js',
+                medidas:MedidaSobMedida,
+                Cliente,
+                error:req.query.error || null,
+                msg: req.query.msg || null
+            })
+            return res.send(MedidaSobMedida)
+        } catch (error) {
+            return res.status(500).json({"Erro":`${error}`})
+        }
     }
 
     async cadastrar_medida_itemPedido(req,res){

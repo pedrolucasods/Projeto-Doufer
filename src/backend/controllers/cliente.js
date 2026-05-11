@@ -2,6 +2,7 @@ const modelCliente = require('../models/cliente')
 const ClienteService = require('../services/cliente')
 const PedidoService = require('../services/pedido')
 const MedidasService = require('../services/medidas_cliente')
+const MedidaClienteService = require('../services/medidas_cliente')
 class Cliente{
 
     // listar clientes
@@ -136,14 +137,16 @@ class Cliente{
         try {
             const cliente = await ClienteService.detalhes(req.params.id)
             const Pedidos = await PedidoService.pedidosCliente(req.params.id)
-            const MedidasCliente = await MedidasService.listar(req.params.id)
+            const MedidasSobCliente = await MedidaClienteService.buscarMedidaSobMedidaPorCliente(req.params.id)
+            const MedidaPadrao = await MedidaClienteService.buscarMedidaPadraoPorCliente(req.params.id)
             const qtdPedidos = Pedidos.length
             return res.render('detalhesCliente',{
                 stylesheet:'detalhesCliente.css',
                 script:'detalhesCliente.js',
                 cliente,
                 qtdPedidos,
-                MedidasCliente,
+                MedidasSobCliente,
+                MedidaPadrao,
                 error:req.query.error || null,
                 msg: req.query.msg || null
             })
@@ -153,23 +156,6 @@ class Cliente{
         }
     }
 
-    async listarMedidas(req,res){
-        try {
-            const MedidasCliente = await MedidasService.listar(req.params.id)
-            const Cliente = await ClienteService.buscarCliente(req.params.id)
-            //return res.send(MedidasCliente)
-            return res.render("medidas",{
-                stylesheet:'medidas.css',
-                script:'medidas.js',
-                medidas:MedidasCliente,
-                Cliente,
-                error:req.query.error || null,
-                msg: req.query.msg || null
-            })
-        } catch (error) {
-            return res.status(500).send(`Erro ao listar as medidas: ${error}`)
-        }
-    }
 
     // Fomulário editar medidas
     async formEditar_medidas(req,res){
