@@ -34,13 +34,11 @@
             </div>
             <div id="medidas">
                 <h2>Medidas</h2>
-                <button onclick="listarMedidas({{cliente.id}})">Consultar Medidas</button>
-                <br><br>
-                {{#if MedidasCliente}}
-                    <button onclick="atualizarMedidas({{cliente.id}})">Atualizar Medidas</button>
-                {{else}}
-                    <button onclick="cadastrarMedidas({{cliente.id}})">Adicionar Medidas</button>
-                {{/if}}
+                <div class="medidas-btn">
+                    <button class="btn btn-primary" onclick="listarMedidas({{cliente.id}})">Sob Medida</button>
+                    <button class="btn btn-primary" onclick="listarMedidas({{cliente.id}})">Media Padrão</button>
+                </div>
+                
             </div>
             
         </div>

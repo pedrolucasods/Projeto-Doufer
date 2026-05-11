@@ -13,7 +13,7 @@ function cadastrarMedidas(id){
 }
 
 function listarMedidas(id){
-    window.location.href = `/clientes/medidas/listar/${id}`
+    window.location.href = `/api/medidas/clientes/SobMedida/${id}`
 }
 function atualizarMedidas(id){
     window.location.href = `/clientes/medidas/editar/${id}`
