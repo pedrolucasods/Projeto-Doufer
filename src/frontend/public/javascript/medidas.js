@@ -17,6 +17,13 @@ function abrirModal(){
     modal.show()
 }
 
+function abrirModalpadrao(){
+    const modalElement = document.getElementById("meumodalpadrao")
+    const modal = new bootstrap.Modal(modalElement)
+
+    modal.show()
+}
+
 async function limparMedidas(id,clienteid){
      try {
         const response = await fetch(`/api/clientes/medidas/${id}`,{

@@ -36,37 +36,24 @@ class Medida{
         }
     }
 
-    async listar_medida_padrao_cliente(req,res){
-        try {
-            const clienteId = req.params.id
-            const MedidaPadrao = await ServiceMedidaCliente.buscarMedidaPadraoPorCliente(clienteId)
-            if(!MedidaPadrao){
-                return  res.status(404).json({"Erro":`Medida não encontrada`})
-            }
-            return res.send(MedidaPadrao)
-        } catch (error) {
-            res.status(500).json({"Erro":`${error}`})
-        }
-        
-    }
-
-    async listar_medida_sobmedida_cliente(req,res){
+    async listar_medidas(req,res){
         try {
             const clienteId = req.params.id
             const MedidaSobMedida = await ServiceMedidaCliente.buscarMedidaSobMedidaPorCliente(clienteId)
+            const MedidaPadrao = await ServiceMedidaCliente.buscarMedidaPadraoPorCliente(clienteId)
             const Cliente = await ServiceCliente.buscarCliente(clienteId)
-            if(!MedidaSobMedida){
+            if(!MedidaSobMedida && !MedidaPadrao){
                 return res.status(404).json({"Erro":"Medida não encontrada"})
             }
             return res.render("medidas",{
                 stylesheet:'medidas.css',
                 script:'medidas.js',
                 medidas:MedidaSobMedida,
+                medidaspadrao:MedidaPadrao,
                 Cliente,
                 error:req.query.error || null,
                 msg: req.query.msg || null
             })
-            return res.send(MedidaSobMedida)
         } catch (error) {
             return res.status(500).json({"Erro":`${error}`})
         }
