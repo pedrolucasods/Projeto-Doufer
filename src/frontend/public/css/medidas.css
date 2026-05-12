@@ -1,24 +1,55 @@
 body{
-    width: 100%;    height: 100%;
     display: block;
+    width: 100%;
+    height: 100%;
     justify-content: center;
     align-items: center;
     padding: 10px;
 }
 
+p{
+    margin: 0;
+}
+
 #container{
     display: flex;
     flex-wrap: wrap;
+    width: 100%;
+    min-height: 100%;
+    margin: 0;
+    padding: 5rem;
+    align-items: center;
+    justify-content: center;
+}
+
+.container-infos{
+    display: flex;
+    flex-wrap: wrap;
     width: 60%;
-    height: 70%;
+    height: 100%;
     margin: 0 auto;
     padding: 5rem;
     align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.container-title{
+    display: block;
+    width: inherit;
+    justify-content: space-between;
+}
+
+#container-ids{
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
 }
 
 #container-medidas{
     display: flex;
     width: 100%;
+    min-width: 1002px;
     justify-content: space-around;
     align-items: center;
     gap: 20px;
@@ -30,11 +61,7 @@ body{
     justify-content: center;
 }
 
-#container-ids{
-    display: flex;
-    width: 40%;
-    justify-content: space-between;
-}
+
 
 
 .medidas-corpos{
@@ -42,6 +69,7 @@ body{
     flex-wrap: wrap;
     width: 100%;
     justify-content: center;
+    gap: 10px;
 }
 
 #medidas-corpo{
@@ -56,6 +84,7 @@ body{
     flex-wrap: wrap;
     width: 100%;
     justify-content: center;
+    gap: 10px;
 }
 
 #medidas-manga{
@@ -63,6 +92,20 @@ body{
     flex-wrap: wrap;
     width: 100%;
     justify-content: space-between;
+}
+
+.medidas-padrao{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+}
+
+#medidas-padrao{
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    gap: 10px;
 }
 
 #container-buttons{
@@ -86,7 +129,6 @@ body{
     font-weight: 600;
     text-align: center;
     justify-content: center;
-    background-color: beige;
     color: #2c3e50;
 }
 
