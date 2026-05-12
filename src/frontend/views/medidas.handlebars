@@ -19,23 +19,37 @@
     </div>
     <div id="container-medidas" class="mb-4 border border-2 p-4 rounded-3">
         <div class="medidas-sobmedida">
-            <p id="title-corpo">Medidas do corpo</p>
-            <div id="medidas-corpo" class="border p-3 rounded">
-                <div id="medidas-coluna1">
-                    <p>Busto: {{mostrar medidas.busto}}</p>
-                    <p>Cintura: {{mostrar medidas.cintura}}</p>
-                    <p>Quadril: {{mostrar medidas.quadril}}</p>
-                    <p>Comprimento: {{mostrar medidas.comprimento}}</p>
-                </div>
-                <div id="medidas-coluna2">
-                    <p>Ombro: {{mostrar medidas.ombro}}</p>
-                    <p>Costas: {{mostrar medidas.costas}}</p>
+            <div class="medidas-corpos">
+                <p id="title-corpo">Medidas do corpo</p>
+                <div id="medidas-corpo" class="border p-3 rounded">
+                    <div id="medidas-coluna1">
+                        <p>Busto: {{mostrar medidas.busto}}</p>
+                        <p>Cintura: {{mostrar medidas.cintura}}</p>
+                        <p>Quadril: {{mostrar medidas.quadril}}</p>
+                        <p>Comprimento: {{mostrar medidas.comprimento}}</p>
+                    </div>
+                    <div id="medidas-coluna2">
+                        <p>Ombro: {{mostrar medidas.ombro}}</p>
+                        <p>Costas: {{mostrar medidas.costas}}</p>
+                    </div>
                 </div>
             </div>
-            <p id="title-manga">Medidas da manga</p>
-            <div id="medidas-manga" class="border p-3 rounded">
-                <p>Comprimento da Manga: {{mostrar medidas.comprimento_da_manga}}</p>
-                <p>Largura da Manga: {{mostrar medidas.largura_da_manga}}</p>
+            
+            <div class="medidas-manga">
+                <p id="title-manga">Medidas da manga</p>
+                <div id="medidas-manga" class="border p-3 rounded">
+                    <p>Comprimento da Manga: {{mostrar medidas.comprimento_da_manga}}</p>
+                    <p>Largura da Manga: {{mostrar medidas.largura_da_manga}}</p>
+                </div>
+                <div id="container-buttons">
+                    {{#if medidas}}
+                    <button class="btn btn-danger" onclick="abrirModal()">Limpar</button>
+                    <button class="btn btn-success" onclick="atualizarMedidas({{Cliente.id}})">Atualizar</button>
+                    {{else}}
+                    <button class="btn btn-secondary" disabled>Limpar</button>
+                    <button class="btn btn-success" onclick="cadastrarMedidas({{Cliente.id}})">Adicionar</button>
+                    {{/if}}
+                </div>
             </div>
         </div>
         
@@ -46,18 +60,17 @@
                     <p>Tamanho: {{mostrar medidaspadrao.tamanho}}</p>
                     <p>Ajuste: {{mostrar medidaspadrao.ajuste}}</p>
                 </div>
+                <div id="container-buttons">
+                    {{#if medidaspadrao}}
+                    <button class="btn btn-danger" onclick="abrirModalpadrao()">Limpar</button>
+                    <button class="btn btn-success" onclick="atualizarMedidaspadrao({{Cliente.id}})">Atualizar</button>
+                    {{else}}
+                    <button class="btn btn-secondary" disabled>Limpar</button>
+                    <button class="btn btn-success" onclick="cadastrarMedidaspadrao({{Cliente.id}})">Adicionar</button>
+                    {{/if}}
+                </div>
             </div>
         </div>
-    </div>
-    <div id="container-buttons">
-        
-        {{#if medidas}}
-        <button class="btn btn-danger" onclick="abrirModal()">Limpar</button>
-        <button class="btn btn-success" onclick="atualizarMedidas({{Cliente.id}})">Atualizar</button>
-        {{else}}
-        <button class="btn btn-secondary" disabled>Limpar</button>
-        <button class="btn btn-success" onclick="cadastrarMedidas({{Cliente.id}})">Adicionar</button>
-        {{/if}}
     </div>
 
     <div class="modal" tabindex="-1" id="meumodal">
@@ -73,6 +86,24 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
                     <button type="button" class="btn btn-danger" onclick="limparMedidas({{medidas.id}},{{Cliente.id}})">Excluir</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" tabindex="-1" id="meumodalpadrao">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Confirmação de exclusão</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Essa ação não poderá ser desfeita.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-danger" onclick="limparMedidas({{medidaspadrao.id}},{{Cliente.id}})">Excluir</button>
                 </div>
             </div>
         </div>

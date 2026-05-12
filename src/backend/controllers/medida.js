@@ -65,7 +65,7 @@ class Medida{
             const MedidaSobMedida = await ServiceMedidaCliente.buscarMedidaSobMedidaPorCliente(clienteId)
             const MedidaPadrao = await ServiceMedidaCliente.buscarMedidaPadraoPorCliente(clienteId)
             const Cliente = await ServiceCliente.buscarCliente(clienteId)
-            if(!MedidaSobMedida){
+            if(!MedidaSobMedida && !MedidaPadrao){
                 return res.status(404).json({"Erro":"Medida não encontrada"})
             }
             return res.render("medidas",{
