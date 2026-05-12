@@ -40,12 +40,6 @@ p{
     justify-content: space-between;
 }
 
-#container-ids{
-    display: flex;
-    width: 100%;
-    justify-content: space-between;
-}
-
 #container-medidas{
     display: flex;
     width: 100%;
