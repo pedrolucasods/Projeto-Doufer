@@ -12,9 +12,14 @@ function cadastrarMedidas(id){
     window.location.href = `/api/medidas/clientes`
 }
 
-function listarMedidas(id){
+function listarSobMedidas(id){
     window.location.href = `/api/medidas/clientes/SobMedida/${id}`
 }
+
+function listarMedidasPadrao(id){
+    window.location.href = `/api/medidas/clientes/Padrao/${id}`
+}
+
 function atualizarMedidas(id){
     window.location.href = `/clientes/medidas/editar/${id}`
 }

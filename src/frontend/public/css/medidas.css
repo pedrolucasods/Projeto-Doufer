@@ -1,24 +1,32 @@
 body{
-    margin: 0;
-    min-height: 100vh;
+    width: 100%;    height: 100%;
     display: block;
     justify-content: center;
     align-items: center;
-    padding: 2rem;
+    padding: 10px;
 }
 
 #container{
-    width: 40%;
+    width: 60%;
     height: 70%;
     margin: 0 auto;
     padding: 5rem;
 
 }
+
+#container-medidas{
+    display: flex;
+    width: 100%;
+    justify-content: space-around;
+    align-items: center;
+}
+
 #container-ids{
     display: flex;
     gap: 220px;
     justify-content: center;
 }
+
 
 #medidas-corpo{
     display: flex;

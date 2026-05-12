@@ -1,6 +1,7 @@
 const ServiceItemPedidoMedida = require('../services/item_pedido_medida')
 const ServiceMedidaCliente = require('../services/medidas_cliente')
 const ServiceCliente = require('../services/cliente')
+const cliente = require('./cliente')
 class Medida{
     formulario_cadastro_medidas_cliente_sob_medida(req,res){
         try {
@@ -40,10 +41,18 @@ class Medida{
         try {
             const clienteId = req.params.id
             const MedidaPadrao = await ServiceMedidaCliente.buscarMedidaPadraoPorCliente(clienteId)
+            const Cliente = await ServiceCliente.buscarCliente(clienteId)
             if(!MedidaPadrao){
                 return  res.status(404).json({"Erro":`Medida não encontrada`})
             }
-            return res.send(MedidaPadrao)
+            return res.render("medidas_padrao_cliente",{
+                stylesheet:'medidas_padrao_cliente.css',
+                script:'medidas_padrao_cliente.js',
+                medidas:MedidaPadrao,
+                Cliente,
+                error:req.query.error || null,
+                msg: req.query.msg || null
+            })
         } catch (error) {
             res.status(500).json({"Erro":`${error}`})
         }
@@ -54,6 +63,7 @@ class Medida{
         try {
             const clienteId = req.params.id
             const MedidaSobMedida = await ServiceMedidaCliente.buscarMedidaSobMedidaPorCliente(clienteId)
+            const MedidaPadrao = await ServiceMedidaCliente.buscarMedidaPadraoPorCliente(clienteId)
             const Cliente = await ServiceCliente.buscarCliente(clienteId)
             if(!MedidaSobMedida){
                 return res.status(404).json({"Erro":"Medida não encontrada"})
@@ -62,11 +72,11 @@ class Medida{
                 stylesheet:'medidas.css',
                 script:'medidas.js',
                 medidas:MedidaSobMedida,
+                medidaspadrao:MedidaPadrao,
                 Cliente,
                 error:req.query.error || null,
                 msg: req.query.msg || null
             })
-            return res.send(MedidaSobMedida)
         } catch (error) {
             return res.status(500).json({"Erro":`${error}`})
         }
