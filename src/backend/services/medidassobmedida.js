@@ -24,6 +24,18 @@ class MedidaSobMedida {
                     comprimento_da_manga:dados.comprimento_da_manga,
                     largura_da_manga:dados.largura_da_manga
                 })
+            }else{
+                return modelMedidaSobMedida.create({
+                    item_pedido_medida_id: dados.item_medida_id,
+                    busto: dados.busto,
+                    cintura:dados.cintura,
+                    quadril:dados.quadril,
+                    comprimento:dados.comprimento,
+                    ombro:dados.ombro,
+                    costas:dados.costas,
+                    comprimento_da_manga:dados.comprimento_da_manga,
+                    largura_da_manga:dados.largura_da_manga
+                })
             }
         } catch (error) {
             throw new Error(`${error.message}`)
