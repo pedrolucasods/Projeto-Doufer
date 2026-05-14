@@ -1,8 +1,10 @@
 const { NOT } = require('sequelize/lib/deferrable')
 const modelItemPedidoMedida = require('../models/item_pedido_medida')
 const modelMedidaPadrao = require('../models/medidas_padrao')
+const modelSobMedida = require('../models/medidas_sob_medida')
 const serviceItemPedido = require('./itenspedido')
 const ServiceMedidaPadrao = require('./medidaspadrao')
+const ServiceMedidaSobMedida = require('./medidassobmedida')
 class ItemPedidoMedida{
     async buscar(id){
         const pedidoMedida = await modelItemPedidoMedida.findOne({
@@ -58,7 +60,7 @@ class ItemPedidoMedida{
                 }
 
                 // validação de mesmo tamanho para o mesmo item pedido
-                const testedata = await this.buscarPorMedidasDoMesmoItem_ComMesmaMedida(cadastro.item_pedido_id,medidaPadrao.tamanho)
+                const testedata = await this.buscarPorMedidasDoMesmoItem_ComMesmaMedida(cadastro.item_pedido_id,medidaPadrao.tamanho,'padrao')
                 let valorbool = testedata?'1':null
                 if(valorbool){
                     throw new Error('Já existe medida igual registrada para esse item!')
@@ -75,7 +77,28 @@ class ItemPedidoMedida{
                 const cadMedidaPadrao = await ServiceMedidaPadrao.cadastrar(medidaPadrao)
                 return cadastro
             }else if(dados.tipo_medida=='sob_medida'){
-                return res.json({"Teste":"cadastro sob medida de itens pedidos"})
+                let medidasobMedida = {}
+                for(const valores of dados.medidas){
+                    medidasobMedida={
+                        item_medida_id: cadastro.id,
+                        busto: valores.busto,
+                        cintura:valores.cintura,
+                        quadril:valores.quadril,
+                        comprimento:valores.comprimento,
+                        ombro:valores.ombro,
+                        costas:valores.costas,
+                        comprimento_da_manga:valores.comprimento_da_manga,
+                        largura_da_manga:valores.largura_da_manga
+                    }
+                }
+
+                const testedata = await this.buscarPorMedidasDoMesmoItem_ComMesmaMedida(cadastro.item_pedido_id,medidasobMedida,'sobmedida')
+                let valorbool = testedata?'1':null
+                if(valorbool){
+                    throw new Error('Já existe medida igual registrada para esse item!')
+                }
+                const cadMedidaSobMedida = await ServiceMedidaSobMedida.cadastrar(medidasobMedida)
+                return cadastro
             } 
         } catch (error) {
             throw new Error(`${error.message}`)
@@ -93,8 +116,9 @@ class ItemPedidoMedida{
     }
 
     // consulta para procurar mesmo tamanho padrao para o mesmo item
-    async buscarPorMedidasDoMesmoItem_ComMesmaMedida(id,medida){
-        const consulta = await modelItemPedidoMedida.findOne({
+    async buscarPorMedidasDoMesmoItem_ComMesmaMedida(id,medida,tipo){
+        if(tipo == 'padrao'){
+            const consulta = await modelItemPedidoMedida.findOne({
             where:{
                 item_pedido_id:id
             },
@@ -105,10 +129,37 @@ class ItemPedidoMedida{
                 where:{
                     tamanho:medida
                 },
-                attibutes: ['tamanho']
-            }]
-        })
-        return consulta
+                    attibutes: ['tamanho']
+                }]
+            })
+            return consulta
+        }
+        else if(tipo =='sobmedida'){
+            const consulta = await modelItemPedidoMedida.findOne({
+                where:{
+                    item_pedido_id:id
+                },
+                include:[{
+                    model:modelSobMedida,
+                    as: 'medidas_sob_medida',
+                    required: true,
+                    where:{
+                        busto: medida.busto,
+                        cintura:medida.cintura,
+                        quadril:medida.quadril,
+                        comprimento:medida.comprimento,
+                        ombro:medida.ombro,
+                        costas:medida.costas,
+                        comprimento_da_manga:medida.comprimento_da_manga,
+                        largura_da_manga:medida.largura_da_manga
+                    },
+                        attibutes: ['busto','cintura','quadril','comprimento','ombro','costas','comprimento_da_manga','largura_da_manga']
+
+                }]
+            })
+            return consulta
+        }
+        
     }
 }
 
