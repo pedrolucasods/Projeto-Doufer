@@ -33,7 +33,6 @@ document.addEventListener("DOMContentLoaded", () => {
         const modelo = document.getElementById('modelo-produto').value.trim()
         const precounit = parseFloat(document.getElementById('precouni-produto').value)
         const complemento = document.getElementById('complemento-produto').value.trim()
-
         // Validação básica
         if (!produto || isNaN(quantidade) || quantidade <= 0 || isNaN(precounit)) {
             mostrarAviso()
@@ -215,7 +214,9 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         // Monta objeto do pedido
+        const tipo_cliente = document.getElementById('tipo_cliente').value
         const pedido = {
+            tipo_cliente:tipo_cliente,
             clienteId: document.getElementById('selectcliente').value,
             data: document.querySelector('input[type="date"]').value,
             itens: itens

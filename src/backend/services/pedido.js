@@ -1,7 +1,7 @@
 const modelCliente = require('../models/cliente')
 const modelPedido = require('../models/pedidos')
 const modelItensPedido = require('../models/itensPedidos')
-
+const ClienteService = require('./cliente')
 class Pedido{
 
     // listar e formatar
@@ -45,6 +45,13 @@ class Pedido{
 
         for(const informacoes_pedido of pedido){
             let total = 0
+            const cliente = await ClienteService.buscarCliente(informacoes_pedido.clienteId)
+            if(!cliente){
+                throw new Error('Cliente não existe!')
+            }
+            if(cliente.tipo_cliente != informacoes_pedido.tipo_cliente){
+                throw new Error("Cliente selecionado não corresponde ao tipo informado.")
+            }
             let pedidoId = await modelPedido.create({
                 cliente_id:informacoes_pedido.clienteId,
                 data: informacoes_pedido.data,
