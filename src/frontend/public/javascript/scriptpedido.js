@@ -1,9 +1,3 @@
-const newpedidobtn = document.getElementById('newpedido')
-let idDeletarPedido = null
-let idEditarPedido = null
-newpedidobtn.addEventListener('click', function(){
-    window.location.href = '/pedidos/cadastrarPedido'
-})
 
 function deletarPedido(id){
     idDeletarPedido = id
@@ -43,10 +37,29 @@ async function editarPedido(id){
 }
 
 
+function abrirModalTipoCliente(){
+    const modalElement = document.getElementById("modaltipocliente")
+    const modal = new bootstrap.Modal(modalElement)
+
+    modal.show()
+}
+
+
 function detalhesPedido(id){
     let idDetalhesPedido = id
     window.location.href = `/pedidos/detalhes/${idDetalhesPedido}`
 }
+
+function selecionarTipoCliente(tipo){
+    if (tipo === 'pessoa') {
+        console.log('Tipo de cliente selecionado: Padrão')
+        window.location.href = '/pedidos/cadastrarPedido?tipo=pessoa'
+    } else if (tipo === 'empresa') {
+        console.log('Tipo de cliente selecionado: Empresa')
+        window.location.href = '/pedidos/cadastrarPedido?tipo=empresa'
+    }
+}
+
 setTimeout(() =>{
     const msg = document.getElementById('msg')
     msg.classList.add("fade")

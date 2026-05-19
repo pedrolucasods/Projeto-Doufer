@@ -27,31 +27,53 @@ class Pedido{
     // formulario cadastrar pedido
     async formCadastrarPedido(req,res){
         try {
-            const clientes = await ClienteService.listarTodos()
+            let tipoCliente = req.query.tipo
+            let clientes = null
+            if(!tipoCliente || (tipoCliente != 'pessoa' && tipoCliente != 'empresa')){
+                throw new Error('Tipo inválido!')
+            }
+            if(tipoCliente == 'pessoa'){
+                clientes = await ClienteService.listarClientesPessoa()
+            }else if(tipoCliente == 'empresa'){
+                clientes = await ClienteService.listarClientesEmpresa()
+            }
+            if(!clientes[0]){
+                throw new Error(`Você não possui clientes-${tipoCliente}`)
+            }
             return res.render('addpedido',{
                 stylesheet:'styleaddpedido.css', 
                 script:'addpedido.js', 
                 layout:'main.handlebars', 
                 clientes,
+                tipoCliente,
                 error:req.query.error || null,
                 msg: req.query.msg || null})
 
         } catch (error) {
-            return res.status(500).send(`Erro ao criar um novo pedido: ${error}`)
+            return res.status(500).json({"Erro":`${error.message}`})
         }
     }
 
     // cadastrar pedido
     async cadastrarPedido(req,res){
         try {
-            if (req.body) {
-                let pedido = await PedidoService.cadastrar(req.body)
+            if (!req.body) {
+                throw new Error('Não possui dados!')
+            }
+            const campos = Object.keys(req.body)
+            if(campos.length!=4 || (
+                !campos.includes('clienteId') ||
+                !campos.includes('data') ||
+                !campos.includes('itens') ||
+                !campos.includes('tipo_cliente'))){
+                    throw new Error('Campos inválidos')
+                }
+            let pedido = await PedidoService.cadastrar(req.body)
                 return res.json({
                 "msg":"Pedido Adicionado!"
             }) 
-            }
         } catch (error) {
-            return res.status(500).json({"Erro":`${error}`})
+            return res.status(500).json({"Erro":`${error.message}`})
         }
     }
 

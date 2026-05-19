@@ -7,6 +7,16 @@ class ClienteService{
         return cliente
     }
 
+    async listarClientesPessoa(){
+        const clientes = await modelCliente.findAll({where:{'tipo_cliente':'pessoa'}})
+        return clientes
+    }
+
+    async listarClientesEmpresa(){
+        const clientesEmpresa = await modelCliente.findAll({where:{'tipo_cliente':'empresa'}})
+        return clientesEmpresa
+    }
+
     async buscarCliente(parametro){
         if(parametro.includes('.') && parametro.includes('-')){
             const cliente = modelCliente.findOne({where:{'cpf':parametro}})

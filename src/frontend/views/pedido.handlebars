@@ -23,7 +23,7 @@
         </select>
         <input id="inputsearch" type="search" placeholder="Digite o termo da busca...">
         <button id="btnsearch"><i class="fas fa-search"></i></button>
-        <button id="newpedido"><i class="fas fa-cart-plus"></i></button>
+        <button onclick="abrirModalTipoCliente()"><i class="fas fa-cart-plus"></i></button>
         <br><br>
     </div>
 
@@ -91,4 +91,27 @@
             <button id="btnCancelar" onclick="fecharModal()">Cancelar</button>
         </div>
     </div>
+
+    {{!-- modal de tipo cliente --}}
+    <div class="modal" tabindex="-1" id="modaltipocliente">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Selecione o Tipo de Cliente</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Escolha o tipo de cliente para criar um novo pedido:</p>
+                    </div>
+                    <div class="modal-footer d-flex justify-content-center gap-2">
+                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal" onclick="selecionarTipoCliente('pessoa')">
+                            <i class="fas fa-user"></i> Padrão
+                        </button>
+                        <button type="button" class="btn btn-info" data-bs-dismiss="modal" onclick="selecionarTipoCliente('empresa')">
+                            <i class="fas fa-building"></i> Empresa
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
 </div>
