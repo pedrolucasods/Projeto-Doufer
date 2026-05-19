@@ -9,7 +9,7 @@ function pedidosCliente(id){
 
 
 function listarMedidas(id){
-    window.location.href = `/api/medidas/clientes/SobMedida/${id}`
+    window.location.href = `/api/medidas/clientes/listar/${id}`
 }
 
 setTimeout(() =>{

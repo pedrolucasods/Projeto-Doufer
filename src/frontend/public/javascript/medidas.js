@@ -7,7 +7,8 @@ function atualizarMedidas(id){
 }
 
 function cadastrarMedidas(id){
-    window.location.href = `/clientes/medidas/${id}`
+    let clientId = sessionStorage.setItem('clienteId',id)
+    window.location.href = `/api/medidas/clientes/`
 }
 
 function abrirModal(){

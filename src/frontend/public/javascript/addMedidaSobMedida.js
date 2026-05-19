@@ -78,7 +78,7 @@ async function adicionarMedida(medidas,clienteId){
             throw new Error(data.erro)
         }
         console.log(data,'\n',data.msg,'\n',response.ok)
-        window.location.href = `/clientes/medidas/listar/${clienteId}?msg=${data.msg}`
+        window.location.href = `/api/medidas/clientes/listar/${clienteId}?msg=${data.msg}`
     } catch (error) {
         console.log(error)
         window.location.href = `/api/medidas/clientes?error=${error}`
