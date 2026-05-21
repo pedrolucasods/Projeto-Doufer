@@ -28,6 +28,24 @@ class Medida{
         }
     }
 
+    async formulário_atualizar_medidas_cliente_padrao(req,res){
+        try {
+            const medidas = await ServiceMedidaCliente.buscarMedidaPadraoPorId(req.params.id)
+            if(!medidas){
+                throw new Error('Medida não encontrada')
+            }
+            return res.render('upMedidaPadraoCliente',{
+                stylesheet:'upMedidaPadraoCliente.css',
+                script:'upMedidaPadraoCliente.js',
+                medidas,
+                error:req.query.error || null,
+                msg: req.query.msg || null
+            })
+        } catch (error) {
+            res.status(500).json({"Erro":`${error}`})
+        }
+    }
+
     async cadastrar_medida_cliente(req,res){
         try {
             const dados = req.body

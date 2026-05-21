@@ -109,6 +109,10 @@ class MedidasCliente {
         let medidaPadrao = ServiceMedidaPadrao.buscaPorClienteId(clienteId)
         return medidaPadrao
     }
+    buscarMedidaPadraoPorId(medidaId){
+        let medidaPadrao = ServiceMedidaPadrao.buscarporMedidaPadraoId(medidaId)
+        return medidaPadrao
+    }
 
     buscarMedidaSobMedidaPorCliente(clienteId){
         let medidaSobMedida = ServiceMedidaSobMedida.buscarMedidaPorClienteId(clienteId)
