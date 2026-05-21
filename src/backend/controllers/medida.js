@@ -28,6 +28,24 @@ class Medida{
         }
     }
 
+    async formulário_atualizar_medidas_cliente_padrao(req,res){
+        try {
+            const medidas = await ServiceMedidaCliente.buscarMedidaPadraoPorId(req.params.id)
+            if(!medidas){
+                throw new Error('Medida não encontrada')
+            }
+            return res.render('upMedidaPadraoCliente',{
+                stylesheet:'upMedidaPadraoCliente.css',
+                script:'upMedidaPadraoCliente.js',
+                medidas,
+                error:req.query.error || null,
+                msg: req.query.msg || null
+            })
+        } catch (error) {
+            res.status(500).json({"Erro":`${error}`})
+        }
+    }
+
     async cadastrar_medida_cliente(req,res){
         try {
             const dados = req.body
@@ -49,6 +67,30 @@ class Medida{
             return res.status(500).json({"erro":`${error.message}`})
         }
     }
+
+    async atualizar_medida_cliente(req,res){
+        try {
+            const dados = req.body
+            const totalDeCampos = Object.keys(dados).length
+            const campos = Object.keys(dados)
+            if(totalDeCampos!=2){
+                throw new Error('Erro ao cadastrar medida do cliente!')
+            }
+            if(!campos.includes('tipo_medida') || !campos.includes('medidas')){
+                throw new Error('Erro ao cadastrar medida do cliente!')
+            }
+            ///////////////////////////////////////////////////////////////////
+            const atualizarMedidas = await ServiceMedidaCliente.atualizar(dados)
+            if(!atualizarMedidas){
+                throw new Error(`Falha ao cadastrar medida!`)
+            }
+            return res.json({'msg':'Medida atualizada com sucesso!'})
+        } catch (error) {
+            return res.status(500).json({"erro":`${error.message}`})
+        }
+    }
+
+
 
     async listar_medidas(req,res){
         try {

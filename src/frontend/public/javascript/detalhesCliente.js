@@ -9,6 +9,7 @@ function pedidosCliente(id){
 
 
 function listarMedidas(id){
+    let cliente_id = sessionStorage.setItem('clienteId',id)
     window.location.href = `/api/medidas/clientes/listar/${id}`
 }
 
