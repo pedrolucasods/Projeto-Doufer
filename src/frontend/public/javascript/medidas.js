@@ -6,6 +6,11 @@ function atualizarMedidas(id){
     window.location.href = `/clientes/medidas/editar/${id}`
 }
 
+function atualizarMedidasPadrao(medidaId){
+    let medida_id = sessionStorage.setItem('MedidaId',medidaId)
+    window.location.href = `/api/medidas/clientes/${medidaId}`
+}
+
 function cadastrarMedidas(id){
     let clientId = sessionStorage.setItem('clienteId',id)
     window.location.href = `/api/medidas/clientes/`
