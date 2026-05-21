@@ -14,6 +14,20 @@ class Medida{
             res.status(500).json({"Erro":`${error}`})
         }
     }
+
+    formulário_cadastro_medidas_cliente_padrao(req,res){
+        try {
+            return res.render('addMedidaPadraoCliente',{
+                stylesheet:'addMedidaPadraoCliente.css',
+                script:'addMedidaPadraoCliente.js',
+                error:req.query.error || null,
+                msg: req.query.msg || null
+            })
+        } catch (error) {
+            res.status(500).json({"Erro":`${error}`})
+        }
+    }
+
     async cadastrar_medida_cliente(req,res){
         try {
             const dados = req.body

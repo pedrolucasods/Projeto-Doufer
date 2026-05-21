@@ -11,6 +11,11 @@ function cadastrarMedidas(id){
     window.location.href = `/api/medidas/clientes/`
 }
 
+function cadastrarMedidasPadrao(id){
+    let clientId = sessionStorage.setItem('clienteId',id)
+    window.location.href = `/api/medidas/clientes/padrao`
+}
+
 function abrirModal(){
     const modalElement = document.getElementById("meumodal")
     const modal = new bootstrap.Modal(modalElement)
