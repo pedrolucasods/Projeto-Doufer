@@ -1,6 +1,4 @@
-const { where } = require('sequelize')
 const modelMedidas = require('../models/medidas_cliente')
-const { moveEmitHelpers } = require('typescript')
 const ServiceMedidaPadrao = require('./medidaspadrao')
 const ServiceMedidaSobMedida = require('./medidassobmedida')
 
