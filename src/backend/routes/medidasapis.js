@@ -7,6 +7,8 @@ router.get('/clientes/padrao', MedidaController.formulário_cadastro_medidas_cli
 router.get('/clientes/listar/:id', MedidaController.listar_medidas)
 
 router.post('/clientes', MedidaController.cadastrar_medida_cliente)
+router.put('/clientes', MedidaController.atualizar_medida_cliente)
+
 router.post('/itens-pedidos', MedidaController.cadastrar_medida_itemPedido)
 
 module.exports = router

@@ -34,12 +34,51 @@ class MedidaPadrao {
 
     }
 
+    async atualizar(dados){
+        try {
+            if(dados.cliente_id) {
+                const buscaMedida = await this.buscarporMedidaPadraoId(dados.medidaPadrao_id)
+                if(!buscaMedida){
+                    throw new Error('Medida não encontrada!')
+                }
+                return ModelmedidasPadrao.update({
+                    tamanho: dados.tamanho,
+                    ajuste: dados.ajuste
+                },{
+                    where:{
+                        id:dados.medidaPadrao_id
+                    }
+                })
+            
+            }else if(dados.item_medida_id) {
+                const buscaMedida = await this.buscarporMedidaPadraoId(dados.medidaPadrao_id)
+                if(!buscaMedida){
+                    throw new Error('Medida não encontrada!')
+                }
+                return ModelmedidasPadrao.update({
+                    tamanho: dados.tamanho,
+                    ajuste: dados.ajuste
+                },{
+                    where:{
+                        id:dados.medidaPadrao_id
+                    }
+                })
+            }
+        } catch (error) {
+            throw new Error(`${error.message}`)
+        }
+    }
+
     buscaPorClienteId(cliente_id){
         return ModelmedidasPadrao.findOne({where:{cliente_id:cliente_id}})
     }
 
     buscarPorItemPedidoMedidaIdETamanho(itemMedidaId,tamanho){
         return ModelmedidasPadrao.findOne({where:{item_pedido_medida_id:itemMedidaId,tamanho:tamanho}})
+    }
+
+    buscarporMedidaPadraoId(medidaPadrao_id){
+        return ModelmedidasPadrao.findOne({where:{id:medidaPadrao_id}})
     }
 
 }

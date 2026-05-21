@@ -49,24 +49,53 @@ class MedidasCliente {
         }
 
     }
-    // cliente_id,busto,cintura,quadril,comprimento,ombro,costas,comprimento_da_manga,largura_da_manga
-    cadastrar(medidas,cliente_id) {
-        let cadastroMedidas = modelMedidas.create({
-            cliente_id: cliente_id,
-            busto: medidas.busto,
-            cintura: medidas.cintura,
-            quadril: medidas.quadril,
-            comprimento: medidas.comprimento,
-            ombro: medidas.ombro,
-            costas: medidas.costas,
-            comprimento_da_manga: medidas.comprimento_da_manga,
-            largura_da_manga: medidas.largura_da_manga
+    
+    async atualizar(dados){
+        try {
+            const infoMedidas = dados.medidas[0]
+            const camposMedidas = Object.keys(infoMedidas)
+            console.log(camposMedidas)
+            if (dados.tipo_medida == 'padrao') {
+                if (
+                    !camposMedidas.includes('medidaPadrao_id')||
+                    !camposMedidas.includes('cliente_id') ||
+                    !camposMedidas.includes('tamanho') ||
+                    !camposMedidas.includes('ajuste')
+                ) {
+                    throw new Error("Erro ao cadastrar medida!")
+                }
+                if (camposMedidas.length != 4) {
+                    throw new Error("Erro ao cadastrar medida!")
+                }
+                const upMedidaPadrao = await ServiceMedidaPadrao.atualizar(infoMedidas)
+                return upMedidaPadrao
+            } else if (dados.tipo_medida == 'sob_medida') {
+                if (camposMedidas.length != 10) {
+                    throw new Error('Erro ao cadastrar medida')
+                }
+                if (
+                    !camposMedidas.includes('medidaPadrao_id')||
+                    !camposMedidas.includes('cliente_id') ||
+                    !camposMedidas.includes('busto') ||
+                    !camposMedidas.includes('cintura') ||
+                    !camposMedidas.includes('quadril') ||
+                    !camposMedidas.includes('comprimento') ||
+                    !camposMedidas.includes('ombro') ||
+                    !camposMedidas.includes('costas') ||
+                    !camposMedidas.includes('comprimento_da_manga') ||
+                    !camposMedidas.includes('largura_da_manga')
+                ) {
+                    throw new Error('Erro ao cadastrar medida!')
+                }
+                const upMedidaSobMedida = await ServiceMedidaSobMedida.atualizar(infoMedidas)
+                return upMedidaSobMedida
+            }
 
-        })
-        return cadastroMedidas
+        } catch (error) {
+            throw new Error(`${error.message}`)
+        }
 
     }
-
     listar(cliente_id) {
         let mediddasCliente = modelMedidas.findOne({
             where: {
