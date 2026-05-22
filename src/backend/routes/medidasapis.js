@@ -9,8 +9,10 @@ router.get('/clientes/:id/padrao', MedidaController.formulário_atualizar_medida
 router.get('/clientes/:id/SobMedida', MedidaController.formulário_atualizar_medidas_cliente_sob_medida)
 
 router.post('/clientes', MedidaController.cadastrar_medida_cliente)
+router.post('/itens-pedidos', MedidaController.cadastrar_medida_itemPedido)
+
 router.put('/clientes', MedidaController.atualizar_medida_cliente)
 
-router.post('/itens-pedidos', MedidaController.cadastrar_medida_itemPedido)
+router.delete('/clientes', MedidaController.deletar_medida_cliente)
 
 module.exports = router

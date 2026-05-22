@@ -43,7 +43,7 @@
                     </div>
                     <div id="container-buttons">
                         {{#if medidas}}
-                        <button class="btn btn-danger" onclick="abrirModal()">Limpar</button>
+                        <button class="btn btn-danger" onclick="abrirModalSobMedida({{Cliente.id}})">Limpar</button>
                         <button class="btn btn-success" onclick="atualizarMedidasSobMedida({{medidas.id}})">Atualizar</button>
                         {{else}}
                         <button class="btn btn-secondary" disabled>Limpar</button>
@@ -85,7 +85,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                        <button type="button" class="btn btn-danger" onclick="limparMedidas({{medidas.id}},{{Cliente.id}})">Excluir</button>
+                        <button type="button" class="btn btn-danger" onclick="deletarMedidaSobMedida({{medidas.id}})">Excluir</button>
                     </div>
                 </div>
             </div>

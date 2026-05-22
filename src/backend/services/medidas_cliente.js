@@ -89,12 +89,33 @@ class MedidasCliente {
                 }
                 const upMedidaSobMedida = await ServiceMedidaSobMedida.atualizar(infoMedidas)
                 return upMedidaSobMedida
+            }else{
+                throw new Error('Tipo inválido!')
             }
 
         } catch (error) {
             throw new Error(`${error.message}`)
         }
 
+    }
+
+    async deletar(dados){
+        try {
+            const campos = Object.keys(dados)
+            if((campos.length !=2) || (!campos.includes('tipo') || !campos.includes('medida_id'))){
+                throw new Error('Erro ao deletar!')
+            }
+            if(dados.tipo == 'padrao'){
+
+            }else if(dados.tipo == 'sob_medida'){
+                const deletarMedida = ServiceMedidaSobMedida.deletar(dados)
+                return deletarMedida
+            }else{
+                throw new Error('Tipo inválido!')
+            }
+        } catch (error) {
+            throw new Error(`${error.message}`)
+        }
     }
     listar(cliente_id) {
         let mediddasCliente = modelMedidas.findOne({

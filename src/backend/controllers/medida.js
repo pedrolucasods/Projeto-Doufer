@@ -108,7 +108,15 @@ class Medida{
         }
     }
 
-
+    async deletar_medida_cliente(req,res){
+        try {
+            const dados = req.body
+            const deletarMedida = await ServiceMedidaCliente.deletar(dados)
+            return res.json({'msg':'Medida deleta com sucesso!'})
+        } catch (error) {
+            return res.status(500).json({"erro":`${error.message}`})
+        }
+    }
 
     async listar_medidas(req,res){
         try {
