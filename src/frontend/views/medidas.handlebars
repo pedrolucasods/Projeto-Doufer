@@ -75,13 +75,14 @@
 
         <div class="modal" tabindex="-1" id="meumodal">
             <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
+                <div class="modal-content delete-modal">
                     <div class="modal-header">
-                        <h5 class="modal-title">Confirmação de exclusão</h5>
+                        <h5 class="modal-title"><i class="bi bi-exclamation-triangle-fill text-warning me-2"></i>Confirmação de exclusão</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <p>Essa ação não poderá ser desfeita.</p>
+                        <p class="mb-2">Tem certeza que deseja excluir a medida sob medida?</p>
+                        <p class="text-muted">Essa ação não poderá ser desfeita.</p>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
@@ -93,17 +94,18 @@
 
         <div class="modal" tabindex="-1" id="meumodalpadrao">
             <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
+                <div class="modal-content delete-modal">
                     <div class="modal-header">
-                        <h5 class="modal-title">Confirmação de exclusão</h5>
+                        <h5 class="modal-title"><i class="bi bi-exclamation-triangle-fill text-warning me-2"></i>Confirmação de exclusão</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <p>Essa ação não poderá ser desfeita.</p>
+                        <p class="mb-2">Tem certeza que deseja excluir a medida padrão?</p>
+                        <p class="text-muted">Essa ação não poderá ser desfeita.</p>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                        <button type="button" class="btn btn-danger" onclick="limparMedidas({{medidaspadrao.id}},{{Cliente.id}})">Excluir</button>
+                        <button type="button" class="btn btn-danger" onclick="deletarMedidaPadrao({{medidaspadrao.id}})">Excluir</button>
                     </div>
                 </div>
             </div>

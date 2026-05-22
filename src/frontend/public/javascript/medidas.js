@@ -59,6 +59,28 @@ async function deletarMedidaSobMedida(medida_id){
      }
 }
 
+async function deletarMedidaPadrao(medidaId) {
+    try {
+        const clienteid = sessionStorage.getItem('clienteId')
+        const dados = {tipo:"padrao",medida_id:medidaId}
+        const response = await fetch(`/api/medidas/clientes`,{
+            method:"DELETE",
+            headers:{
+                'Content-Type':'application/json'
+            },
+            body:JSON.stringify(dados)
+        })
+        const data = await response.json()
+        if(!response.ok){
+            throw new Error(data.erro)
+        }
+        window.location.href = `/api/medidas/clientes/listar/${clienteid}?msg=${data.msg}`
+     } catch (error) {
+        const erro = error
+        window.location.href= `/api/medidas/clientes/listar/${clienteid}?error=${erro}`
+     }
+}
+
 setTimeout(() =>{
     const msg = document.getElementById('msg')
     msg.classList.add("fade")

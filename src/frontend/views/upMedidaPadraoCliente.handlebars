@@ -32,7 +32,7 @@
 
                             <div class="col-12">
                                 <label for="tamanho" class="form-label">Tamanho</label>
-                                <select class="form-select" id="tamanho" name="medidas[0][tamanho]" required>
+                                <select class="form-select" id="tamanho" name="medidas[0][tamanho]">
                                     <option value="" {{#unless medidas.tamanho}}selected{{/unless}}>Selecione o tamanho</option>
                                     <option value="PP" {{selected medidas.tamanho "PP"}}>PP</option>
                                     <option value="P" {{selected medidas.tamanho "P"}}>P</option>
@@ -44,7 +44,7 @@
 
                             <div class="col-12">
                                 <label for="ajuste" class="form-label">Ajuste</label>
-                                <textarea class="form-control" id="ajuste" name="medidas[0][ajuste]" rows="4" placeholder="Descreva o ajuste desejado" required>{{medidas.ajuste}}</textarea>
+                                <textarea class="form-control" id="ajuste" name="medidas[0][ajuste]" rows="4" placeholder="Descreva o ajuste desejado">{{medidas.ajuste}}</textarea>
                             </div>
 
                             <div class="col-12">

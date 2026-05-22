@@ -37,7 +37,7 @@ form.addEventListener('submit', async function (e) {
         }
     })
     if(contatador_medidas_vazias == 8){
-        limparMedidas(medidaId,clienteId)
+        deletarMedidaSobMedida(medidaId,clienteId)
     }else if(contatador_medidas_vazias < 8){
         Medidas.medidaSobMedida_id = medidaId
         Medidas.cliente_id = clienteId
@@ -50,16 +50,25 @@ form.addEventListener('submit', async function (e) {
 
 })
 
-async function limparMedidas(medidaId, clienteId) {
+async function deletarMedidaSobMedida(medidaId, clienteId) {
     try {
-        const response = await fetch(`/api/clientes/medidas/${medidaId}`,{
-            method:"DELETE"
+        const dados = {tipo:"sob_medida",medida_id:medidaId}
+        const response = await fetch(`/api/medidas/clientes`,{
+            method:"DELETE",
+            headers:{
+                'Content-Type':'application/json'
+            },
+            body:JSON.stringify(dados)
         })
         const data = await response.json()
-        window.location.href = (`/clientes/medidas/listar/${clienteId}?msg=${data.msg}`)
-    } catch (error) {
-        window.location.href = (`/clientes/medidas/listar/${clienteId}?msg=${error}`)
-    }
+        if(!response.ok){
+            throw new Error(data.erro)
+        }
+        window.location.href = `/api/medidas/clientes/listar/${clienteid}?msg=${data.msg}`
+     } catch (error) {
+        const erro = error
+        window.location.href= `/api/medidas/clientes/listar/${clienteid}?error=${erro}`
+     }
 }
 
 async function atualizarMedida(dados,clienteId){

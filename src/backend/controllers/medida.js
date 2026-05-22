@@ -112,7 +112,7 @@ class Medida{
         try {
             const dados = req.body
             const deletarMedida = await ServiceMedidaCliente.deletar(dados)
-            return res.json({'msg':'Medida deleta com sucesso!'})
+            return res.json({'msg':'Medida deletada com sucesso!'})
         } catch (error) {
             return res.status(500).json({"erro":`${error.message}`})
         }

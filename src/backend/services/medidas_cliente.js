@@ -106,7 +106,8 @@ class MedidasCliente {
                 throw new Error('Erro ao deletar!')
             }
             if(dados.tipo == 'padrao'){
-
+                const deletarMedida = ServiceMedidaPadrao.deletar(dados)
+                return deletarMedida
             }else if(dados.tipo == 'sob_medida'){
                 const deletarMedida = ServiceMedidaSobMedida.deletar(dados)
                 return deletarMedida
