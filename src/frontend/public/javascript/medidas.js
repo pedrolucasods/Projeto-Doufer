@@ -2,13 +2,14 @@ function voltar(id){
     window.location.href = `/clientes/detalhes/${id}`
 }
 
-function atualizarMedidas(id){
-    window.location.href = `/clientes/medidas/editar/${id}`
+function atualizarMedidasSobMedida(id){
+    let medida_id = sessionStorage.setItem('MedidaId_sobMedida',id)
+    window.location.href = `/api/medidas/clientes/${id}/SobMedida`
 }
 
 function atualizarMedidasPadrao(medidaId){
-    let medida_id = sessionStorage.setItem('MedidaId',medidaId)
-    window.location.href = `/api/medidas/clientes/${medidaId}`
+    let medida_id = sessionStorage.setItem('MedidaId_padrao',medidaId)
+    window.location.href = `/api/medidas/clientes/${medidaId}/padrao`
 }
 
 function cadastrarMedidas(id){
@@ -21,7 +22,8 @@ function cadastrarMedidasPadrao(id){
     window.location.href = `/api/medidas/clientes/padrao`
 }
 
-function abrirModal(){
+function abrirModalSobMedida(id){
+    const clienteId = sessionStorage.setItem('clienteId',id)
     const modalElement = document.getElementById("meumodal")
     const modal = new bootstrap.Modal(modalElement)
 
@@ -35,16 +37,47 @@ function abrirModalpadrao(){
     modal.show()
 }
 
-async function limparMedidas(id,clienteid){
+async function deletarMedidaSobMedida(medida_id){
      try {
-        const response = await fetch(`/api/clientes/medidas/${id}`,{
-            method:"DELETE"
+        const clienteid = sessionStorage.getItem('clienteId')
+        const dados = {tipo:"sob_medida",medida_id:medida_id}
+        const response = await fetch(`/api/medidas/clientes`,{
+            method:"DELETE",
+            headers:{
+                'Content-Type':'application/json'
+            },
+            body:JSON.stringify(dados)
         })
         const data = await response.json()
-        window.location.href = `/clientes/medidas/listar/${clienteid}?msg=${data.msg}`
+        if(!response.ok){
+            throw new Error(data.erro)
+        }
+        window.location.href = `/api/medidas/clientes/listar/${clienteid}?msg=${data.msg}`
      } catch (error) {
         const erro = error
-        window.location.href= `/clientes/medidas/listar/${clienteid}?error=${erro}`
+        window.location.href= `/api/medidas/clientes/listar/${clienteid}?error=${erro}`
+     }
+}
+
+async function deletarMedidaPadrao(medidaId) {
+    try {
+        const clienteid = sessionStorage.getItem('clienteId')
+        const dados = {tipo:"padrao",medida_id:medidaId}
+        const response = await fetch(`/api/medidas/clientes`,{
+            method:"DELETE",
+            headers:{
+                'Content-Type':'application/json'
+            },
+            body:JSON.stringify(dados)
+        })
+        const data = await response.json()
+        if(!response.ok){
+            throw new Error(data.erro)
+        }
+        window.location.href = `/api/medidas/clientes/listar/${clienteid}?msg=${data.msg}`
+     } catch (error) {
+        const erro = error
+        window.location.href= `/api/medidas/clientes/listar/${clienteid}?error=${erro}`
      }
 }
 

@@ -5,10 +5,9 @@ document.addEventListener('DOMContentLoaded',()=>{
 form.addEventListener('submit', async function (e) {
     e.preventDefault()
     // pegando o id do cliente
-    const url = window.location.pathname
-    const partes = url.split('/')
-    const clienteId = partes[partes.length - 1]
-    console.log(`${url}\n${partes}\n${clienteId}`)
+    const clienteId = sessionStorage.getItem('clienteId')
+    let medidaId = sessionStorage.getItem('MedidaId_sobMedida')
+    
     // montando o body
     let busto = document.getElementById('inputBusto').value
     let cintura = document.getElementById('inputCintura').value
@@ -18,8 +17,6 @@ form.addEventListener('submit', async function (e) {
     let costas = document.getElementById('inputCostas').value
     let comprimento_da_manga = document.getElementById('inputCManga').value
     let largura_da_manga = document.getElementById('inputLManga').value
-
-    let medidaId = document.getElementById('medidaId').value
 
     const Medidas = {
         busto: (busto != null) ? busto : null,
@@ -32,6 +29,7 @@ form.addEventListener('submit', async function (e) {
         largura_da_manga: (largura_da_manga != null) ? largura_da_manga : null
     }
 
+    
     let contatador_medidas_vazias = 0
     Object.values(Medidas).forEach( valor =>{
         if(valor == ""){
@@ -39,43 +37,57 @@ form.addEventListener('submit', async function (e) {
         }
     })
     if(contatador_medidas_vazias == 8){
-        limparMedidas(medidaId,clienteId)
+        deletarMedidaSobMedida(medidaId,clienteId)
     }else if(contatador_medidas_vazias < 8){
-        atualizarMedidas(clienteId, Medidas)
+        Medidas.medidaSobMedida_id = medidaId
+        Medidas.cliente_id = clienteId
+        const dados = {
+            tipo_medida:"sob_medida",
+            medidas:[Medidas]
+        }
+        atualizarMedida(dados,clienteId)
     }
 
 })
 
-async function limparMedidas(medidaId, clienteId) {
+async function deletarMedidaSobMedida(medidaId, clienteId) {
     try {
-        const response = await fetch(`/api/clientes/medidas/${medidaId}`,{
-            method:"DELETE"
+        const dados = {tipo:"sob_medida",medida_id:medidaId}
+        const response = await fetch(`/api/medidas/clientes`,{
+            method:"DELETE",
+            headers:{
+                'Content-Type':'application/json'
+            },
+            body:JSON.stringify(dados)
         })
         const data = await response.json()
-        window.location.href = (`/clientes/medidas/listar/${clienteId}?msg=${data.msg}`)
-    } catch (error) {
-        window.location.href = (`/clientes/medidas/listar/${clienteId}?msg=${error}`)
-    }
+        if(!response.ok){
+            throw new Error(data.erro)
+        }
+        window.location.href = `/api/medidas/clientes/listar/${clienteid}?msg=${data.msg}`
+     } catch (error) {
+        const erro = error
+        window.location.href= `/api/medidas/clientes/listar/${clienteid}?error=${erro}`
+     }
 }
 
-async function atualizarMedidas(clienteId, Medidas) {
+async function atualizarMedida(dados,clienteId){
     try {
-        const response = await fetch(`/api/clientes/medidas/${clienteId}`, {
-            method: 'PUT',
-            headers: {
-                "Content-Type": "application/json"
+        const response = await fetch('/api/medidas/clientes',{
+            method:'PUT',
+            headers:{
+                'Content-Type':'application/json'
             },
-            body: JSON.stringify(Medidas)
+            body: JSON.stringify(dados)
         })
-        if(!response.ok){
-            throw new Error(`Erro na requisição: ${response.status}`)
-        }
         const data = await response.json()
-        window.location.href = `/clientes/detalhes/${clienteId}?msg=${data.msg}`
+        if(!response.ok){
+            throw new Error(data.erro)
+        }
+        window.location.href = `/api/medidas/clientes/listar/${clienteId}?msg=${data.msg}`
     } catch (error) {
-        window.location.href = `/clientes/medidas/editar/${clienteId}?error=${error}`
+        window.location.href = `/api/medidas/clientes/padrao?error=${error}`
     }
-
 }
 
 function mascaras(){

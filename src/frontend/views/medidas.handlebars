@@ -43,8 +43,8 @@
                     </div>
                     <div id="container-buttons">
                         {{#if medidas}}
-                        <button class="btn btn-danger" onclick="abrirModal()">Limpar</button>
-                        <button class="btn btn-success" onclick="atualizarMedidas({{Cliente.id}})">Atualizar</button>
+                        <button class="btn btn-danger" onclick="abrirModalSobMedida({{Cliente.id}})">Limpar</button>
+                        <button class="btn btn-success" onclick="atualizarMedidasSobMedida({{medidas.id}})">Atualizar</button>
                         {{else}}
                         <button class="btn btn-secondary" disabled>Limpar</button>
                         <button class="btn btn-success" onclick="cadastrarMedidas({{Cliente.id}})">Adicionar</button>
@@ -75,17 +75,18 @@
 
         <div class="modal" tabindex="-1" id="meumodal">
             <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
+                <div class="modal-content delete-modal">
                     <div class="modal-header">
-                        <h5 class="modal-title">Confirmação de exclusão</h5>
+                        <h5 class="modal-title"><i class="bi bi-exclamation-triangle-fill text-warning me-2"></i>Confirmação de exclusão</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <p>Essa ação não poderá ser desfeita.</p>
+                        <p class="mb-2">Tem certeza que deseja excluir a medida sob medida?</p>
+                        <p class="text-muted">Essa ação não poderá ser desfeita.</p>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                        <button type="button" class="btn btn-danger" onclick="limparMedidas({{medidas.id}},{{Cliente.id}})">Excluir</button>
+                        <button type="button" class="btn btn-danger" onclick="deletarMedidaSobMedida({{medidas.id}})">Excluir</button>
                     </div>
                 </div>
             </div>
@@ -93,17 +94,18 @@
 
         <div class="modal" tabindex="-1" id="meumodalpadrao">
             <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
+                <div class="modal-content delete-modal">
                     <div class="modal-header">
-                        <h5 class="modal-title">Confirmação de exclusão</h5>
+                        <h5 class="modal-title"><i class="bi bi-exclamation-triangle-fill text-warning me-2"></i>Confirmação de exclusão</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <p>Essa ação não poderá ser desfeita.</p>
+                        <p class="mb-2">Tem certeza que deseja excluir a medida padrão?</p>
+                        <p class="text-muted">Essa ação não poderá ser desfeita.</p>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                        <button type="button" class="btn btn-danger" onclick="limparMedidas({{medidaspadrao.id}},{{Cliente.id}})">Excluir</button>
+                        <button type="button" class="btn btn-danger" onclick="deletarMedidaPadrao({{medidaspadrao.id}})">Excluir</button>
                     </div>
                 </div>
             </div>

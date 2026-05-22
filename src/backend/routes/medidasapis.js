@@ -5,11 +5,14 @@ const MedidaController = require('../controllers/medida')
 router.get('/clientes', MedidaController.formulario_cadastro_medidas_cliente_sob_medida)
 router.get('/clientes/padrao', MedidaController.formulário_cadastro_medidas_cliente_padrao)
 router.get('/clientes/listar/:id', MedidaController.listar_medidas)
-router.get('/clientes/:id', MedidaController.formulário_atualizar_medidas_cliente_padrao)
+router.get('/clientes/:id/padrao', MedidaController.formulário_atualizar_medidas_cliente_padrao)
+router.get('/clientes/:id/SobMedida', MedidaController.formulário_atualizar_medidas_cliente_sob_medida)
 
 router.post('/clientes', MedidaController.cadastrar_medida_cliente)
+router.post('/itens-pedidos', MedidaController.cadastrar_medida_itemPedido)
+
 router.put('/clientes', MedidaController.atualizar_medida_cliente)
 
-router.post('/itens-pedidos', MedidaController.cadastrar_medida_itemPedido)
+router.delete('/clientes', MedidaController.deletar_medida_cliente)
 
 module.exports = router

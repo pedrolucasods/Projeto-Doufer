@@ -157,33 +157,6 @@ class Cliente{
     }
 
 
-    // Fomulário editar medidas
-    async formEditar_medidas(req,res){
-        try {
-            const MedidasCliente = await MedidasService.listar(req.params.id)
-            return res.render('formEditarMedidas',{
-                stylesheet:'formEditarMedidas.css',
-                script:'formEditarMedidas.js',
-                MedidasCliente,
-                error:req.query.error || null,
-                msg: req.query.msg || null
-            })
-        } catch (error) {
-            return res.status(404).json({"Erro":`${error}`})
-        }
-    }
-
-    async editarMedidas(req,res){
-        try {
-            let medidas = req.body
-            let EdicaoMedidas = await MedidasService.editar(medidas,req.params.id)
-            return res.json({
-                "msg":"Medidas editada!"
-            })
-        } catch (error) {
-            return res.status(500).json({"Erro":`${error}`})
-        }
-    }
 
     async limparMedidas(req,res){
         try {

@@ -69,6 +69,18 @@ class MedidaPadrao {
         }
     }
 
+    async deletar(dados){
+        try {
+            const buscaMedida = await this.buscarporMedidaPadraoId(dados.medida_id)
+            if(!buscaMedida){
+                throw new Error('Medida não encontrada!')
+            }
+            return ModelmedidasPadrao.destroy({where:{id:dados.medida_id}})
+        } catch (error) {
+            throw new Error(`${error.message}`)
+        }
+    }
+
     buscaPorClienteId(cliente_id){
         return ModelmedidasPadrao.findOne({where:{cliente_id:cliente_id}})
     }

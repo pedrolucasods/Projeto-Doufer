@@ -14,9 +14,6 @@ router.delete('/:id', ClienteController.deletar)
 
 
 
-// editar medidas no banco
-router.put('/medidas/:id', ClienteController.editarMedidas)
-
 // limpar medidas
 router.delete('/medidas/:id', ClienteController.limparMedidas)
 
