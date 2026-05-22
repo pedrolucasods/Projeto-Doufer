@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded',()=>{
     const form = document.getElementById('formUpMedidaPadrao')
     const clienteId = sessionStorage.getItem('clienteId')
-    const medidaId = sessionStorage.getItem('MedidaId')
+    const medidaId = sessionStorage.getItem('MedidaId_padrao')
     form.addEventListener('submit',(e)=>{
         e.preventDefault()
         let dados = {

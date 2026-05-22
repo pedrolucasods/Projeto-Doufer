@@ -46,6 +46,24 @@ class Medida{
         }
     }
 
+    async formulário_atualizar_medidas_cliente_sob_medida(req,res){
+        try {
+            const medidas = await ServiceMedidaCliente.buscarMedidaSobMedidaPorId(req.params.id)
+            if(!medidas){
+                throw new Error('Medida não encontrada')
+            }
+            return res.render('upMedidaSobMedidaCliente',{
+                stylesheet:'upMedidaSobMedidaCliente.css',
+                script:'upMedidaSobMedidaCliente.js',
+                medidas,
+                error:req.query.error || null,
+                msg: req.query.msg || null
+            })
+        } catch (error) {
+            res.status(500).json({"Erro":`${error}`})
+        }
+    }
+
     async cadastrar_medida_cliente(req,res){
         try {
             const dados = req.body

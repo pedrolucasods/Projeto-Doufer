@@ -44,7 +44,7 @@
                     <div id="container-buttons">
                         {{#if medidas}}
                         <button class="btn btn-danger" onclick="abrirModal()">Limpar</button>
-                        <button class="btn btn-success" onclick="atualizarMedidas({{Cliente.id}})">Atualizar</button>
+                        <button class="btn btn-success" onclick="atualizarMedidasSobMedida({{medidas.id}})">Atualizar</button>
                         {{else}}
                         <button class="btn btn-secondary" disabled>Limpar</button>
                         <button class="btn btn-success" onclick="cadastrarMedidas({{Cliente.id}})">Adicionar</button>

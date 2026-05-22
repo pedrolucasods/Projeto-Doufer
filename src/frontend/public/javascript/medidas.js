@@ -2,13 +2,14 @@ function voltar(id){
     window.location.href = `/clientes/detalhes/${id}`
 }
 
-function atualizarMedidas(id){
-    window.location.href = `/clientes/medidas/editar/${id}`
+function atualizarMedidasSobMedida(id){
+    let medida_id = sessionStorage.setItem('MedidaId_sobMedida',id)
+    window.location.href = `/api/medidas/clientes/${id}/SobMedida`
 }
 
 function atualizarMedidasPadrao(medidaId){
-    let medida_id = sessionStorage.setItem('MedidaId',medidaId)
-    window.location.href = `/api/medidas/clientes/${medidaId}`
+    let medida_id = sessionStorage.setItem('MedidaId_padrao',medidaId)
+    window.location.href = `/api/medidas/clientes/${medidaId}/padrao`
 }
 
 function cadastrarMedidas(id){

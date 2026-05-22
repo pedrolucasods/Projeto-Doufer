@@ -74,7 +74,7 @@ class MedidasCliente {
                     throw new Error('Erro ao cadastrar medida')
                 }
                 if (
-                    !camposMedidas.includes('medidaPadrao_id')||
+                    !camposMedidas.includes('medidaSobMedida_id')||
                     !camposMedidas.includes('cliente_id') ||
                     !camposMedidas.includes('busto') ||
                     !camposMedidas.includes('cintura') ||
@@ -116,6 +116,11 @@ class MedidasCliente {
 
     buscarMedidaSobMedidaPorCliente(clienteId){
         let medidaSobMedida = ServiceMedidaSobMedida.buscarMedidaPorClienteId(clienteId)
+        return medidaSobMedida
+    }
+    
+    buscarMedidaSobMedidaPorId(medidaId){
+        let medidaSobMedida = ServiceMedidaSobMedida.buscarMedidaPorId(medidaId)
         return medidaSobMedida
     }
 

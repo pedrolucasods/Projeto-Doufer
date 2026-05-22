@@ -43,8 +43,58 @@ class MedidaSobMedida {
 
     }
 
+    async atualizar(dados){
+        try {
+            if(dados.cliente_id) {
+                const buscaMedida = await this.buscarMedidaPorId(dados.medidaSobMedida_id)
+                if(!buscaMedida){
+                    throw new Error('Medida não encontrada!')
+                }
+                return modelMedidaSobMedida.update({
+                    busto: dados.busto,
+                    cintura:dados.cintura,
+                    quadril:dados.quadril,
+                    comprimento:dados.comprimento,
+                    ombro:dados.ombro,
+                    costas:dados.costas,
+                    comprimento_da_manga:dados.comprimento_da_manga,
+                    largura_da_manga:dados.largura_da_manga
+                },{
+                    where:{
+                        id:dados.medidaSobMedida_id
+                    }
+                })
+            
+            }else if(dados.item_medida_id) {
+                const buscaMedida = await this.buscarMedidaPorId(dados.medidaSobMedida_idd)
+                if(!buscaMedida){
+                    throw new Error('Medida não encontrada!')
+                }
+                return modelMedidaSobMedida.update({
+                    busto: dados.busto,
+                    cintura:dados.cintura,
+                    quadril:dados.quadril,
+                    comprimento:dados.comprimento,
+                    ombro:dados.ombro,
+                    costas:dados.costas,
+                    comprimento_da_manga:dados.comprimento_da_manga,
+                    largura_da_manga:dados.largura_da_manga
+                },{
+                    where:{
+                        id:dados.medidaSobMedida_id
+                    }
+                })
+            }
+        } catch (error) {
+            throw new Error(`${error.message}`)
+        }
+    }
+
     buscarMedidaPorClienteId(id) {
         return modelMedidaSobMedida.findOne({ where: { cliente_id: id } })
+    }
+    buscarMedidaPorId(id) {
+        return modelMedidaSobMedida.findOne({ where: { id: id } })
     }
 }
 
