@@ -39,46 +39,51 @@ class Pedido{
 
     // Cadastrar pedidos
     async cadastrar(pedidoiten){
-        let pedido = []
-        pedido.push(pedidoiten);
         
+            let pedido = []
+            pedido.push(pedidoiten);
+            const dataToday = new Date().toISOString().split('T')[0]
 
-        for(const informacoes_pedido of pedido){
-            let total = 0
-            const cliente = await ClienteService.buscarCliente(informacoes_pedido.clienteId)
-            if(!cliente){
-                throw new Error('Cliente não existe!')
-            }
-            if(cliente.tipo_cliente != informacoes_pedido.tipo_cliente){
-                throw new Error("Cliente selecionado não corresponde ao tipo informado.")
-            }
-            let pedidoId = await modelPedido.create({
-                cliente_id:informacoes_pedido.clienteId,
-                data: informacoes_pedido.data,
-                status:'aberto'
-            })
-            
-            for(const valor_total of informacoes_pedido.itens){
-            total += valor_total.total
-            }
-
-            for(const items_pedido of informacoes_pedido.itens){
-                modelItensPedido.create({
-                    id_pedido: pedidoId.id,
-                    preco: items_pedido.total,
-                    produto: items_pedido.produto,
-                    cor: items_pedido.cor,
-                    tecido: items_pedido.tecido,
-                    tamanho: items_pedido.tamanho,
-                    detalhes: items_pedido.detalhes,
-                    quantidade: items_pedido.quantidade,
-                    preco_unitario: items_pedido.precounit,
-                    modelo_produto: items_pedido.modelo,
-                    complemento: items_pedido.complemento
+            for(const informacoes_pedido of pedido){
+                let total = 0
+                const cliente = await ClienteService.buscarCliente(informacoes_pedido.clienteId)
+                if(!cliente){
+                    throw new Error('Cliente não existe!')
+                }
+                if(cliente.tipo_cliente != informacoes_pedido.tipo_cliente){
+                    throw new Error("Cliente selecionado não corresponde ao tipo informado.")
+                }
+                
+                if(informacoes_pedido.data < dataToday){
+                    throw new Error("Data inválida!")
+                }
+                let pedidoId = await modelPedido.create({
+                    cliente_id:informacoes_pedido.clienteId,
+                    data: informacoes_pedido.data,
+                    status:'aberto'
                 })
+                
+                for(const valor_total of informacoes_pedido.itens){
+                total += valor_total.total
+                }
+
+                for(const items_pedido of informacoes_pedido.itens){
+                    modelItensPedido.create({
+                        id_pedido: pedidoId.id,
+                        preco: items_pedido.total,
+                        produto: items_pedido.produto,
+                        cor: items_pedido.cor,
+                        tecido: items_pedido.tecido,
+                        tamanho: items_pedido.tamanho,
+                        detalhes: items_pedido.detalhes,
+                        quantidade: items_pedido.quantidade,
+                        preco_unitario: items_pedido.precounit,
+                        modelo_produto: items_pedido.modelo,
+                        complemento: items_pedido.complemento
+                    })
+                }
             }
-        }
-        return pedido
+            return pedido
     }
     
     async formEditar(id){
