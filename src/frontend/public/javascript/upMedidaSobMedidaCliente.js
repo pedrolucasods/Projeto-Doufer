@@ -64,10 +64,10 @@ async function deletarMedidaSobMedida(medidaId, clienteId) {
         if(!response.ok){
             throw new Error(data.erro)
         }
-        window.location.href = `/api/medidas/clientes/listar/${clienteid}?msg=${data.msg}`
+        window.location.href = `/api/medidas/clientes/listar/${clienteId}?msg=${data.msg}`
      } catch (error) {
         const erro = error
-        window.location.href= `/api/medidas/clientes/listar/${clienteid}?error=${erro}`
+        window.location.href= `/api/medidas/clientes/listar/${clienteId}?error=${erro}`
      }
 }
 
