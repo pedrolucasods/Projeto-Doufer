@@ -39,6 +39,7 @@ app.engine('handlebars', handlebars.engine({
         lte: (a, b) => a <= b,
         and: (a, b) => a && b,
         or: (a, b) => a || b,
+        selected: (a, b) => (a == b ? 'selected' : ''),
         json: (context) => JSON.stringify(context),
         mostrar:(valor) =>{return valor?valor:"-"}
     },

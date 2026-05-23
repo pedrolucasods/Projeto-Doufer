@@ -14,6 +14,7 @@
     {{#if clientes.length}}
         <h1>Criar Pedido</h1>
         <form id="formaddpedido">
+            <input type="hidden" id="tipo_cliente" value="{{tipoCliente}}">
             <label for="selectcliente">Cliente:</label>
             <select id="selectcliente" name="cliente">
                 {{#each clientes}}

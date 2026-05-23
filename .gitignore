@@ -15,7 +15,6 @@ out/
 *.asar
 
 # VSCode
-.vscode/
 *.code-workspace
 
 # Sistema operacional

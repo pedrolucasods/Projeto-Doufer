@@ -1,7 +1,7 @@
 const db = require('../database')
 const { DataTypes } = require('sequelize')
 
-const Medidas_sob_medida = db.define('medidas_sob_medida', {
+const Medidas_sob_medida = db.define('medidas_sob_medidas', {
     cliente_id: {
         type: DataTypes.INTEGER,
         allowNull: true,

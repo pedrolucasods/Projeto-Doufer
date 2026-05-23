@@ -2,7 +2,7 @@ const modelItensPedido = require('../models/itensPedidos')
 
 class ItensPedido{
     async buscaritem(id){
-        const Item = await modelItensPedido.findOne({
+        const Item = modelItensPedido.findOne({
             where:{
                 id:id
             }

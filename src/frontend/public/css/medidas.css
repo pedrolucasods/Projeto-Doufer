@@ -1,35 +1,105 @@
 body{
-    margin: 0;
-    min-height: 100vh;
     display: block;
+    width: 100%;
+    height: 100%;
     justify-content: center;
     align-items: center;
-    padding: 2rem;
+    padding: 10px;
+}
+
+p{
+    margin: 0;
 }
 
 #container{
-    width: 40%;
-    height: 70%;
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    min-height: 100%;
+    margin: 0;
+    padding: 5rem;
+    align-items: center;
+    justify-content: center;
+}
+
+.container-infos{
+    display: flex;
+    flex-wrap: wrap;
+    width: 60%;
+    height: 100%;
     margin: 0 auto;
     padding: 5rem;
-
-}
-#container-ids{
-    display: flex;
-    gap: 220px;
+    align-items: center;
     justify-content: center;
+    gap: 10px;
+}
+
+.container-title{
+    display: block;
+    width: inherit;
+    justify-content: space-between;
+}
+
+#container-medidas{
+    display: flex;
+    width: 100%;
+    min-width: 1002px;
+    justify-content: space-around;
+    align-items: center;
+    gap: 20px;
+}
+
+.medidas-sobmedida{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+
+
+
+.medidas-corpos{
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    justify-content: center;
+    gap: 10px;
 }
 
 #medidas-corpo{
     display: flex;
-    gap: 220px;
+    flex-wrap: wrap;
+    width: 100%;
+    justify-content: space-between;
+}
+
+.medidas-manga{
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
     justify-content: center;
+    gap: 10px;
 }
 
 #medidas-manga{
     display: flex;
-    gap: 220px;
+    flex-wrap: wrap;
+    width: 100%;
+    justify-content: space-between;
+}
+
+.medidas-padrao{
+    display: flex;
+    flex-wrap: wrap;
     justify-content: center;
+    gap: 10px;
+}
+
+#medidas-padrao{
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    gap: 10px;
 }
 
 #container-buttons{
@@ -45,21 +115,75 @@ body{
     font-weight: 600;
     text-align: center;
     color: #2c3e50;
-    margin-bottom: 20px;
 }
 
 #title-corpo{
+    display: flex;
     font-size: 28px;
     font-weight: 600;
     text-align: center;
+    justify-content: center;
     color: #2c3e50;
-    margin-bottom: 20px;
 }
 
 #title-manga{
     font-size: 28px;
     font-weight: 600;
     text-align: center;
+    justify-content: center;
     color: #2c3e50;
-    margin-bottom: 20px;
+    align-items: center;
+}
+
+/* Estilo do modal de exclusão */
+.modal-content.delete-modal {
+    border: none;
+    border-radius: 1.25rem;
+    overflow: hidden;
+    box-shadow: 0 1.5rem 3rem rgba(0, 0, 0, 0.18);
+    background: linear-gradient(180deg, #ffffff 0%, #f9f8ff 100%);
+}
+
+.modal-content.delete-modal .modal-header {
+    background: #f5f3ff;
+    border-bottom: none;
+    padding: 1.4rem 1.5rem 1rem;
+}
+
+.modal-content.delete-modal .modal-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #2b2a56;
+}
+
+.modal-content.delete-modal .modal-body {
+    padding: 1rem 1.5rem 0.5rem;
+    color: #4f4f63;
+    font-size: 0.98rem;
+}
+
+.modal-content.delete-modal .modal-body .text-muted {
+    font-size: 0.92rem;
+}
+
+.modal-content.delete-modal .modal-footer {
+    border-top: none;
+    padding: 1rem 1.5rem 1.4rem;
+    gap: 0.75rem;
+    justify-content: flex-end;
+}
+
+.modal-content.delete-modal .btn-secondary,
+.modal-content.delete-modal .btn-danger {
+    border-radius: 50px;
+    padding: 0.8rem 1.4rem;
+    min-width: 110px;
+}
+
+.modal-content.delete-modal .btn-danger {
+    box-shadow: inset 0 0 0 1px rgba(196, 25, 25, 0.12);
+}
+
+.modal-backdrop.show {
+    background-color: rgba(0, 0, 0, 0.55);
 }

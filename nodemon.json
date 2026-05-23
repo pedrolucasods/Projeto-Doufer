@@ -1,0 +1,5 @@
+{
+  "exec": "node --inspect=9229 ./src/backend/server.js",
+  "watch": ["src"],
+  "ext": "js,json"
+}

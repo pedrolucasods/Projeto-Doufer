@@ -14,14 +14,6 @@ router.get('/editar/:id', ClienteController.formEditar)
 // detalhes cliente
 router.get('/detalhes/:id', ClienteController.detalhes)
 
-// formulario cadastrar Medida
-router.get('/medidas/:id', ClienteController.formCadastrar_Medidas)
-
-// listar medidas cliente
-router.get('/medidas/listar/:id', ClienteController.listarMedidas)
-
-// editar medidas cliente
-router.get('/medidas/editar/:id', ClienteController.formEditar_medidas)
 
 
 module.exports = router

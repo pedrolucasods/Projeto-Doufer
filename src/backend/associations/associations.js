@@ -70,7 +70,7 @@ itempedido_medida.belongsTo(itenspedidos,{
 
 cliente.hasMany(MedidasSobMedida,{
     foreignKey:'cliente_id',
-    as:'medidas_padrao',
+    as:'medidas_sob_medida',
     onDelete:'CASCADE'
 })
 
