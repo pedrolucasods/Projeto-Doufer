@@ -1,0 +1,61 @@
+{{#if msg}}
+<div id="msg" class="d-flex gap-3 alert alert-success alert-dismissible fade show position-fixed top-0 end-0 me-5 m-3">
+    <i class="bi bi-check-square-fill text-success"></i>
+    <p class="fw-bold mb-0">{{msg}}</p>
+</div>
+{{/if}}
+{{#if error}}
+<div id="errordiv" class="d-flex gap-3 alert alert-danger alert-dismissible fade show position-fixed top-0 end-0 me-5 m-3">
+    <i class="bi bi-x-square-fill text-danger"></i>
+    <p class="fw-bold mb-0">{{error}}</p>
+</div>
+{{/if}}
+<div id="container-medidas">
+    <h1>Cadastro de Medidas</h1>
+    <div id="container-form">
+        <form id="form">
+            <label>Busto:</label>
+            <br>
+            <input id="inputBusto" name="busto">
+            <br><br>
+
+            <label>Cintura:</label>
+            <br>
+            <input id="inputCintura" name="cintura">
+            <br><br>
+
+            <label>Quadril:</label>
+            <br>
+            <input id="inputQuadril" name="quadril">
+            <br><br>
+
+            <label>Comprimento</label>
+            <br>
+            <input id="inputComprimento" name="comprimento">
+            <br><br>
+
+            <label>Ombro:</label>
+            <br>
+            <input id="inputOmbro" name="ombro">
+            <br><br>
+
+            <label>Costas:</label>
+            <br>
+            <input id="inputCostas" name="costas">
+            <br><br>
+
+            <label>Comprimento da Manga:</label>
+            <br>
+            <input id="inputCManga" name="comprimento_da_manga">
+            <br><br>
+
+            <label>Largura da Manga</label>
+            <br>
+            <input id="inputLManga" name="largura_da_manga">
+            <br><br>
+
+            <button type="submit">Enviar</button>
+        </form>
+    </div>
+</div>
+    
