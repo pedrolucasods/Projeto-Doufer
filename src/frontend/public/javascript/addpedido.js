@@ -14,6 +14,11 @@ document.addEventListener("DOMContentLoaded", () => {
     const divItens = document.getElementById('itens')
     const form = document.getElementById('formaddpedido')
 
+    // Adicionando a data de hoje no pedido data
+    const today = new Date().toISOString().split('T')[0]
+    const dataInput = document.getElementById('data_input')
+    dataInput.setAttribute('min',today)
+
     // Modal de confirmação
     const modalConfirm = document.getElementById('modalConfirm')
     const btnConfirmar = document.getElementById('btnConfirmar')
@@ -246,8 +251,8 @@ async function cadastrarPedido(pedido){
         }
         window.location.href = `/pedidos?msg=${data.msg}`
     } catch (error) {
-        console.log(error)
-        window.location.href = `/pedidos/cadastrarPedido?error=${error}`
+        const erro = error
+        window.location.href = `/pedidos/cadastrarPedido?tipo=${pedido.tipo_cliente}&error=${erro}`
     }
 }
 
