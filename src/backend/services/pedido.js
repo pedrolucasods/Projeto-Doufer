@@ -2,6 +2,7 @@ const modelCliente = require('../models/cliente')
 const modelPedido = require('../models/pedidos')
 const modelItensPedido = require('../models/itensPedidos')
 const ClienteService = require('./cliente')
+const ItemPedidoMedidaService = require('./item_pedido_medida')
 class Pedido{
 
     // listar e formatar
@@ -86,30 +87,60 @@ class Pedido{
             return pedido
     }
     
-    async formEditar(id){
+    async detalhes(id){
         const arraydeItens = []
         const Pedidoid = id
         const Pedido = await modelPedido.findAll({where: {'id':Pedidoid}})
         const itens = await modelItensPedido.findAll({where: {'id_pedido':Pedidoid}})
+        let totalPedido = 0
+        let quantidadeItens_com_medida = 0
+        let medidasItens
+        let quantidade_total_de_itens = 0
+        for(let info of itens){
+            totalPedido+=info.preco
+            medidasItens = await ItemPedidoMedidaService.somar_quantidadeMedida_registrada(info.id)
+            quantidadeItens_com_medida += medidasItens
+            quantidade_total_de_itens+=info.quantidade
+        }
+        
+        
+        
         arraydeItens.push(...itens)
 
         //Info Pedido
         let pedido_status = null
         let pedido_id_cliente = null
         let pedido_data = null
+        const quantidade_Itens_do_Pedido = arraydeItens.length
         //For para adicionar os valores nas variaveis
         for (const Infos of Pedido){
                 pedido_status = Infos.status
                 pedido_id_cliente = Infos.cliente_id
                 pedido_data = Infos.data
             }
+        // pegando a quantidade de dias faltante
+        let dataToday = new Date().toISOString().split('T')[0]
+        let DiasFaltante = ((new Date(pedido_data)) - (new Date(dataToday))) / (1000 * 60 * 60 * 24)
 
         // Busca Nome cliente
         const Cliente = await modelCliente.findAll({where:{'id':pedido_id_cliente}})
         let nome = null
         for(const infoCliente of Cliente)
             nome = infoCliente.nome
-        return {arraydeItens,Pedidoid,pedido_status,pedido_id_cliente,pedido_data,nome}
+
+        return {
+            quantidade_total_de_itens,
+            quantidadeItens_com_medida,
+            quantidade_Itens_do_Pedido,
+            arraydeItens,
+            Pedidoid,
+            pedido_status,
+            pedido_id_cliente,
+            pedido_data,
+            nome,
+            totalPedido,
+            DiasFaltante
+        }
     }
 
     async editarPedido(reqbodypedido,reqparamsid){

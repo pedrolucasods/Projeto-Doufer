@@ -28,21 +28,10 @@ app.use(bodyParser.json())
 
 //config
 // Configura Handlebars, public, etc.
+const customHelpers = require('./helpers/helpersHandlebars')
 app.engine('handlebars', handlebars.engine({
     defaultLayout: 'main',
-    helpers: {  // adicionado helpers para eq e outros
-        eq: (a, b) => a == b,
-        ne: (a, b) => a != b,
-        gt: (a, b) => a > b,
-        lt: (a, b) => a < b,
-        gte: (a, b) => a >= b,
-        lte: (a, b) => a <= b,
-        and: (a, b) => a && b,
-        or: (a, b) => a || b,
-        selected: (a, b) => (a == b ? 'selected' : ''),
-        json: (context) => JSON.stringify(context),
-        mostrar:(valor) =>{return valor?valor:"-"}
-    },
+    helpers: customHelpers,
     runtimeOptions: {
         allowProtoPropertiesByDefault: true,
         allowProtoMethodsByDefault: true,

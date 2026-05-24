@@ -1,33 +1,200 @@
+<button id="back" onclick="voltar()">
+    <i class="fas fa-home"></i>
+</button>
+
+{{#if msg}}
+<div id="msg" class="d-flex gap-3 alert alert-success alert-dismissible fade show position-fixed top-0 end-0 me-5 m-3">
+    <i class="bi bi-check-square-fill text-success"></i>
+    <p class="fw-bold mb-0">{{msg}}</p>
+</div>
+{{/if}}
+
+{{#if error}}
+<div id="errordiv" class="d-flex gap-3 alert alert-danger alert-dismissible fade show position-fixed top-0 end-0 me-5 m-3">
+    <i class="bi bi-x-square-fill text-danger"></i>
+    <p class="fw-bold mb-0">{{error}}</p>
+</div>
+{{/if}}
+
 <div id="container">
-    <div id="container-info-pedido">
-        <h1>Detalhes Pedido Nº{{PedidoId}}</h1>
-        <p><strong>Cliente:</strong>{{nome}}</p>
-        <p><strong>Data da Entrega:</strong>{{pedido_data}}</p>
-        <p><strong>Status do Pedido:</strong>{{pedido_status}}</p>
-    </div>
-    <br>
-    <div id="container-info-itens">
-        {{#each arraydeItens}}
-            <p><strong>Produto: </strong>{{produto}}</p>
-            <p><strong>Cor: </strong>{{this.cor}}</p>
-            <p><strong>Tecido: </strong>{{this.tecido}}</p>
-            <p><strong>Tamanho: </strong>{{this.tamanho}}cm</p>
-            {{#if this.detalhes}}
-                <p><strong>Detalhes: </strong>{{this.detalhes}}</p>
-            {{/if}}
-            <p><strong>Quantidade: </strong>{{this.quantidade}}</p>
-            <p><strong>Preço Unitário: </strong>R${{this.preco_unitario}}</p>
-            <p><strong>Modelo do Produto: </strong>{{this.modelo_produto}}</p>
-            {{#if this.complemento}}
-                <h3>Complemento:</h3>
-                <div id="container-info-itens-complemento">
-                    <p>{{this.complemento}}</p>
+
+    <div id="pedido-container">
+
+        <div class="header-pedido">
+
+            <div>
+                <h1 class="title">
+                    Pedido #{{Pedidoid}}
+                </h1>
+
+                <p class="cliente-name">
+                    Cliente: <strong>{{nome}}</strong>
+                </p>
+            </div>
+
+            <div>
+
+                {{#if DiasFaltante}}
+
+                    <span class="badge bg-success fs-6">
+                        {{DiasFaltante}} dias restantes
+                    </span>
+
+                {{else}}
+
+                    <span class="badge bg-danger fs-6">
+                        Entrega atrasada
+                    </span>
+
+                {{/if}}
+
+            </div>
+
+        </div>
+
+        <div id="pedido-info">
+
+            <div class="info-card">
+
+                <h3>Status</h3>
+
+                {{#if pedido_status}}
+
+                    <span class="badge bg-primary">
+                        {{pedido_status}}
+                    </span>
+
+                {{else}}
+
+                    <span class="badge bg-secondary">
+                        sem status
+                    </span>
+
+                {{/if}}
+
+            </div>
+
+            <div class="info-card">
+
+                <h3>Entrega</h3>
+
+                <p>{{data_brasileira pedido_data}}</p>
+
+            </div>
+
+            <div class="info-card">
+
+                <h3>Total</h3>
+
+                <p>R$ {{totalPedido}}</p>
+
+            </div>
+
+        </div>
+
+        <div id="metricas-container">
+
+            <div class="metrica-card">
+
+                <h2>{{quantidade_total_de_itens}}</h2>
+
+                <p>Total de itens</p>
+
+            </div>
+
+            <div class="metrica-card">
+
+                <h2>{{quantidadeItens_com_medida}}</h2>
+
+                <p>Itens com medida</p>
+
+            </div>
+
+            <div class="metrica-card">
+
+                <h2>{{quantidade_Itens_do_Pedido}}</h2>
+
+                <p>Itens sem medida</p>
+
+            </div>
+
+            <div class="metrica-card">
+
+                <h2>{{DiasFaltante}}</h2>
+
+                <p>Dias restantes</p>
+
+            </div>
+
+        </div>
+
+        <div id="itens-container">
+
+            <div class="section-header">
+                <h2>Itens do Pedido</h2>
+            </div>
+
+            {{#each arraydeItens}}
+
+            <div class="item-card">
+
+                <div class="item-top">
+
+                    <h3>{{produto}}</h3>
+
+                    <span class="badge bg-dark">
+                        Qtd: {{quantidade}}
+                    </span>
+
                 </div>
-            {{/if}}
-            <br>
-            <hr>
-            <br>
-            <h2>Preço total: <strong>R${{this.preco}}</strong></h2>
-        {{/each}}
+
+                <div class="item-body">
+
+                    <p>
+                        <strong>Cor:</strong>
+
+                        {{#if cor}}
+                            {{cor}}
+                        {{else}}
+                            Não informado
+                        {{/if}}
+                    </p>
+
+                    <p>
+                        <strong>Tecido:</strong>
+
+                        {{#if tecido}}
+                            {{tecido}}
+                        {{else}}
+                            Não informado
+                        {{/if}}
+                    </p>
+
+                    <p>
+                        <strong>Preço Unitário:</strong>
+                        R$ {{preco_unitario}}
+                    </p>
+
+                </div>
+
+            </div>
+
+            {{/each}}
+
+        </div>
+
+        <div id="acoes-container">
+
+            <button class="btn btn-primary">
+                Ver Medidas
+            </button>
+
+            <button class="btn btn-outline-secondary">
+                Editar Pedido
+            </button>
+
+        </div>
+
     </div>
+
 </div>
