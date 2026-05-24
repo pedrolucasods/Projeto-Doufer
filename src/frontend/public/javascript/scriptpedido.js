@@ -3,6 +3,14 @@ document.addEventListener('DOMContentLoaded',()=>{
     const input = document.getElementById('inputsearch');
     console.log('dom carregado');
 
+    function debounce(func,wait=300){
+        let timeout
+        return function(...args){
+            clearTimeout(timeout)
+            timeout = setTimeout(() => func.apply(this, args), wait)
+        }
+    }
+
     select.addEventListener('change', function () {
         let selectvalue = select.options[select.selectedIndex].text.toLowerCase();
         input.placeholder = `digite o ${selectvalue}...`;
@@ -31,7 +39,7 @@ document.addEventListener('DOMContentLoaded',()=>{
     const selectPedido = document.getElementById('fieldsearch');
     const inputsearch = document.getElementById('inputsearch');
 
-    inputsearch.addEventListener('input', filtrarCards);
+    inputsearch.addEventListener('input', debounce(filtrarCards, 300));
 
     function filtrarCards() {
         const campo = selectPedido.value;
