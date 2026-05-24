@@ -1,4 +1,3 @@
-const buttonaddcliente = document.getElementById('newcliente');
 const buttonback = document.getElementById('back');
 
 let idClienteParaExcluir = null; // usado para guardar o ID temporariamente
@@ -67,9 +66,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
 });
 
-buttonaddcliente.addEventListener('click', function () {
+function adicionar_cliente(){
     window.location.href = '/clientes/cadastro';
-});
+}
+
 
 buttonback.addEventListener('click', function () {
     window.location.href = '/';
