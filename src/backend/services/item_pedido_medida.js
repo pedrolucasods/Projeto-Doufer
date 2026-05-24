@@ -5,6 +5,7 @@ const modelSobMedida = require('../models/medidas_sob_medida')
 const serviceItemPedido = require('./itenspedido')
 const ServiceMedidaPadrao = require('./medidaspadrao')
 const ServiceMedidaSobMedida = require('./medidassobmedida')
+const { where } = require('sequelize')
 class ItemPedidoMedida{
     async buscar(id){
         const pedidoMedida = await modelItemPedidoMedida.findOne({
@@ -12,7 +13,6 @@ class ItemPedidoMedida{
                 id:id
             }
         })
-
         return pedidoMedida
     }
 
@@ -33,54 +33,49 @@ class ItemPedidoMedida{
             // validação da quantidade
             const total = itemPedido.quantidade
             const totalItemMedida = await this.somar_quantidadeMedida_registrada(dados.item_pedido_id)
-            if(dadosQuantidade>total || totalItemMedida+dadosQuantidade>total || dadosQuantidade<1 || isNaN(dadosQuantidade)){
+            if(dadosQuantidade>total || ((totalItemMedida+dadosQuantidade)>total) || dadosQuantidade<1 || isNaN(dadosQuantidade)){
                 throw new Error('Quantidade inválida!')
                 
             }
 
-            // cadastro do item pedido medida
-            const cadastro = await modelItemPedidoMedida.create({
-                item_pedido_id:dados.item_pedido_id,
-                tipo_medida:dados.tipo_medida,
-                quantidade:dadosQuantidade
-            })
-
-            // validação do cadastro
-            if(!cadastro){
-                throw new Error("Erro ao cadastrar a medida padrão!")
-            }
+            
 
             // se for medida padrão faz isso
             if(dados.tipo_medida=='padrao'){
                 let medidaPadrao = {}
                 for(const valores of dados.medidas){
                     medidaPadrao = {
-                        item_medida_id: cadastro.id, tamanho: valores.tamanho, ajuste: valores.ajuste
+                        tamanho: valores.tamanho, ajuste: valores.ajuste
                     }
                 }
 
-                // validação de mesmo tamanho para o mesmo item pedido
-                const testedata = await this.buscarPorMedidasDoMesmoItem_ComMesmaMedida(cadastro.item_pedido_id,medidaPadrao.tamanho,'padrao')
-                let valorbool = testedata?'1':null
+                const item_com_mesma_medida = await this.buscarPorMedidasDoMesmoItem_ComMesmaMedida(dados.item_pedido_id,medidaPadrao,'padrao')
+                let valorbool = item_com_mesma_medida?'1':null
                 if(valorbool){
-                    throw new Error('Já existe medida igual registrada para esse item!')
+                    const quantidade_Antiga = parseInt(item_com_mesma_medida.quantidade)
+                    let novaquantidade = dadosQuantidade+quantidade_Antiga
+                    let updateQuantidade = await this.editar_quantidade(novaquantidade,item_com_mesma_medida.id)
+                    return updateQuantidade
+                }else{
+                    // cadastro do item pedido medida
+                    const cadastro = await modelItemPedidoMedida.create({
+                    item_pedido_id:dados.item_pedido_id,
+                    tipo_medida:dados.tipo_medida,
+                    quantidade:dadosQuantidade
+                    })
+                    // validação do cadastro
+                    if(!cadastro){
+                        throw new Error("Erro ao cadastrar a medida padrão!")
+                    }
+                    medidaPadrao.item_medida_id = cadastro.id
+                    const cadMedidaSobMedida = await ServiceMedidaPadrao.cadastrar(medidaPadrao)
+                    return cadastro
                 }
 
-
-                // validação caso duplique
-                const buscaDuplicadaMedidaPadrao = await ServiceMedidaPadrao.buscarPorItemPedidoMedidaIdETamanho(cadastro.id,medidaPadrao.tamanho)
-                if(buscaDuplicadaMedidaPadrao){
-                    throw new Error('Ja existe esse tamanho registrado para esta divisão!')
-                }
-
-                // cadastro da medida padrão
-                const cadMedidaPadrao = await ServiceMedidaPadrao.cadastrar(medidaPadrao)
-                return cadastro
             }else if(dados.tipo_medida=='sob_medida'){
                 let medidasobMedida = {}
                 for(const valores of dados.medidas){
                     medidasobMedida={
-                        item_medida_id: cadastro.id,
                         busto: valores.busto,
                         cintura:valores.cintura,
                         quadril:valores.quadril,
@@ -91,18 +86,43 @@ class ItemPedidoMedida{
                         largura_da_manga:valores.largura_da_manga
                     }
                 }
-
-                const testedata = await this.buscarPorMedidasDoMesmoItem_ComMesmaMedida(cadastro.item_pedido_id,medidasobMedida,'sobmedida')
-                let valorbool = testedata?'1':null
+                const item_com_mesma_medida = await this.buscarPorMedidasDoMesmoItem_ComMesmaMedida(dados.item_pedido_id,medidasobMedida,'sobmedida')
+                let valorbool = item_com_mesma_medida?'1':null
                 if(valorbool){
-                    throw new Error('Já existe medida igual registrada para esse item!')
-                }
-                const cadMedidaSobMedida = await ServiceMedidaSobMedida.cadastrar(medidasobMedida)
-                return cadastro
+                    const quantidade_Antiga = parseInt(item_com_mesma_medida.quantidade)
+                    let novaquantidade = dadosQuantidade+quantidade_Antiga
+                    let updateQuantidade = await this.editar_quantidade(novaquantidade,item_com_mesma_medida.id)
+                    return updateQuantidade
+                }else{
+                    // cadastro do item pedido medida
+                    const cadastro = await modelItemPedidoMedida.create({
+                    item_pedido_id:dados.item_pedido_id,
+                    tipo_medida:dados.tipo_medida,
+                    quantidade:dadosQuantidade
+                    })
+                    // validação do cadastro
+                    if(!cadastro){
+                        throw new Error("Erro ao cadastrar a medida padrão!")
+                    }
+                    medidasobMedida.item_medida_id = cadastro.id
+                    const cadMedidaSobMedida = await ServiceMedidaSobMedida.cadastrar(medidasobMedida)
+                    return cadastro
+                    }
+                
             } 
         } catch (error) {
             throw new Error(`${error.message}`)
         }
+    }
+
+    async editar_quantidade(quantidade, id){
+        const updateQuantidade = await modelItemPedidoMedida.update({
+            quantidade:quantidade
+            },{
+                where:{id:id}
+            }
+        )
+        return updateQuantidade
     }
 
     async somar_quantidadeMedida_registrada(item_pedido_id){
@@ -121,13 +141,14 @@ class ItemPedidoMedida{
             const consulta = await modelItemPedidoMedida.findOne({
             where:{
                 item_pedido_id:id
-            },
+            },attibutes:['id','quantidade'],
             include:[{
                 model:modelMedidaPadrao,
                 as: 'medidas_padrao_item',
                 required: true,
                 where:{
-                    tamanho:medida
+                    tamanho:medida.tamanho,
+                    ajuste:medida.ajuste
                 },
                     attibutes: ['tamanho']
                 }]
@@ -138,7 +159,7 @@ class ItemPedidoMedida{
             const consulta = await modelItemPedidoMedida.findOne({
                 where:{
                     item_pedido_id:id
-                },
+                },attibutes:['id','quantidade'],
                 include:[{
                     model:modelSobMedida,
                     as: 'medidas_sob_medida',

@@ -80,7 +80,7 @@ class Pedido{
     //formulario editar pedido
     async formEditarPedido(req,res){
         try {
-            const {arraydeItens,Pedidoid,pedido_status,pedido_id_cliente,pedido_data,nome} = await PedidoService.formEditar(req.params.id)
+            const {arraydeItens,Pedidoid,pedido_status,pedido_id_cliente,pedido_data,nome} = await PedidoService.detalhes(req.params.id)
             //Info Itens Pedido
             return res.render('editarPedido', {
                     script:'editarpedido.js',
@@ -141,20 +141,21 @@ class Pedido{
 
     async detalhesPedido(req,res){
         try {
-            const {arraydeItens,Pedidoid,pedido_status,pedido_id_cliente,pedido_data,nome} = await PedidoService.formEditar(req.params.id)
+            const {quantidadeItens_com_medida,DiasFaltante,quantidadeItens,totalPedido,arraydeItens,Pedidoid,pedido_status,pedido_id_cliente,pedido_data,nome} = await PedidoService.detalhes(req.params.id)
             //Info Itens Pedido
-            // return res.send(arraydeItens[0],Pedidoid,pedido_status,pedido_id_cliente,pedido_data,nome)
-            return res.render('detalhes-pedido', {
-                    script:'detalhes-pedido.js',
-                    stylesheet:'detalhes-pedido.css',
-                    Pedidoid,
-                    pedido_status,
-                    pedido_id_cliente,
-                    pedido_data,
-                    nome, 
-                    arraydeItens
-                }
-                )
+            return res.json({quantidadeItens_com_medida,DiasFaltante,totalPedido,Pedidoid,pedido_status,pedido_id_cliente,pedido_data,nome,quantidadeItens,arraydeItens})
+            
+            // return res.render('detalhes-pedido', {
+            //         script:'detalhes-pedido.js',
+            //         stylesheet:'detalhes-pedido.css',
+            //         Pedidoid,
+            //         pedido_status,
+            //         pedido_id_cliente,
+            //         pedido_data,
+            //         nome, 
+            //         arraydeItens
+            //     }
+            //     )
         } catch (error) {
             return res.status(500).send(`Erro ao exibir os detalhes do pedido!: ${error}`)
         }
