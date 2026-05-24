@@ -39,6 +39,14 @@ class Helpers{
         let dataBrail = `${day}/${month}/${year}`
         return dataBrail
     }
+
+    subtrair(a,b){
+        if(b>0){
+            return  parseInt(a)-parseInt(b)
+        }else{
+            return a
+        }
+    }
 }
 
 const helpersInstance = new Helpers();
@@ -56,5 +64,6 @@ const objectHelper = {  // adicionado helpers para eq e outros
         json: (context) => helpersInstance.json(context),
         mostrar: (valor) => helpersInstance.mostrar(valor),
         data_brasileira: (dataUSA) => helpersInstance.data_brasileira(dataUSA),
+        subtrair: (a,b)=> helpersInstance.subtrair(a,b)
     }
 module.exports = objectHelper
