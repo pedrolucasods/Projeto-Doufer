@@ -1,3 +1,79 @@
+document.addEventListener('DOMContentLoaded',()=>{
+    const select = document.getElementById('fieldsearch');
+    const input = document.getElementById('inputsearch');
+    console.log('dom carregado');
+
+    select.addEventListener('change', function () {
+        let selectvalue = select.options[select.selectedIndex].text.toLowerCase();
+        input.placeholder = `digite o ${selectvalue}...`;
+    });
+
+    // AQUI: Corrige o input travado no Electron após carregamento
+    setTimeout(() => {
+        const input = document.getElementById('inputsearch');
+        if (input) input.focus();
+
+        try {
+            const { remote } = require('electron');
+            const win = remote.getCurrentWindow();
+            win.blur();
+            win.focus();
+        } catch (e) {
+            console.warn('Electron remote não disponível. Ignorado.');
+        }
+    }, 300);
+
+
+
+
+
+    //Busca de pedidos
+    const selectPedido = document.getElementById('fieldsearch');
+    const inputsearch = document.getElementById('inputsearch');
+
+    inputsearch.addEventListener('input', filtrarCards);
+
+    function filtrarCards() {
+        const campo = selectPedido.value;
+        const termo = inputsearch.value.trim().toLowerCase();
+        const cards = document.querySelectorAll('.pedido-card');
+
+        cards.forEach(card => {
+            let textoComparacao = '';
+
+            if (campo === 'cliente') {
+                const clienteElement = card.querySelector('.cliente');
+                if (clienteElement) {
+                    textoComparacao = clienteElement.textContent.toLowerCase();
+                }
+            } else if (campo === 'id') {
+                const idElement = card.querySelector('.pedido-id-badge');
+                if (idElement) {
+                    textoComparacao = idElement.textContent.toLowerCase();
+                }
+            } else if (campo === 'data') {
+                const infoBoxes = card.querySelectorAll('.info-box');
+                for (let box of infoBoxes) {
+                    if (box.textContent.includes('Entrega')) {
+                        textoComparacao = box.textContent.toLowerCase();
+                        break;
+                    }
+                }
+            } else if (campo === 'status') {
+                const statusElement = card.querySelector('.status');
+                if (statusElement) {
+                    textoComparacao = statusElement.textContent.toLowerCase();
+                }
+            }
+
+            if (textoComparacao.includes(termo)) {
+                card.style.display = 'block';
+            } else {
+                card.style.display = 'none';
+            }
+        });
+    }
+})
 
 function deletarPedido(id){
     idDeletarPedido = id
