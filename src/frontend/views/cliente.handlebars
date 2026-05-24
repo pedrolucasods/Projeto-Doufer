@@ -1,70 +1,230 @@
-<button id="back"><i class="fas fa-home"></i></button>
+<button id="back">
+    <i class="fas fa-home"></i>
+</button>
+
 {{#if msg}}
 <div id="msg" class="d-flex gap-3 alert alert-success alert-dismissible fade show position-fixed top-0 end-0 me-5 m-3">
     <i class="bi bi-check-square-fill text-success"></i>
     <p class="fw-bold mb-0">{{msg}}</p>
 </div>
 {{/if}}
+
 {{#if error}}
 <div id="errordiv" class="d-flex gap-3 alert alert-danger alert-dismissible fade show position-fixed top-0 end-0 me-5 m-3">
     <i class="bi bi-x-square-fill text-danger"></i>
     <p class="fw-bold mb-0">{{error}}</p>
 </div>
 {{/if}}
-<div id="fundo">
-    <h1 id="title">Clientes</h1>
-    <div id="opcoes">
-        <select id="fieldsearch">
-            <option value="nome">Nome</option>
-            <option value="nome_empresa">Nome da Empresa</option>
-            <option value="id">Id</option>
-            <option value="telefone">Telefone</option>
-        </select>
-        <input id="inputsearch" type="search" placeholder="digite o nome...">
-        <button ><i class="fas fa-search"></i></button>
-        <button ><i id="newcliente" class="fas fa-user-plus"></i></button>
-        <br><br>
-    </div>
-    <hr>
-    {{#if clientes.length}}
-    <h2>Clientes Cadastrados</h2>
-        <div id="exibirclientes">
-            <div class="card-container">
-            {{#each clientes}}
-                <div class="card">
-                    <h3 class="campo-nome">{{this.nome}}</h3>
-                    <p><strong>ID:</strong> <span class="campo-id">{{this.id}}</span></p>
-                    <p><strong>Telefone:</strong> <span class="campo-telefone">{{this.telefone}}</span></p>
-                    <p><strong>CPF:</strong> {{this.cpf}}</p>
-                    <p><strong>Nome da Empresa :</strong> <span class="campo-nome-empresa">{{this.nome_empresa}}</span></p>
-                    <a href="/clientes/editar/{{this.id}}/"><button>Editar</button></a>
-                    <a href="/clientes/detalhes/{{this.id}}/"><button>Detalhes</button></a>
-                
-                    <button onclick="deletarCliente({{this.id}})">Excluir</button>
-                </div>
-            {{/each}}
+
+<div id="container">
+
+    <div id="clientes-wrapper">
+
+        <!-- HEADER -->
+
+        <div class="header-page">
+
+            <div>
+
+                <h1 id="title">
+                    Clientes
+                </h1>
+
+                <p class="subtitle">
+                    Gerenciamento e visualização de clientes
+                </p>
+
             </div>
+
+            <button class="btn btn-primary" onclick="adicionar_cliente()">
+                <i id="newcliente" class="fas fa-user-plus"></i>
+                Novo Cliente
+            </button>
+
         </div>
-    {{else}}
-        <h2>Você ainda não cadastrou nenhum cliente!</h2>
-    {{/if}}
-        
-    
 
-<!-- confirmaçcao da exclusão -->
+        <!-- SEARCH -->
 
-    <div id="modalConfirm" style="display: none; position: fixed; top: 0; left: 0; 
-        width: 100%; height: 100%; background-color: rgba(0,0,0,0.6); 
-        z-index: 999; justify-content: center; align-items: center;">
+        <div id="search-container">
 
-        <div style="background-color: white; padding: 20px; border-radius: 10px; text-align: center;">
-            <h2>Tem certeza que deseja excluir este cliente?</h2>
-            <br>
-            <button onclick="confirmarExclusao()">Sim</button>
-            <button onclick="fecharModal()">Cancelar</button>
+            <select id="fieldsearch">
+
+                <option value="nome">Nome</option>
+                <option value="nome_empresa">Empresa</option>
+                <option value="id">ID</option>
+                <option value="telefone">Telefone</option>
+
+            </select>
+
+            <input
+                id="inputsearch"
+                type="search"
+                placeholder="Digite o termo da busca..."
+            >
+
+            <button id="btnsearch">
+                <i class="fas fa-search"></i>
+            </button>
+
         </div>
+
+        <hr>
+
+        {{#if clientes.length}}
+
+        <div class="clientes-list">
+
+            {{#each clientes}}
+
+            <div class="cliente-row">
+
+                <!-- LEFT -->
+
+                <div class="cliente-main">
+
+                    <div class="cliente-avatar">
+
+                        {{this.nome.[0]}}
+
+                    </div>
+
+                    <div class="cliente-content">
+
+                        <div class="cliente-top">
+
+                            <h3 class="cliente-nome">
+                                {{this.nome}}
+                            </h3>
+
+                            <span class="cliente-id">
+                                #{{this.id}}
+                            </span>
+
+                        </div>
+
+                        <div class="cliente-info-grid">
+
+                            <div class="cliente-info">
+
+                                <span class="info-label">
+                                    Telefone
+                                </span>
+
+                                <strong class="campo-telefone">
+                                    {{this.telefone}}
+                                </strong>
+
+                            </div>
+
+                            <div class="cliente-info">
+
+                                <span class="info-label">
+                                    CPF
+                                </span>
+
+                                <strong>
+                                    {{this.cpf}}
+                                </strong>
+
+                            </div>
+
+                            <div class="cliente-info empresa">
+
+                                <span class="info-label">
+                                    Empresa
+                                </span>
+
+                                <strong class="campo-nome-empresa">
+
+                                    {{#if this.nome_empresa}}
+                                        {{this.nome_empresa}}
+                                    {{else}}
+                                        Nenhuma empresa cadastrada
+                                    {{/if}}
+
+                                </strong>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <!-- ACTIONS -->
+
+                <div class="cliente-actions">
+
+                    <a href="/clientes/editar/{{this.id}}/">
+
+                        <button class="btn btn-outline-primary">
+                            Editar
+                        </button>
+
+                    </a>
+
+                    <a href="/clientes/detalhes/{{this.id}}/">
+
+                        <button class="btn btn-primary">
+                            Detalhes
+                        </button>
+
+                    </a>
+
+                    <button
+                        class="btn btn-danger"
+                        onclick="deletarCliente({{this.id}})"
+                    >
+                        Excluir
+                    </button>
+
+                </div>
+
+            </div>
+
+            {{/each}}
+
+        </div>
+
+        {{else}}
+
+        <div class="empty-state">
+
+            <h2>
+                Você ainda não cadastrou nenhum cliente!
+            </h2>
+
+        </div>
+
+        {{/if}}
+
     </div>
 
-            
-    
+</div>
+
+<!-- MODAL -->
+
+<div id="modalConfirm">
+
+    <div class="modal-box">
+
+        <h2 id="modalMensagem">
+            Tem certeza que deseja excluir este cliente?
+        </h2>
+
+        <div class="modal-actions">
+
+            <button onclick="confirmarExclusao()">
+                Sim
+            </button>
+
+            <button onclick="fecharModal()">
+                Cancelar
+            </button>
+
+        </div>
+
+    </div>
+
 </div>
