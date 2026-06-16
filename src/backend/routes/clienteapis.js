@@ -4,7 +4,7 @@ const ClienteController = require('../controllers/cliente')
 
 
 // cadastro cliente
-router.post('/', ClienteController.cadastro)
+router.post('/', ClienteController.cadastrar)
 
 // editar cliente
 router.put('/:id', ClienteController.editar)
@@ -13,8 +13,5 @@ router.put('/:id', ClienteController.editar)
 router.delete('/:id', ClienteController.deletar)
 
 
-
-// limpar medidas
-router.delete('/medidas/:id', ClienteController.limparMedidas)
 
 module.exports = router

@@ -2,7 +2,7 @@ const cliente = require('../controllers/cliente')
 const modelCliente = require('../models/cliente')
 
 class ClienteService{
-    async listarTodos(){
+    async listar_todos(){
         const cliente = await modelCliente.findAll()
         return cliente
     }
@@ -32,31 +32,51 @@ class ClienteService{
         return cliente
     }
 
-    async cadastrar(nome,telefone,cpf,nome_empresa,tipo_cliente){
+    async cadastrar(Dados){
+        if(Dados.cpf){
+            let cpfregister = await this.buscarCliente(Dados.cpf)
+            if(cpfregister){
+                throw new Error('Cpf ja cadastrado!')
+            }
+        }
         return  modelCliente.create({
-                    nome:nome,
-                    telefone: telefone,
-                    cpf: cpf,
-                    nome_empresa: nome_empresa,
-                    tipo_cliente: tipo_cliente
+                    nome:Dados.nome,
+                    telefone: Dados.telefone,
+                    cpf: Dados.cpf,
+                    nome_empresa: Dados.nome_empresa,
+                    tipo_cliente: Dados.tipo_cliente
                 })
     }
 
-    editar(idcliente,nomecliente,telefonecliente,cpfcliente,nomeclienteEmpresa,tipo_cliente){
+    async editar(Dados){
+        const busca_cliente = await this.buscarCliente(Dados.cliente_id)
+        if(!busca_cliente){
+            throw new Error('Cliente não encontrado')
+        }
+        if(Dados.cpf){
+        let cpfregister = await this.buscarCliente(Dados.cpf)
+        if(cpfregister && cpfregister.id != Dados.cliente_id){
+            throw new Error('Cpf ja cadastrado!')
+        }
+    }
         return modelCliente.update({
-                nome:nomecliente,
-                telefone: telefonecliente,
-                cpf: cpfcliente,
-                nome_empresa: nomeclienteEmpresa,
-                tipo_cliente: tipo_cliente
+                nome:Dados.nomecliente,
+                telefone: Dados.telefonecliente,
+                cpf: Dados.cpfcliente,
+                nome_empresa: Dados.nomeclienteEmpresa,
+                tipo_cliente: Dados.tipo_cliente
             },{
                 where:{
-                    id: idcliente
+                    id: Dados.cliente_id
                 }
             })
     }
 
-    deletar(idcliente){
+    async deletar(idcliente){
+        const busca_cliente = await this.buscarCliente(idcliente)
+        if(!busca_cliente){
+            throw new Error('Cliente não encontrado!')
+        }
         return modelCliente.destroy({where:{'id':idcliente}})
     }
 

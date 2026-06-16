@@ -174,14 +174,6 @@ class MedidasCliente {
         return editarMedida
     }
 
-    limpar(idmedida) {
-        let deletarMedidas = modelMedidas.destroy({
-            where: {
-                "id": idmedida
-            }
-        })
-        return deletarMedidas
-    }
 }
 
 module.exports = new MedidasCliente()
