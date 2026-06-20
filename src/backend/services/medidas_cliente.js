@@ -7,42 +7,12 @@ class MedidasCliente {
     async cadastrar_medidas(dados) {
         try {
             const infoMedidas = dados.medidas[0]
-            const camposMedidas = Object.keys(infoMedidas)
-            console.log(camposMedidas)
             if (dados.tipo_medida == 'padrao') {
-                if (
-                    !camposMedidas.includes('cliente_id') ||
-                    !camposMedidas.includes('tamanho') ||
-                    !camposMedidas.includes('ajuste')
-                ) {
-                    throw new Error("Erro ao cadastrar medida!")
-                }
-                if (camposMedidas.length != 3) {
-                    throw new Error("Erro ao cadastrar medida!")
-                }
                 const cadMedidaPadrao = await ServiceMedidaPadrao.cadastrar(infoMedidas)
                 return cadMedidaPadrao
             } else if (dados.tipo_medida == 'sob_medida') {
-                if (camposMedidas.length != 9) {
-                    throw new Error('Erro ao cadastrar medida')
-                }
-                if (
-                    !camposMedidas.includes('cliente_id') ||
-                    !camposMedidas.includes('busto') ||
-                    !camposMedidas.includes('cintura') ||
-                    !camposMedidas.includes('quadril') ||
-                    !camposMedidas.includes('comprimento') ||
-                    !camposMedidas.includes('ombro') ||
-                    !camposMedidas.includes('costas') ||
-                    !camposMedidas.includes('comprimento_da_manga') ||
-                    !camposMedidas.includes('largura_da_manga')
-                ) {
-                    throw new Error('Erro ao cadastrar medida!')
-                }
                 const cadMedidaSobMedida = await ServiceMedidaSobMedida.cadastrar(infoMedidas)
                 return cadMedidaSobMedida
-            } else {
-                throw new Error('Tipo inválido!')
             }
         } catch (error) {
             throw new Error(`${error.message}`)
@@ -133,6 +103,9 @@ class MedidasCliente {
     }
     buscarMedidaPadraoPorId(medidaId){
         let medidaPadrao = ServiceMedidaPadrao.buscarporMedidaPadraoId(medidaId)
+        if(!medidaPadrao){
+            throw new Error('Medida não encontrada!')
+        }
         return medidaPadrao
     }
 
@@ -143,6 +116,9 @@ class MedidasCliente {
     
     buscarMedidaSobMedidaPorId(medidaId){
         let medidaSobMedida = ServiceMedidaSobMedida.buscarMedidaPorId(medidaId)
+        if(!medidaSobMedida){
+            throw new Error('Medida não encontrada!')
+        }
         return medidaSobMedida
     }
 

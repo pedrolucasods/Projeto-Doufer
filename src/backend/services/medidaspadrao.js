@@ -10,9 +10,6 @@ class MedidaPadrao {
             if(dados.cliente_id) {
                 const buscaCliente = await ServiceCliente.buscarCliente(dados.cliente_id)
                 const buscaMedida = await this.buscaPorClienteId(dados.cliente_id)
-                if(!buscaCliente) {
-                    throw new Error('Cliente não encontrado')
-                }
                 if(buscaMedida){
                     throw new Error('Ja existe uma medida cadastrada!')
                 }

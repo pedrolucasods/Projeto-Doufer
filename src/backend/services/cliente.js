@@ -18,17 +18,19 @@ class ClienteService{
     }
 
     async buscarCliente(parametro){
+        let cliente = ''
         if(parametro.includes('.') && parametro.includes('-')){
-            const cliente = modelCliente.findOne({where:{'cpf':parametro}})
+            cliente = await modelCliente.findOne({where:{'cpf':parametro}})
             if(!cliente){
                 throw new Error('Erro, cliente não encontrado!')
             }
-            return cliente
+        }else{
+            cliente = await modelCliente.findOne({where:{'id':parametro}})
+            if(!cliente){
+                throw new Error('Erro, cliente não encontrado!')
+            }
         }
-        const cliente = modelCliente.findOne({where:{'id':parametro}})
-        if(!cliente){
-            throw new Error('Erro, cliente não encontrado!')
-        }
+        
         return cliente
     }
 

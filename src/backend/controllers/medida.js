@@ -1,6 +1,7 @@
 const ServiceItemPedidoMedida = require('../services/item_pedido_medida')
 const ServiceMedidaCliente = require('../services/medidas_cliente')
 const ServiceCliente = require('../services/cliente')
+const {ValidatorCadastroMedidaCliente} = require('../validators/medidas/cadastro_medidas_cliente')
 class Medida{
     formulario_cadastro_medidas_cliente_sob_medida(req,res){
         try {
@@ -31,9 +32,6 @@ class Medida{
     async formulário_atualizar_medidas_cliente_padrao(req,res){
         try {
             const medidas = await ServiceMedidaCliente.buscarMedidaPadraoPorId(req.params.id)
-            if(!medidas){
-                throw new Error('Medida não encontrada')
-            }
             return res.render('upMedidaPadraoCliente',{
                 stylesheet:'upMedidaPadraoCliente.css',
                 script:'upMedidaPadraoCliente.js',
@@ -42,16 +40,13 @@ class Medida{
                 msg: req.query.msg || null
             })
         } catch (error) {
-            res.status(500).json({"Erro":`${error}`})
+            res.status(500).json({"Erro":`${error.message}`})
         }
     }
 
     async formulário_atualizar_medidas_cliente_sob_medida(req,res){
         try {
             const medidas = await ServiceMedidaCliente.buscarMedidaSobMedidaPorId(req.params.id)
-            if(!medidas){
-                throw new Error('Medida não encontrada')
-            }
             return res.render('upMedidaSobMedidaCliente',{
                 stylesheet:'upMedidaSobMedidaCliente.css',
                 script:'upMedidaSobMedidaCliente.js',
@@ -60,22 +55,17 @@ class Medida{
                 msg: req.query.msg || null
             })
         } catch (error) {
-            res.status(500).json({"Erro":`${error}`})
+            res.status(500).json({"Erro":`${error.message}`})
         }
     }
 
     async cadastrar_medida_cliente(req,res){
         try {
             const dados = req.body
-            const totalDeCampos = Object.keys(dados).length
-            const campos = Object.keys(dados)
-            if(totalDeCampos!=2){
-                throw new Error('Erro ao cadastrar medida do cliente!')
+            const validar_dados = await ValidatorCadastroMedidaCliente(dados,res)
+            if(!validar_dados){
+                return
             }
-            if(!campos.includes('tipo_medida') || !campos.includes('medidas')){
-                throw new Error('Erro ao cadastrar medida do cliente!')
-            }
-            ///////////////////////////////////////////////////////////////////
             const cadastroMedidas = await ServiceMedidaCliente.cadastrar_medidas(dados)
             if(!cadastroMedidas){
                 throw new Error(`Falha ao cadastrar medida!`)

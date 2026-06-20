@@ -6,9 +6,6 @@ class MedidaSobMedida {
         try {
             if (dados.cliente_id) {
                 const cliente = await ServiceCliente.buscarCliente(dados.cliente_id)
-                if (!cliente) {
-                    throw new Error('Cliente não encontrado!')
-                }
                 const medidaExistente = await this.buscarMedidaPorClienteId(dados.cliente_id)
                 if(medidaExistente){
                     throw new Error('Este cliente já tem tamanho Sob Medida Registrado!')

@@ -25,11 +25,6 @@ class ItemPedidoMedida{
             const dadosQuantidade = parseInt(dados.quantidade)
             const itemPedido = await serviceItemPedido.buscaritem(dados.item_pedido_id)
 
-            // validação de item pedido
-            if(!itemPedido){
-                throw new Error('Item do Pedido não encontrado!')
-            }
-
             // validação da quantidade
             const total = itemPedido.quantidade
             const totalItemMedida = await this.somar_quantidadeMedida_registrada(dados.item_pedido_id)
