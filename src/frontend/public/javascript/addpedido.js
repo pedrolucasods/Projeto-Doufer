@@ -237,7 +237,7 @@ document.addEventListener("DOMContentLoaded", () => {
 async function cadastrarPedido(pedido){
     try {
         console.log(pedido)
-        const response = await fetch('/api/pedidos',{
+        const response = await fetch('/pedidos',{
             method : 'POST',
             headers:{
                 "Content-Type": "application/json"

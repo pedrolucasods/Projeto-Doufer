@@ -226,7 +226,7 @@ async function editarCliente(formData,clienteId){
             tipo_cliente : formData.tipo_cliente
         }
 
-        const response = await fetch(`/api/clientes/${clienteId}`,{
+        const response = await fetch(`/clientes/${clienteId}`,{
             method: 'PUT',
             headers:{
                 "Content-Type": "application/json"

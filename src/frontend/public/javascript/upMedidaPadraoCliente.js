@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded',()=>{
 
 async function atualizarMedida(dados,clienteId){
     try {
-        const response = await fetch('/api/medidas/clientes',{
+        const response = await fetch('/medidas/clientes',{
             method:'PUT',
             headers:{
                 'Content-Type':'application/json'
@@ -36,16 +36,16 @@ async function atualizarMedida(dados,clienteId){
         if(!response.ok){
             throw new Error(data.erro)
         }
-        window.location.href = `/api/medidas/clientes/listar/${clienteId}?msg=${data.msg}`
+        window.location.href = `/medidas/clientes/listar/${clienteId}?msg=${data.msg}`
     } catch (error) {
-        window.location.href = `/api/medidas/clientes/padrao?error=${error}`
+        window.location.href = `/medidas/clientes/padrao?error=${error}`
     }
 }
 
 async function deletarMedida(medidaId, clienteId) {
     try {
         const dados = {tipo:"padrao",medida_id:medidaId}
-        const response = await fetch(`/api/medidas/clientes`,{
+        const response = await fetch(`/medidas/clientes`,{
             method:"DELETE",
             headers:{
                 'Content-Type':'application/json'
@@ -56,16 +56,16 @@ async function deletarMedida(medidaId, clienteId) {
         if(!response.ok){
             throw new Error(data.erro)
         }
-        window.location.href = `/api/medidas/clientes/listar/${clienteId}?msg=${data.msg}`
+        window.location.href = `/medidas/clientes/listar/${clienteId}?msg=${data.msg}`
      } catch (error) {
         const erro = error
-        window.location.href= `/api/medidas/clientes/listar/${clienteId}?error=${erro}`
+        window.location.href= `/medidas/clientes/listar/${clienteId}?error=${erro}`
      }
 }
 
 function voltar(){
     const clienteId = sessionStorage.getItem('clienteId')
-    window.location.href = `/api/medidas/clientes/listar/${clienteId}`   
+    window.location.href = `/medidas/clientes/listar/${clienteId}`   
 }
 
 setTimeout(() =>{

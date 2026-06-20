@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded',()=>{
 
 async function adicionarMedida(dados,clienteId){
     try {
-        const response = await fetch('/api/medidas/clientes',{
+        const response = await fetch('/medidas/clientes',{
             method:'POST',
             headers:{
                 'Content-Type':'application/json'
@@ -28,14 +28,14 @@ async function adicionarMedida(dados,clienteId){
         if(!response.ok){
             throw new Error(data.erro)
         }
-        window.location.href = `/api/medidas/clientes/listar/${clienteId}?msg=${data.msg}`
+        window.location.href = `/medidas/clientes/listar/${clienteId}?msg=${data.msg}`
     } catch (error) {
-        window.location.href = `/api/medidas/clientes/padrao?error=${error}`
+        window.location.href = `/medidas/clientes/padrao?error=${error}`
     }
 }
 function voltar(){
     const clienteId = sessionStorage.getItem('clienteId')
-    window.location.href = `/api/medidas/clientes/listar/${clienteId}`   
+    window.location.href = `/medidas/clientes/listar/${clienteId}`   
 }
 
 setTimeout(() =>{

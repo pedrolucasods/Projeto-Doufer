@@ -303,7 +303,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 async function editarPedido(pedido, pedidoId) {
     try {
-        const response = await fetch(`/api/pedidos/${pedidoId}`, {
+        const response = await fetch(`/pedidos/${pedidoId}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': "application/json"

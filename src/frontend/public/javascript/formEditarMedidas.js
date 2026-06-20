@@ -48,7 +48,7 @@ form.addEventListener('submit', async function (e) {
 
 async function limparMedidas(medidaId, clienteId) {
     try {
-        const response = await fetch(`/api/clientes/medidas/${medidaId}`,{
+        const response = await fetch(`/clientes/medidas/${medidaId}`,{
             method:"DELETE"
         })
         const data = await response.json()
@@ -60,7 +60,7 @@ async function limparMedidas(medidaId, clienteId) {
 
 async function atualizarMedidas(clienteId, Medidas) {
     try {
-        const response = await fetch(`/api/clientes/medidas/${clienteId}`, {
+        const response = await fetch(`/clientes/medidas/${clienteId}`, {
             method: 'PUT',
             headers: {
                 "Content-Type": "application/json"
