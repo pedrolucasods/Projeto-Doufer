@@ -80,10 +80,12 @@ class ClienteService{
         return modelCliente.destroy({where:{'id':idcliente}})
     }
 
-    detalhes(id){
-        return modelCliente.findOne({where:{
-                'id':id
-            }})
+    async detalhes(id){
+        const busca_cliente = await this.buscarCliente(id)
+        if(!busca_cliente){
+            throw new Error('Cliente não encontrado!')
+        }
+        return busca_cliente
     }
 }
 

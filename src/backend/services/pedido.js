@@ -222,7 +222,7 @@ class Pedido{
 
     async pedidosCliente(id){
         const pedidos = await modelPedido.findAll({where:{
-            "id":id
+            "cliente_id":id
             },
             order: [["id","DESC"]],
             include:[
@@ -252,6 +252,15 @@ class Pedido{
             }
         })
         return pedidosFormatados
+    }
+
+    async quantidade_pedidos_clientes(id){
+        const quantidade_pedidos = await modelPedido.count({
+            where:{
+                cliente_id:id
+            }
+        })
+        return quantidade_pedidos
     }
 }
 

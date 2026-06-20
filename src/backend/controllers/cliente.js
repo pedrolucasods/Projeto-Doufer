@@ -114,23 +114,19 @@ class Cliente{
     async detalhes(req,res){
         try {
             const cliente = await ClienteService.detalhes(req.params.id)
-            const Pedidos = await PedidoService.pedidosCliente(req.params.id)
-            const MedidasSobCliente = await MedidaClienteService.buscarMedidaSobMedidaPorCliente(req.params.id)
-            const MedidaPadrao = await MedidaClienteService.buscarMedidaPadraoPorCliente(req.params.id)
-            const qtdPedidos = Pedidos.length
+            const qtdPedidos = await PedidoService.quantidade_pedidos_clientes(req.params.id)
+            
             return res.render('detalhesCliente',{
                 stylesheet:'detalhesCliente.css',
                 script:'detalhesCliente.js',
                 cliente,
                 qtdPedidos,
-                MedidasSobCliente,
-                MedidaPadrao,
                 error:req.query.error || null,
                 msg: req.query.msg || null
             })
 
         } catch (error) {
-            return res.status(500).send(`Erro ao carregar os dados do cliente: ${error}`)
+            return res.status(500).send(`Erro ao carregar os dados do cliente: ${error.message}`)
         }
     }
 
