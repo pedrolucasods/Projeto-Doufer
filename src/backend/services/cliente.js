@@ -55,6 +55,15 @@ class ClienteService{
         if(!busca_cliente){
             throw new Error('Cliente não encontrado')
         }
+        let quantidade_iguais = 0
+        for(let fields of Object.keys(Dados)){
+            if(busca_cliente[fields] == Dados[fields]){
+                quantidade_iguais+=1
+            }
+        }
+        if(quantidade_iguais == 5){
+            throw new Error('Nada Para Alterar!')
+        }
         if(Dados.cpf){
         let cpfregister = await this.buscarCliente(Dados.cpf)
         if(cpfregister && cpfregister.id != Dados.cliente_id){
@@ -62,10 +71,10 @@ class ClienteService{
         }
     }
         return modelCliente.update({
-                nome:Dados.nomecliente,
-                telefone: Dados.telefonecliente,
-                cpf: Dados.cpfcliente,
-                nome_empresa: Dados.nomeclienteEmpresa,
+                nome:Dados.nome,
+                telefone: Dados.telefone,
+                cpf: Dados.cpf,
+                nome_empresa: Dados.nome_empresa,
                 tipo_cliente: Dados.tipo_cliente
             },{
                 where:{
@@ -79,7 +88,7 @@ class ClienteService{
         if(!busca_cliente){
             throw new Error('Cliente não encontrado!')
         }
-        return modelCliente.destroy({where:{'id':idcliente}})
+        return await busca_cliente.destroy()
     }
 
     async detalhes(id){

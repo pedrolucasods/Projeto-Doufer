@@ -72,7 +72,7 @@ class MedidaPadrao {
             if(!buscaMedida){
                 throw new Error('Medida não encontrada!')
             }
-            return ModelmedidasPadrao.destroy({where:{id:dados.medida_id}})
+            return await buscaMedida.destroy()
         } catch (error) {
             throw new Error(`${error.message}`)
         }

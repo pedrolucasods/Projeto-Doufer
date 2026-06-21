@@ -122,7 +122,7 @@ class Pedido{
             }) 
         } catch (error) {
             console.log(error)
-            return res.status(500).json({"Erro":`${error}`})
+            return res.status(500).json({"Erro":`${error.message}`})
         }
     }
 

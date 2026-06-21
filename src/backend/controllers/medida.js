@@ -2,6 +2,7 @@ const ServiceItemPedidoMedida = require('../services/item_pedido_medida')
 const ServiceMedidaCliente = require('../services/medidas_cliente')
 const ServiceCliente = require('../services/cliente')
 const {ValidatorCadastroMedidaCliente} = require('../validators/medidas/cadastro_medidas_cliente')
+const {ValidadorCadastroMedidaItemPedido} = require('../validators/medidas/cadastro_medidas_item_pedido')
 class Medida{
     formulario_cadastro_medidas_cliente_sob_medida(req,res){
         try {
@@ -131,17 +132,9 @@ class Medida{
     async cadastrar_medida_itemPedido(req,res){
         try {
             const dados = req.body
-            const campos = Object.keys(dados)
-            const totalCampos = campos.length
-            if(totalCampos>4 || totalCampos<4){
-                throw new Error("Erro ao cadastrar medida, campos inválidos!")
-            }
-            if(
-                !campos.includes("item_pedido_id")||
-                !campos.includes("tipo_medida")||
-                !campos.includes("quantidade")
-            ){
-                throw new Error("Erro ao cadastrar medida, campos inválidos!")
+            const validar_dados = await ValidadorCadastroMedidaItemPedido(dados,res)
+            if(!validar_dados){
+                return
             }
             const cadastro = await ServiceItemPedidoMedida.cadastrar(dados)
             return res.json({"msg":"Cadastro com sucesso!"})

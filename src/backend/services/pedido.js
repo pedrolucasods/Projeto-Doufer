@@ -38,6 +38,11 @@ class Pedido{
         return pedidosFormatados
     }
 
+    async buscar_pedido(id){
+        const pedido = await modelPedido.findOne({where:{id:id}})
+        return pedido
+    }
+
     // Cadastrar pedidos
     async cadastrar(pedidoiten){
         
@@ -217,7 +222,11 @@ class Pedido{
     }
 
     async deletar(pedido_id){
-        return modelPedido.destroy({where:{'id':pedido_id}})
+        const busca_pedido = await this.buscar_pedido(pedido_id)
+        if(!busca_pedido){
+            throw new Error('Pedido não encontrado!')
+        }
+        return await busca_pedido.destroy()
     }
 
     async pedidosCliente(id){
