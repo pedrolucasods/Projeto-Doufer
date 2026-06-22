@@ -3,6 +3,7 @@ const ServiceMedidaCliente = require('../services/medidas_cliente')
 const ServiceCliente = require('../services/cliente')
 const {ValidatorCadastroMedidaCliente} = require('../validators/medidas/cadastro_medidas_cliente')
 const {ValidadorCadastroMedidaItemPedido} = require('../validators/medidas/cadastro_medidas_item_pedido')
+const {ValidatorAtualizarMedidaCliente} = require('../validators/medidas/atualizar_medida_cliente')
 class Medida{
     formulario_cadastro_medidas_cliente_sob_medida(req,res){
         try {
@@ -80,15 +81,10 @@ class Medida{
     async atualizar_medida_cliente(req,res){
         try {
             const dados = req.body
-            const totalDeCampos = Object.keys(dados).length
-            const campos = Object.keys(dados)
-            if(totalDeCampos!=2){
-                throw new Error('Erro ao cadastrar medida do cliente!')
+            const validar_dados = await ValidatorAtualizarMedidaCliente(dados,res)
+            if(!validar_dados){
+                return
             }
-            if(!campos.includes('tipo_medida') || !campos.includes('medidas')){
-                throw new Error('Erro ao cadastrar medida do cliente!')
-            }
-            ///////////////////////////////////////////////////////////////////
             const atualizarMedidas = await ServiceMedidaCliente.atualizar(dados)
             if(!atualizarMedidas){
                 throw new Error(`Falha ao cadastrar medida!`)

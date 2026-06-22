@@ -35,16 +35,12 @@ class MedidaPadrao {
         try {
             if(dados.cliente_id) {
                 const buscaMedida = await this.buscarporMedidaPadraoId(dados.medidaPadrao_id)
-                if(!buscaMedida){
+                if(!buscaMedida || buscaMedida.cliente_id != dados.cliente_id){
                     throw new Error('Medida não encontrada!')
                 }
-                return ModelmedidasPadrao.update({
+                return buscaMedida.update({
                     tamanho: dados.tamanho,
                     ajuste: dados.ajuste
-                },{
-                    where:{
-                        id:dados.medidaPadrao_id
-                    }
                 })
             
             }else if(dados.item_medida_id) {
@@ -52,13 +48,9 @@ class MedidaPadrao {
                 if(!buscaMedida){
                     throw new Error('Medida não encontrada!')
                 }
-                return ModelmedidasPadrao.update({
+                return buscaMedida.update({
                     tamanho: dados.tamanho,
                     ajuste: dados.ajuste
-                },{
-                    where:{
-                        id:dados.medidaPadrao_id
-                    }
                 })
             }
         } catch (error) {

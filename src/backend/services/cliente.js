@@ -65,21 +65,17 @@ class ClienteService{
             throw new Error('Nada Para Alterar!')
         }
         if(Dados.cpf){
-        let cpfregister = await this.buscarCliente(Dados.cpf)
-        if(cpfregister && cpfregister.id != Dados.cliente_id){
-            throw new Error('Cpf ja cadastrado!')
+            let cpfregister = await this.buscarCliente(Dados.cpf)
+            if(cpfregister && cpfregister.id != Dados.cliente_id){
+                throw new Error('Cpf ja cadastrado!')
+            }
         }
-    }
-        return modelCliente.update({
+        return busca_cliente.update({
                 nome:Dados.nome,
                 telefone: Dados.telefone,
                 cpf: Dados.cpf,
                 nome_empresa: Dados.nome_empresa,
                 tipo_cliente: Dados.tipo_cliente
-            },{
-                where:{
-                    id: Dados.cliente_id
-                }
             })
     }
 

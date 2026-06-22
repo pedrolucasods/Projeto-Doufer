@@ -46,7 +46,7 @@ class MedidaSobMedida {
             if(!buscaMedida){
                 throw new Error('Medida não encontrada!')
             }
-            return modelMedidaSobMedida.update({
+            return buscaMedida.update({
                 busto: dados.busto,
                 cintura:dados.cintura,
                 quadril:dados.quadril,
@@ -55,10 +55,6 @@ class MedidaSobMedida {
                 costas:dados.costas,
                 comprimento_da_manga:dados.comprimento_da_manga,
                 largura_da_manga:dados.largura_da_manga
-            },{
-                where:{
-                    id:dados.medidaSobMedida_id
-                }
             })
             
         } catch (error) {
