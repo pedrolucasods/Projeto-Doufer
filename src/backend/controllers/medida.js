@@ -4,6 +4,7 @@ const ServiceCliente = require('../services/cliente')
 const {ValidatorCadastroMedidaCliente} = require('../validators/medidas/cadastro_medidas_cliente')
 const {ValidadorCadastroMedidaItemPedido} = require('../validators/medidas/cadastro_medidas_item_pedido')
 const {ValidatorAtualizarMedidaCliente} = require('../validators/medidas/atualizar_medida_cliente')
+const {ValidatorDeletarMedidaCliente} = require('../validators/medidas/deletar_medida_cliente')
 class Medida{
     formulario_cadastro_medidas_cliente_sob_medida(req,res){
         try {
@@ -98,6 +99,10 @@ class Medida{
     async deletar_medida_cliente(req,res){
         try {
             const dados = req.body
+            const validar_dados = await ValidatorDeletarMedidaCliente(dados,res)
+            if(!validar_dados){
+                return
+            }
             const deletarMedida = await ServiceMedidaCliente.deletar(dados)
             return res.json({'msg':'Medida deletada com sucesso!'})
         } catch (error) {

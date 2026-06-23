@@ -43,19 +43,13 @@ class MedidasCliente {
 
     async deletar(dados){
         try {
-            const campos = Object.keys(dados)
-            if((campos.length !=2) || (!campos.includes('tipo') || !campos.includes('medida_id'))){
-                throw new Error('Erro ao deletar!')
-            }
+            let deletarMedida
             if(dados.tipo == 'padrao'){
-                const deletarMedida = ServiceMedidaPadrao.deletar(dados)
-                return deletarMedida
+                deletarMedida = ServiceMedidaPadrao.deletar(dados)
             }else if(dados.tipo == 'sob_medida'){
-                const deletarMedida = ServiceMedidaSobMedida.deletar(dados)
-                return deletarMedida
-            }else{
-                throw new Error('Tipo inválido!')
+                deletarMedida = ServiceMedidaSobMedida.deletar(dados)
             }
+            return deletarMedida
         } catch (error) {
             throw new Error(`${error.message}`)
         }
