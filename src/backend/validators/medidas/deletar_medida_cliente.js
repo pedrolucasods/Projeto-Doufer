@@ -1,6 +1,6 @@
 async function ValidatorDeletarMedidaCliente(Dados,res){
     const campos = Object.keys(Dados)
-    if((campos.length !=2) || (!campos.includes('tipo') || !campos.includes('medida_id'))){
+    if((campos.length !=3) || (!campos.includes('tipo') || !campos.includes('medida_id')) || !campos.includes('cliente_id')){
         res.status(400).json({'erro':'Erro ao deletar Medida!'})
         return false
     }

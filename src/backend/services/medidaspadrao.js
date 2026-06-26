@@ -82,6 +82,10 @@ class MedidaPadrao {
         return ModelmedidasPadrao.findOne({where:{id:medidaPadrao_id}})
     }
 
+    buscarporMedidaPadraoIdEClienteId(medidaPadrao_id,cliente_id){
+        return ModelmedidasPadrao.findOne({where:{id:medidaPadrao_id,cliente_id:cliente_id}})
+    }
+
 }
 
 module.exports = new MedidaPadrao()
