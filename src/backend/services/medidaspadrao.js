@@ -64,6 +64,16 @@ class MedidaPadrao {
             if(!buscaMedida){
                 throw new Error('Medida não encontrada!')
             }
+            if(dados.cliente_id){
+                if(!buscaMedida.cliente_id || buscaMedida.cliente_id != dados.cliente_id){
+                    throw new Error('Medida não encontrada!')
+                }
+            }else if(dados.item_pedido_medida_id){
+                if(!buscaMedida.item_pedido_medida_id || buscaMedida.item_medida_id != dados.item_pedido_medida_id){
+                    throw new Error('Medida não encontrada!')
+                }
+            }
+    
             return await buscaMedida.destroy()
         } catch (error) {
             throw new Error(`${error.message}`)
