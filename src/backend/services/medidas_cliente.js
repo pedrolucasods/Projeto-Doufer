@@ -1,4 +1,4 @@
-const modelMedidas = require('../models/medidas_cliente')
+
 const ServiceMedidaPadrao = require('./medidaspadrao')
 const ServiceMedidaSobMedida = require('./medidassobmedida')
 
@@ -54,15 +54,7 @@ class MedidasCliente {
             throw new Error(`${error.message}`)
         }
     }
-    listar(cliente_id) {
-        let mediddasCliente = modelMedidas.findOne({
-            where: {
-                'cliente_id': cliente_id
-            }
-        })
-        return mediddasCliente
-    }
-
+    
     buscarMedidaPadraoPorCliente(clienteId){
         let medidaPadrao = ServiceMedidaPadrao.buscaPorClienteId(clienteId)
         return medidaPadrao
@@ -88,33 +80,6 @@ class MedidasCliente {
         return medidaSobMedida
     }
 
-    listarIdmedida(idmedida) {
-        let medidas = modelMedidas.findOne({
-            where: {
-                'id': idmedida
-            }
-        })
-        return medidas
-    }
-
-    editar(medidas, cliente_id) {
-        let editarMedida = modelMedidas.update({
-            busto: medidas.busto,
-            cintura: medidas.cintura,
-            quadril: medidas.quadril,
-            comprimento: medidas.comprimento,
-            ombro: medidas.ombro,
-            costas: medidas.costas,
-            comprimento_da_manga: medidas.comprimento_da_manga,
-            largura_da_manga: medidas.largura_da_manga
-        }, {
-            where: {
-                'cliente_id': cliente_id
-            }
-        })
-
-        return editarMedida
-    }
 
 }
 

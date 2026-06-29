@@ -1,8 +1,6 @@
 const modelCliente = require('../models/cliente')
 const ClienteService = require('../services/cliente')
 const PedidoService = require('../services/pedido')
-const MedidasService = require('../services/medidas_cliente')
-const MedidaClienteService = require('../services/medidas_cliente')
 const {ValidatorCadastroCliente} = require('../validators/clientes/cadastro_clientes_validator')
 const {ValidatorEdicaoCliente} = require('../validators/clientes/editar_cliente_validator')
 class Cliente{
