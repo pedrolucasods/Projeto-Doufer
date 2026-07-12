@@ -1,7 +1,11 @@
+const {QueryTypes} = require('sequelize')
+const sequelize = require('../database')
+
 const modelCliente = require('../models/cliente')
 const modelPedido = require('../models/pedidos')
 const modelItensPedido = require('../models/itensPedidos')
 const ClienteService = require('./cliente')
+const ItemPedidoService = require('./itenspedido')
 const ItemPedidoMedidaService = require('./item_pedido_medida')
 class Pedido{
 
@@ -44,54 +48,78 @@ class Pedido{
     }
 
     // Cadastrar pedidos
-    async cadastrar(pedidoiten){
-        
-            let pedido = []
-            pedido.push(pedidoiten);
+    async cadastrar(dados){
             const dataToday = new Date().toISOString().split('T')[0]
 
-            for(const informacoes_pedido of pedido){
-                let total = 0
-                const cliente = await ClienteService.buscarCliente(informacoes_pedido.clienteId)
-                if(!cliente){
-                    throw new Error('Cliente não existe!')
-                }
-                if(cliente.tipo_cliente != informacoes_pedido.tipo_cliente){
-                    throw new Error("Cliente selecionado não corresponde ao tipo informado.")
-                }
-                
-                if(informacoes_pedido.data < dataToday){
-                    throw new Error("Data inválida!")
-                }
-                let pedidoId = await modelPedido.create({
-                    cliente_id:informacoes_pedido.clienteId,
-                    data: informacoes_pedido.data,
-                    status:'aberto'
-                })
-                
-                for(const valor_total of informacoes_pedido.itens){
-                total += valor_total.total
-                }
-
-                for(const items_pedido of informacoes_pedido.itens){
-                    modelItensPedido.create({
-                        id_pedido: pedidoId.id,
-                        preco: items_pedido.total,
-                        produto: items_pedido.produto,
-                        cor: items_pedido.cor,
-                        tecido: items_pedido.tecido,
-                        tamanho: items_pedido.tamanho,
-                        detalhes: items_pedido.detalhes,
-                        quantidade: items_pedido.quantidade,
-                        preco_unitario: items_pedido.precounit,
-                        modelo_produto: items_pedido.modelo,
-                        complemento: items_pedido.complemento
-                    })
-                }
+            const cliente = await ClienteService.buscarCliente(dados.clienteId)
+            if(!cliente){
+                throw new Error('Cliente não existe!')
             }
+
+            if(cliente.tipo_cliente != dados.tipo_cliente){
+                throw new Error("Cliente selecionado não corresponde ao tipo informado.")
+            }
+
+            if(dados.data < dataToday){
+                throw new Error("Data inválida!")
+            }
+            let pedido = await modelPedido.create({
+                cliente_id:dados.clienteId,
+                data: dados.data,
+                status:'aberto'
+            })
+
+            for(const items_pedido of dados.itens){
+                items_pedido.id_pedido = pedido.id
+                await ItemPedidoService.cadastrar(items_pedido)
+            }
+
             return pedido
     }
     
+    async editar_pedido_dados(id){
+        const dados = await sequelize.query(`
+            SELECT
+                c.nome as nome_cliente,
+                c.nome_empresa,
+                c.id as cliente_id,
+                p.status as pedido_status,
+                p.id as pedido_id,
+                p.data as pedido_data,
+                COUNT(i.id) as quantidade_itens,
+                SUM(i.preco) as total_pedido,
+                json_group_array(
+                    json_object(
+                        'id', i.id,
+                        'produto',i.produto,
+                        'cor',i.cor,
+                        'tecido',i.tecido,
+                        'tamanho',i.tamanho,
+                        'detalhes',i.detalhes,
+                        'quantidade',i.quantidade,
+                        'preco_unitario',i.preco_unitario,
+                        'modelo_produto',i.modelo_produto,
+                        'complemento',i.complemento
+                    )
+                ) as itens
+            FROM pedidos p
+                INNER JOIN clientes c ON p.cliente_id = c.id
+                INNER JOIN itens_pedidos i ON p.id = i.id_pedido
+            WHERE p.id = :id;    
+            `,
+            {
+                replacements: {id:id},
+                type: QueryTypes.SELECT,
+                plain: true
+            }
+        )
+
+        dados.itens = JSON.parse(dados.itens)
+
+        return dados
+    }
+
+
     async detalhes(id){
         const arraydeItens = []
         const Pedidoid = id
@@ -149,71 +177,33 @@ class Pedido{
     }
 
     async editarPedido(reqbodypedido,reqparamsid){
-        let pedido = []
-        pedido.push(reqbodypedido);
-        
+        let pedido = await modelPedido.update({
+            cliente_id:reqbodypedido.clienteId,
+            data: reqbodypedido.data,
+            status:'aberto'
+        },{where:{id:reqparamsid}})
 
-        for(const informacoes_pedido of pedido){
-            let total = 0
-            await modelPedido.update({
-                cliente_id:informacoes_pedido.clienteId,
-                data: informacoes_pedido.data,
-                status:'aberto'
-                },{where:{id:reqparamsid}})
-                
-                for(const valor_total of informacoes_pedido.itens){
-                total += valor_total.total
-                }
 
-                if(Array.isArray(informacoes_pedido.itensatuais) && informacoes_pedido.itensatuais.length>0){
-                    for(const items_pedido of informacoes_pedido.itensatuais){
-                        modelItensPedido.update({
-                            id_pedido: items_pedido.id_pedido,
-                            preco: items_pedido.total,
-                            produto: items_pedido.produto,
-                            cor: items_pedido.cor,
-                            tecido: items_pedido.tecido,
-                            tamanho: items_pedido.tamanho,
-                            detalhes: items_pedido.detalhes,
-                            quantidade: items_pedido.quantidade,
-                            preco_unitario: items_pedido.precounit,
-                            modelo_produto: items_pedido.modelo,
-                            complemento: items_pedido.complemento
-                        },{where:{id:items_pedido.id}})
-                    }
-                }else{
-                if(informacoes_pedido.ItensExcluir.length>0 && Array.isArray(informacoes_pedido.ItensExcluir)){
-                        for(const items_excluir of informacoes_pedido.ItensExcluir){
-                            modelItensPedido.destroy({
-                                where:{
-                                    id:items_excluir.id
-                                }
-                            })
+        // atualizar itens
+        if(Array.isArray(reqbodypedido.itensatuais) && reqbodypedido.itensatuais.length>0){
+            for(const items_pedido of reqbodypedido.itensatuais){
+                await ItemPedidoService.editar(items_pedido)
+            }
+        }
 
-                        }
-                    }else {
-                        
-                        
-                    }
-                }
+        // excluir itens
+        if(reqbodypedido.ItensExcluir.length>0 && Array.isArray(reqbodypedido.ItensExcluir)){
+            for(const items_excluir of reqbodypedido.ItensExcluir){
+                await ItemPedidoService.deletar(items_excluir.id)
+            }
+        }
 
-                if(Array.isArray(informacoes_pedido.novoItem) && informacoes_pedido.novoItem.length > 0){
-                    for(const items_pedido of informacoes_pedido.novoItem){
-                        modelItensPedido.create({
-                            id_pedido: reqparamsid,
-                            preco: items_pedido.total,
-                            produto: items_pedido.produto,
-                            cor: items_pedido.cor,
-                            tecido: items_pedido.tecido,
-                            tamanho: items_pedido.tamanho,
-                            detalhes: items_pedido.detalhes,
-                            quantidade: items_pedido.quantidade,
-                            preco_unitario: items_pedido.precounit,
-                            produto_modelo: items_pedido.modelo,
-                            complemento: items_pedido.complemento
-                        })
-                    }
-                }else{
+
+        // cadastrar novos itens
+        if(Array.isArray(reqbodypedido.novoItem) && reqbodypedido.novoItem.length > 0){
+            for(let items_pedido of reqbodypedido.novoItem){
+                items_pedido.id_pedido = reqparamsid
+                await ItemPedidoService.cadastrar(items_pedido)
 
             }
         }

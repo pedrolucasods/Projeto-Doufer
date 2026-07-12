@@ -7,14 +7,9 @@ class ClienteService{
         return cliente
     }
 
-    async listarClientesPessoa(){
-        const clientes = await modelCliente.findAll({where:{'tipo_cliente':'pessoa'}})
+    async listarClientesPorTipo(tipo){
+        const clientes = await modelCliente.findAll({where:{'tipo_cliente':tipo}})
         return clientes
-    }
-
-    async listarClientesEmpresa(){
-        const clientesEmpresa = await modelCliente.findAll({where:{'tipo_cliente':'empresa'}})
-        return clientesEmpresa
     }
 
     async buscarCliente(parametro){

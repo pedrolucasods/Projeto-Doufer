@@ -3,6 +3,8 @@ const modelItensPedido = require('../models/itensPedidos')
 const modelCliente = require('../models/cliente')
 const PedidoService = require('../services/pedido')
 const ClienteService = require('../services/cliente')
+const {ValidatorTipoClienteForms} = require('../validators/pedidos/form_cadastro_tipo_cliente')
+const {ValidatorCadastroPedido} = require('../validators/pedidos/cadastro_pedido')
 
 class Pedido{
     // listar Pedidos
@@ -28,18 +30,11 @@ class Pedido{
     async formCadastrarPedido(req,res){
         try {
             let tipoCliente = req.query.tipo
-            let clientes = null
-            if(!tipoCliente || (tipoCliente != 'pessoa' && tipoCliente != 'empresa')){
-                throw new Error('Tipo inválido!')
+            const validar_dados = await ValidatorTipoClienteForms(tipoCliente,res)
+            if(!validar_dados){
+                return
             }
-            if(tipoCliente == 'pessoa'){
-                clientes = await ClienteService.listarClientesPessoa()
-            }else if(tipoCliente == 'empresa'){
-                clientes = await ClienteService.listarClientesEmpresa()
-            }
-            if(!clientes[0]){
-                throw new Error(`Você não possui clientes-${tipoCliente}`)
-            }
+            let clientes = await ClienteService.listarClientesPorTipo(tipoCliente)
             return res.render('addpedido',{
                 stylesheet:'styleaddpedido.css', 
                 script:'addpedido.js', 
@@ -57,17 +52,10 @@ class Pedido{
     // cadastrar pedido
     async cadastrarPedido(req,res){
         try {
-            if (!req.body) {
-                throw new Error('Não possui dados!')
+            const validar_dados = await ValidatorCadastroPedido(req.body,res)
+            if(!validar_dados){
+                return
             }
-            const campos = Object.keys(req.body)
-            if(campos.length!=4 || (
-                !campos.includes('clienteId') ||
-                !campos.includes('data') ||
-                !campos.includes('itens') ||
-                !campos.includes('tipo_cliente'))){
-                    throw new Error('Campos inválidos')
-                }
             let pedido = await PedidoService.cadastrar(req.body)
                 return res.json({
                 "msg":"Pedido Adicionado!"
@@ -80,16 +68,20 @@ class Pedido{
     //formulario editar pedido
     async formEditarPedido(req,res){
         try {
-            const {arraydeItens,Pedidoid,pedido_status,pedido_id_cliente,pedido_data,nome} = await PedidoService.detalhes(req.params.id)
+            const dados = await PedidoService.editar_pedido_dados(req.params.id)
+            // return res.send(dados)
+
+            // const {arraydeItens,Pedidoid,pedido_status,pedido_id_cliente,pedido_data,nome} = await PedidoService.detalhes(req.params.id)
             //Info Itens Pedido
             return res.render('editarPedido', {
                     script:'editarpedido.js',
-                    Pedidoid,
-                    pedido_status,
-                    pedido_id_cliente,
-                    pedido_data,
-                    nome, 
-                    ItensPedido:JSON.stringify(arraydeItens),
+                    Pedidoid:dados.pedido_id,
+                    pedido_status:dados.pedido_status,
+                    pedido_id_cliente:dados.cliente_id,
+                    pedido_data:dados.pedido_data,
+                    nome:dados.nome_cliente,
+                    nome_empresa:dados.nome_empresa,
+                    ItensPedido:JSON.stringify(dados.itens),
                     error:req.query.error || null,
                     msg: req.query.msg || null
                 })
