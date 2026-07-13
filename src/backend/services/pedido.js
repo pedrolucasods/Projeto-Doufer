@@ -135,59 +135,47 @@ class Pedido{
 
 
     async detalhes(id){
-        const arraydeItens = []
-        const Pedidoid = id
-        const Pedido = await modelPedido.findAll({where: {'id':Pedidoid}})
-        const itens = await modelItensPedido.findAll({where: {'id_pedido':Pedidoid}})
-        let totalPedido = 0
-        let quantidadeItens_com_medida = 0
-        let medidasItens
-        let quantidade_total_de_itens = 0
-        for(let info of itens){
-            totalPedido+=info.preco
-            medidasItens = await ItemPedidoMedidaService.somar_quantidadeMedida_registrada(info.id)
-            quantidadeItens_com_medida += medidasItens
-            quantidade_total_de_itens+=info.quantidade
-        }
+        let dados = await sequelize.query(`
+            SELECT
+                c.nome,
+                c.id,
+                p.id AS pedido_id,
+                p.status AS pedido_status,
+                p.data AS pedido_data,
+                json_group_array(
+                    json_object(
+                        'produto',i.produto,
+                        'quantidade',i.quantidade,
+                        'cor',i.cor,
+                        'tecido',i.tecido,
+                        'preco_unitario',i.preco_unitario
+                    )
+                ) OVER() AS itens,
+                SUM(i.preco) OVER() AS total_pedido,
+                SUM(i.quantidade) OVER() AS total_itens,
+                COALESCE(SUM(SUM(im.quantidade)) OVER() , 0) AS total_itens_com_medida,
+                ( SUM(i.quantidade) OVER() - COALESCE(SUM(SUM(im.quantidade)) OVER(),0) ) AS total_itens_sem_medida
+            FROM item_pedido_medidas im
+                RIGHT JOIN itens_pedidos i ON im.item_pedido_id = i.id
+                INNER JOIN pedidos p ON i.id_pedido = p.id
+                INNER JOIN clientes c ON p.cliente_id = c.id
+            WHERE p.id = :id
+            GROUP BY i.id;    
         
-        
-        
-        arraydeItens.push(...itens)
+        `,
+        {
+            replacements: {id:id},
+            type: QueryTypes.SELECT,
+            plain: true
+        })
 
-        //Info Pedido
-        let pedido_status = null
-        let pedido_id_cliente = null
-        let pedido_data = null
-        const quantidade_Itens_do_Pedido = arraydeItens.length
-        //For para adicionar os valores nas variaveis
-        for (const Infos of Pedido){
-                pedido_status = Infos.status
-                pedido_id_cliente = Infos.cliente_id
-                pedido_data = Infos.data
-            }
-        // pegando a quantidade de dias faltante
-        let dataToday = new Date().toISOString().split('T')[0]
-        let DiasFaltante = ((new Date(pedido_data)) - (new Date(dataToday))) / (1000 * 60 * 60 * 24)
+        let today = new Date().toISOString().split('T')[0]
+        let dias_faltantes = ((new Date(dados.pedido_data)) - (new Date(today))) / (1000 * 60 * 60 * 24)
 
-        // Busca Nome cliente
-        const Cliente = await modelCliente.findAll({where:{'id':pedido_id_cliente}})
-        let nome = null
-        for(const infoCliente of Cliente)
-            nome = infoCliente.nome
+        dados.dias_faltantes = dias_faltantes
+        dados.itens = JSON.parse(dados.itens)
 
-        return {
-            quantidade_total_de_itens,
-            quantidadeItens_com_medida,
-            quantidade_Itens_do_Pedido,
-            arraydeItens,
-            Pedidoid,
-            pedido_status,
-            pedido_id_cliente,
-            pedido_data,
-            nome,
-            totalPedido,
-            DiasFaltante
-        }
+        return dados
     }
 
     async editarPedido(reqbodypedido,reqparamsid){

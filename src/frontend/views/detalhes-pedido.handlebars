@@ -24,20 +24,20 @@
 
             <div>
                 <h1 class="title">
-                    Pedido #{{Pedidoid}}
+                    Pedido #{{dados.pedido_id}}
                 </h1>
 
                 <p class="cliente-name">
-                    Cliente: <strong>{{nome}}</strong>
+                    Cliente: <strong>{{dados.nome}}</strong>
                 </p>
             </div>
 
             <div>
 
-                {{#if DiasFaltante}}
+                {{#if dados.dias_faltantes}}
 
                     <span class="badge bg-success fs-6">
-                        {{DiasFaltante}} dias restantes
+                        {{dados.dias_faltantes}} dias restantes
                     </span>
 
                 {{else}}
@@ -58,10 +58,10 @@
 
                 <h3>Status</h3>
 
-                {{#if pedido_status}}
+                {{#if dados.pedido_status}}
 
                     <span class="badge bg-primary">
-                        {{pedido_status}}
+                        {{dados.pedido_status}}
                     </span>
 
                 {{else}}
@@ -78,7 +78,7 @@
 
                 <h3>Entrega</h3>
 
-                <p>{{data_brasileira pedido_data}}</p>
+                <p>{{data_brasileira dados.pedido_data}}</p>
 
             </div>
 
@@ -86,7 +86,7 @@
 
                 <h3>Total</h3>
 
-                <p>R$ {{totalPedido}}</p>
+                <p>R$ {{dados.total_pedido}}</p>
 
             </div>
 
@@ -96,7 +96,7 @@
 
             <div class="metrica-card">
 
-                <h2>{{quantidade_total_de_itens}}</h2>
+                <h2>{{dados.total_itens}}</h2>
 
                 <p>Total de itens</p>
 
@@ -104,7 +104,7 @@
 
             <div class="metrica-card">
 
-                <h2>{{quantidadeItens_com_medida }}</h2>
+                <h2>{{dados.total_itens_com_medida }}</h2>
 
                 <p>Itens com medida</p>
 
@@ -112,7 +112,7 @@
 
             <div class="metrica-card">
 
-                <h2>{{subtrair quantidade_total_de_itens quantidadeItens_com_medida}}</h2>
+                <h2>{{dados.total_itens_sem_medida}}</h2>
 
                 <p>Itens sem medida</p>
 
@@ -120,7 +120,7 @@
 
             <div class="metrica-card">
 
-                <h2>{{DiasFaltante}}</h2>
+                <h2>{{dados.dias_faltantes}}</h2>
 
                 <p>Dias restantes</p>
 
@@ -134,7 +134,7 @@
                 <h2>Itens do Pedido</h2>
             </div>
 
-            {{#each arraydeItens}}
+            {{#each dados.itens}}
 
             <div class="item-card">
 
