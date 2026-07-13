@@ -1,11 +1,10 @@
-const { NOT } = require('sequelize/lib/deferrable')
 const modelItemPedidoMedida = require('../models/item_pedido_medida')
 const modelMedidaPadrao = require('../models/medidas_padrao')
 const modelSobMedida = require('../models/medidas_sob_medida')
 const serviceItemPedido = require('./itenspedido')
 const ServiceMedidaPadrao = require('./medidaspadrao')
 const ServiceMedidaSobMedida = require('./medidassobmedida')
-const { where } = require('sequelize')
+
 class ItemPedidoMedida{
     async buscar(id){
         const pedidoMedida = await modelItemPedidoMedida.findOne({
