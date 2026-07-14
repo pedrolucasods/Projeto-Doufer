@@ -116,11 +116,11 @@ class Pedido{
 
     async pedidosCliente(req,res){
         try {
-            const pedidosFormatados = await PedidoService.pedidosCliente(req.params.id)
+            const pedidos = await PedidoService.pedidosCliente(req.params.id)
             return res.render('pedidos-cliente',{
                 script:'pedidos-cliente.js',
                 stylesheet:'pedidos-cliente.css',
-                pedidos: pedidosFormatados
+                dados: pedidos
             })
         } catch (error) {
             return res.status(500).send(`Erro ao listar os pedidos do cliente: ${error}`)

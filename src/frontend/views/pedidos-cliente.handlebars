@@ -19,11 +19,11 @@
     <hr>
 
     
-    {{#if pedidos.length}}
+    {{#if dados.pedidos.length}}
         <h2>Pedidos Registrados</h2>
         <div class="card-container">
 
-            {{#each pedidos}}
+            {{#each dados.pedidos}}
             <div class="card">
 
                 <div class="topo-card">
@@ -34,7 +34,7 @@
                 </div>
 
                 <p><strong>Cliente:</strong>
-                    {{clientes.nome}}
+                    {{nome}}
                 </p>
 
                 <p><strong>Data:</strong> {{data}}</p>

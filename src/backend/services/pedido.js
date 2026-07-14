@@ -222,37 +222,49 @@ class Pedido{
     }
 
     async pedidosCliente(id){
-        const pedidos = await modelPedido.findAll({where:{
-            "cliente_id":id
-            },
-            order: [["id","DESC"]],
-            include:[
-                {
-                    model: modelItensPedido,
-                    as:"itens",
-                    attributes:["id","preco_unitario","quantidade","modelo_produto"]
-                },
-                {
-                    model: modelCliente,
-                    as:"clientes",
-                    attributes:["nome"]
-                }
-            ]
-        })
-        // Criar array formatado com total calculado
-        const pedidosFormatados = pedidos.map(p=>{
-            const itens = p.itens || []
-            const total = itens.reduce((soma, item) => {
-                return soma +(item.preco_unitario * item.quantidade)
-            }, 0)
-            return {
-                ...p.dataValues,
-                cliente: p.clientes,
-                itens,
-                total
-            }
-        })
-        return pedidosFormatados
+        let dados = await sequelize.query(`
+            SELECT
+                json_group_array(
+                    json_object(
+                        'id',pedido_id,
+                        'cliente_id', cliente_id,
+                        'data',data,
+                        'status',status,
+                        'nome',nome_cliente,
+                        'total',valor_total,
+                        'itens',json(itens_do_pedido)
+                    )
+                ) AS pedidos
+            FROM(
+                SELECT
+                    p.id AS pedido_id,
+                    p.cliente_id AS cliente_id,
+                    p.data AS data,
+                    p.status AS status,
+                    c.nome AS nome_cliente,
+                    SUM(SUM(i.preco)) OVER(PARTITION BY p.id) AS valor_total,
+                    json_group_array(
+                        json_object(
+                            'produto',i.produto,
+                            'quantidade',i.quantidade,
+                            'modelo_produto',i.modelo_produto
+                        )
+                    ) AS itens_do_pedido
+                FROM itens_pedidos i
+                    INNER JOIN pedidos p on i.id_pedido = p.id
+                    INNER JOIN clientes c on p.cliente_id = c.id
+                WHERE c.id = :id
+                GROUP BY p.id
+            );
+            `,
+            {
+                replacements:{id:id},
+                type: QueryTypes.SELECT,
+                plain: true
+            })
+        
+        dados.pedidos = JSON.parse(dados.pedidos)
+        return dados
     }
 
     async quantidade_pedidos_clientes(id){
