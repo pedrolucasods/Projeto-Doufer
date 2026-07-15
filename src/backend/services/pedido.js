@@ -77,18 +77,26 @@ class Pedido{
             if(dados.data < dataToday){
                 throw new Error("Data inválida!")
             }
-            let pedido = await modelPedido.create({
-                cliente_id:dados.clienteId,
-                data: dados.data,
-                status:'aberto'
+
+            const cadastro = await sequelize.transaction(async(t)=>{
+                let pedido = await modelPedido.create({
+                    cliente_id:dados.clienteId,
+                    data: dados.data,
+                    status:'aberto'
+                },{transaction:t})
+
+                for(const items_pedido of dados.itens){
+                    items_pedido.id_pedido = pedido.id
+                    const itens = await ItemPedidoService.cadastrar(items_pedido,t)
+                }
+
+                return {pedido:pedido}
             })
+            
 
-            for(const items_pedido of dados.itens){
-                items_pedido.id_pedido = pedido.id
-                await ItemPedidoService.cadastrar(items_pedido)
-            }
+            
 
-            return pedido
+            return cadastro
     }
     
     async editar_pedido_dados(id){

@@ -13,8 +13,8 @@ class ItensPedido{
         return Item
     }
 
-    async cadastrar(dados){
-        await modelItensPedido.create({
+    async cadastrar(dados,transacao){
+        return await modelItensPedido.create({
             id_pedido: dados.id_pedido,
             preco: dados.total,
             produto: dados.produto,
@@ -26,11 +26,15 @@ class ItensPedido{
             preco_unitario: dados.precounit,
             modelo_produto: dados.modelo,
             complemento: dados.complemento
-        })
+        },{transaction: transacao})
     }
 
     async editar(dados){
-        await modelItensPedido.update({
+        let item_pedido = await modelItensPedido.findOne({where:{id:dados.id}})
+        if(!item_pedido){
+            throw new Error('Item do Pedido não encontrado!')
+        }
+        return await item_pedido.update({
             preco: dados.total,
             produto: dados.produto,
             cor: dados.cor,
@@ -41,7 +45,7 @@ class ItensPedido{
             preco_unitario: dados.precounit,
             modelo_produto: dados.modelo,
             complemento: dados.complemento
-        },{where:{id:dados.id}})
+        })
     }
 
     async deletar(id){
