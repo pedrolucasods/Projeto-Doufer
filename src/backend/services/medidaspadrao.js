@@ -23,7 +23,7 @@ class MedidaPadrao {
                     item_pedido_medida_id: dados.item_medida_id,
                     tamanho: dados.tamanho,
                     ajuste: dados.ajuste
-                })
+                },{transaction:dados.transacao})
             }
         } catch (error) {
             throw new Error(`${error.message}`)

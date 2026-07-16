@@ -1,3 +1,5 @@
+const {QueryTypes} = require('sequelize')
+const sequelize = require('../database')
 const modelItemPedidoMedida = require('../models/item_pedido_medida')
 const modelMedidaPadrao = require('../models/medidas_padrao')
 const modelSobMedida = require('../models/medidas_sob_medida')
@@ -52,17 +54,18 @@ class ItemPedidoMedida{
                     return updateQuantidade
                 }else{
                     // cadastro do item pedido medida
-                    const cadastro = await modelItemPedidoMedida.create({
-                    item_pedido_id:dados.item_pedido_id,
-                    tipo_medida:dados.tipo_medida,
-                    quantidade:dadosQuantidade
+                    const cadastro = await sequelize.transaction(async(t)=>{
+                        const medida = await modelItemPedidoMedida.create({
+                            item_pedido_id:dados.item_pedido_id,
+                            tipo_medida:dados.tipo_medida,
+                            quantidade:dadosQuantidade
+                        },{transaction:t})
+
+                        medidaPadrao.item_medida_id = medida.id
+                        medidaPadrao.transacao = t
+                        const cadMedidaSobMedida = await ServiceMedidaPadrao.cadastrar(medidaPadrao)
+                        return {medida:medida}
                     })
-                    // validação do cadastro
-                    if(!cadastro){
-                        throw new Error("Erro ao cadastrar a medida padrão!")
-                    }
-                    medidaPadrao.item_medida_id = cadastro.id
-                    const cadMedidaSobMedida = await ServiceMedidaPadrao.cadastrar(medidaPadrao)
                     return cadastro
                 }
 
@@ -88,19 +91,31 @@ class ItemPedidoMedida{
                     let updateQuantidade = await this.editar_quantidade(novaquantidade,item_com_mesma_medida.id)
                     return updateQuantidade
                 }else{
-                    // cadastro do item pedido medida
-                    const cadastro = await modelItemPedidoMedida.create({
-                    item_pedido_id:dados.item_pedido_id,
-                    tipo_medida:dados.tipo_medida,
-                    quantidade:dadosQuantidade
-                    })
-                    // validação do cadastro
-                    if(!cadastro){
-                        throw new Error("Erro ao cadastrar a medida padrão!")
-                    }
-                    medidasobMedida.item_medida_id = cadastro.id
-                    const cadMedidaSobMedida = await ServiceMedidaSobMedida.cadastrar(medidasobMedida)
-                    return cadastro
+                        // cadastro do item pedido medida
+                        const cadastro = await sequelize.transaction(async(t)=>{
+                            const medida = await modelItemPedidoMedida.create({
+                                item_pedido_id:dados.item_pedido_id,
+                                tipo_medida:dados.tipo_medida,
+                                quantidade:dadosQuantidade
+                            },{transaction:t})
+
+                            medidasobMedida.item_medida_id = medida.id
+                            medidasobMedida.transacao = t
+                            const cadMedidaSobMedida = await ServiceMedidaSobMedida.cadastrar(medidasobMedida)
+                            return {medida:medida}
+                        })
+                        // const medida = await modelItemPedidoMedida.create({
+                        //     item_pedido_id:dados.item_pedido_id,
+                        //     tipo_medida:dados.tipo_medida,
+                        //     quantidade:dadosQuantidade
+                        // })
+                        // // validação do cadastro
+                        // if(!medida){
+                        //     throw new Error("Erro ao cadastrar a medida padrão!")
+                        // }
+                        // medidasobMedida.item_medida_id = medida.id
+                        // const cadMedidaSobMedida = await ServiceMedidaSobMedida.cadastrar(medidasobMedida)
+                        return cadastro
                     }
                 
             } 

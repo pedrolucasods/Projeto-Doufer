@@ -32,7 +32,7 @@ class MedidaSobMedida {
                     costas:dados.costas,
                     comprimento_da_manga:dados.comprimento_da_manga,
                     largura_da_manga:dados.largura_da_manga
-                })
+                },{transaction:dados.transacao})
             }
         } catch (error) {
             throw new Error(`${error.message}`)
