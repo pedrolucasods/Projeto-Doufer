@@ -104,17 +104,7 @@ class ItemPedidoMedida{
                             const cadMedidaSobMedida = await ServiceMedidaSobMedida.cadastrar(medidasobMedida)
                             return {medida:medida}
                         })
-                        // const medida = await modelItemPedidoMedida.create({
-                        //     item_pedido_id:dados.item_pedido_id,
-                        //     tipo_medida:dados.tipo_medida,
-                        //     quantidade:dadosQuantidade
-                        // })
-                        // // validação do cadastro
-                        // if(!medida){
-                        //     throw new Error("Erro ao cadastrar a medida padrão!")
-                        // }
-                        // medidasobMedida.item_medida_id = medida.id
-                        // const cadMedidaSobMedida = await ServiceMedidaSobMedida.cadastrar(medidasobMedida)
+                        
                         return cadastro
                     }
                 
