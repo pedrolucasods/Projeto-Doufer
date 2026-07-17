@@ -113,15 +113,11 @@ class Medida{
     async listar_medidas(req,res){
         try {
             const clienteId = req.params.id
-            const MedidaSobMedida = await ServiceMedidaCliente.buscarMedidaSobMedidaPorCliente(clienteId)
-            const MedidaPadrao = await ServiceMedidaCliente.buscarMedidaPadraoPorCliente(clienteId)
-            const Cliente = await ServiceCliente.buscarCliente(clienteId)
+            const medidas_cliente = await ServiceMedidaCliente.buscar_medidas_cliente(clienteId)
             return res.render("medidas",{
                 stylesheet:'medidas.css',
                 script:'medidas.js',
-                medidas:MedidaSobMedida,
-                medidaspadrao:MedidaPadrao,
-                Cliente,
+                cliente:medidas_cliente,
                 error:req.query.error || null,
                 msg: req.query.msg || null
             })

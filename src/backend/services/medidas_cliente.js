@@ -1,3 +1,5 @@
+const {QueryTypes} = require('sequelize')
+const sequelize = require('../database')
 
 const ServiceMedidaPadrao = require('./medidaspadrao')
 const ServiceMedidaSobMedida = require('./medidassobmedida')
@@ -53,6 +55,56 @@ class MedidasCliente {
         } catch (error) {
             throw new Error(`${error.message}`)
         }
+    }
+
+    async buscar_medidas_cliente(id){
+        const medidas = await sequelize.query(`
+            SELECT
+                c.id,
+                c.nome,
+                json_group_array(
+                    CASE
+                        WHEN med_p.id IS NOT NULL THEN
+                            json_object(
+                                'id',med_p.id,
+                                'tamanho',med_p.tamanho,
+                                'ajuste',med_p.ajuste
+                            )
+                        ELSE NULL
+                    END
+                ) AS medida_padrao,
+                json_group_array(
+                    CASE
+                        WHEN med_sob.id IS NOT NULL THEN
+                            json_object(
+                                'id',med_sob.id,
+                                'busto',med_sob.busto,
+                                'cintura',med_sob.cintura,
+                                'quadril',med_sob.quadril,
+                                'comprimento',med_sob.comprimento,
+                                'ombro',med_sob.ombro,
+                                'costas',med_sob.costas,
+                                'comprimento_da_managa',med_sob.comprimento_da_manga,
+                                'largura_da_manga',med_sob.largura_da_manga
+                            
+                            )
+                        ELSE
+                            NULL
+                    END
+                ) AS medida_sob_medida
+            FROM clientes c
+            LEFT JOIN medidas_padrao med_p ON c.id = med_p.cliente_id 
+            LEFT JOIN medidas_sob_medidas med_sob ON c.id = med_sob.cliente_id
+            WHERE c.id = :id;
+        `,{
+            replacements:{id:id},
+            type: QueryTypes.SELECT,
+            plain:true
+        })
+
+        medidas.medida_padrao = JSON.parse(medidas.medida_padrao)
+        medidas.medida_sob_medida = JSON.parse(medidas.medida_sob_medida)
+        return medidas
     }
     
     buscarMedidaPadraoPorCliente(clienteId){
