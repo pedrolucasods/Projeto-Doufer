@@ -10,12 +10,6 @@ const bodyParser = require('body-parser')
 const handlebars = require('express-handlebars')
 
 
-// puxando models
-const cliente = require('./models/cliente')
-const pedido = require('./models/pedidos')
-const itenspedidos = require('./models/itensPedidos')
-const medidas_cliente = require('./models/medidas_cliente')
-
 // puxando a associação
 const association = require('./associations/associations')
 
@@ -51,31 +45,8 @@ app.use('/icons', express.static(path.join(__dirname, '../../node_modules/bootst
 
 
 // Rotas
-
-// home
-const homeroute = require('./routes/homeroutes')
-app.use('/', homeroute)
-
-// Rotas dos clientes
-const clienteroute = require('./routes/clienteroutes')
-app.use('/clientes', clienteroute)
-// apis cliente
-const apicliente = require('./routes/clienteapis')
-app.use('/api/clientes', apicliente)
-
-// Rotas dos Pedidos
-const pedidoroute = require('./routes/pedidoroutes')
-app.use('/pedidos', pedidoroute)
-// api pedidos
-const apipedido = require('./routes/pedidoapis')
-app.use('/api/pedidos', apipedido)
-
-
-//Rotas das Medidas
-
-//api medidas
-const apimedida = require('./routes/medidasapis')
-app.use('/api/medidas', apimedida)
+const routes = require('./routes/routes')
+app.use(routes)
 
 // Exporta tanto o app quanto a função para startar o servidor
 function startServer(port = process.env.PORT) {

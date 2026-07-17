@@ -1,6 +1,10 @@
 const ServiceItemPedidoMedida = require('../services/item_pedido_medida')
 const ServiceMedidaCliente = require('../services/medidas_cliente')
 const ServiceCliente = require('../services/cliente')
+const {ValidatorCadastroMedidaCliente} = require('../validators/medidas/cadastro_medidas_cliente')
+const {ValidadorCadastroMedidaItemPedido} = require('../validators/medidas/cadastro_medidas_item_pedido')
+const {ValidatorAtualizarMedidaCliente} = require('../validators/medidas/atualizar_medida_cliente')
+const {ValidatorDeletarMedidaCliente} = require('../validators/medidas/deletar_medida_cliente')
 class Medida{
     formulario_cadastro_medidas_cliente_sob_medida(req,res){
         try {
@@ -31,9 +35,6 @@ class Medida{
     async formulário_atualizar_medidas_cliente_padrao(req,res){
         try {
             const medidas = await ServiceMedidaCliente.buscarMedidaPadraoPorId(req.params.id)
-            if(!medidas){
-                throw new Error('Medida não encontrada')
-            }
             return res.render('upMedidaPadraoCliente',{
                 stylesheet:'upMedidaPadraoCliente.css',
                 script:'upMedidaPadraoCliente.js',
@@ -42,16 +43,13 @@ class Medida{
                 msg: req.query.msg || null
             })
         } catch (error) {
-            res.status(500).json({"Erro":`${error}`})
+            res.status(500).json({"Erro":`${error.message}`})
         }
     }
 
     async formulário_atualizar_medidas_cliente_sob_medida(req,res){
         try {
             const medidas = await ServiceMedidaCliente.buscarMedidaSobMedidaPorId(req.params.id)
-            if(!medidas){
-                throw new Error('Medida não encontrada')
-            }
             return res.render('upMedidaSobMedidaCliente',{
                 stylesheet:'upMedidaSobMedidaCliente.css',
                 script:'upMedidaSobMedidaCliente.js',
@@ -60,22 +58,17 @@ class Medida{
                 msg: req.query.msg || null
             })
         } catch (error) {
-            res.status(500).json({"Erro":`${error}`})
+            res.status(500).json({"Erro":`${error.message}`})
         }
     }
 
     async cadastrar_medida_cliente(req,res){
         try {
             const dados = req.body
-            const totalDeCampos = Object.keys(dados).length
-            const campos = Object.keys(dados)
-            if(totalDeCampos!=2){
-                throw new Error('Erro ao cadastrar medida do cliente!')
+            const validar_dados = await ValidatorCadastroMedidaCliente(dados,res)
+            if(!validar_dados){
+                return
             }
-            if(!campos.includes('tipo_medida') || !campos.includes('medidas')){
-                throw new Error('Erro ao cadastrar medida do cliente!')
-            }
-            ///////////////////////////////////////////////////////////////////
             const cadastroMedidas = await ServiceMedidaCliente.cadastrar_medidas(dados)
             if(!cadastroMedidas){
                 throw new Error(`Falha ao cadastrar medida!`)
@@ -89,15 +82,10 @@ class Medida{
     async atualizar_medida_cliente(req,res){
         try {
             const dados = req.body
-            const totalDeCampos = Object.keys(dados).length
-            const campos = Object.keys(dados)
-            if(totalDeCampos!=2){
-                throw new Error('Erro ao cadastrar medida do cliente!')
+            const validar_dados = await ValidatorAtualizarMedidaCliente(dados,res)
+            if(!validar_dados){
+                return
             }
-            if(!campos.includes('tipo_medida') || !campos.includes('medidas')){
-                throw new Error('Erro ao cadastrar medida do cliente!')
-            }
-            ///////////////////////////////////////////////////////////////////
             const atualizarMedidas = await ServiceMedidaCliente.atualizar(dados)
             if(!atualizarMedidas){
                 throw new Error(`Falha ao cadastrar medida!`)
@@ -111,6 +99,10 @@ class Medida{
     async deletar_medida_cliente(req,res){
         try {
             const dados = req.body
+            const validar_dados = await ValidatorDeletarMedidaCliente(dados,res)
+            if(!validar_dados){
+                return
+            }
             const deletarMedida = await ServiceMedidaCliente.deletar(dados)
             return res.json({'msg':'Medida deletada com sucesso!'})
         } catch (error) {
@@ -141,17 +133,9 @@ class Medida{
     async cadastrar_medida_itemPedido(req,res){
         try {
             const dados = req.body
-            const campos = Object.keys(dados)
-            const totalCampos = campos.length
-            if(totalCampos>4 || totalCampos<4){
-                throw new Error("Erro ao cadastrar medida, campos inválidos!")
-            }
-            if(
-                !campos.includes("item_pedido_id")||
-                !campos.includes("tipo_medida")||
-                !campos.includes("quantidade")
-            ){
-                throw new Error("Erro ao cadastrar medida, campos inválidos!")
+            const validar_dados = await ValidadorCadastroMedidaItemPedido(dados,res)
+            if(!validar_dados){
+                return
             }
             const cadastro = await ServiceItemPedidoMedida.cadastrar(dados)
             return res.json({"msg":"Cadastro com sucesso!"})

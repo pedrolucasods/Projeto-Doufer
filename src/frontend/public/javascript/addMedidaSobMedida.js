@@ -66,7 +66,7 @@ function mask(input){
 
 async function adicionarMedida(medidas,clienteId){
     try {
-        const response = await fetch(`/api/medidas/clientes`,{
+        const response = await fetch(`/medidas/clientes`,{
             method: 'POST',
             headers:{
                 'Content-Type': 'application/json'
@@ -78,10 +78,10 @@ async function adicionarMedida(medidas,clienteId){
             throw new Error(data.erro)
         }
         console.log(data,'\n',data.msg,'\n',response.ok)
-        window.location.href = `/api/medidas/clientes/listar/${clienteId}?msg=${data.msg}`
+        window.location.href = `/medidas/clientes/listar/${clienteId}?msg=${data.msg}`
     } catch (error) {
         console.log(error)
-        window.location.href = `/api/medidas/clientes?error=${error}`
+        window.location.href = `/medidas/clientes?error=${error}`
     }
 }
 

@@ -1,214 +1,219 @@
+const {QueryTypes} = require('sequelize')
+const sequelize = require('../database')
+
 const modelCliente = require('../models/cliente')
 const modelPedido = require('../models/pedidos')
 const modelItensPedido = require('../models/itensPedidos')
 const ClienteService = require('./cliente')
+const ItemPedidoService = require('./itenspedido')
 const ItemPedidoMedidaService = require('./item_pedido_medida')
 class Pedido{
 
     // listar e formatar
     async listarTodos(){
-        const pedidos = await modelPedido.findAll({
-            order: [["id","DESC"]],
-            include:[
-                {
-                    model: modelItensPedido,
-                    as:"itens",
-                    attributes:["id","preco_unitario","quantidade","modelo_produto"]
-                },
-                {
-                    model: modelCliente,
-                    as:"clientes",
-                    attributes:["nome"]
-                }
-            ]
-        })
-        // Criar array formatado com total calculado
-        const pedidosFormatados = pedidos.map(p=>{
-            const itens = p.itens || []
-            const total = itens.reduce((soma, item) => {
-                return soma +(item.preco_unitario * item.quantidade)
-            }, 0)
-            return {
-                ...p.dataValues,
-                cliente: p.clientes,
-                itens,
-                total
-            }
-        })
-        return pedidosFormatados
+        let dados = await sequelize.query(`
+            SELECT
+                json_group_array(
+                    json_object(
+                        'id',pedido_id,
+                        'cliente_id', cliente_id,
+                        'data',data,
+                        'status',status,
+                        'nome',nome_cliente,
+                        'total',valor_total,
+                        'itens',json(itens_do_pedido)
+                    )
+                ) AS pedidos
+            FROM(
+                SELECT
+                    p.id AS pedido_id,
+                    p.cliente_id AS cliente_id,
+                    p.data AS data,
+                    p.status AS status,
+                    c.nome AS nome_cliente,
+                    SUM(i.preco) AS valor_total,
+                    json_group_array(
+                        json_object(
+                            'id',i.id,
+                            'preco_unitario',i.preco_unitario,
+                            'quantidade',i.quantidade,
+                            'modelo_produto',i.modelo_produto
+                        )
+                    ) AS itens_do_pedido
+                FROM itens_pedidos i
+                    INNER JOIN pedidos p on i.id_pedido = p.id
+                    INNER JOIN clientes c on p.cliente_id = c.id
+                GROUP BY p.id
+            );
+            `,
+            {
+                type: QueryTypes.SELECT,
+                plain: true
+            })
+
+        dados.pedidos = JSON.parse(dados.pedidos)
+
+        return dados.pedidos
+    }
+
+    async buscar_pedido(id){
+        const pedido = await modelPedido.findOne({where:{id:id}})
+        return pedido
     }
 
     // Cadastrar pedidos
-    async cadastrar(pedidoiten){
-        
-            let pedido = []
-            pedido.push(pedidoiten);
+    async cadastrar(dados){
             const dataToday = new Date().toISOString().split('T')[0]
 
-            for(const informacoes_pedido of pedido){
-                let total = 0
-                const cliente = await ClienteService.buscarCliente(informacoes_pedido.clienteId)
-                if(!cliente){
-                    throw new Error('Cliente não existe!')
-                }
-                if(cliente.tipo_cliente != informacoes_pedido.tipo_cliente){
-                    throw new Error("Cliente selecionado não corresponde ao tipo informado.")
-                }
-                
-                if(informacoes_pedido.data < dataToday){
-                    throw new Error("Data inválida!")
-                }
-                let pedidoId = await modelPedido.create({
-                    cliente_id:informacoes_pedido.clienteId,
-                    data: informacoes_pedido.data,
+            const cliente = await ClienteService.buscarCliente(dados.clienteId)
+            if(!cliente){
+                throw new Error('Cliente não existe!')
+            }
+
+            if(cliente.tipo_cliente != dados.tipo_cliente){
+                throw new Error("Cliente selecionado não corresponde ao tipo informado.")
+            }
+
+            if(dados.data < dataToday){
+                throw new Error("Data inválida!")
+            }
+
+            const cadastro = await sequelize.transaction(async(t)=>{
+                let pedido = await modelPedido.create({
+                    cliente_id:dados.clienteId,
+                    data: dados.data,
                     status:'aberto'
-                })
-                
-                for(const valor_total of informacoes_pedido.itens){
-                total += valor_total.total
+                },{transaction:t})
+
+                for(const items_pedido of dados.itens){
+                    items_pedido.id_pedido = pedido.id
+                    const itens = await ItemPedidoService.cadastrar(items_pedido,t)
                 }
 
-                for(const items_pedido of informacoes_pedido.itens){
-                    modelItensPedido.create({
-                        id_pedido: pedidoId.id,
-                        preco: items_pedido.total,
-                        produto: items_pedido.produto,
-                        cor: items_pedido.cor,
-                        tecido: items_pedido.tecido,
-                        tamanho: items_pedido.tamanho,
-                        detalhes: items_pedido.detalhes,
-                        quantidade: items_pedido.quantidade,
-                        preco_unitario: items_pedido.precounit,
-                        modelo_produto: items_pedido.modelo,
-                        complemento: items_pedido.complemento
-                    })
-                }
-            }
-            return pedido
+                return {pedido:pedido}
+            })
+            
+
+            
+
+            return cadastro
     }
     
-    async detalhes(id){
-        const arraydeItens = []
-        const Pedidoid = id
-        const Pedido = await modelPedido.findAll({where: {'id':Pedidoid}})
-        const itens = await modelItensPedido.findAll({where: {'id_pedido':Pedidoid}})
-        let totalPedido = 0
-        let quantidadeItens_com_medida = 0
-        let medidasItens
-        let quantidade_total_de_itens = 0
-        for(let info of itens){
-            totalPedido+=info.preco
-            medidasItens = await ItemPedidoMedidaService.somar_quantidadeMedida_registrada(info.id)
-            quantidadeItens_com_medida += medidasItens
-            quantidade_total_de_itens+=info.quantidade
-        }
-        
-        
-        
-        arraydeItens.push(...itens)
-
-        //Info Pedido
-        let pedido_status = null
-        let pedido_id_cliente = null
-        let pedido_data = null
-        const quantidade_Itens_do_Pedido = arraydeItens.length
-        //For para adicionar os valores nas variaveis
-        for (const Infos of Pedido){
-                pedido_status = Infos.status
-                pedido_id_cliente = Infos.cliente_id
-                pedido_data = Infos.data
+    async editar_pedido_dados(id){
+        const dados = await sequelize.query(`
+            SELECT
+                c.nome as nome_cliente,
+                c.nome_empresa,
+                c.id as cliente_id,
+                p.status as pedido_status,
+                p.id as pedido_id,
+                p.data as pedido_data,
+                COUNT(i.id) as quantidade_itens,
+                SUM(i.preco) as total_pedido,
+                json_group_array(
+                    json_object(
+                        'id', i.id,
+                        'produto',i.produto,
+                        'cor',i.cor,
+                        'tecido',i.tecido,
+                        'tamanho',i.tamanho,
+                        'detalhes',i.detalhes,
+                        'quantidade',i.quantidade,
+                        'preco_unitario',i.preco_unitario,
+                        'modelo_produto',i.modelo_produto,
+                        'complemento',i.complemento
+                    )
+                ) as itens
+            FROM pedidos p
+                INNER JOIN clientes c ON p.cliente_id = c.id
+                INNER JOIN itens_pedidos i ON p.id = i.id_pedido
+            WHERE p.id = :id;    
+            `,
+            {
+                replacements: {id:id},
+                type: QueryTypes.SELECT,
+                plain: true
             }
-        // pegando a quantidade de dias faltante
-        let dataToday = new Date().toISOString().split('T')[0]
-        let DiasFaltante = ((new Date(pedido_data)) - (new Date(dataToday))) / (1000 * 60 * 60 * 24)
+        )
 
-        // Busca Nome cliente
-        const Cliente = await modelCliente.findAll({where:{'id':pedido_id_cliente}})
-        let nome = null
-        for(const infoCliente of Cliente)
-            nome = infoCliente.nome
+        dados.itens = JSON.parse(dados.itens)
 
-        return {
-            quantidade_total_de_itens,
-            quantidadeItens_com_medida,
-            quantidade_Itens_do_Pedido,
-            arraydeItens,
-            Pedidoid,
-            pedido_status,
-            pedido_id_cliente,
-            pedido_data,
-            nome,
-            totalPedido,
-            DiasFaltante
-        }
+        return dados
+    }
+
+
+    async detalhes(id){
+        let dados = await sequelize.query(`
+            SELECT
+                c.nome,
+                c.id,
+                p.id AS pedido_id,
+                p.status AS pedido_status,
+                p.data AS pedido_data,
+                json_group_array(
+                    json_object(
+                        'produto',i.produto,
+                        'quantidade',i.quantidade,
+                        'cor',i.cor,
+                        'tecido',i.tecido,
+                        'preco_unitario',i.preco_unitario
+                    )
+                ) OVER() AS itens,
+                SUM(i.preco) OVER() AS total_pedido,
+                SUM(i.quantidade) OVER() AS total_itens,
+                COALESCE(SUM(SUM(im.quantidade)) OVER() , 0) AS total_itens_com_medida,
+                ( SUM(i.quantidade) OVER() - COALESCE(SUM(SUM(im.quantidade)) OVER(),0) ) AS total_itens_sem_medida
+            FROM item_pedido_medidas im
+                RIGHT JOIN itens_pedidos i ON im.item_pedido_id = i.id
+                INNER JOIN pedidos p ON i.id_pedido = p.id
+                INNER JOIN clientes c ON p.cliente_id = c.id
+            WHERE p.id = :id
+            GROUP BY i.id;    
+        
+        `,
+        {
+            replacements: {id:id},
+            type: QueryTypes.SELECT,
+            plain: true
+        })
+
+        let today = new Date().toISOString().split('T')[0]
+        let dias_faltantes = ((new Date(dados.pedido_data)) - (new Date(today))) / (1000 * 60 * 60 * 24)
+
+        dados.dias_faltantes = dias_faltantes
+        dados.itens = JSON.parse(dados.itens)
+
+        return dados
     }
 
     async editarPedido(reqbodypedido,reqparamsid){
-        let pedido = []
-        pedido.push(reqbodypedido);
-        
+        let pedido = await modelPedido.update({
+            cliente_id:reqbodypedido.clienteId,
+            data: reqbodypedido.data,
+            status:'aberto'
+        },{where:{id:reqparamsid}})
 
-        for(const informacoes_pedido of pedido){
-            let total = 0
-            await modelPedido.update({
-                cliente_id:informacoes_pedido.clienteId,
-                data: informacoes_pedido.data,
-                status:'aberto'
-                },{where:{id:reqparamsid}})
-                
-                for(const valor_total of informacoes_pedido.itens){
-                total += valor_total.total
-                }
 
-                if(Array.isArray(informacoes_pedido.itensatuais) && informacoes_pedido.itensatuais.length>0){
-                    for(const items_pedido of informacoes_pedido.itensatuais){
-                        modelItensPedido.update({
-                            id_pedido: items_pedido.id_pedido,
-                            preco: items_pedido.total,
-                            produto: items_pedido.produto,
-                            cor: items_pedido.cor,
-                            tecido: items_pedido.tecido,
-                            tamanho: items_pedido.tamanho,
-                            detalhes: items_pedido.detalhes,
-                            quantidade: items_pedido.quantidade,
-                            preco_unitario: items_pedido.precounit,
-                            modelo_produto: items_pedido.modelo,
-                            complemento: items_pedido.complemento
-                        },{where:{id:items_pedido.id}})
-                    }
-                }else{
-                if(informacoes_pedido.ItensExcluir.length>0 && Array.isArray(informacoes_pedido.ItensExcluir)){
-                        for(const items_excluir of informacoes_pedido.ItensExcluir){
-                            modelItensPedido.destroy({
-                                where:{
-                                    id:items_excluir.id
-                                }
-                            })
+        // atualizar itens
+        if(Array.isArray(reqbodypedido.itensatuais) && reqbodypedido.itensatuais.length>0){
+            for(const items_pedido of reqbodypedido.itensatuais){
+                await ItemPedidoService.editar(items_pedido)
+            }
+        }
 
-                        }
-                    }else {
-                        
-                        
-                    }
-                }
+        // excluir itens
+        if(reqbodypedido.ItensExcluir.length>0 && Array.isArray(reqbodypedido.ItensExcluir)){
+            for(const items_excluir of reqbodypedido.ItensExcluir){
+                await ItemPedidoService.deletar(items_excluir.id)
+            }
+        }
 
-                if(Array.isArray(informacoes_pedido.novoItem) && informacoes_pedido.novoItem.length > 0){
-                    for(const items_pedido of informacoes_pedido.novoItem){
-                        modelItensPedido.create({
-                            id_pedido: reqparamsid,
-                            preco: items_pedido.total,
-                            produto: items_pedido.produto,
-                            cor: items_pedido.cor,
-                            tecido: items_pedido.tecido,
-                            tamanho: items_pedido.tamanho,
-                            detalhes: items_pedido.detalhes,
-                            quantidade: items_pedido.quantidade,
-                            preco_unitario: items_pedido.precounit,
-                            produto_modelo: items_pedido.modelo,
-                            complemento: items_pedido.complemento
-                        })
-                    }
-                }else{
+
+        // cadastrar novos itens
+        if(Array.isArray(reqbodypedido.novoItem) && reqbodypedido.novoItem.length > 0){
+            for(let items_pedido of reqbodypedido.novoItem){
+                items_pedido.id_pedido = reqparamsid
+                await ItemPedidoService.cadastrar(items_pedido)
 
             }
         }
@@ -217,41 +222,66 @@ class Pedido{
     }
 
     async deletar(pedido_id){
-        return modelPedido.destroy({where:{'id':pedido_id}})
+        const busca_pedido = await this.buscar_pedido(pedido_id)
+        if(!busca_pedido){
+            throw new Error('Pedido não encontrado!')
+        }
+        return await busca_pedido.destroy()
     }
 
     async pedidosCliente(id){
-        const pedidos = await modelPedido.findAll({where:{
-            "id":id
-            },
-            order: [["id","DESC"]],
-            include:[
-                {
-                    model: modelItensPedido,
-                    as:"itens",
-                    attributes:["id","preco_unitario","quantidade","modelo_produto"]
-                },
-                {
-                    model: modelCliente,
-                    as:"clientes",
-                    attributes:["nome"]
-                }
-            ]
-        })
-        // Criar array formatado com total calculado
-        const pedidosFormatados = pedidos.map(p=>{
-            const itens = p.itens || []
-            const total = itens.reduce((soma, item) => {
-                return soma +(item.preco_unitario * item.quantidade)
-            }, 0)
-            return {
-                ...p.dataValues,
-                cliente: p.clientes,
-                itens,
-                total
+        let dados = await sequelize.query(`
+            SELECT
+                json_group_array(
+                    json_object(
+                        'id',pedido_id,
+                        'cliente_id', cliente_id,
+                        'data',data,
+                        'status',status,
+                        'nome',nome_cliente,
+                        'total',valor_total,
+                        'itens',json(itens_do_pedido)
+                    )
+                ) AS pedidos
+            FROM(
+                SELECT
+                    p.id AS pedido_id,
+                    p.cliente_id AS cliente_id,
+                    p.data AS data,
+                    p.status AS status,
+                    c.nome AS nome_cliente,
+                    SUM(SUM(i.preco)) OVER(PARTITION BY p.id) AS valor_total,
+                    json_group_array(
+                        json_object(
+                            'produto',i.produto,
+                            'quantidade',i.quantidade,
+                            'modelo_produto',i.modelo_produto
+                        )
+                    ) AS itens_do_pedido
+                FROM itens_pedidos i
+                    INNER JOIN pedidos p on i.id_pedido = p.id
+                    INNER JOIN clientes c on p.cliente_id = c.id
+                WHERE c.id = :id
+                GROUP BY p.id
+            );
+            `,
+            {
+                replacements:{id:id},
+                type: QueryTypes.SELECT,
+                plain: true
+            })
+        
+        dados.pedidos = JSON.parse(dados.pedidos)
+        return dados
+    }
+
+    async quantidade_pedidos_clientes(id){
+        const quantidade_pedidos = await modelPedido.count({
+            where:{
+                cliente_id:id
             }
         })
-        return pedidosFormatados
+        return quantidade_pedidos
     }
 }
 

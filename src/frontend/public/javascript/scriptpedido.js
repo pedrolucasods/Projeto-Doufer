@@ -91,7 +91,7 @@ function deletarPedido(id){
 async function confirmarExclusao(){
     try {
         document.getElementById('modalConfirm').style.display = 'none'
-        const response = await fetch(`/api/pedidos/${idDeletarPedido}`,{
+        const response = await fetch(`/pedidos/${idDeletarPedido}`,{
             method: 'DELETE',
             headers:{
                 'Content-Type':'application/json'

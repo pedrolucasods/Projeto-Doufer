@@ -58,7 +58,7 @@ function mask(input){
 
 async function adicionarMedida(medidas,clienteId){
     try {
-        const response = await fetch(`/api/clientes/medidas/${clienteId}`,{
+        const response = await fetch(`/clientes/medidas/${clienteId}`,{
             method: 'POST',
             headers:{
                 'Content-Type': 'application/json'

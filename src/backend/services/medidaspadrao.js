@@ -10,9 +10,6 @@ class MedidaPadrao {
             if(dados.cliente_id) {
                 const buscaCliente = await ServiceCliente.buscarCliente(dados.cliente_id)
                 const buscaMedida = await this.buscaPorClienteId(dados.cliente_id)
-                if(!buscaCliente) {
-                    throw new Error('Cliente não encontrado')
-                }
                 if(buscaMedida){
                     throw new Error('Ja existe uma medida cadastrada!')
                 }
@@ -26,7 +23,7 @@ class MedidaPadrao {
                     item_pedido_medida_id: dados.item_medida_id,
                     tamanho: dados.tamanho,
                     ajuste: dados.ajuste
-                })
+                },{transaction:dados.transacao})
             }
         } catch (error) {
             throw new Error(`${error.message}`)
@@ -38,16 +35,12 @@ class MedidaPadrao {
         try {
             if(dados.cliente_id) {
                 const buscaMedida = await this.buscarporMedidaPadraoId(dados.medidaPadrao_id)
-                if(!buscaMedida){
+                if(!buscaMedida || buscaMedida.cliente_id != dados.cliente_id){
                     throw new Error('Medida não encontrada!')
                 }
-                return ModelmedidasPadrao.update({
+                return buscaMedida.update({
                     tamanho: dados.tamanho,
                     ajuste: dados.ajuste
-                },{
-                    where:{
-                        id:dados.medidaPadrao_id
-                    }
                 })
             
             }else if(dados.item_medida_id) {
@@ -55,13 +48,9 @@ class MedidaPadrao {
                 if(!buscaMedida){
                     throw new Error('Medida não encontrada!')
                 }
-                return ModelmedidasPadrao.update({
+                return buscaMedida.update({
                     tamanho: dados.tamanho,
                     ajuste: dados.ajuste
-                },{
-                    where:{
-                        id:dados.medidaPadrao_id
-                    }
                 })
             }
         } catch (error) {
@@ -75,7 +64,17 @@ class MedidaPadrao {
             if(!buscaMedida){
                 throw new Error('Medida não encontrada!')
             }
-            return ModelmedidasPadrao.destroy({where:{id:dados.medida_id}})
+            if(dados.cliente_id){
+                if(!buscaMedida.cliente_id || buscaMedida.cliente_id != dados.cliente_id){
+                    throw new Error('Medida não encontrada!')
+                }
+            }else if(dados.item_pedido_medida_id){
+                if(!buscaMedida.item_pedido_medida_id || buscaMedida.item_medida_id != dados.item_pedido_medida_id){
+                    throw new Error('Medida não encontrada!')
+                }
+            }
+    
+            return await buscaMedida.destroy()
         } catch (error) {
             throw new Error(`${error.message}`)
         }
@@ -91,6 +90,10 @@ class MedidaPadrao {
 
     buscarporMedidaPadraoId(medidaPadrao_id){
         return ModelmedidasPadrao.findOne({where:{id:medidaPadrao_id}})
+    }
+
+    buscarporMedidaPadraoIdEClienteId(medidaPadrao_id,cliente_id){
+        return ModelmedidasPadrao.findOne({where:{id:medidaPadrao_id,cliente_id:cliente_id}})
     }
 
 }

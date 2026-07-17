@@ -4,22 +4,22 @@ function voltar(id){
 
 function atualizarMedidasSobMedida(id){
     let medida_id = sessionStorage.setItem('MedidaId_sobMedida',id)
-    window.location.href = `/api/medidas/clientes/${id}/SobMedida`
+    window.location.href = `/medidas/clientes/${id}/SobMedida`
 }
 
 function atualizarMedidasPadrao(medidaId){
     let medida_id = sessionStorage.setItem('MedidaId_padrao',medidaId)
-    window.location.href = `/api/medidas/clientes/${medidaId}/padrao`
+    window.location.href = `/medidas/clientes/${medidaId}/padrao`
 }
 
 function cadastrarMedidas(id){
     let clientId = sessionStorage.setItem('clienteId',id)
-    window.location.href = `/api/medidas/clientes/`
+    window.location.href = `/medidas/clientes/`
 }
 
 function cadastrarMedidasPadrao(id){
     let clientId = sessionStorage.setItem('clienteId',id)
-    window.location.href = `/api/medidas/clientes/padrao`
+    window.location.href = `/medidas/clientes/padrao`
 }
 
 function abrirModalSobMedida(id){
@@ -41,7 +41,7 @@ async function deletarMedidaSobMedida(medida_id){
      try {
         const clienteid = sessionStorage.getItem('clienteId')
         const dados = {tipo:"sob_medida",medida_id:medida_id}
-        const response = await fetch(`/api/medidas/clientes`,{
+        const response = await fetch(`/medidas/clientes`,{
             method:"DELETE",
             headers:{
                 'Content-Type':'application/json'
@@ -52,18 +52,18 @@ async function deletarMedidaSobMedida(medida_id){
         if(!response.ok){
             throw new Error(data.erro)
         }
-        window.location.href = `/api/medidas/clientes/listar/${clienteid}?msg=${data.msg}`
+        window.location.href = `/medidas/clientes/listar/${clienteid}?msg=${data.msg}`
      } catch (error) {
         const erro = error
-        window.location.href= `/api/medidas/clientes/listar/${clienteid}?error=${erro}`
+        window.location.href= `/medidas/clientes/listar/${clienteid}?error=${erro}`
      }
 }
 
 async function deletarMedidaPadrao(medidaId) {
     try {
         const clienteid = sessionStorage.getItem('clienteId')
-        const dados = {tipo:"padrao",medida_id:medidaId}
-        const response = await fetch(`/api/medidas/clientes`,{
+        const dados = {tipo:"padrao",medida_id:medidaId,cliente_id:clienteid}
+        const response = await fetch(`/medidas/clientes`,{
             method:"DELETE",
             headers:{
                 'Content-Type':'application/json'
@@ -74,10 +74,10 @@ async function deletarMedidaPadrao(medidaId) {
         if(!response.ok){
             throw new Error(data.erro)
         }
-        window.location.href = `/api/medidas/clientes/listar/${clienteid}?msg=${data.msg}`
+        window.location.href = `/medidas/clientes/listar/${clienteid}?msg=${data.msg}`
      } catch (error) {
         const erro = error
-        window.location.href= `/api/medidas/clientes/listar/${clienteid}?error=${erro}`
+        window.location.href= `/medidas/clientes/listar/${clienteid}?error=${erro}`
      }
 }
 

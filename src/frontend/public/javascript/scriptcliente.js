@@ -85,7 +85,7 @@ async function confirmarExclusao() {
     try {
         document.getElementById('modalConfirm').style.display = 'none';
 
-        const response = await fetch(`/api/clientes/${idClienteParaExcluir}`, {
+        const response = await fetch(`/clientes/${idClienteParaExcluir}`, {
             method: 'DELETE'
         })
         idClienteParaExcluir = null;

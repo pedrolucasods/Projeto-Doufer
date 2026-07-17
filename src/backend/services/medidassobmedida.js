@@ -6,9 +6,6 @@ class MedidaSobMedida {
         try {
             if (dados.cliente_id) {
                 const cliente = await ServiceCliente.buscarCliente(dados.cliente_id)
-                if (!cliente) {
-                    throw new Error('Cliente não encontrado!')
-                }
                 const medidaExistente = await this.buscarMedidaPorClienteId(dados.cliente_id)
                 if(medidaExistente){
                     throw new Error('Este cliente já tem tamanho Sob Medida Registrado!')
@@ -35,7 +32,7 @@ class MedidaSobMedida {
                     costas:dados.costas,
                     comprimento_da_manga:dados.comprimento_da_manga,
                     largura_da_manga:dados.largura_da_manga
-                })
+                },{transaction:dados.transacao})
             }
         } catch (error) {
             throw new Error(`${error.message}`)
@@ -49,7 +46,7 @@ class MedidaSobMedida {
             if(!buscaMedida){
                 throw new Error('Medida não encontrada!')
             }
-            return modelMedidaSobMedida.update({
+            return buscaMedida.update({
                 busto: dados.busto,
                 cintura:dados.cintura,
                 quadril:dados.quadril,
@@ -58,10 +55,6 @@ class MedidaSobMedida {
                 costas:dados.costas,
                 comprimento_da_manga:dados.comprimento_da_manga,
                 largura_da_manga:dados.largura_da_manga
-            },{
-                where:{
-                    id:dados.medidaSobMedida_id
-                }
             })
             
         } catch (error) {
@@ -75,7 +68,16 @@ class MedidaSobMedida {
             if(!buscaMedida){
                 throw new Error('Medida não encontrada!')
             }
-            return modelMedidaSobMedida.destroy({where:{id:dados.medida_id}})
+            if(dados.cliente_id){
+                if(!buscaMedida.cliente_id || buscaMedida.cliente_id != dados.cliente_id){
+                    throw new Error('Medida não encontrada!')
+                }
+            }else if(dados.item_pedido_medida_id){
+                if(!buscaMedida.item_pedido_medida_id || buscaMedida.item_pedido_medida_id != dados.item_pedido_medida_id){
+                    throw new Error('Medida não encontrada!')
+                }
+            }
+            return await buscaMedida.destroy()
         } catch (error) {
             throw new Error(`${error.message}`)
         }
