@@ -22,7 +22,7 @@ class ItemPedidoMedida{
         return pedidoMedida
     }
 
-    async dados_formulario_cadastro_medidas_padrao_item_pedido(item_id){
+    async dados_formulario_cadastro_medidas_item_pedido(item_id){
         const dados = await sequelize.query(`
             SELECT
                 COALESCE(c.nome,c.nome_empresa) AS cliente,

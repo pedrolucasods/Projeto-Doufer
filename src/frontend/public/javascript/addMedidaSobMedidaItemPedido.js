@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded',()=>{
-    const form = document.getElementById('formAddMedidaPadraoItemPedido')
+    const form = document.getElementById('formAddMedidaSobMedidaItemPedido')
     form.addEventListener('submit',(e)=>{
         e.preventDefault()
         const url = window.location.pathname
@@ -9,10 +9,16 @@ document.addEventListener('DOMContentLoaded',()=>{
         let dados = {
             item_pedido_id:item_id,
             quantidade:document.getElementById('quantidade').value,
-            tipo_medida:"padrao",
+            tipo_medida:"sob_medida",
             medidas:[{
-                tamanho:document.getElementById('tamanho').value,
-                ajuste:document.getElementById('ajuste').value
+                busto:document.getElementById('busto').value,
+                cintura:document.getElementById('cintura').value,
+                quadril:document.getElementById('quadril').value,
+                comprimento:document.getElementById('comprimento').value,
+                ombro:document.getElementById('ombro').value,
+                costas:document.getElementById('costas').value,
+                comprimento_da_manga:document.getElementById('comprimento_da_manga').value,
+                largura_da_manga:document.getElementById('largura_da_manga').value
             }]
         }
         adicionarMedidas(dados)
@@ -43,7 +49,7 @@ async function adicionarMedidas(dados){
 
         window.location.href = `/pedidos?msg=${data.msg}`
     } catch (error) {
-        window.location.href = `/medidas/itens-pedidos/${dados.item_pedido_id}/padrao?error=${error}`
+        window.location.href = `/medidas/itens-pedidos/${dados.item_pedido_id}/SobMedida?error=${error}`
     }
 }
 
