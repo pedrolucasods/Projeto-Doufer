@@ -112,13 +112,10 @@ class Cliente{
     async detalhes(req,res){
         try {
             const cliente = await ClienteService.detalhes(req.params.id)
-            const qtdPedidos = await PedidoService.quantidade_pedidos_clientes(req.params.id)
-            
             return res.render('detalhesCliente',{
                 stylesheet:'detalhesCliente.css',
                 script:'detalhesCliente.js',
                 cliente,
-                qtdPedidos,
                 error:req.query.error || null,
                 msg: req.query.msg || null
             })

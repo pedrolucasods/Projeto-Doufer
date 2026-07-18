@@ -43,8 +43,8 @@
         </div>
         <div id="pedido-detalhes">
             <h2 class="title">Pedidos</h2>
-            {{#if qtdPedidos}}
-                <p><strong>quantidade pedidos: </strong>{{qtdPedidos}}</p>
+            {{#if cliente.quantidade_pedidos}}
+                <p><strong>quantidade pedidos: </strong>{{cliente.quantidade_pedidos}}</p>
             {{else}}
                 <p><strong>quantidade pedidos: </strong>Cliente ainda não possui nenhum pedido!!</p>
             {{/if}}

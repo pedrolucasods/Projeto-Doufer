@@ -1,3 +1,6 @@
+const {QueryTypes} = require('sequelize')
+const sequelize = require('../database')
+
 const cliente = require('../controllers/cliente')
 const modelCliente = require('../models/cliente')
 
@@ -83,11 +86,27 @@ class ClienteService{
     }
 
     async detalhes(id){
-        const busca_cliente = await this.buscarCliente(id)
-        if(!busca_cliente){
+        const cliente = await sequelize.query(`
+            SELECT
+                c.id,
+                c.nome,
+                c.telefone,
+                c.cpf,
+                c.nome_empresa,
+                COUNT(p.id) AS quantidade_pedidos
+            FROM pedidos p
+            RIGHT JOIN clientes c ON p.cliente_id = c.id
+            WHERE c.id = :id;
+        `,{
+            replacements:{id:id},
+            type: QueryTypes.SELECT,
+            plain: true
+        })
+        
+        if(!cliente.id){
             throw new Error('Cliente não encontrado!')
         }
-        return busca_cliente
+        return cliente
     }
 }
 

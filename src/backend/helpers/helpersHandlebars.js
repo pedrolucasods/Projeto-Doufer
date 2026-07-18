@@ -1,4 +1,7 @@
 class Helpers{
+    eq(a,b){
+        return a==b
+    }
     ne(a,b){
         return a!=b
     }
