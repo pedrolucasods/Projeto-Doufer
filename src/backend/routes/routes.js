@@ -2,6 +2,7 @@ const express = require('express')
 const home = express.Router()
 const clientes = express.Router()
 const pedidos = express.Router()
+const itens_pedidos = express.Router()
 const medidas = express.Router()
 const router = express.Router()
 const controllers = require('../controllers/index')
@@ -9,7 +10,8 @@ const controllers = require('../controllers/index')
 const ROUTES = {
     CLIENTES: '/clientes',
     PEDIDOS: '/pedidos',
-    MEDIDAS: '/medidas'
+    MEDIDAS: '/medidas',
+    ITEM_PEDIDOS: '/itens-pedido'
 }
 
 // home
@@ -44,6 +46,8 @@ pedidos.get('/PedidosCliente/:id', controllers.pedido.pedidosCliente)
 pedidos.get('/detalhes/:id', controllers.pedido.detalhesPedido)
 router.use('/pedidos',pedidos)
 
+itens_pedidos.get('/detalhes/:id', controllers.item_pedido.detalhes)
+router.use('/itens-pedidos',itens_pedidos)
 
 // medidas
 medidas.get('/clientes', controllers.medida.formulario_cadastro_medidas_cliente_sob_medida)

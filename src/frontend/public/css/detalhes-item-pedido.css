@@ -1,0 +1,166 @@
+body {
+    background: radial-gradient(circle at top, #f7f9ff 0%, #e7efff 55%, #f4f7ff 100%);
+    color: #212529;
+}
+
+.add-medida-card {
+    border-radius: 2rem;
+    background: #ffffff;
+}
+
+.add-medida-card .card-body {
+    padding: 3rem 2.5rem;
+}
+
+.add-medida-card h1 {
+    letter-spacing: -0.02em;
+}
+
+.info-panel {
+    background: #f8faff;
+    border: 1px solid #e3ebf8;
+    border-radius: 1.25rem;
+    padding: 1.25rem;
+}
+
+.summary-panel {
+    background: linear-gradient(135deg, #f8faff 0%, #eef4ff 100%);
+    border: 1px solid #dce8ff;
+    border-radius: 1.25rem;
+    padding: 1.25rem;
+}
+
+.summary-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    padding: 1rem 1.1rem;
+    background: #ffffff;
+    border-radius: 1rem;
+    border: 1px solid #e7eefc;
+}
+
+.summary-item .label {
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: #6c757d;
+}
+
+.summary-item strong {
+    color: #23304a;
+}
+
+.highlight-summary {
+    background: linear-gradient(135deg, #f8faff 0%, #eef5ff 100%);
+    border-color: #dbe8ff;
+}
+
+.highlight-summary strong {
+    color: #4f7fff;
+    font-size: 1.1rem;
+}
+
+.info-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    padding: 0.9rem 1rem;
+    background: #ffffff;
+    border-radius: 1rem;
+    border: 1px solid #e7eefc;
+}
+
+.info-item .label {
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: #6c757d;
+}
+
+.info-item strong {
+    color: #23304a;
+}
+
+.btn-primary,
+.btn-outline-primary {
+    border-radius: 1rem;
+    padding: 0.75rem 1.25rem;
+    font-weight: 700;
+}
+
+.btn-primary:hover {
+    background-color: #3c66d1;
+}
+
+.medidas-section {
+    margin-top: 1rem;
+}
+
+.section-title {
+    font-size: 1rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    color: #23304a;
+}
+
+.medida-card {
+    background: #ffffff;
+    border: 1px solid #e7eefc;
+    border-radius: 1.25rem;
+    padding: 1.25rem;
+    box-shadow: 0 8px 20px rgba(35, 48, 74, 0.05);
+    height: 100%;
+}
+
+.medida-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.75rem;
+}
+
+.medida-card-header h3 {
+    margin: 0;
+    font-size: 1.05rem;
+    color: #23304a;
+}
+
+.medida-description {
+    color: #6c757d;
+    margin-bottom: 1rem;
+}
+
+.medida-highlight {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #f8faff;
+    border: 1px solid #e3ebf8;
+    border-radius: 0.9rem;
+    padding: 0.8rem 1rem;
+    margin-bottom: 0.75rem;
+    color: #23304a;
+    font-weight: 600;
+}
+
+.medida-highlight strong {
+    color: #4f7fff;
+}
+
+.badge {
+    padding: 0.75rem 1rem;
+    font-size: 0.9rem;
+}
+
+.text-muted {
+    color: #6c757d !important;
+}
+
+@media (max-width: 576px) {
+    .add-medida-card .card-body {
+        padding: 2rem 1.5rem;
+    }
+}

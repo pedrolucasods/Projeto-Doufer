@@ -2,6 +2,10 @@ function voltar(){
     window.location.href = '/pedidos'
 }
 
+function detalhes_item(id){
+    window.location.href=`/itens-pedidos/detalhes/${id}`
+}
+
 setTimeout(() =>{
     const msg = document.getElementById('msg')
     msg.classList.add("fade")
