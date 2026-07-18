@@ -21,6 +21,31 @@ class ItemPedidoMedida{
         const pedidoMedida = await modelItemPedidoMedida.findOne({where:{item_pedido_id:item_id}})
         return pedidoMedida
     }
+
+    async dados_formulario_cadastro_medidas_padrao_item_pedido(item_id){
+        const dados = await sequelize.query(`
+            SELECT
+                COALESCE(c.nome,c.nome_empresa) AS cliente,
+                ip.id_pedido AS pedido_id,
+                ip.id AS item_id,
+                ip.produto,
+                ip.modelo_produto,
+                ip.cor,
+                ip.quantidade - COALESCE(SUM(ipm.quantidade),0) AS quantidade_disponivel
+            FROM item_pedido_medidas ipm
+            RIGHT JOIN itens_pedidos ip ON ipm.item_pedido_id = ip.id
+            INNER JOIN pedidos p ON ip.id_pedido = p.id
+            INNER JOIN clientes c ON p.cliente_id = c.id
+            WHERE ip.id = :item_id;
+        `,{
+            replacements: {item_id,item_id},
+            type: QueryTypes.SELECT,
+            plain: true
+        })
+        
+        return dados
+    }
+
     async cadastrar(dados){
         try {
             const dadosQuantidade = parseInt(dados.quantidade)
