@@ -10,52 +10,57 @@
     <p class="fw-bold mb-0">{{error}}</p>
 </div>
 {{/if}}
-<div id="container-medidas">
-    <h1>Cadastro de Medidas</h1>
-    <div id="container-form">
-        <form id="form">
-            <label>Busto:</label>
-            <br>
-            <input id="inputBusto" name="busto">
-            <br><br>
+<div class="page-shell">
+    <div class="form-card">
+        <div class="card-body">
+            <h1 class="form-title">Cadastro de Sob Medida</h1>
+            <p class="form-subtitle">Registre as medidas específicas para o cliente com o mesmo padrão visual das telas de pedido.</p>
 
-            <label>Cintura:</label>
-            <br>
-            <input id="inputCintura" name="cintura">
-            <br><br>
+            <form id="form" class="row g-3">
+                <div class="col-12 col-md-6">
+                    <label for="inputBusto" class="form-label">Busto</label>
+                    <input class="form-control" id="inputBusto" name="busto">
+                </div>
 
-            <label>Quadril:</label>
-            <br>
-            <input id="inputQuadril" name="quadril">
-            <br><br>
+                <div class="col-12 col-md-6">
+                    <label for="inputCintura" class="form-label">Cintura</label>
+                    <input class="form-control" id="inputCintura" name="cintura">
+                </div>
 
-            <label>Comprimento</label>
-            <br>
-            <input id="inputComprimento" name="comprimento">
-            <br><br>
+                <div class="col-12 col-md-6">
+                    <label for="inputQuadril" class="form-label">Quadril</label>
+                    <input class="form-control" id="inputQuadril" name="quadril">
+                </div>
 
-            <label>Ombro:</label>
-            <br>
-            <input id="inputOmbro" name="ombro">
-            <br><br>
+                <div class="col-12 col-md-6">
+                    <label for="inputComprimento" class="form-label">Comprimento</label>
+                    <input class="form-control" id="inputComprimento" name="comprimento">
+                </div>
 
-            <label>Costas:</label>
-            <br>
-            <input id="inputCostas" name="costas">
-            <br><br>
+                <div class="col-12 col-md-6">
+                    <label for="inputOmbro" class="form-label">Ombro</label>
+                    <input class="form-control" id="inputOmbro" name="ombro">
+                </div>
 
-            <label>Comprimento da Manga:</label>
-            <br>
-            <input id="inputCManga" name="comprimento_da_manga">
-            <br><br>
+                <div class="col-12 col-md-6">
+                    <label for="inputCostas" class="form-label">Costas</label>
+                    <input class="form-control" id="inputCostas" name="costas">
+                </div>
 
-            <label>Largura da Manga</label>
-            <br>
-            <input id="inputLManga" name="largura_da_manga">
-            <br><br>
+                <div class="col-12 col-md-6">
+                    <label for="inputCManga" class="form-label">Comprimento da Manga</label>
+                    <input class="form-control" id="inputCManga" name="comprimento_da_manga">
+                </div>
 
-            <button type="submit">Enviar</button>
-        </form>
+                <div class="col-12 col-md-6">
+                    <label for="inputLManga" class="form-label">Largura da Manga</label>
+                    <input class="form-control" id="inputLManga" name="largura_da_manga">
+                </div>
+
+                <div class="col-12 text-end">
+                    <button type="submit" class="btn btn-primary">Enviar</button>
+                </div>
+            </form>
+        </div>
     </div>
-</div>
-    
+</div>    

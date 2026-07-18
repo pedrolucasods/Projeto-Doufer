@@ -35,3 +35,7 @@ async function editarPedido(id){
     window.location.href = `/pedidos/editar/${idEditarPedido}`
     
 }
+
+function voltar(cliente_id){
+    window.location.href = `/clientes/detalhes/${cliente_id}`
+}

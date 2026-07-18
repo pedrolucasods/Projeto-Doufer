@@ -70,6 +70,7 @@ class Pedido{
         try {
             const dados = await PedidoService.editar_pedido_dados(req.params.id)
             return res.render('editarPedido', {
+                    stylesheet:'editarPedido.css',
                     script:'editarpedido.js',
                     Pedidoid:dados.pedido_id,
                     pedido_status:dados.pedido_status,

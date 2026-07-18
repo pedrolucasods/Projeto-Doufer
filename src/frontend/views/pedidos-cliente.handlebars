@@ -1,26 +1,29 @@
-<a href="/"><button id="back"><i class="fas fa-home"></i></button></a>
+<a onclick="voltar({{dados.pedidos.0.cliente_id}})"><button id="back"><i class="fas fa-home"></i></button></a>
 
 <div id="fundo">
-    <h1 id="title">Pedidos</h1>
+    <div class="page-header">
+        <div>
+            <h1 id="title">Pedidos</h1>
+            <p class="page-subtitle">Gerencie os pedidos registrados para o cliente.</p>
+        </div>
 
-    <div id="opcoes">
-        <select id="fieldsearch">
-            <option value="id">ID do Pedido</option>
-            <option value="cliente">Cliente</option>
-            <option value="data">Data</option>
-            <option value="status">Status</option>
-        </select>
-        <input id="inputsearch" type="search" placeholder="Digite o termo da busca...">
-        <button id="btnsearch"><i class="fas fa-search"></i></button>
-        <button id="newpedido"><i class="fas fa-cart-plus"></i></button>
-        <br><br>
+        <div id="opcoes">
+            <select id="fieldsearch" class="form-select">
+                <option value="id">ID do Pedido</option>
+                <option value="cliente">Cliente</option>
+                <option value="data">Data</option>
+                <option value="status">Status</option>
+            </select>
+            <input id="inputsearch" type="search" placeholder="Digite o termo da busca...">
+            <button id="btnsearch"><i class="fas fa-search"></i></button>
+            <button id="newpedido"><i class="fas fa-cart-plus"></i></button>
+        </div>
     </div>
 
     <hr>
 
-    
     {{#if dados.pedidos.length}}
-        <h2>Pedidos Registrados</h2>
+        <h2 class="section-title">Pedidos Registrados</h2>
         <div class="card-container">
 
             {{#each dados.pedidos}}
@@ -57,17 +60,18 @@
                 <p class="total">
                     Total: <span>R$ {{total}}</span>
                 </p>
-                <button id="deletar" onclick="deletarPedido({{id}})">Excluir</button>
-                <button id="editar" onclick="editarPedido({{id}})">Editar</button>
+                <div class="card-actions">
+                    <button id="deletar" onclick="deletarPedido({{id}})">Excluir</button>
+                    <button id="editar" onclick="editarPedido({{id}})">Editar</button>
+                </div>
             </div>
             {{/each}}
 
         </div>
     {{else}}
-        <h2>Você ainda não registrou nenhum pedido !</h2>
-    
+        <h2 class="section-title">Você ainda não registrou nenhum pedido!</h2>
     {{/if}}
-    <!-- Modal de confirmação -->
+
     <div id="modalConfirm" style="display: none; position: fixed; top: 0; left: 0; 
             width: 100%; height: 100%; background-color: rgba(0,0,0,0.6); 
             z-index: 999; justify-content: center; align-items: center;">

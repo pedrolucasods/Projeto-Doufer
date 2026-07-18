@@ -10,82 +10,107 @@
     <p class="fw-bold mb-0">{{error}}</p>
 </div>
 {{/if}}
-<div>
-    <h1>Editar Cliente</h1>
-    <div>
-        <form id="formeditcliente">
-            <p>Tipo do cliente</p>
-            <select name="tipo_cliente" id="tipo_cliente">
-                {{#if (eq cliente.tipo_cliente "pessoa")}}
-                    <option value="">Selecione o tipo</option>
-                    <option value="pessoa" selected>Pessoa</option>
-                    <option value="empresa">Empresa</option>
-                {{else if (eq cliente.tipo_cliente "empresa")}}
-                    <option value="">Selecione o tipo</option>
-                    <option value="pessoa">Pessoa</option>
-                    <option value="empresa" selected>Empresa</option>
+<div class="page-shell">
+    <div class="form-card">
+        <div class="card-body">
+            <h1 class="form-title">Editar Cliente</h1>
+            <p class="form-subtitle">Atualize os dados cadastrais do cliente sem alterar a lógica do formulário.</p>
+
+            <form id="formeditcliente" class="row g-3">
+                <div class="col-12">
+                    <label for="tipo_cliente" class="form-label">Tipo do cliente</label>
+                    <select class="form-select" name="tipo_cliente" id="tipo_cliente">
+                        {{#if (eq cliente.tipo_cliente "pessoa")}}
+                            <option value="">Selecione o tipo</option>
+                            <option value="pessoa" selected>Pessoa</option>
+                            <option value="empresa">Empresa</option>
+                        {{else if (eq cliente.tipo_cliente "empresa")}}
+                            <option value="">Selecione o tipo</option>
+                            <option value="pessoa">Pessoa</option>
+                            <option value="empresa" selected>Empresa</option>
+                        {{/if}}
+                    </select>
+                    <span id="spanTipo_cliente"></span>
+                </div>
+
+                <div class="col-12">
+                    <label for="inputnome" class="form-label">Nome</label>
+                    <input class="form-control" value="{{cliente.nome}}" id="inputnome" type="text" name="namecliente" required>
+                    <span id="spanname"></span>
+                </div>
+
+                {{#if  (eq cliente.tipo_cliente "empresa")}}
+                    <div class="col-12">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="toggleempresa" name="inserirempresa" style="display: none;">
+                        </div>
+                        {{#if cliente.nome_empresa.length}}
+                            <div id="empresaContainer" style="display: block;">
+                                <label for="empresaInput" class="form-label">Nome da empresa</label>
+                                <input class="form-control" value="{{cliente.nome_empresa}}" type="text" name="empresacliente" id="empresaInput">
+                            </div>
+                        {{else}}
+                            <div id="empresaContainer" style="display: block;">
+                                <label for="empresaInput" class="form-label">Nome da empresa</label>
+                                <input class="form-control" type="text" name="empresacliente" id="empresaInput">
+                            </div>
+                        {{/if}}
+                    </div>
+                {{else if  (eq cliente.tipo_cliente "pessoa")}}
+                    {{#if cliente.nome_empresa}}
+                        <div class="col-12">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="toggleempresa" name="inserirempresa" checked>
+                                <label class="form-check-label" for="toggleempresa" id="pnomeempresa">Deseja alterar o nome da empresa?</label>
+                            </div>
+                            <div id="empresaContainer" style="display: block;" class="mt-3">
+                                <label for="empresaInput" class="form-label">Nome da empresa</label>
+                                <input class="form-control" value="{{cliente.nome_empresa}}" type="text" name="empresacliente" id="empresaInput">
+                            </div>
+                        </div>
+                    {{else}}
+                        <div class="col-12">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="toggleempresa" name="inserirempresa">
+                                <label class="form-check-label" for="toggleempresa" id="pnomeempresa">Deseja alterar o nome da empresa?</label>
+                            </div>
+                            <div id="empresaContainer" style="display: none;" class="mt-3">
+                                <label for="empresaInput" class="form-label">Nome da empresa</label>
+                                <input class="form-control" type="text" name="empresacliente" id="empresaInput">
+                            </div>
+                        </div>
+                    {{/if}}
                 {{/if}}
-            </select>
-            <span id="spanTipo_cliente"></span>
 
-            <p>Nome: </p>
-            <input value="{{cliente.nome}}" id="inputnome" type="text" name="namecliente" required>
-            <span id="spanname"></span>
+                <div class="col-12">
+                    <label for="telefone" class="form-label">Telefone</label>
+                    <input class="form-control" value="{{cliente.telefone}}" id="telefone" name="telefonecliente" required placeholder="(00) 00000-0000...">
+                    <span id="spanphone"></span>
+                </div>
 
-            {{#if  (eq cliente.tipo_cliente "empresa")}}
-                <p id="pnomeempresa" style="display: none;">Deseja Alterar o Nome da Empresa?</p>
-                <input type="checkbox" id="toggleempresa" name="inserirempresa" style="display: none;">
-                {{#if cliente.nome_empresa.length}}
-                    <div id="empresaContainer" style="display: block;">
-                        <p>Nome da empresa:</p>
-                        <input value="{{cliente.nome_empresa}}" type="text" name="empresacliente" id="empresaInput">
+                <div class="col-12">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="toggleCpf" name="inserirCpf">
+                        <label class="form-check-label" for="toggleCpf">Deseja alterar o CPF?</label>
+                    </div>
+                </div>
+
+                {{#if cliente.cpf.length}}
+                    <div id="cpfContainer" style="display: none;" class="col-12">
+                        <label for="cpfInput" class="form-label">CPF</label>
+                        <input class="form-control" value="{{cliente.cpf}}" type="text" name="cpfcliente" id="cpfInput" placeholder="000.000.000-00">
                     </div>
                 {{else}}
-                    <div id="empresaContainer" style="display: block;">
-                        <p>Nome da empresa:</p>
-                        <input type="text" name="empresacliente" id="empresaInput">
+                    <div id="cpfContainer" style="display: none;" class="col-12">
+                        <label for="cpfInput" class="form-label">CPF</label>
+                        <input class="form-control" type="text" name="cpfcliente" id="cpfInput" placeholder="000.000.000-00">
                     </div>
                 {{/if}}
-            {{else if  (eq cliente.tipo_cliente "pessoa")}}
-                {{#if cliente.nome_empresa}}
-                    <p id="pnomeempresa" style="display: block;">Deseja Alterar o Nome da Empresa?</p>
-                    <input type="checkbox" id="toggleempresa" name="inserirempresa" style="display: block;" checked>
-                    <div id="empresaContainer" style="display: block;">
-                        <p>Nome da empresa:</p>
-                        <input value="{{cliente.nome_empresa}}" type="text" name="empresacliente" id="empresaInput">
-                    </div>
-                {{else}}
-                    <p id="pnomeempresa" style="display: block;">Deseja Alterar o Nome da Empresa?</p>
-                    <input type="checkbox" id="toggleempresa" name="inserirempresa" style="display: block;">
-                    <div id="empresaContainer" style="display: none;">
-                        <p>Nome da empresa:</p>
-                        <input type="text" name="empresacliente" id="empresaInput">
-                    </div>
-                {{/if}}
-            {{/if}}
 
-            
-
-            <p>Telefone: </p>
-            <input value="{{cliente.telefone}}" id="telefone" name="telefonecliente" required placeholder="(00) 00000-0000..."></input>
-            <span id="spanphone"></span>
-            <p>
-                Deseja Alterar o CPF?
-                <input type="checkbox" id="toggleCpf" name="inserirCpf">
-            </p>
-            {{#if cliente.cpf.length}}
-                <div id="cpfContainer" style="display: none;">
-                    <p>CPF:</p>
-                    <input value="{{cliente.cpf}}" type="text" name="cpfcliente" id="cpfInput" placeholder="000.000.000-00">
+                <div class="col-12 text-end">
+                    <button type="submit" class="btn btn-primary">Editar cliente</button>
                 </div>
-            {{else}}
-                <div id="cpfContainer" style="display: none;">
-                    <p>CPF:</p>
-                    <input type="text" name="cpfcliente" id="cpfInput" placeholder="000.000.000-00">
-                </div>
-            {{/if}}
-            <br>
-            <button type="submit">Editar cliente</button>
-         </form>
+            </form>
+        </div>
     </div>
 </div>

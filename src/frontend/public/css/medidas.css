@@ -1,140 +1,131 @@
-body{
-    display: block;
-    width: 100%;
-    height: 100%;
-    justify-content: center;
-    align-items: center;
-    padding: 10px;
+body {
+    margin: 0;
+    background: linear-gradient(135deg, #f8fafc 0%, #eef2ff 100%);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-p{
+p {
     margin: 0;
 }
 
-#container{
+#container {
+    min-height: 100vh;
+    padding: 36px 20px 40px;
     display: flex;
-    flex-wrap: wrap;
-    width: 100%;
-    min-height: 100%;
-    margin: 0;
-    padding: 5rem;
-    align-items: center;
     justify-content: center;
-}
-
-.container-infos{
-    display: flex;
-    flex-wrap: wrap;
-    width: 60%;
-    height: 100%;
-    margin: 0 auto;
-    padding: 5rem;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-}
-
-.container-title{
-    display: block;
-    width: inherit;
-    justify-content: space-between;
-}
-
-#container-medidas{
-    display: flex;
-    width: 100%;
-    min-width: 1002px;
-    justify-content: space-around;
-    align-items: center;
-    gap: 20px;
-}
-
-.medidas-sobmedida{
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-}
-
-
-
-
-.medidas-corpos{
-    display: flex;
-    flex-wrap: wrap;
-    width: 100%;
-    justify-content: center;
-    gap: 10px;
-}
-
-#medidas-corpo{
-    display: flex;
-    flex-wrap: wrap;
-    width: 100%;
-    justify-content: space-between;
-}
-
-.medidas-manga{
-    display: flex;
-    flex-wrap: wrap;
-    width: 100%;
-    justify-content: center;
-    gap: 10px;
-}
-
-#medidas-manga{
-    display: flex;
-    flex-wrap: wrap;
-    width: 100%;
-    justify-content: space-between;
-}
-
-.medidas-padrao{
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 10px;
-}
-
-#medidas-padrao{
-    display: flex;
-    flex-wrap: wrap;
-    width: 100%;
-    gap: 10px;
-}
-
-#container-buttons{
-    display: flex;
-    gap: 220px;
-    justify-content: center;
-    margin: 0;
     align-items: center;
 }
 
-#title-cliente{
-    font-size: 28px;
-    font-weight: 600;
+.container-infos {
+    width: 100%;
+    max-width: 980px;
+    background: #fff;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+    border: 1px solid #e5e7eb;
+    padding: 24px;
+}
+
+.container-title {
+    margin-bottom: 16px;
+}
+
+#container-medidas {
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr;
+    gap: 18px;
+    width: 100%;
+    align-items: start;
+}
+
+.medidas-sobmedida,
+.medidas-padrao {
+    background: #f8fafc;
+    border: 1px solid #e5e7eb;
+    border-radius: 16px;
+    padding: 18px;
+}
+
+.medidas-corpos,
+.medidas-manga {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 12px;
+}
+
+#medidas-corpo,
+#medidas-manga,
+#medidas-padrao {
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 12px;
+    background: #fff;
+}
+
+#medidas-corpo {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
+#container-buttons {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+    margin-top: 10px;
+}
+
+#title-cliente,
+#title-corpo,
+#title-manga {
+    font-size: 1.2rem;
+    font-weight: 700;
     text-align: center;
-    color: #2c3e50;
+    color: #111827;
 }
 
-#title-corpo{
-    display: flex;
-    font-size: 28px;
-    font-weight: 600;
-    text-align: center;
-    justify-content: center;
-    color: #2c3e50;
+.btn {
+    border-radius: 10px;
+    padding: 0.6rem 0.9rem;
 }
 
-#title-manga{
-    font-size: 28px;
-    font-weight: 600;
-    text-align: center;
-    justify-content: center;
-    color: #2c3e50;
-    align-items: center;
+.btn-primary,
+.btn-success,
+.btn-danger,
+.btn-secondary {
+    border: none;
 }
 
+.btn-primary {
+    background: #4f46e5;
+    color: #fff;
+}
+
+.btn-success {
+    background: #16a34a;
+    color: #fff;
+}
+
+.btn-danger {
+    background: #dc2626;
+    color: #fff;
+}
+
+.btn-secondary {
+    background: #6b7280;
+    color: #fff;
+}
+
+@media (max-width: 768px) {
+    #container-medidas {
+        grid-template-columns: 1fr;
+    }
+
+    #medidas-corpo {
+        grid-template-columns: 1fr;
+    }
+}
 /* Estilo do modal de exclusão */
 .modal-content.delete-modal {
     border: none;

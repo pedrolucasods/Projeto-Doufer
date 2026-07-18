@@ -1,6 +1,7 @@
 body {
-    margin: 0;
     background: linear-gradient(135deg, #f8fafc 0%, #eef2ff 100%);
+    min-height: 100vh;
+    margin: 0;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
@@ -8,8 +9,8 @@ body {
     min-height: 100vh;
     padding: 40px 20px;
     display: flex;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
 }
 
 .form-card {
@@ -22,7 +23,7 @@ body {
     overflow: hidden;
 }
 
-.card-body {
+.form-card .card-body {
     padding: 2rem;
 }
 
@@ -38,24 +39,38 @@ body {
     margin-bottom: 1.5rem;
 }
 
-.form-label {
+.form-card .form-label {
     font-weight: 600;
     color: #374151;
 }
 
-.form-control {
+.form-card .form-control,
+.form-card .form-select {
     border-radius: 10px;
     border: 1px solid #d1d5db;
     padding: 0.7rem 0.9rem;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
-.form-control:focus {
+.form-card .form-control:focus,
+.form-card .form-select:focus {
     border-color: #4f46e5;
     box-shadow: 0 0 0 0.2rem rgba(79, 70, 229, 0.15);
 }
 
-.btn-primary {
+.form-card .btn-primary {
     border-radius: 10px;
     padding: 0.7rem 1.2rem;
     font-weight: 600;
+}
+
+.form-card .form-check-input:checked {
+    background-color: #4f46e5;
+    border-color: #4f46e5;
+}
+
+.form-card .helper-text {
+    font-size: 0.9rem;
+    color: #6b7280;
+    margin-top: 0.35rem;
 }

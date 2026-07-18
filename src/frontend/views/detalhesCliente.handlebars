@@ -1,4 +1,4 @@
-<button id="back"><i class="fas fa-home"></i></button>
+<button id="back" type="button"><i class="fas fa-home"></i></button>
 {{#if msg}}
 <div id="msg" class="d-flex gap-3 alert alert-success alert-dismissible fade show position-fixed top-0 end-0 me-5 m-3">
     <i class="bi bi-check-square-fill text-success"></i>
@@ -16,7 +16,7 @@
         <h1 class="title">Informações</h1>
         <div id="cliente-detalhes">
             <div id="info-clientes">
-                <h2>cliente</h2>
+                <h2>Cliente</h2>
                 <p><strong>Identificação: </strong>{{cliente.id}}</p>
                 <p><strong>Nome: </strong>{{cliente.nome}}</p>
                 <p><strong>Telefone: </strong></p>
@@ -32,24 +32,27 @@
                     <p><strong>Empresa: </strong>Nenhuma empresa cadastrada!</p>
                 {{/if}}
             </div>
-            <div id="medidas">
-                <h2>Medidas</h2>
-                <div class="medidas-btn">
-                    <button class="btn btn-primary" onclick="listarMedidas({{cliente.id}})">Consultar</button>
+
+            <div class="card-stack">
+                <div id="medidas">
+                    <h2>Medidas</h2>
+                    <div class="medidas-btn">
+                        <button class="btn btn-primary" onclick="listarMedidas({{cliente.id}})">Consultar</button>
+                    </div>
                 </div>
-                
+
+                <div id="pedido-detalhes">
+                    <h2 class="title">Pedidos</h2>
+                    {{#if cliente.quantidade_pedidos}}
+                        <p><strong>Quantidade de pedidos: </strong>{{cliente.quantidade_pedidos}}</p>
+                    {{else}}
+                        <p><strong>Quantidade de pedidos: </strong>Cliente ainda não possui nenhum pedido!!</p>
+                    {{/if}}
+                    <div class="pedido-actions">
+                        <button class="btn btn-outline-primary" onclick="pedidosCliente({{cliente.id}})">Ver Pedidos</button>
+                    </div>
+                </div>
             </div>
-            
-        </div>
-        <div id="pedido-detalhes">
-            <h2 class="title">Pedidos</h2>
-            {{#if cliente.quantidade_pedidos}}
-                <p><strong>quantidade pedidos: </strong>{{cliente.quantidade_pedidos}}</p>
-            {{else}}
-                <p><strong>quantidade pedidos: </strong>Cliente ainda não possui nenhum pedido!!</p>
-            {{/if}}
-            <br>
-            <button onclick="pedidosCliente({{cliente.id}})">Ver Pedidos</button>
         </div>
     </div>
 </div>
