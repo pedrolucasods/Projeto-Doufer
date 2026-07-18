@@ -256,6 +256,10 @@ async function cadastrarPedido(pedido){
     }
 }
 
+function voltar(){
+    window.location.href = '/pedidos'
+}
+
 setTimeout(() =>{
     const msg = document.getElementById('msg')
     msg.classList.add("fade")

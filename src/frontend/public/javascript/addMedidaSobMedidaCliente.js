@@ -85,6 +85,11 @@ async function adicionarMedida(medidas,clienteId){
     }
 }
 
+function voltar(){
+    cliente_id = sessionStorage.getItem('clienteId')
+    window.location.href = `/medidas/clientes/listar/${cliente_id}`
+}
+
 setTimeout(() =>{
     const msg = document.getElementById('msg')
     msg.classList.add("fade")

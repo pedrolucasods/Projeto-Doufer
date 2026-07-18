@@ -1,50 +1,57 @@
-<div id="container-medidas">
-    <h1>Cadastro de Medidas</h1>
-    <div id="container-form">
-        <form id="form">
-            <label>Busto:</label>
-            <br>
-            <input id="inputBusto" name="busto" value="{{medidas.busto}}">
-            <br><br>
+<button id="back" type="button" onclick="voltar()"><i class="fas fa-home"></i></button>
+<div class="page-shell">
+    <div class="form-card">
+        <div class="card-body">
+            <h1 class="form-title">Atualizar Sob Medida</h1>
+            <p class="form-subtitle">Atualize as medidas específicas do cliente com o mesmo padrão visual das telas de pedido.</p>
 
-            <label>Cintura:</label>
-            <br>
-            <input id="inputCintura" name="cintura" value="{{medidas.cintura}}">
-            <br><br>
+            <form id="form" class="row g-3">
+                <div class="col-12 col-md-6">
+                    <label for="inputBusto" class="form-label">Busto</label>
+                    <input class="form-control" id="inputBusto" name="busto" value="{{medidas.busto}}">
+                </div>
 
-            <label>Quadril:</label>
-            <br>
-            <input id="inputQuadril" name="quadril" value="{{medidas.quadril}}">
-            <br><br>
+                <div class="col-12 col-md-6">
+                    <label for="inputCintura" class="form-label">Cintura</label>
+                    <input class="form-control" id="inputCintura" name="cintura" value="{{medidas.cintura}}">
+                </div>
 
-            <label>Comprimento</label>
-            <br>
-            <input id="inputComprimento" name="comprimento" value="{{medidas.comprimento}}">
-            <br><br>
+                <div class="col-12 col-md-6">
+                    <label for="inputQuadril" class="form-label">Quadril</label>
+                    <input class="form-control" id="inputQuadril" name="quadril" value="{{medidas.quadril}}">
+                </div>
 
-            <label>Ombro:</label>
-            <br>
-            <input id="inputOmbro" name="ombro" value="{{medidas.ombro}}">
-            <br><br>
+                <div class="col-12 col-md-6">
+                    <label for="inputComprimento" class="form-label">Comprimento</label>
+                    <input class="form-control" id="inputComprimento" name="comprimento" value="{{medidas.comprimento}}">
+                </div>
 
-            <label>Costas:</label>
-            <br>
-            <input id="inputCostas" name="costas" value="{{medidas.costas}}">
-            <br><br>
+                <div class="col-12 col-md-6">
+                    <label for="inputOmbro" class="form-label">Ombro</label>
+                    <input class="form-control" id="inputOmbro" name="ombro" value="{{medidas.ombro}}">
+                </div>
 
-            <label>Comprimento da Manga:</label>
-            <br>
-            <input id="inputCManga" name="comprimento_da_manga" value="{{medidas.comprimento_da_manga}}">
-            <br><br>
+                <div class="col-12 col-md-6">
+                    <label for="inputCostas" class="form-label">Costas</label>
+                    <input class="form-control" id="inputCostas" name="costas" value="{{medidas.costas}}">
+                </div>
 
-            <label>Largura da Manga</label>
-            <br>
-            <input id="inputLManga" name="largura_da_manga" value="{{medidas.largura_da_manga}}">
-            <br><br>
+                <div class="col-12 col-md-6">
+                    <label for="inputCManga" class="form-label">Comprimento da Manga</label>
+                    <input class="form-control" id="inputCManga" name="comprimento_da_manga" value="{{medidas.comprimento_da_manga}}">
+                </div>
 
-            <input id="medidaId" type="hidden" value="{{medidas.id}}">
-            <button type="submit">Enviar</button>
-        </form>
+                <div class="col-12 col-md-6">
+                    <label for="inputLManga" class="form-label">Largura da Manga</label>
+                    <input class="form-control" id="inputLManga" name="largura_da_manga" value="{{medidas.largura_da_manga}}">
+                </div>
+
+                <input id="medidaId" type="hidden" value="{{medidas.id}}">
+
+                <div class="col-12 text-end">
+                    <button type="submit" class="btn btn-primary">Enviar</button>
+                </div>
+            </form>
+        </div>
     </div>
 </div>
-    

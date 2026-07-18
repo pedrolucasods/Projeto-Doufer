@@ -224,6 +224,10 @@ async function cadastrarCliente(formData){
     }
 }
 
+function voltar(){
+    window.location.href = '/clientes'
+}
+
 setTimeout(() =>{
     const msg = document.getElementById('msg')
     msg.classList.add("fade")

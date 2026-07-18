@@ -8,6 +8,19 @@ p {
     margin: 0;
 }
 
+#back {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    width: 46px;
+    height: 46px;
+    border: none;
+    border-radius: 12px;
+    background: #fff;
+    box-shadow: 0 4px 12px rgba(15, 23, 42, 0.08);
+    z-index: 10;
+}
+
 #container {
     min-height: 100vh;
     padding: 36px 20px 40px;
