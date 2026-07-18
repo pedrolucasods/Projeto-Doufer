@@ -55,6 +55,8 @@ medidas.post('/clientes', controllers.medida.cadastrar_medida_cliente)
 medidas.post('/itens-pedidos', controllers.medida.cadastrar_medida_itemPedido)
 medidas.put('/clientes', controllers.medida.atualizar_medida_cliente)
 medidas.delete('/clientes', controllers.medida.deletar_medida_cliente)
+
+medidas.get('/itens-pedidos/:id/padrao', controllers.medida.formulario_cadastro_medidas_padrao_item_pedido)
 router.use('/medidas',medidas)
 
 
