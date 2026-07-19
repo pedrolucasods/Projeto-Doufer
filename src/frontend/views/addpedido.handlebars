@@ -82,26 +82,22 @@
                 </form>
 
         <!-- Modal de confirmação -->
-        <div id="modalConfirm" style="display: none; position: fixed; top: 0; left: 0; 
-                width: 100%; height: 100%; background-color: rgba(0,0,0,0.6); 
-                z-index: 999; justify-content: center; align-items: center;">
-
-            <div style="background-color: white; padding: 20px; border-radius: 10px; text-align: center;">
+        <div id="modalConfirm">
+            <div class="modal-box">
                 <h2 id="modalMensagem">Tem certeza que deseja excluir este item?</h2>
-                <br>
-                <button id="btnConfirmar">Sim</button>
-                <button id="btnCancelar">Cancelar</button>
+                <div class="modal-actions">
+                    <button id="btnConfirmar">Sim</button>
+                    <button id="btnCancelar">Cancelar</button>
+                </div>
             </div>
         </div>
         <!-- Modal Aviso -->
-        <div id="modalAviso" style="display: none; position: fixed; top: 0; left: 0; 
-                width: 100%; height: 100%; background-color: rgba(0,0,0,0.6); 
-                z-index: 999; justify-content: center; align-items: center;">
-
-            <div style="background-color: white; padding: 20px; border-radius: 10px; text-align: center;">
+        <div id="modalAviso">
+            <div class="modal-box">
                 <h2 id="avisoMensagem">Preencha corretamente o nome do produto, quantidade e preço unitário!</h2>
-                <br>
-                <button id="btnOK">Ok</button>
+                <div class="modal-actions">
+                    <button id="btnOK">Ok</button>
+                </div>
             </div>
         </div>
             {{else}}

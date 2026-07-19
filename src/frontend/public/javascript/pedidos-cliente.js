@@ -1,9 +1,14 @@
 const newpedidobtn = document.getElementById('newpedido')
 let idDeletarPedido = null
 let idEditarPedido = null
+
 newpedidobtn.addEventListener('click', function(){
     window.location.href = '/pedidos/cadastrarPedido'
 })
+
+function fecharAviso(){
+    document.getElementById('modalAviso').style.display = 'none'
+}
 
 function deletarPedido(id){
     idDeletarPedido = id
@@ -21,7 +26,8 @@ function confirmarExclusao(){
         })
         .catch(error => {
         console.error('Erro ao deletar cliente:', error);
-        alert('Erro ao deletar cliente');
+        document.getElementById('avisoMensagem').textContent = 'Erro ao deletar cliente';
+        document.getElementById('modalAviso').style.display = 'flex';
         });
 }
 

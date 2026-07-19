@@ -266,9 +266,9 @@ document.addEventListener("DOMContentLoaded", async () => {
     const bntok = document.getElementById('btnOK')
     function mostrarAviso() {
         modalAviso.style.display = 'flex'
-        bntok.addEventListener('click', function () {
+        bntok.onclick = () => {
             modalAviso.style.display = 'none'
-        })
+        }
     }
 
     // =====================================
@@ -278,8 +278,9 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 
         if (itens.length === 0) {
-            alert("Adicione pelo menos um item ao pedido!")
             e.preventDefault()
+            document.getElementById('avisoMensagem').textContent = 'Adicione pelo menos um item ao pedido!'
+            document.getElementById('modalAviso').style.display = 'flex'
             return
         }
 
