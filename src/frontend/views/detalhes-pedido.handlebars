@@ -140,40 +140,46 @@
 
                 <div class="item-top">
 
-                    <h3>{{produto}}</h3>
+                    <div class="item-main-content">
+                        <h3>{{produto}}</h3>
 
-                    <span class="badge bg-dark">
-                        Qtd: {{quantidade}}
-                    </span>
+                        <div class="item-details">
+                            <p>
+                                <strong>Cor:</strong>
 
-                </div>
+                                {{#if cor}}
+                                    {{cor}}
+                                {{else}}
+                                    Não informado
+                                {{/if}}
+                            </p>
 
-                <div class="item-body">
+                            <p>
+                                <strong>Tecido:</strong>
 
-                    <p>
-                        <strong>Cor:</strong>
+                                {{#if tecido}}
+                                    {{tecido}}
+                                {{else}}
+                                    Não informado
+                                {{/if}}
+                            </p>
 
-                        {{#if cor}}
-                            {{cor}}
-                        {{else}}
-                            Não informado
-                        {{/if}}
-                    </p>
+                            <p>
+                                <strong>Preço Unitário:</strong>
+                                R$ {{preco_unitario}}
+                            </p>
+                        </div>
+                    </div>
 
-                    <p>
-                        <strong>Tecido:</strong>
+                    <div class="item-actions-column">
+                        <span class="badge bg-dark">
+                            Qtd: {{quantidade}}
+                        </span>
 
-                        {{#if tecido}}
-                            {{tecido}}
-                        {{else}}
-                            Não informado
-                        {{/if}}
-                    </p>
-
-                    <p>
-                        <strong>Preço Unitário:</strong>
-                        R$ {{preco_unitario}}
-                    </p>
+                        <button class="btn btn-outline-primary btn-sm" onclick="detalhes_item({{id}})">
+                            Detalhes
+                        </button>
+                    </div>
 
                 </div>
 

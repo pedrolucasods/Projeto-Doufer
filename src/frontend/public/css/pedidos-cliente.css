@@ -1,17 +1,291 @@
+body {
+  margin: 0;
+  background: #f8fafc;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+#fundo {
+  padding: 24px 32px 40px;
+}
+
+#back {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  width: 46px;
+  height: 46px;
+  border: none;
+  border-radius: 12px;
+  background: #fff;
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.08);
+  z-index: 10;
+}
+
+#modalConfirm,
+#modalAviso {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(17, 24, 39, 0.6);
+  z-index: 999;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+.modal-box {
+  background: #fff;
+  padding: 28px;
+  border-radius: 16px;
+  width: min(100%, 420px);
+  text-align: center;
+  box-shadow: 0 16px 40px rgba(15, 23, 42, 0.16);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#modalMensagem,
+#avisoMensagem {
+  margin: 0 0 8px;
+  font-size: 1.2rem;
+  color: #111827;
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+.modal-text {
+  margin: 0 0 16px;
+  color: #6b7280;
+  font-size: 0.95rem;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+#btnConfirmar,
+#btnCancelar,
+#btnOK {
+  border-radius: 10px;
+  padding: 0.7rem 1rem;
+  font-weight: 600;
+  border: 1px solid #d1d5db;
+  background: #fff !important;
+  color: #374151 !important;
+}
+
+#btnConfirmar,
+#btnConfirmar.btn {
+  background: #dc3545 !important;
+  color: #fff !important;
+  border-color: #dc3545 !important;
+}
+
+#btnCancelar,
+#btnOK,
+#btnCancelar.btn,
+#btnOK.btn {
+  background: #f0f0f0 !important;
+  color: #333 !important;
+  border: 1px solid #ddd !important;
+}
+
+.btn-details,
+#deletar,
+#editar,
+.btn-details.btn,
+#deletar.btn,
+#editar.btn {
+  border-radius: 7px;
+  padding: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  border: 1px solid #d1d5db;
+  background: #fff !important;
+  color: #374151 !important;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-details,
+.btn-details.btn {
+  background: #0d6efd !important;
+  color: #fff !important;
+  border-color: #0d6efd !important;
+}
+
+#editar,
+#editar.btn {
+  background: #fff !important;
+  color: #0d6efd !important;
+  border-color: #0d6efd !important;
+}
+
+#deletar,
+#deletar.btn {
+  background: #dc3545 !important;
+  color: #fff !important;
+  border-color: #dc3545 !important;
+}
+
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+  padding-left: 72px;
+  margin-bottom: 16px;
+}
+
+#title {
+  margin: 0 0 6px;
+  font-size: 28px;
+  color: #111827;
+}
+
+.page-subtitle {
+  margin: 0;
+  color: #6b7280;
+}
+
+#opcoes {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+#fieldsearch,
+#inputsearch,
+#btnsearch,
+#newpedido,
+#deletar,
+#editar,
+#btnConfirmar,
+#btnCancelar {
+  border-radius: 10px;
+  border: 1px solid #d1d5db;
+}
+
+#inputsearch {
+  width: 220px;
+  padding: 8px 12px;
+}
+
+#btnsearch,
+#newpedido,
+#deletar,
+#editar,
+#btnConfirmar,
+#btnCancelar {
+  padding: 8px 12px;
+  background: #fff;
+}
+
+#btnsearch,
+#newpedido {
+  color: #4f46e5;
+}
+
+.section-title {
+  font-size: 20px;
+  margin: 8px 0 16px;
+  color: #374151;
+}
+
 .card-container {
   display: flex;
   flex-wrap: wrap;
-  gap: 15px;
+  gap: 16px;
 }
 
-#inputsearch{
-  width: 200px;
-}
 .card {
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  padding: 15px;
-  width: 250px;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  border: 1px solid #e5e7eb;
+  border-radius: 16px;
+  padding: 18px;
+  width: 280px;
+  box-shadow: 0 8px 20px rgba(15, 23, 42, 0.06);
   background: #fff;
+}
+
+.topo-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.topo-card h3 {
+  margin: 0;
+  font-size: 18px;
+}
+
+.status {
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: capitalize;
+}
+
+.status.pendente {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.status.aprovado {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.status.cancelado {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+.lista-itens {
+  padding-left: 18px;
+  margin-bottom: 0;
+}
+
+.total {
+  font-weight: 700;
+  color: #111827;
+}
+
+.card-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+#deletar,
+#editar,
+.btn-details {
+  flex: 1;
+}
+
+@media (max-width: 768px) {
+  #fundo {
+    padding: 24px 16px 32px;
+  }
+
+  .page-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  #opcoes {
+    width: 100%;
+  }
+
+  #inputsearch {
+    width: 100%;
+  }
 }

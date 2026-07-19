@@ -23,6 +23,9 @@ body{
     display: flex;
     justify-content: space-between;
     align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+    padding-left: 72px;
 
     margin-bottom: 20px;
 }
@@ -390,26 +393,17 @@ body{
 
 /* ===== BACK BUTTON ===== */
 
-#back{
+#back {
     position: fixed;
-
     top: 20px;
     left: 20px;
-
-    width: 42px;
-    height: 42px;
-
+    width: 46px;
+    height: 46px;
     border: none;
-
-    border-radius: 10px;
-
-    background-color: white;
-
-    border: 1px solid #ddd;
-
-    box-shadow: 0 1px 2px rgba(0,0,0,0.08);
-
-    z-index: 999;
+    border-radius: 12px;
+    background: #fff;
+    box-shadow: 0 4px 12px rgba(15, 23, 42, 0.08);
+    z-index: 10;
 }
 
 /* ===== MODAL ===== */
@@ -507,23 +501,18 @@ body{
 
 #modaltipocliente .modal-content{
     border: none;
-
-    border-radius: 12px;
-
-    box-shadow: 0 10px 40px rgba(0,0,0,0.16);
+    border-radius: 16px;
+    box-shadow: 0 14px 40px rgba(15, 23, 42, 0.16);
 }
 
 #modaltipocliente .modal-header{
     border-bottom: 1px solid #f0f0f0;
-
     padding: 24px;
 }
 
 #modaltipocliente .modal-title{
     font-size: 18px;
-
     font-weight: 600;
-
     color: #333;
 }
 
@@ -537,40 +526,31 @@ body{
 
 #modaltipocliente .modal-body{
     padding: 20px 24px;
-
     color: #666;
-
     font-size: 14px;
 }
 
 #modaltipocliente .modal-footer{
     border-top: 1px solid #f0f0f0;
-
     padding: 16px 24px;
 }
 
 #modaltipocliente .modal-footer .btn{
     padding: 10px 24px;
-
-    border-radius: 7px;
-
-    font-weight: 500;
-
+    border-radius: 10px;
+    font-weight: 600;
     font-size: 14px;
-
     transition: all 0.2s ease;
 }
 
 #modaltipocliente .modal-footer .btn-primary{
-    background-color: #007bff;
-
-    border-color: #007bff;
+    background-color: #4f46e5;
+    border-color: #4f46e5;
 }
 
 #modaltipocliente .modal-footer .btn-primary:hover{
-    background-color: #0056b3;
-
-    border-color: #0056b3;
+    background-color: #4338ca;
+    border-color: #4338ca;
 }
 
 /* ===== RESPONSIVE ===== */

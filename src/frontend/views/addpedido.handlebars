@@ -10,95 +10,99 @@
         <p class="fw-bold mb-0">{{error}}</p>
     </div>
 {{/if}}
-<div>
-    {{#if clientes.length}}
-        <h1>Criar Pedido</h1>
-        <form id="formaddpedido">
-            <input type="hidden" id="tipo_cliente" value="{{tipoCliente}}">
-            <label for="selectcliente">Cliente:</label>
-            <select id="selectcliente" name="cliente">
-                {{#each clientes}}
-                    <option value="{{this.id}}">{{this.nome}}</option>
-                {{/each}}
-            </select>
-            <br><br>
-            <label for="data_pedido">Data pedido!</label>
-            <input type="date" id="data_input"required value="{{hoje}}">
-            <br><br>
-            <hr>
-            <h3>Itens do Pedido</h3>
-            <div id="itens-container">
-                <label>Produto:</label>
-                <input id="nome-produto">
-                <br><br>
+<button id="back" type="button" onclick="voltar()"><i class="fas fa-home"></i></button>
 
-                <label>Cor:</label>
-                <input id="cor-produto">
-                <br><br>
+<div class="page-shell">
+    <div class="form-card">
+        <div class="card-body">
+            {{#if clientes.length}}
+                <h1 class="form-title">Criar Pedido</h1>
+                <p class="form-subtitle">Cadastre um novo pedido e adicione os itens abaixo.</p>
+                <form id="formaddpedido">
+                    <input type="hidden" id="tipo_cliente" value="{{tipoCliente}}">
+                    <label class="form-label" for="selectcliente">Cliente:</label>
+                    <select class="form-select" id="selectcliente" name="cliente">
+                        {{#each clientes}}
+                            <option value="{{this.id}}">{{this.nome}}</option>
+                        {{/each}}
+                    </select>
+                    <br><br>
+                    <label class="form-label" for="data_pedido">Data pedido</label>
+                    <input class="form-control" type="date" id="data_input" required value="{{hoje}}">
+                    <br><br>
+                    <hr>
+                    <h3 class="form-title" style="font-size: 1.2rem;">Itens do Pedido</h3>
+                    <div id="itens-container">
+                        <label class="form-label">Produto:</label>
+                        <input class="form-control" id="nome-produto">
+                        <br><br>
 
-                <label>Tecido:</label>
-                <input id="tecido-produto">
-                <br><br>
+                        <label class="form-label">Cor:</label>
+                        <input class="form-control" id="cor-produto">
+                        <br><br>
 
-                <label>Tamanho:</label>
-                <input id="tamanho-produto">
-                <br><br>
+                        <label class="form-label">Tecido:</label>
+                        <input class="form-control" id="tecido-produto">
+                        <br><br>
 
-                <label>Detalhes</label>
-                <input id="detalhes-produto">
-                <br><br>
+                        <label class="form-label">Tamanho:</label>
+                        <input class="form-control" id="tamanho-produto">
+                        <br><br>
 
-                <label>Quantidade:</label>
-                <input id="quantidade-produto" type="number">
-                <br><br>
+                        <label class="form-label">Detalhes</label>
+                        <input class="form-control" id="detalhes-produto">
+                        <br><br>
 
-                <label>Modelo do Produto:</label>
-                <input id="modelo-produto">
-                <br><br>
+                        <label class="form-label">Quantidade:</label>
+                        <input class="form-control" id="quantidade-produto" type="number">
+                        <br><br>
 
-                <label>Preço Unitário:</label>
-                <input id="precouni-produto">
-                <br><br>
+                        <label class="form-label">Modelo do Produto:</label>
+                        <input class="form-control" id="modelo-produto">
+                        <br><br>
 
-                <label>Complemento:</label>
-                <input id="complemento-produto">
-                <br><br>
+                        <label class="form-label">Preço Unitário:</label>
+                        <input class="form-control" id="precouni-produto">
+                        <br><br>
 
-                <button type="button" id="btn-add-item">
-                    <i class="fa-solid fa-plus"></i> Adicionar Item
-                </button>
+                        <label class="form-label">Complemento:</label>
+                        <input class="form-control" id="complemento-produto">
+                        <br><br>
 
-                <div id="itens"></div>
-            </div>
-            <hr>
-            <button type="submit">Salvar Pedido!</button>
-        </form>
+                        <button type="button" id="btn-add-item">
+                            <i class="fa-solid fa-plus"></i> Adicionar Item
+                        </button>
+
+                        <div id="itens"></div>
+                    </div>
+                    <hr>
+                    <div class="text-end">
+                        <button type="submit">Salvar Pedido!</button>
+                    </div>
+                </form>
 
         <!-- Modal de confirmação -->
-        <div id="modalConfirm" style="display: none; position: fixed; top: 0; left: 0; 
-                width: 100%; height: 100%; background-color: rgba(0,0,0,0.6); 
-                z-index: 999; justify-content: center; align-items: center;">
-
-            <div style="background-color: white; padding: 20px; border-radius: 10px; text-align: center;">
+        <div id="modalConfirm">
+            <div class="modal-box">
                 <h2 id="modalMensagem">Tem certeza que deseja excluir este item?</h2>
-                <br>
-                <button id="btnConfirmar">Sim</button>
-                <button id="btnCancelar">Cancelar</button>
+                <div class="modal-actions">
+                    <button id="btnConfirmar">Sim</button>
+                    <button id="btnCancelar">Cancelar</button>
+                </div>
             </div>
         </div>
         <!-- Modal Aviso -->
-        <div id="modalAviso" style="display: none; position: fixed; top: 0; left: 0; 
-                width: 100%; height: 100%; background-color: rgba(0,0,0,0.6); 
-                z-index: 999; justify-content: center; align-items: center;">
-
-            <div style="background-color: white; padding: 20px; border-radius: 10px; text-align: center;">
+        <div id="modalAviso">
+            <div class="modal-box">
                 <h2 id="avisoMensagem">Preencha corretamente o nome do produto, quantidade e preço unitário!</h2>
-                <br>
-                <button id="btnOK">Ok</button>
+                <div class="modal-actions">
+                    <button id="btnOK">Ok</button>
+                </div>
             </div>
         </div>
-    {{else}}
-        <h1>Você não possui nenhum cliente cadastrado para criar um pedido!</h1>
-    {{/if}}
-
+            {{else}}
+                <h1 class="form-title">Você não possui nenhum cliente cadastrado para criar um pedido!</h1>
+            {{/if}}
+        </div>
+    </div>
 </div>

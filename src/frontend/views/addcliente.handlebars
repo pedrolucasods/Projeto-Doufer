@@ -1,3 +1,4 @@
+<button id="back" type="button" onclick="voltar()"><i class="fas fa-home"></i></button>
 {{#if msg}}
 <div id="msg" class="d-flex gap-3 alert alert-success alert-dismissible fade show position-fixed top-0 end-0 me-5 m-3">
     <i class="bi bi-check-square-fill text-success"></i>
@@ -10,45 +11,64 @@
     <p class="fw-bold mb-0">{{error}}</p>
 </div>
 {{/if}}
-<div>
-    <h1>Cadastro Cliente</h1>
-    <div>
-        <form id="formaddcliente" method="post">
-            <p>Tipo do cliente</p>
-            <select name="tipo_cliente" id="tipo_cliente">
-                <option value="">Selecione o tipo</option>
-                <option value="pessoa">Pessoa</option>
-                <option value="empresa">Empresa</option>
-            </select>
-            <span id="spanTipo_cliente"></span>
-            <p>Nome: </p>
-            <input id="inputnome" type="text" name="namecliente" required>
-            <span id="spanname"></span>
+<div class="page-shell">
+    <div class="form-card">
+        <div class="card-body">
+            <h1 class="form-title">Cadastro de Cliente</h1>
+            <p class="form-subtitle">Preencha os dados principais para registrar um novo cliente.</p>
 
-            <p id="pnomeempresa">Deseja Nome da Empresa?</p>
-            <input type="checkbox" id="toggleempresa" name="inserirempresa">
+            <form id="formaddcliente" method="post" class="row g-3">
+                <div class="col-12">
+                    <label for="tipo_cliente" class="form-label">Tipo do cliente</label>
+                    <select class="form-select" name="tipo_cliente" id="tipo_cliente">
+                        <option value="">Selecione o tipo</option>
+                        <option value="pessoa">Pessoa</option>
+                        <option value="empresa">Empresa</option>
+                    </select>
+                    <span id="spanTipo_cliente"></span>
+                </div>
 
-            <div id="empresaContainer" style="display: none;">
-                <p>Nome da empresa:</p>
-                <input type="text" name="empresacliente" id="empresaInput">
-            </div>
+                <div class="col-12">
+                    <label for="inputnome" class="form-label">Nome</label>
+                    <input class="form-control" id="inputnome" type="text" name="namecliente" required>
+                    <span id="spanname"></span>
+                </div>
 
-            <p>Telefone: </p>
-            <input id="telefone" name="telefonecliente" required placeholder="(00) 00000-0000..."></input>
-            <span id="spanphone"></span>
+                <div class="col-12">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="toggleempresa" name="inserirempresa">
+                        <label class="form-check-label" for="toggleempresa" id="pnomeempresa">Deseja inserir o nome da empresa?</label>
+                    </div>
+                </div>
 
-            <p>
-                Deseja inserir CPF?
-                <input type="checkbox" id="toggleCpf" name="inserirCpf">
-            </p>
+                <div id="empresaContainer" style="display: none;" class="col-12">
+                    <label for="empresaInput" class="form-label">Nome da empresa</label>
+                    <input class="form-control" type="text" name="empresacliente" id="empresaInput">
+                </div>
 
-            <div id="cpfContainer" style="display: none;">
-                <p>CPF:</p>
-                <input type="text" name="cpfcliente" id="cpfInput" placeholder="000.000.000-00">
-            </div>
-            <br>
-            <button type="submit">Cadastrar cliente</button>
-         </form>
+                <div class="col-12">
+                    <label for="telefone" class="form-label">Telefone</label>
+                    <input class="form-control" id="telefone" name="telefonecliente" required placeholder="(00) 00000-0000...">
+                    <span id="spanphone"></span>
+                </div>
+
+                <div class="col-12">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="toggleCpf" name="inserirCpf">
+                        <label class="form-check-label" for="toggleCpf">Deseja inserir CPF?</label>
+                    </div>
+                </div>
+
+                <div id="cpfContainer" style="display: none;" class="col-12">
+                    <label for="cpfInput" class="form-label">CPF</label>
+                    <input class="form-control" type="text" name="cpfcliente" id="cpfInput" placeholder="000.000.000-00">
+                </div>
+
+                <div class="col-12 text-end">
+                    <button type="submit" class="btn btn-primary">Cadastrar cliente</button>
+                </div>
+            </form>
+        </div>
     </div>
 </div>
  

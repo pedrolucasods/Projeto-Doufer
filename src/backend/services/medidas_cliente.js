@@ -84,7 +84,7 @@ class MedidasCliente {
                                 'comprimento',med_sob.comprimento,
                                 'ombro',med_sob.ombro,
                                 'costas',med_sob.costas,
-                                'comprimento_da_managa',med_sob.comprimento_da_manga,
+                                'comprimento_da_manga',med_sob.comprimento_da_manga,
                                 'largura_da_manga',med_sob.largura_da_manga
                             
                             )

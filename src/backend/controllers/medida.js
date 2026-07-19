@@ -8,9 +8,9 @@ const {ValidatorDeletarMedidaCliente} = require('../validators/medidas/deletar_m
 class Medida{
     formulario_cadastro_medidas_cliente_sob_medida(req,res){
         try {
-            return res.render('addMedidaSobMedida',{
-                stylesheet:'addMedidaSobMedida.css',
-                script:'addMedidaSobMedida.js',
+            return res.render('addMedidaSobMedidaCliente',{
+                stylesheet:'addMedidaSobMedidaCliente.css',
+                script:'addMedidaSobMedidaCliente.js',
                 error:req.query.error || null,
                 msg: req.query.msg || null
             })

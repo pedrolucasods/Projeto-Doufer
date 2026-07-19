@@ -242,3 +242,7 @@ async function editarCliente(formData,clienteId){
         window.location.href = `/clientes/editar/${clienteId}?error=${error}`
     }
 }
+
+function voltar(){
+    window.location.href = '/clientes'
+}

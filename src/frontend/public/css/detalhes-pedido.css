@@ -194,6 +194,15 @@ body{
     align-items: center;
 
     margin-bottom: 15px;
+    gap: 24px;
+}
+
+.item-main-content{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 12px;
+    flex: 1;
 }
 
 .item-top h3{
@@ -201,15 +210,24 @@ body{
     margin: 0;
 }
 
-.item-body{
+.item-details{
     display: flex;
     gap: 25px;
     flex-wrap: wrap;
 }
 
-.item-body p{
+.item-details p{
     margin: 0;
     color: #444;
+}
+
+.item-actions-column{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 8px;
+    min-height: 86px;
 }
 
 /* ===== ACTIONS ===== */

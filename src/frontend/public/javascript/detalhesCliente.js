@@ -4,6 +4,7 @@ btnback.addEventListener('click', function(){
 })
 
 function pedidosCliente(id){
+    let cliente_id = sessionStorage.setItem('clienteId',id)
     window.location.href = `/pedidos/PedidosCliente/${id}`
 }
 

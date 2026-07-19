@@ -203,9 +203,9 @@ document.addEventListener("DOMContentLoaded", () => {
     const bntok = document.getElementById('btnOK')
     function mostrarAviso(){
         modalAviso.style.display = 'flex'
-        bntok.addEventListener('click',function(){
+        bntok.onclick = () => {
             modalAviso.style.display = 'none'
-        })
+        }
     }
 
     // =====================================
@@ -213,8 +213,9 @@ document.addEventListener("DOMContentLoaded", () => {
     // =====================================
     form.addEventListener('submit', async (e) => {
         if (itens.length === 0) {
-            alert("Adicione pelo menos um item ao pedido!")
             e.preventDefault()
+            document.getElementById('avisoMensagem').textContent = 'Adicione pelo menos um item ao pedido!'
+            document.getElementById('modalAviso').style.display = 'flex'
             return
         }
 
@@ -254,6 +255,10 @@ async function cadastrarPedido(pedido){
         const erro = error
         window.location.href = `/pedidos/cadastrarPedido?tipo=${pedido.tipo_cliente}&error=${erro}`
     }
+}
+
+function voltar(){
+    window.location.href = '/pedidos'
 }
 
 setTimeout(() =>{

@@ -152,6 +152,7 @@ class Pedido{
                 p.data AS pedido_data,
                 json_group_array(
                     json_object(
+                        'id',i.id,
                         'produto',i.produto,
                         'quantidade',i.quantidade,
                         'cor',i.cor,
