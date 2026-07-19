@@ -61,8 +61,9 @@
                     Total: <span>R$ {{total}}</span>
                 </p>
                 <div class="card-actions">
-                    <button id="deletar" onclick="deletarPedido({{id}})">Excluir</button>
-                    <button id="editar" onclick="editarPedido({{id}})">Editar</button>
+                    <button id="deletar" class="btn btn-danger" onclick="deletarPedido({{id}})">Excluir</button>
+                    <button id="editar" class="btn btn-outline-primary" onclick="editarPedido({{id}})">Editar</button>
+                    <button class="btn-details btn btn-primary" onclick="detalhesPedido({{id}})">Detalhes</button>
                 </div>
             </div>
             {{/each}}
@@ -74,7 +75,8 @@
 
     <div id="modalConfirm">
         <div class="modal-box">
-            <h2 id="modalMensagem">Tem certeza que deseja excluir este item?</h2>
+            <h2 id="modalMensagem">Tem certeza que deseja excluir este pedido?</h2>
+            <p class="modal-text">Esta ação não poderá ser desfeita.</p>
             <div class="modal-actions">
                 <button id="btnConfirmar" onclick="confirmarExclusao()">Sim</button>
                 <button id="btnCancelar" onclick="fecharModal()">Cancelar</button>

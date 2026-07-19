@@ -35,18 +35,29 @@ body {
 
 .modal-box {
   background: #fff;
-  padding: 24px;
-  border-radius: 18px;
+  padding: 28px;
+  border-radius: 16px;
   width: min(100%, 420px);
   text-align: center;
   box-shadow: 0 16px 40px rgba(15, 23, 42, 0.16);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 #modalMensagem,
 #avisoMensagem {
-  margin: 0 0 12px;
+  margin: 0 0 8px;
   font-size: 1.2rem;
   color: #111827;
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+.modal-text {
+  margin: 0 0 16px;
+  color: #6b7280;
+  font-size: 0.95rem;
 }
 
 .modal-actions {
@@ -62,14 +73,64 @@ body {
   border-radius: 10px;
   padding: 0.7rem 1rem;
   font-weight: 600;
-  border: none;
-  background: #4f46e5;
-  color: #fff;
+  border: 1px solid #d1d5db;
+  background: #fff !important;
+  color: #374151 !important;
+}
+
+#btnConfirmar,
+#btnConfirmar.btn {
+  background: #dc3545 !important;
+  color: #fff !important;
+  border-color: #dc3545 !important;
 }
 
 #btnCancelar,
-#btnOK {
-  background: #6b7280;
+#btnOK,
+#btnCancelar.btn,
+#btnOK.btn {
+  background: #f0f0f0 !important;
+  color: #333 !important;
+  border: 1px solid #ddd !important;
+}
+
+.btn-details,
+#deletar,
+#editar,
+.btn-details.btn,
+#deletar.btn,
+#editar.btn {
+  border-radius: 7px;
+  padding: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  border: 1px solid #d1d5db;
+  background: #fff !important;
+  color: #374151 !important;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-details,
+.btn-details.btn {
+  background: #0d6efd !important;
+  color: #fff !important;
+  border-color: #0d6efd !important;
+}
+
+#editar,
+#editar.btn {
+  background: #fff !important;
+  color: #0d6efd !important;
+  border-color: #0d6efd !important;
+}
+
+#deletar,
+#deletar.btn {
+  background: #dc3545 !important;
+  color: #fff !important;
+  border-color: #dc3545 !important;
 }
 
 .page-header {
@@ -205,16 +266,9 @@ body {
 }
 
 #deletar,
-#editar {
+#editar,
+.btn-details {
   flex: 1;
-}
-
-#deletar {
-  color: #dc2626;
-}
-
-#editar {
-  color: #2563eb;
 }
 
 @media (max-width: 768px) {

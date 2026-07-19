@@ -276,54 +276,64 @@ body{
 
 #modalConfirm{
     display: none;
-
     position: fixed;
-
-    top: 0;
-    left: 0;
-
-    width: 100%;
-    height: 100%;
-
-    background-color: rgba(0,0,0,0.6);
-
+    inset: 0;
+    background-color: rgba(15, 23, 42, 0.6);
     z-index: 1000;
-
     justify-content: center;
     align-items: center;
+    padding: 20px;
 }
 
 .modal-box{
     background-color: white;
-
     padding: 28px;
-
-    border-radius: 14px;
-
+    border-radius: 16px;
     text-align: center;
+    width: min(100%, 420px);
+    box-shadow: 0 14px 40px rgba(15, 23, 42, 0.16);
+}
 
-    width: 380px;
-
-    box-shadow: 0 10px 40px rgba(0,0,0,0.16);
+#modalMensagem{
+    margin: 0 0 12px;
+    font-size: 18px;
+    font-weight: 600;
+    color: #333;
 }
 
 .modal-actions{
     display: flex;
     justify-content: center;
-
     gap: 10px;
-
     margin-top: 20px;
 }
 
 .modal-actions button{
     padding: 10px 24px;
-
     border: none;
-
-    border-radius: 8px;
-
+    border-radius: 10px;
     font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.modal-actions button:first-child{
+    background-color: #dc3545;
+    color: white;
+}
+
+.modal-actions button:first-child:hover{
+    background-color: #c82333;
+}
+
+.modal-actions button:last-child{
+    background-color: #f0f0f0;
+    color: #333;
+    border: 1px solid #ddd;
+}
+
+.modal-actions button:last-child:hover{
+    background-color: #e8e8e8;
 }
 
 /* ===== RESPONSIVE ===== */
