@@ -320,6 +320,16 @@ async function editarPedido(pedido, pedidoId) {
     }
 }
 
+function voltar(){
+    let tela = sessionStorage.getItem('tela')
+    if(tela == 'pedidos'){
+        window.location.href = `/pedidos`
+    }else if(tela == 'pedido_cliente'){
+        let cliente_id = sessionStorage.getItem('clienteId')
+        window.location.href = `/pedidos/PedidosCliente/${cliente_id}`
+    }
+}
+
 setTimeout(() => {
     const msg = document.getElementById('msg')
     msg.classList.add("fade")

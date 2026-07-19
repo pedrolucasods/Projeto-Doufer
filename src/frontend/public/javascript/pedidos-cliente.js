@@ -31,6 +31,7 @@ function fecharModal(){
 }
 
 async function editarPedido(id){
+    let tela = sessionStorage.setItem('tela','pedido_cliente')
     idEditarPedido = await id
     window.location.href = `/pedidos/editar/${idEditarPedido}`
     
