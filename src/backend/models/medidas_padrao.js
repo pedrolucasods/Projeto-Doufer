@@ -27,6 +27,10 @@ const Medidas_padrao = db.define('medidas_padrao', {
     ajuste: {
         type: DataTypes.TEXT,
         allowNull: true
+    },
+    sexo:{
+        type:DataTypes.ENUM('masculino','feminino'),
+        allowNull:false
     }
 },{
     tableName: 'medidas_padrao'
