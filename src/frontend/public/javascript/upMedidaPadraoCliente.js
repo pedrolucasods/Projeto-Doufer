@@ -9,6 +9,7 @@ document.addEventListener('DOMContentLoaded',()=>{
             medidas:[{
                 medidaPadrao_id:medidaId,
                 cliente_id:clienteId,
+                sexo:document.getElementById('sexo').value,
                 tamanho:document.getElementById('tamanho').value,
                 ajuste:document.getElementById('ajuste').value
             }]

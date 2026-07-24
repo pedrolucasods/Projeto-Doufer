@@ -12,20 +12,22 @@ function ValidatorAtualizarMedidaCliente(Dados, res) {
     const campos_medidas = Object.keys(Dados.medidas[0])
     if (Dados.tipo_medida == 'padrao') {
         const valores_tamanho_padrao = ['','P','PP','M','G','GG']
+        const sexos = ['masculino','feminino']
         if (
             !campos_medidas.includes('medidaPadrao_id') ||
             !campos_medidas.includes('cliente_id') ||
+            !campos_medidas.includes('sexo') ||
             !campos_medidas.includes('tamanho') ||
             !campos_medidas.includes('ajuste')
         ) {
             res.status(400).json({ 'erro': 'Erro ao atualizar medida!' })
             return false
         }
-        if (campos_medidas.length != 4) {
+        if (campos_medidas.length != 5) {
             res.status(400).json({ 'erro': 'Erro ao atualizar medida!' })
             return false
         }
-        if (!valores_tamanho_padrao.includes(Dados.medidas[0].tamanho)){
+        if (!valores_tamanho_padrao.includes(Dados.medidas[0].tamanho) || !sexos.includes(Dados.medidas[0].sexo)){
             res.status(400).json({ 'erro': 'Erro ao atualizar medida!' })
             return false
         }

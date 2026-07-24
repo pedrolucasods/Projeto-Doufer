@@ -39,6 +39,32 @@ body {
     padding: 2rem;
 }
 
+.sexo-wrapper{
+    display:flex;
+    align-items:center;
+    gap:12px;
+}
+
+.sexo-wrapper label{
+    font-weight:600;
+    color:#374151;
+    margin:0;
+    white-space:nowrap;
+}
+
+.sexo-select{
+    width:220px;
+    border:1px solid #d1d5db;
+    border-radius:10px;
+    padding:.7rem .9rem;
+    transition:.2s;
+}
+
+.sexo-select:focus{
+    border-color:#4f46e5;
+    box-shadow:0 0 0 .2rem rgba(79,70,229,.15);
+}
+
 .form-title {
     font-size: 1.7rem;
     font-weight: 700;

@@ -40,6 +40,7 @@ class MedidaPadrao {
                     throw new Error('Medida não encontrada!')
                 }
                 return buscaMedida.update({
+                    sexo:dados.sexo,
                     tamanho: dados.tamanho,
                     ajuste: dados.ajuste
                 })

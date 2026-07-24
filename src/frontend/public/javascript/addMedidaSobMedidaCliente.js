@@ -11,6 +11,7 @@ document.addEventListener('DOMContentLoaded',()=>{
             medidas:[
                 {
                     cliente_id:clienteId,
+                    sexo:document.getElementById('inputSexo').value,
                     busto : document.getElementById('inputBusto').value,
                     cintura : document.getElementById('inputCintura').value,
                     quadril : document.getElementById('inputQuadril').value,

@@ -60,7 +60,32 @@
                     <div id="medidas-coluna1">
                         <p>Sexo: {{mostrar cliente.medida_padrao.0.sexo}}</p>
                         <p>Tamanho: {{mostrar cliente.medida_padrao.0.tamanho}}</p>
-                        <p>Ajuste: {{mostrar cliente.medida_padrao.0.ajuste}}</p>
+                        <div class="ajuste-container">
+                            {{#if cliente.medida_padrao.0.ajuste}}
+                            <div class="ajuste-linha">
+                                <span class="ajuste-titulo">Ajuste:</span>
+
+                                <span class="ajuste-preview">
+                                    {{mostrar cliente.medida_padrao.0.ajuste}}
+                                </span>
+
+                                <button
+                                    type="button"
+                                    class="btn-ajuste"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#modalAjuste"
+                                    title="Visualizar ajuste"
+                                >
+                                    <i class="fas fa-file-alt"></i>
+                                </button>
+                            </div>
+                            {{else}}
+                            <div class="ajuste-linha">
+                                <span class="ajuste-titulo">Ajuste:</span>
+                                <span class="text-muted">Não informado</span>
+                            </div>
+                            {{/if}}
+                        </div>
                     </div>
                     <div id="container-buttons">
                         {{#if cliente.medida_padrao.0.id}}
@@ -109,6 +134,48 @@
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
                         <button type="button" class="btn btn-danger" onclick="deletarMedidaPadrao({{cliente.medida_padrao.0.id}})">Excluir</button>
                     </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="modalAjuste" tabindex="-1">
+            <div class="modal-dialog modal-lg modal-dialog-centered">
+                <div class="modal-content ajuste-modal">
+
+                    <div class="modal-header">
+                        <h5 class="modal-title">
+                            <span class="material-symbols-outlined me-2">
+                                description
+                            </span>
+                            Ajustes
+                        </h5>
+
+                        <button
+                            class="btn-close"
+                            data-bs-dismiss="modal">
+                        </button>
+                    </div>
+
+                    <div class="modal-body">
+                        {{#if cliente.medida_padrao.0.ajuste}}
+                            <p class="texto-ajuste-modal">
+                                {{mostrar cliente.medida_padrao.0.ajuste}}
+                            </p>
+                        {{else}}
+                            <p class="text-muted">
+                                Nenhum ajuste informado.
+                            </p>
+                        {{/if}}
+
+                    </div>
+
+                    <div class="modal-footer">
+                        <button
+                            class="btn btn-primary"
+                            data-bs-dismiss="modal">
+                            Fechar
+                        </button>
+                    </div>
+
                 </div>
             </div>
         </div>

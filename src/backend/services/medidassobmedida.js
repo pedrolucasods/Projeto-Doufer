@@ -12,6 +12,7 @@ class MedidaSobMedida {
                 }
                 return modelMedidaSobMedida.create({
                     cliente_id: dados.cliente_id,
+                    sexo:dados.sexo,
                     busto: dados.busto,
                     cintura:dados.cintura,
                     quadril:dados.quadril,
