@@ -7,6 +7,7 @@ document.addEventListener('DOMContentLoaded',()=>{
             tipo_medida:"padrao",
             medidas:[{
                 cliente_id:clienteId,
+                sexo:document.getElementById('sexo').value,
                 tamanho:document.getElementById('tamanho').value,
                 ajuste:document.getElementById('ajuste').value
             }]

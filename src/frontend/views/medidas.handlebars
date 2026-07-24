@@ -18,7 +18,7 @@
             <p id="title-cliente">Medidas de {{cliente.nome}}</p>
         </div>
         
-        <div id="container-medidas" class=" border border-2 p-4 rounded-3">
+        <div id="container-medidas" class=" p-4 rounded-3">
             <div class="medidas-sobmedida">
                 <div class="medidas-corpos">
                     <p id="title-corpo">Medidas do corpo</p>
@@ -58,6 +58,7 @@
                 <p id="title-corpo">Medidas Padrão</p>
                 <div id="medidas-padrao" class="border p-3 rounded">
                     <div id="medidas-coluna1">
+                        <p>Sexo: {{mostrar cliente.medida_padrao.0.sexo}}</p>
                         <p>Tamanho: {{mostrar cliente.medida_padrao.0.tamanho}}</p>
                         <p>Ajuste: {{mostrar cliente.medida_padrao.0.ajuste}}</p>
                     </div>

@@ -67,6 +67,7 @@ class MedidasCliente {
                         WHEN med_p.id IS NOT NULL THEN
                             json_object(
                                 'id',med_p.id,
+                                'sexo',med_p.sexo,
                                 'tamanho',med_p.tamanho,
                                 'ajuste',med_p.ajuste
                             )
@@ -78,6 +79,7 @@ class MedidasCliente {
                         WHEN med_sob.id IS NOT NULL THEN
                             json_object(
                                 'id',med_sob.id,
+                                'sexo',med_sob.sexo,
                                 'busto',med_sob.busto,
                                 'cintura',med_sob.cintura,
                                 'quadril',med_sob.quadril,

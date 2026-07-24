@@ -15,6 +15,7 @@ class MedidaPadrao {
                 }
                 return ModelmedidasPadrao.create({
                     cliente_id: dados.cliente_id,
+                    sexo:dados.sexo,
                     tamanho: dados.tamanho,
                     ajuste: dados.ajuste
                 })
