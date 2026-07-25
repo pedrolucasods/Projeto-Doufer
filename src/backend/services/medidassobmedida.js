@@ -48,6 +48,7 @@ class MedidaSobMedida {
                 throw new Error('Medida não encontrada!')
             }
             return buscaMedida.update({
+                sexo:dados.sexo,
                 busto: dados.busto,
                 cintura:dados.cintura,
                 quadril:dados.quadril,

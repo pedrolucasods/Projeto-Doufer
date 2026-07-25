@@ -62,30 +62,30 @@
                         <div class="coluna-medidas">
                             <div class="campo-medida">
                                 <span class="campo-label"><i class="fas fa-vest"></i> Busto</span>
-                                <span class="campo-value">{{mostrar cliente.medida_sob_medida.0.busto}} <small>cm</small></span>
+                                <span class="campo-value">{{mostrar cliente.medida_sob_medida.0.busto}}</span>
                             </div>
                             <div class="campo-medida">
                                 <span class="campo-label"><i class="fas fa-hourglass-half"></i> Cintura</span>
-                                <span class="campo-value">{{mostrar cliente.medida_sob_medida.0.cintura}} <small>cm</small></span>
+                                <span class="campo-value">{{mostrar cliente.medida_sob_medida.0.cintura}}</span>
                             </div>
                             <div class="campo-medida">
                                 <span class="campo-label"><i class="fas fa-box"></i> Quadril</span>
-                                <span class="campo-value">{{mostrar cliente.medida_sob_medida.0.quadril}} <small>cm</small></span>
+                                <span class="campo-value">{{mostrar cliente.medida_sob_medida.0.quadril}}</span>
                             </div>
                             <div class="campo-medida">
                                 <span class="campo-label"><i class="fas fa-arrows-alt-v"></i> Comprimento</span>
-                                <span class="campo-value">{{mostrar cliente.medida_sob_medida.0.comprimento}} <small>cm</small></span>
+                                <span class="campo-value">{{mostrar cliente.medida_sob_medida.0.comprimento}}</span>
                             </div>
                         </div>
 
                         <div class="coluna-medidas">
                             <div class="campo-medida">
                                 <span class="campo-label"><i class="fas fa-tshirt"></i> Ombro</span>
-                                <span class="campo-value">{{mostrar cliente.medida_sob_medida.0.ombro}} <small>cm</small></span>
+                                <span class="campo-value">{{mostrar cliente.medida_sob_medida.0.ombro}}</span>
                             </div>
                             <div class="campo-medida">
                                 <span class="campo-label"><i class="fas fa-user-friends"></i> Costas</span>
-                                <span class="campo-value">{{mostrar cliente.medida_sob_medida.0.costas}} <small>cm</small></span>
+                                <span class="campo-value">{{mostrar cliente.medida_sob_medida.0.costas}}</span>
                             </div>
                         </div>
                     </div>
@@ -97,11 +97,11 @@
                     </h3>
                     <div class="campo-medida">
                         <span class="campo-label"><i class="fas fa-arrows-alt-v"></i> Comprimento da manga</span>
-                        <span class="campo-value">{{mostrar cliente.medida_sob_medida.0.comprimento_da_manga}} <small>cm</small></span>
+                        <span class="campo-value">{{mostrar cliente.medida_sob_medida.0.comprimento_da_manga}}</span>
                     </div>
                     <div class="campo-medida">
                         <span class="campo-label"><i class="fas fa-arrows-alt-h"></i> Largura da manga</span>
-                        <span class="campo-value">{{mostrar cliente.medida_sob_medida.0.largura_da_manga}} <small>cm</small></span>
+                        <span class="campo-value">{{mostrar cliente.medida_sob_medida.0.largura_da_manga}}</span>
                     </div>
                 </div>
             </div>
@@ -110,7 +110,11 @@
             <div id="container-buttons">
                 <div class="card-footer-info">
                     <i class="far fa-clock"></i>
-                    <span>Atualizado em <strong>20/05/2025 às 14:32</strong></span>
+                    {{#if cliente.medida_sob_medida.0.id}}
+                        <span>Atualizado em <strong>{{data_brasileira cliente.medida_sob_medida.0.atualizacao.data}} ás {{cliente.medida_sob_medida.0.atualizacao.hora}}</strong></span>
+                    {{else}}
+                        <span><strong>Sem Medida Sob Medida!</strong></span>
+                    {{/if}}
                 </div>
                 <div class="card-footer-actions">
                     {{#if cliente.medida_sob_medida.0.id}}
@@ -187,7 +191,11 @@
             <div id="container-buttons">
                 <div class="card-footer-info">
                     <i class="far fa-clock"></i>
-                    <span>Atualizado em <strong>20/05/2025 às 14:32</strong></span>
+                    {{#if cliente.medida_padrao.0.id}}
+                        <span>Atualizado em <strong>{{data_brasileira cliente.medida_padrao.0.atualizacao.data}} ás {{cliente.medida_padrao.0.atualizacao.hora}}</strong></span>
+                    {{else}}
+                        <span><strong>Sem Medida Padrão!</strong></span>
+                    {{/if}}
                 </div>
                 <div class="card-footer-actions">
                     {{#if cliente.medida_padrao.0.id}}

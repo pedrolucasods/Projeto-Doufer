@@ -69,7 +69,15 @@ class MedidasCliente {
                                 'id',med_p.id,
                                 'sexo',med_p.sexo,
                                 'tamanho',med_p.tamanho,
-                                'ajuste',med_p.ajuste
+                                'ajuste',med_p.ajuste,
+                                'criacao',json_object(
+                                    'data',DATE(med_p.createdAt),
+                                    'hora',strftime('%H:%M', med_p.createdAt, '-4 hours')
+                                ),
+                                'atualizacao',json_object(
+                                    'data',DATE(med_p.updatedAt),
+                                    'hora',strftime('%H:%M', med_p.updatedAt, '-4 hours')
+                                )
                             )
                         ELSE NULL
                     END
@@ -87,7 +95,15 @@ class MedidasCliente {
                                 'ombro',med_sob.ombro,
                                 'costas',med_sob.costas,
                                 'comprimento_da_manga',med_sob.comprimento_da_manga,
-                                'largura_da_manga',med_sob.largura_da_manga
+                                'largura_da_manga',med_sob.largura_da_manga,
+                                'criacao',json_object(
+                                    'data',DATE(med_sob.createdAt),
+                                    'hora',strftime('%H:%M', med_sob.createdAt, '-4 hours')
+                                ),
+                                'atualizacao',json_object(
+                                    'data',DATE(med_sob.updatedAt),
+                                    'hora',strftime('%H:%M', med_sob.updatedAt, '-4 hours')
+                                )
                             
                             )
                         ELSE

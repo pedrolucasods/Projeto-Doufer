@@ -11,7 +11,7 @@ function ValidatorAtualizarMedidaCliente(Dados, res) {
 
     const campos_medidas = Object.keys(Dados.medidas[0])
     if (Dados.tipo_medida == 'padrao') {
-        const valores_tamanho_padrao = ['','P','PP','M','G','GG']
+        const valores_tamanho_padrao = ['','P','PP','M','G','GG','EXG','SEGUIR MEDIDA']
         const sexos = ['masculino','feminino']
         if (
             !campos_medidas.includes('medidaPadrao_id') ||
@@ -32,12 +32,13 @@ function ValidatorAtualizarMedidaCliente(Dados, res) {
             return false
         }
     } else if (Dados.tipo_medida == 'sob_medida') {
-        if (campos_medidas.length != 10) {
+        if (campos_medidas.length != 11) {
             res.status(400).json({ 'erro': 'Erro ao atualizar medida!' })
             return false
         }
         if (
             !campos_medidas.includes('medidaSobMedida_id') ||
+            !campos_medidas.includes('sexo') ||
             !campos_medidas.includes('cliente_id') ||
             !campos_medidas.includes('busto') ||
             !campos_medidas.includes('cintura') ||
