@@ -11,6 +11,7 @@ document.addEventListener('DOMContentLoaded',()=>{
             quantidade:document.getElementById('quantidade').value,
             tipo_medida:"padrao",
             medidas:[{
+                sexo:document.getElementById('sexo').value,
                 tamanho:document.getElementById('tamanho').value,
                 ajuste:document.getElementById('ajuste').value
             }]

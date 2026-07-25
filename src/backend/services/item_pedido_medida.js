@@ -66,7 +66,7 @@ class ItemPedidoMedida{
                 let medidaPadrao = {}
                 for(const valores of dados.medidas){
                     medidaPadrao = {
-                        tamanho: valores.tamanho, ajuste: valores.ajuste
+                        sexo: valores.sexo,tamanho: valores.tamanho, ajuste: valores.ajuste
                     }
                 }
 
@@ -171,6 +171,7 @@ class ItemPedidoMedida{
                 as: 'medidas_padrao_item',
                 required: true,
                 where:{
+                    sexo:medida.sexo,
                     tamanho:medida.tamanho,
                     ajuste:medida.ajuste
                 },

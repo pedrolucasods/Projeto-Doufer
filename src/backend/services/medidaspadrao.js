@@ -22,6 +22,7 @@ class MedidaPadrao {
             }else if(dados.item_medida_id) {
                 return ModelmedidasPadrao.create({
                     item_pedido_medida_id: dados.item_medida_id,
+                    sexo: dados.sexo,
                     tamanho: dados.tamanho,
                     ajuste: dados.ajuste
                 },{transaction:dados.transacao})
