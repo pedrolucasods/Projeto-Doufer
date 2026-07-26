@@ -11,6 +11,7 @@ document.addEventListener('DOMContentLoaded',()=>{
             quantidade:document.getElementById('quantidade').value,
             tipo_medida:"sob_medida",
             medidas:[{
+                sexo:document.getElementById('sexo').value,
                 busto:document.getElementById('busto').value,
                 cintura:document.getElementById('cintura').value,
                 quadril:document.getElementById('quadril').value,
@@ -30,7 +31,13 @@ async function adicionarMedidas(dados){
         if(dados.quantidade<0){
             throw new Error('Quantidade Inválido ou Superior a Disponivel!')
         }
-        if(dados.medidas[0].tamanho == '' && dados.medidas[0].ajustes == ''){
+        let qtd_sem = 0
+        for(let valor of Object.values(dados.medidas[0])){
+            if(valor == ''){
+                qtd_sem +=1
+            }
+        }
+        if(qtd_sem == 8){
             throw new Error('Nenhuma Medida Informada!')
         }
         

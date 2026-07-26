@@ -25,6 +25,7 @@ class MedidaSobMedida {
             }else{
                 return modelMedidaSobMedida.create({
                     item_pedido_medida_id: dados.item_medida_id,
+                    sexo:dados.sexo,
                     busto: dados.busto,
                     cintura:dados.cintura,
                     quadril:dados.quadril,

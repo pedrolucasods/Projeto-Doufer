@@ -31,11 +31,13 @@ function ValidadorCadastroMedidaItemPedido(Dados,res){
                 return false
             }
     }else if(Dados.tipo_medida == 'sob_medida'){
-        if (campos_medidas.length != 8) {
+        const sexos = ['masculino','feminino']
+        if (campos_medidas.length != 9) {
             res.status(400).json({'erro':'Erro ao cadastrar medida!'})
             return false
         }
         if (
+            !campos_medidas.includes('sexo') ||
             !campos_medidas.includes('busto') ||
             !campos_medidas.includes('cintura') ||
             !campos_medidas.includes('quadril') ||
@@ -45,6 +47,10 @@ function ValidadorCadastroMedidaItemPedido(Dados,res){
             !campos_medidas.includes('comprimento_da_manga') ||
             !campos_medidas.includes('largura_da_manga')
         ) {
+            res.status(400).json({'erro':'Erro ao cadastrar medida!'})
+            return false
+        }
+        if(!sexos.includes(Dados.medidas[0].sexo)){
             res.status(400).json({'erro':'Erro ao cadastrar medida!'})
             return false
         }

@@ -98,6 +98,7 @@ class ItemPedidoMedida{
                 let medidasobMedida = {}
                 for(const valores of dados.medidas){
                     medidasobMedida={
+                        sexo:valores.sexo,
                         busto: valores.busto,
                         cintura:valores.cintura,
                         quadril:valores.quadril,
@@ -190,6 +191,7 @@ class ItemPedidoMedida{
                     as: 'medidas_sob_medida',
                     required: true,
                     where:{
+                        sexo:medida.sexo,
                         busto: medida.busto,
                         cintura:medida.cintura,
                         quadril:medida.quadril,
