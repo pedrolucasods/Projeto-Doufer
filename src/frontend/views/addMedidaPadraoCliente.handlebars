@@ -31,6 +31,15 @@
                             <input type="hidden" name="medidas[0][cliente_id]" value="{{clienteId}}">
 
                             <div class="col-12">
+                                <label for="sexo" class="form-label">Sexo</label>
+                                <select class="form-select" id="sexo" name="medidas[0][sexo]" required>
+                                    <option value="">Selecione o sexo</option>
+                                    <option value="masculino">Masculino</option>
+                                    <option value="feminino">Feminino</option>
+                                </select>
+                            </div>
+
+                            <div class="col-12">
                                 <label for="tamanho" class="form-label">Tamanho</label>
                                 <select class="form-select" id="tamanho" name="medidas[0][tamanho]" required>
                                     <option value="">Selecione o tamanho</option>
@@ -39,6 +48,8 @@
                                     <option value="M">M</option>
                                     <option value="G">G</option>
                                     <option value="GG">GG</option>
+                                    <option value="EXG">EXG</option>
+                                    <option value="SEGUIR MEDIDA">SEGUIR MEDIDA</option>
                                 </select>
                             </div>
 

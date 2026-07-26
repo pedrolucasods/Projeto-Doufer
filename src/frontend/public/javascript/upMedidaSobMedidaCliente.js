@@ -9,6 +9,7 @@ form.addEventListener('submit', async function (e) {
     let medidaId = sessionStorage.getItem('MedidaId_sobMedida')
     
     // montando o body
+    let sexo = document.getElementById('inputSexo').value
     let busto = document.getElementById('inputBusto').value
     let cintura = document.getElementById('inputCintura').value
     let quadril = document.getElementById('inputQuadril').value
@@ -19,6 +20,7 @@ form.addEventListener('submit', async function (e) {
     let largura_da_manga = document.getElementById('inputLManga').value
 
     const Medidas = {
+        sexo: (sexo != null) ? sexo : null,
         busto: (busto != null) ? busto : null,
         cintura: (cintura != null) ? cintura : null,
         quadril: (quadril != null) ? quadril : null,
@@ -52,7 +54,7 @@ form.addEventListener('submit', async function (e) {
 
 async function deletarMedidaSobMedida(medidaId, clienteId) {
     try {
-        const dados = {tipo:"sob_medida",medida_id:medidaId}
+        const dados = {tipo:"sob_medida",medida_id:medidaId,cliente_id:clienteId}
         const response = await fetch(`/medidas/clientes`,{
             method:"DELETE",
             headers:{
@@ -124,6 +126,11 @@ function mask(input){
         mask:'000cm'
     })
 
+}
+
+function voltar(){
+    const clienteId = sessionStorage.getItem('clienteId')
+    window.location.href = `/medidas/clientes/listar/${clienteId}`   
 }
 
 

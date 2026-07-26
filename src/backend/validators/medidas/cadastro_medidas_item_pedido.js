@@ -12,23 +12,32 @@ function ValidadorCadastroMedidaItemPedido(Dados,res){
 
     const campos_medidas = Object.keys(Dados.medidas[0])
     if(Dados.tipo_medida == 'padrao'){
+        const valores_tamanho_padrao = ['','P','PP','M','G','GG','EXG','SEGUIR MEDIDA']
+        const sexos = ['masculino','feminino']
         if (
+            !campos_medidas.includes('sexo') ||
             !campos_medidas.includes('tamanho') ||
             !campos_medidas.includes('ajuste')
             ) {
                 res.status(400).json({'erro':'Erro ao cadastrar medida!'})
                 return false
             }
-            if (campos_medidas.length != 2) {
+            if (campos_medidas.length != 3) {
+                res.status(400).json({'erro':'Erro ao cadastrar medida!'})
+                return false
+            }
+            if(!valores_tamanho_padrao.includes(Dados.medidas[0].tamanho) || !sexos.includes(Dados.medidas[0].sexo)){
                 res.status(400).json({'erro':'Erro ao cadastrar medida!'})
                 return false
             }
     }else if(Dados.tipo_medida == 'sob_medida'){
-        if (campos_medidas.length != 8) {
+        const sexos = ['masculino','feminino']
+        if (campos_medidas.length != 9) {
             res.status(400).json({'erro':'Erro ao cadastrar medida!'})
             return false
         }
         if (
+            !campos_medidas.includes('sexo') ||
             !campos_medidas.includes('busto') ||
             !campos_medidas.includes('cintura') ||
             !campos_medidas.includes('quadril') ||
@@ -38,6 +47,10 @@ function ValidadorCadastroMedidaItemPedido(Dados,res){
             !campos_medidas.includes('comprimento_da_manga') ||
             !campos_medidas.includes('largura_da_manga')
         ) {
+            res.status(400).json({'erro':'Erro ao cadastrar medida!'})
+            return false
+        }
+        if(!sexos.includes(Dados.medidas[0].sexo)){
             res.status(400).json({'erro':'Erro ao cadastrar medida!'})
             return false
         }

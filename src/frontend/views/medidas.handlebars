@@ -1,116 +1,301 @@
+<div class="page-layout">
+    <!-- Alertas -->
+    {{#if msg}}
+    <div id="msg" class="d-flex gap-3 alert alert-success alert-dismissible fade show position-fixed top-0 end-0 me-5 m-3">
+        <i class="bi bi-check-square-fill text-success"></i>
+        <p class="fw-bold mb-0">{{msg}}</p>
+    </div>
+    {{/if}}
 
-<button id="back" type="button" onclick="voltar({{cliente.id}})"><i class="fas fa-home"></i></button>
-{{#if msg}}
-<div id="msg" class="d-flex gap-3 alert alert-success alert-dismissible fade show position-fixed top-0 end-0 me-5 m-3">
-    <i class="bi bi-check-square-fill text-success"></i>
-    <p class="fw-bold mb-0">{{msg}}</p>
-</div>
-{{/if}}
-{{#if error}}
-<div id="errordiv" class="d-flex gap-3 alert alert-danger alert-dismissible fade show position-fixed top-0 end-0 me-5 m-3">
-    <i class="bi bi-x-square-fill text-danger"></i>
-    <p class="fw-bold mb-0">{{error}}</p>
-</div>
-{{/if}}
-<div id="container">
-    <div class="container-infos">
-        <div class="container-title">
-            <p id="title-cliente">Medidas de {{cliente.nome}}</p>
+    {{#if error}}
+    <div id="errordiv" class="d-flex gap-3 alert alert-danger alert-dismissible fade show position-fixed top-0 end-0 me-5 m-3">
+        <i class="bi bi-x-square-fill text-danger"></i>
+        <p class="fw-bold mb-0">{{error}}</p>
+    </div>
+    {{/if}}
+
+    <!-- Cabeçalho -->
+    <header class="page-header">
+        <button id="back" type="button" onclick="voltar({{cliente.id}})" title="Voltar">
+            <i class="fas fa-arrow-left"></i>
+        </button>
+
+        <div class="header-user-info">
+            <div class="user-avatar">
+                <i class="fas fa-user"></i>
+            </div>
+            <div>
+                <h1 id="title-cliente">Medidas de {{cliente.nome}}</h1>
+                <span class="subtitle-page">Visualização das medidas cadastradas para o cliente</span>
+            </div>
         </div>
-        
-        <div id="container-medidas" class=" border border-2 p-4 rounded-3">
-            <div class="medidas-sobmedida">
-                <div class="medidas-corpos">
-                    <p id="title-corpo">Medidas do corpo</p>
-                    <div id="medidas-corpo" class="border p-3 rounded">
-                        <div id="medidas-coluna1">
-                            <p>Busto: {{mostrar cliente.medida_sob_medida.0.busto}}</p>
-                            <p>Cintura: {{mostrar cliente.medida_sob_medida.0.cintura}}</p>
-                            <p>Quadril: {{mostrar cliente.medida_sob_medida.0.quadril}}</p>
-                            <p>Comprimento: {{mostrar cliente.medida_sob_medida.0.comprimento}}</p>
+    </header>
+
+    <!-- Cards Container -->
+    <div id="container-medidas">
+
+        <!-- CARD 1: SOB MEDIDA -->
+        <section class="card-medida">
+            <div class="card-header-medida">
+                <h2>
+                    <i class="fas fa-ruler-horizontal"></i>
+                    Sob Medida
+                </h2>
+                <span class="header-tag">Personalizadas</span>
+            </div>
+
+            <div class="card-body-medida">
+                <div class="bloco-medidas">
+                    <h3 class="bloco-title">
+                        <i class="fas fa-user"></i> Medidas do corpo
+                    </h3>
+
+                    <div class="campo-medida sexo-row">
+                        <span class="campo-label">Sexo</span>
+                        <span class="badge-sexo">
+                            <i class="fas fa-venus"></i>
+                            {{mostrar cliente.medida_sob_medida.0.sexo}}
+                        </span>
+                    </div>
+
+                    <div class="grid-medidas-corpo">
+                        <div class="coluna-medidas">
+                            <div class="campo-medida">
+                                <span class="campo-label"><i class="fas fa-vest"></i> Busto</span>
+                                <span class="campo-value">{{mostrar cliente.medida_sob_medida.0.busto}}</span>
+                            </div>
+                            <div class="campo-medida">
+                                <span class="campo-label"><i class="fas fa-hourglass-half"></i> Cintura</span>
+                                <span class="campo-value">{{mostrar cliente.medida_sob_medida.0.cintura}}</span>
+                            </div>
+                            <div class="campo-medida">
+                                <span class="campo-label"><i class="fas fa-box"></i> Quadril</span>
+                                <span class="campo-value">{{mostrar cliente.medida_sob_medida.0.quadril}}</span>
+                            </div>
+                            <div class="campo-medida">
+                                <span class="campo-label"><i class="fas fa-arrows-alt-v"></i> Comprimento</span>
+                                <span class="campo-value">{{mostrar cliente.medida_sob_medida.0.comprimento}}</span>
+                            </div>
                         </div>
-                        <div id="medidas-coluna2">
-                            <p>Ombro: {{mostrar cliente.medida_sob_medida.0.ombro}}</p>
-                            <p>Costas: {{mostrar cliente.medida_sob_medida.0.costas}}</p>
+
+                        <div class="coluna-medidas">
+                            <div class="campo-medida">
+                                <span class="campo-label"><i class="fas fa-tshirt"></i> Ombro</span>
+                                <span class="campo-value">{{mostrar cliente.medida_sob_medida.0.ombro}}</span>
+                            </div>
+                            <div class="campo-medida">
+                                <span class="campo-label"><i class="fas fa-user-friends"></i> Costas</span>
+                                <span class="campo-value">{{mostrar cliente.medida_sob_medida.0.costas}}</span>
+                            </div>
                         </div>
                     </div>
                 </div>
-                
-                <div class="medidas-manga">
-                    <p id="title-manga">Medidas da manga</p>
-                    <div id="medidas-manga" class="border p-3 rounded">
-                        <p>Comprimento da Manga: {{mostrar cliente.medida_sob_medida.0.comprimento_da_manga}}</p>
-                        <p>Largura da Manga: {{mostrar cliente.medida_sob_medida.0.largura_da_manga}}</p>
+
+                <div class="bloco-medidas mt-4">
+                    <h3 class="bloco-title">
+                        <i class="fas fa-tshirt"></i> Medidas da manga
+                    </h3>
+                    <div class="campo-medida">
+                        <span class="campo-label"><i class="fas fa-arrows-alt-v"></i> Comprimento da manga</span>
+                        <span class="campo-value">{{mostrar cliente.medida_sob_medida.0.comprimento_da_manga}}</span>
                     </div>
-                    <div id="container-buttons">
-                        {{#if cliente.medida_sob_medida.0.id}}
-                        <button class="btn btn-danger" onclick="abrirModalSobMedida({{cliente.id}})">Limpar</button>
-                        <button class="btn btn-success" onclick="atualizarMedidasSobMedida({{cliente.medida_sob_medida.0.id}})">Atualizar</button>
-                        {{else}}
-                        <button class="btn btn-secondary" disabled>Limpar</button>
-                        <button class="btn btn-success" onclick="cadastrarMedidas({{cliente.id}})">Adicionar</button>
-                        {{/if}}
+                    <div class="campo-medida">
+                        <span class="campo-label"><i class="fas fa-arrows-alt-h"></i> Largura da manga</span>
+                        <span class="campo-value">{{mostrar cliente.medida_sob_medida.0.largura_da_manga}}</span>
                     </div>
                 </div>
             </div>
-            
-            <div class="medidas-padrao border p-4 rounded-3">
-                <p id="title-corpo">Medidas Padrão</p>
-                <div id="medidas-padrao" class="border p-3 rounded">
-                    <div id="medidas-coluna1">
-                        <p>Tamanho: {{mostrar cliente.medida_padrao.0.tamanho}}</p>
-                        <p>Ajuste: {{mostrar cliente.medida_padrao.0.ajuste}}</p>
+
+            <!-- Rodapé Unificado -->
+            <div id="container-buttons">
+                <div class="card-footer-info">
+                    <i class="far fa-clock"></i>
+                    {{#if cliente.medida_sob_medida.0.id}}
+                        <span>Atualizado em <strong>{{data_brasileira cliente.medida_sob_medida.0.atualizacao.data}} ás {{cliente.medida_sob_medida.0.atualizacao.hora}}</strong></span>
+                    {{else}}
+                        <span><strong>Sem Medida Sob Medida!</strong></span>
+                    {{/if}}
+                </div>
+                <div class="card-footer-actions">
+                    {{#if cliente.medida_sob_medida.0.id}}
+                        <button class="btn btn-outline-danger" onclick="abrirModalSobMedida({{cliente.id}})">
+                            <i class="far fa-trash-alt"></i> Limpar
+                        </button>
+                        <button class="btn btn-primary" onclick="atualizarMedidasSobMedida({{cliente.medida_sob_medida.0.id}})">
+                            <i class="fas fa-pen"></i> Atualizar
+                        </button>
+                    {{else}}
+                        <button class="btn btn-outline-secondary" disabled>Limpar</button>
+                        <button class="btn btn-primary" onclick="cadastrarMedidas({{cliente.id}})">
+                            <i class="fas fa-plus"></i> Adicionar
+                        </button>
+                    {{/if}}
+                </div>
+            </div>
+        </section>
+
+        <!-- CARD 2: MEDIDA PADRÃO -->
+        <section class="card-medida">
+            <div class="card-header-medida">
+                <h2>
+                    <i class="fas fa-tshirt"></i>
+                    Medida Padrão
+                </h2>
+                <span class="header-tag">Padrão</span>
+            </div>
+
+            <div class="card-body-medida">
+                <div class="secao-padrao">
+                    <div class="campo-padrao-group">
+                        <label class="campo-label">Sexo</label>
+                        <div class="badge-sexo">
+                            <i class="fas fa-venus"></i>
+                            {{mostrar cliente.medida_padrao.0.sexo}}
+                        </div>
                     </div>
-                    <div id="container-buttons">
-                        {{#if cliente.medida_padrao.0.id}}
-                        <button class="btn btn-danger" onclick="abrirModalpadrao()">Limpar</button>
-                        <button class="btn btn-success" onclick="atualizarMedidasPadrao({{cliente.medida_padrao.0.id}})">Atualizar</button>
-                        {{else}}
-                        <button class="btn btn-secondary" disabled>Limpar</button>
-                        <button class="btn btn-success" onclick="cadastrarMedidasPadrao({{cliente.id}})">Adicionar</button>
-                        {{/if}}
+
+                    <div class="campo-padrao-group">
+                        <label class="campo-label">Tamanho</label>
+                        <div class="badge-tamanho">
+                            <i class="fas fa-tshirt"></i>
+                            {{mostrar cliente.medida_padrao.0.tamanho}}
+                        </div>
+                    </div>
+
+                    <div class="campo-padrao-group">
+                        <label class="campo-label">Ajuste</label>
+                        <div class="ajuste-wrapper">
+                            <div class="ajuste-box-limited" title="{{cliente.medida_padrao.0.ajuste}}">
+                                {{#if cliente.medida_padrao.0.ajuste}}
+                                    {{mostrar cliente.medida_padrao.0.ajuste}}
+                                {{else}}
+                                    <span class="text-muted">Nenhum ajuste informado.</span>
+                                {{/if}}
+                            </div>
+
+                            <div class="tooltip-container">
+                                <button type="button" 
+                                        class="btn-ajuste-modal" 
+                                        data-bs-toggle="modal" 
+                                        data-bs-target="#modalAjuste">
+                                    <i class="fas fa-file-alt"></i>
+                                </button>
+                                <span class="custom-tooltip">Visualizar ajuste detalhado</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
+            </div>
+
+            <!-- Rodapé Unificado -->
+            <div id="container-buttons">
+                <div class="card-footer-info">
+                    <i class="far fa-clock"></i>
+                    {{#if cliente.medida_padrao.0.id}}
+                        <span>Atualizado em <strong>{{data_brasileira cliente.medida_padrao.0.atualizacao.data}} ás {{cliente.medida_padrao.0.atualizacao.hora}}</strong></span>
+                    {{else}}
+                        <span><strong>Sem Medida Padrão!</strong></span>
+                    {{/if}}
+                </div>
+                <div class="card-footer-actions">
+                    {{#if cliente.medida_padrao.0.id}}
+                        <button class="btn btn-outline-danger" onclick="abrirModalpadrao()">
+                            <i class="far fa-trash-alt"></i> Limpar
+                        </button>
+                        <button class="btn btn-primary" onclick="atualizarMedidasPadrao({{cliente.medida_padrao.0.id}})">
+                            <i class="fas fa-pen"></i> Atualizar
+                        </button>
+                    {{else}}
+                        <button class="btn btn-outline-secondary" disabled>Limpar</button>
+                        <button class="btn btn-primary" onclick="cadastrarMedidasPadrao({{cliente.id}})">
+                            <i class="fas fa-plus"></i> Adicionar
+                        </button>
+                    {{/if}}
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <!-- Banner Informativo -->
+    <div class="info-banner-card">
+        <div class="info-banner-content">
+            <div class="info-icon">
+                <i class="fas fa-info"></i>
+            </div>
+            <div>
+                <h4>Informações</h4>
+                <p>As medidas sob medida são utilizadas para peças personalizadas.<br>
+                As medidas padrão são utilizadas como referência para novos pedidos.</p>
             </div>
         </div>
-
-        <div class="modal" tabindex="-1" id="meumodal">
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content delete-modal">
-                    <div class="modal-header">
-                        <h5 class="modal-title"><i class="bi bi-exclamation-triangle-fill text-warning me-2"></i>Confirmação de exclusão</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <p class="mb-2">Tem certeza que deseja excluir a medida sob medida?</p>
-                        <p class="text-muted">Essa ação não poderá ser desfeita.</p>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                        <button type="button" class="btn btn-danger" onclick="deletarMedidaSobMedida({{cliente.medida_sob_medida.0.id}})">Excluir</button>
-                    </div>
-                </div>
-            </div>
+        <div class="info-banner-illustration">
+            <svg viewBox="0 0 200 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M10 30 Q 50 10, 100 30 T 190 30" stroke="#cbd5e1" stroke-width="2" stroke-dasharray="4 4"/>
+                <circle cx="150" cy="30" r="15" stroke="#cbd5e1" stroke-width="2"/>
+            </svg>
         </div>
+    </div>
 
-        <div class="modal" tabindex="-1" id="meumodalpadrao">
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content delete-modal">
-                    <div class="modal-header">
-                        <h5 class="modal-title"><i class="bi bi-exclamation-triangle-fill text-warning me-2"></i>Confirmação de exclusão</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <p class="mb-2">Tem certeza que deseja excluir a medida padrão?</p>
-                        <p class="text-muted">Essa ação não poderá ser desfeita.</p>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                        <button type="button" class="btn btn-danger" onclick="deletarMedidaPadrao({{cliente.medida_padrao.0.id}})">Excluir</button>
-                    </div>
+    <!-- Modais -->
+    <div class="modal fade" tabindex="-1" id="meumodal">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content delete-modal">
+                <div class="modal-header">
+                    <h5 class="modal-title"><i class="fas fa-exclamation-triangle text-warning me-2"></i> Excluir Medida Sob Medida</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <p class="mb-1">Tem certeza que deseja excluir esta medida?</p>
+                    <small class="text-muted">Essa ação não poderá ser desfeita.</small>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-danger" onclick="deletarMedidaSobMedida({{cliente.medida_sob_medida.0.id}})">Excluir</button>
                 </div>
             </div>
         </div>
     </div>
-    
+
+    <div class="modal fade" tabindex="-1" id="meumodalpadrao">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content delete-modal">
+                <div class="modal-header">
+                    <h5 class="modal-title"><i class="fas fa-exclamation-triangle text-warning me-2"></i> Excluir Medida Padrão</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <p class="mb-1">Tem certeza que deseja excluir esta medida?</p>
+                    <small class="text-muted">Essa ação não poderá ser desfeita.</small>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-danger" onclick="deletarMedidaPadrao({{cliente.medida_padrao.0.id}})">Excluir</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modalAjuste" tabindex="-1">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content ajuste-modal">
+                <div class="modal-header">
+                    <h5 class="modal-title"><i class="fas fa-file-alt me-2 text-primary"></i> Ajustes da Medida</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="texto-ajuste-modal">
+                        {{#if cliente.medida_padrao.0.ajuste}}
+                            {{mostrar cliente.medida_padrao.0.ajuste}}
+                        {{else}}
+                            <span class="text-muted">Nenhum ajuste informado.</span>
+                        {{/if}}
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Fechar</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

@@ -12,6 +12,7 @@ class MedidaSobMedida {
                 }
                 return modelMedidaSobMedida.create({
                     cliente_id: dados.cliente_id,
+                    sexo:dados.sexo,
                     busto: dados.busto,
                     cintura:dados.cintura,
                     quadril:dados.quadril,
@@ -24,6 +25,7 @@ class MedidaSobMedida {
             }else{
                 return modelMedidaSobMedida.create({
                     item_pedido_medida_id: dados.item_medida_id,
+                    sexo:dados.sexo,
                     busto: dados.busto,
                     cintura:dados.cintura,
                     quadril:dados.quadril,
@@ -47,6 +49,7 @@ class MedidaSobMedida {
                 throw new Error('Medida não encontrada!')
             }
             return buscaMedida.update({
+                sexo:dados.sexo,
                 busto: dados.busto,
                 cintura:dados.cintura,
                 quadril:dados.quadril,

@@ -51,6 +51,10 @@ const Medidas_sob_medida = db.define('medidas_sob_medidas', {
     largura_da_manga: {
         type: DataTypes.STRING,
         allowNull: true
+    },
+    sexo:{
+        type:DataTypes.ENUM('masculino','feminino'),
+        allowNull: false
     }
 })
 

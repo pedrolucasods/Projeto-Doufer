@@ -9,6 +9,7 @@ document.addEventListener('DOMContentLoaded',()=>{
             medidas:[{
                 medidaPadrao_id:medidaId,
                 cliente_id:clienteId,
+                sexo:document.getElementById('sexo').value,
                 tamanho:document.getElementById('tamanho').value,
                 ajuste:document.getElementById('ajuste').value
             }]
@@ -17,13 +18,13 @@ document.addEventListener('DOMContentLoaded',()=>{
         if(infoMedidas.tamanho == '' && infoMedidas.ajuste == ''){
             deletarMedida(medidaId,clienteId)
         }else{
-            atualizarMedida(dados,clienteId)
+            atualizarMedida(dados,clienteId,medidaId)
         }
         
     })
 })
 
-async function atualizarMedida(dados,clienteId){
+async function atualizarMedida(dados,clienteId,medida_id){
     try {
         const response = await fetch('/medidas/clientes',{
             method:'PUT',
@@ -38,7 +39,7 @@ async function atualizarMedida(dados,clienteId){
         }
         window.location.href = `/medidas/clientes/listar/${clienteId}?msg=${data.msg}`
     } catch (error) {
-        window.location.href = `/medidas/clientes/padrao?error=${error}`
+        window.location.href = `/medidas/clientes/${medida_id}/padrao?error=${error}`
     }
 }
 
