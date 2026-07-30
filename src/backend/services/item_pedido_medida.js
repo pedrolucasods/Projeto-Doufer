@@ -163,6 +163,10 @@ class ItemPedidoMedida{
 
             // se for medida padrão faz isso
             if(dados.tipo_medida=='padrao'){
+                const busca_medida = await ServiceMedidaPadrao.buscarPorItemPedidoMedidaIdEMedidaId(dados.medida_id,vinculo_medida.id)
+                if(!busca_medida){
+                    throw new Error('Medida Não Encontrada!')
+                }
                 let medidaPadrao = {}
                 for(const valores of dados.medidas){
                     medidaPadrao = {
