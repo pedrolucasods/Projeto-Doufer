@@ -57,6 +57,7 @@ medidas.get('/clientes/:id/padrao', controllers.medida.formulário_atualizar_med
 medidas.get('/clientes/:id/SobMedida', controllers.medida.formulário_atualizar_medidas_cliente_sob_medida)
 medidas.post('/clientes', controllers.medida.cadastrar_medida_cliente)
 medidas.post('/itens-pedidos', controllers.medida.cadastrar_medida_itemPedido)
+medidas.put('/itens-pedidos', controllers.medida.atualizar_medida_itemPedido)
 medidas.put('/clientes', controllers.medida.atualizar_medida_cliente)
 medidas.delete('/clientes', controllers.medida.deletar_medida_cliente)
 

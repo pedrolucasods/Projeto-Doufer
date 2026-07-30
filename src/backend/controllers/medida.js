@@ -3,6 +3,7 @@ const ServiceMedidaCliente = require('../services/medidas_cliente')
 const ServiceCliente = require('../services/cliente')
 const {ValidatorCadastroMedidaCliente} = require('../validators/medidas/cadastro_medidas_cliente')
 const {ValidadorCadastroMedidaItemPedido} = require('../validators/medidas/cadastro_medidas_item_pedido')
+const {ValidatorAtualizarMedidaItemPedido} = require('../validators/medidas/atualizar_medidas_item_pedido')
 const {ValidatorAtualizarMedidaCliente} = require('../validators/medidas/atualizar_medida_cliente')
 const {ValidatorDeletarMedidaCliente} = require('../validators/medidas/deletar_medida_cliente')
 class Medida{
@@ -166,6 +167,20 @@ class Medida{
             }
             const cadastro = await ServiceItemPedidoMedida.cadastrar(dados)
             return res.json({"msg":"Cadastro com sucesso!"})
+        } catch (error) {
+            return res.status(500).json({"Erro":`${error.message}`})
+        }
+    }
+
+    async atualizar_medida_itemPedido(req,res){
+        try {
+            const dados = req.body
+            const validar_dados = await ValidatorAtualizarMedidaItemPedido(dados,res)
+            if(!validar_dados){
+                return
+            }
+            const atualizar = await ServiceItemPedidoMedida.atualizar(dados)
+            return res.json({"msg":"Medida Atualizada Com Sucesso!"})
         } catch (error) {
             return res.status(500).json({"Erro":`${error.message}`})
         }
