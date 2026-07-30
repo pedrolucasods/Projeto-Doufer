@@ -44,21 +44,41 @@ class MedidaSobMedida {
 
     async atualizar(dados){
         try {
-            const buscaMedida = await this.buscarMedidaPorId(dados.medidaSobMedida_id)
-            if(!buscaMedida){
-                throw new Error('Medida não encontrada!')
+            if(dados.cliente){
+                const buscaMedida = await this.buscarMedidaPorId(dados.medidaSobMedida_id)
+                if(!buscaMedida){
+                    throw new Error('Medida não encontrada!')
+                }
+                return buscaMedida.update({
+                    sexo:dados.sexo,
+                    busto: dados.busto,
+                    cintura:dados.cintura,
+                    quadril:dados.quadril,
+                    comprimento:dados.comprimento,
+                    ombro:dados.ombro,
+                    costas:dados.costas,
+                    comprimento_da_manga:dados.comprimento_da_manga,
+                    largura_da_manga:dados.largura_da_manga
+                })
             }
-            return buscaMedida.update({
-                sexo:dados.sexo,
-                busto: dados.busto,
-                cintura:dados.cintura,
-                quadril:dados.quadril,
-                comprimento:dados.comprimento,
-                ombro:dados.ombro,
-                costas:dados.costas,
-                comprimento_da_manga:dados.comprimento_da_manga,
-                largura_da_manga:dados.largura_da_manga
-            })
+            else if(dados.item_medida_id){
+                const buscaMedida = await this.buscarPorItemPedidoMedidaIdEMedidaId(dados.medida_id,dados.item_medida_id)
+                if(!buscaMedida){
+                    throw new Error('Medida não encontrada!')
+                }
+                return buscaMedida.update({
+                    sexo:dados.sexo,
+                    busto: dados.busto,
+                    cintura:dados.cintura,
+                    quadril:dados.quadril,
+                    comprimento:dados.comprimento,
+                    ombro:dados.ombro,
+                    costas:dados.costas,
+                    comprimento_da_manga:dados.comprimento_da_manga,
+                    largura_da_manga:dados.largura_da_manga
+                },{transaction:dados.transacao})
+            }
+            
             
         } catch (error) {
             throw new Error(`${error.message}`)
@@ -88,6 +108,10 @@ class MedidaSobMedida {
 
     buscarMedidaPorClienteId(id) {
         return modelMedidaSobMedida.findOne({ where: { cliente_id: id } })
+    }
+
+    buscarPorItemPedidoMedidaIdEMedidaId(id,itemMedidaId){
+        return modelMedidaSobMedida.findOne({where:{id:id,item_pedido_medida_id:itemMedidaId}})
     }
 
     buscarMedidaPorItemPedidoId(id) {

@@ -202,6 +202,10 @@ class ItemPedidoMedida{
                 }
 
             }else if(dados.tipo_medida=='sob_medida'){
+                const busca_medida = await ServiceMedidaSobMedida.buscarPorItemPedidoMedidaIdEMedidaId(dados.medida_id,vinculo_medida.id)
+                if(!busca_medida){
+                    throw new Error('Medida Não Encontrada!')
+                }
                 let medidasobMedida = {}
                 for(const valores of dados.medidas){
                     medidasobMedida={
@@ -216,29 +220,32 @@ class ItemPedidoMedida{
                         largura_da_manga:valores.largura_da_manga
                     }
                 }
-                const item_com_mesma_medida = await this.buscarPorMedidasDoMesmoItem_ComMesmaMedida(dados.item_pedido_id,medidasobMedida,'sobmedida')
+                const item_com_mesma_medida = await this.buscarPorMedidasDoMesmoItem_ComMesmaMedida(vinculo_medida.item_pedido_id,medidasobMedida,'sobmedida')
                 let valorbool = item_com_mesma_medida?'1':null
                 if(valorbool){
-                    const quantidade_Antiga = parseInt(item_com_mesma_medida.quantidade)
-                    let novaquantidade = dadosQuantidade+quantidade_Antiga
+                    let novaquantidade = dadosQuantidade
+                    if(item_com_mesma_medida.id != vinculo_medida.id){
+                        await this.deletar(vinculo_medida.id)
+                        const quantidade_Antiga = parseInt(item_com_mesma_medida.quantidade)
+                        novaquantidade=dadosQuantidade+quantidade_Antiga
+                    }
                     let updateQuantidade = await this.editar_quantidade(novaquantidade,item_com_mesma_medida.id)
                     return updateQuantidade
                 }else{
                         // cadastro do item pedido medida
-                        const cadastro = await sequelize.transaction(async(t)=>{
-                            const medida = await modelItemPedidoMedida.create({
-                                item_pedido_id:dados.item_pedido_id,
-                                tipo_medida:dados.tipo_medida,
-                                quantidade:dadosQuantidade
-                            },{transaction:t})
+                        const atualizacao = await sequelize.transaction(async(t)=>{
+                            await vinculo_medida.update({
+                            quantidade:dadosQuantidade
+                        },{transaction:t})
 
-                            medidasobMedida.item_medida_id = medida.id
+                            medidasobMedida.medida_id = dados.medida_id
+                            medidasobMedida.item_medida_id = vinculo_medida.id
                             medidasobMedida.transacao = t
-                            const cadMedidaSobMedida = await ServiceMedidaSobMedida.cadastrar(medidasobMedida)
-                            return {medida:medida}
+                            const cadMedidaSobMedida = await ServiceMedidaSobMedida.atualizar(medidasobMedida)
+                            return {medida:vinculo_medida}
                         })
                         
-                        return cadastro
+                        return atualizacao
                     }
                 
             } 
