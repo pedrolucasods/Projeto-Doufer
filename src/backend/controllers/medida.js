@@ -162,7 +162,13 @@ class Medida{
         try {
             const medida_id = req.params.id
             const dados = await ServiceItemPedidoMedida.dados_formulario_atualizar(medida_id)
-            return res.send(dados)
+            return res.render('upMedidaSobMedidaItemPedido',{
+                stylesheet:'upMedidaSobMedidaItemPedido.css',
+                script:'upMedidaSobMedidaItemPedido.js',
+                ...dados,
+                error:req.query.error || null,
+                msg: req.query.msg || null
+            })
         } catch (error) {
             return res.status(500).json({"Erro":`${error.message}`})
         }

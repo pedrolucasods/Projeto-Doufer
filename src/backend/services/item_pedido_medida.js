@@ -153,6 +153,8 @@ class ItemPedidoMedida{
                 c.nome AS nome_cliente,
                 p.id AS pedido_id,
                 ip.produto AS produto,
+                ip.modelo_produto AS modelo,
+                ip.cor AS cor,
                 ip.id AS item_id,
                 ipm.tipo_medida AS tipo_medida,
                 ipm.id AS vinculo_medida_id,
