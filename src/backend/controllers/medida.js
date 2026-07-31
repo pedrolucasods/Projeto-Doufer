@@ -174,6 +174,23 @@ class Medida{
         }
     }
 
+    async formulario_atualizar_medidas_padrao_item_pedido(req,res){
+        try {
+            const medida_id = req.params.id
+            const dados = await ServiceItemPedidoMedida.dados_formulario_atualizar(medida_id)
+            // return res.send(dados)
+            return res.render('upMedidaPadraoItemPedido',{
+                stylesheet:'upMedidaPadraoItemPedido.css',
+                script:'upMedidaPadraoItemPedido.js',
+                ...dados,
+                error:req.query.error || null,
+                msg: req.query.msg || null
+            })
+        } catch (error) {
+            return res.status(500).json({"Erro":`${error.message}`})
+        }
+    }
+
     async cadastrar_medida_itemPedido(req,res){
         try {
             const dados = req.body

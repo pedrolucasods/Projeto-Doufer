@@ -65,6 +65,7 @@ medidas.get('/itens-pedidos/:id/padrao', controllers.medida.formulario_cadastro_
 medidas.get('/itens-pedidos/:id/SobMedida', controllers.medida.formulario_cadastro_medidas_sob_medida_item_pedido)
 
 medidas.get('/itens-pedidos/:id/atualizar/SobMedida', controllers.medida.formulario_atualizar_medidas_sob_medida_item_pedido)
+medidas.get('/itens-pedidos/:id/atualizar/padrao', controllers.medida.formulario_atualizar_medidas_padrao_item_pedido)
 
 router.use('/medidas',medidas)
 
