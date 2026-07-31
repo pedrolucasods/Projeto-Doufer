@@ -3,6 +3,7 @@ const ServiceMedidaCliente = require('../services/medidas_cliente')
 const ServiceCliente = require('../services/cliente')
 const {ValidatorCadastroMedidaCliente} = require('../validators/medidas/cadastro_medidas_cliente')
 const {ValidadorCadastroMedidaItemPedido} = require('../validators/medidas/cadastro_medidas_item_pedido')
+const {ValidatorAtualizarMedidaItemPedido} = require('../validators/medidas/atualizar_medidas_item_pedido')
 const {ValidatorAtualizarMedidaCliente} = require('../validators/medidas/atualizar_medida_cliente')
 const {ValidatorDeletarMedidaCliente} = require('../validators/medidas/deletar_medida_cliente')
 class Medida{
@@ -19,7 +20,7 @@ class Medida{
         }
     }
 
-    formulário_cadastro_medidas_cliente_padrao(req,res){
+    formulario_cadastro_medidas_cliente_padrao(req,res){
         try {
             return res.render('addMedidaPadraoCliente',{
                 stylesheet:'addMedidaPadraoCliente.css',
@@ -32,7 +33,7 @@ class Medida{
         }
     }
 
-    async formulário_atualizar_medidas_cliente_padrao(req,res){
+    async formulario_atualizar_medidas_cliente_padrao(req,res){
         try {
             const medidas = await ServiceMedidaCliente.buscarMedidaPadraoPorId(req.params.id)
             return res.render('upMedidaPadraoCliente',{
@@ -47,7 +48,7 @@ class Medida{
         }
     }
 
-    async formulário_atualizar_medidas_cliente_sob_medida(req,res){
+    async formulario_atualizar_medidas_cliente_sob_medida(req,res){
         try {
             const medidas = await ServiceMedidaCliente.buscarMedidaSobMedidaPorId(req.params.id)
             return res.render('upMedidaSobMedidaCliente',{
@@ -157,6 +158,39 @@ class Medida{
         }
     }
 
+    async formulario_atualizar_medidas_sob_medida_item_pedido(req,res){
+        try {
+            const medida_id = req.params.id
+            const dados = await ServiceItemPedidoMedida.dados_formulario_atualizar(medida_id)
+            return res.render('upMedidaSobMedidaItemPedido',{
+                stylesheet:'upMedidaSobMedidaItemPedido.css',
+                script:'upMedidaSobMedidaItemPedido.js',
+                ...dados,
+                error:req.query.error || null,
+                msg: req.query.msg || null
+            })
+        } catch (error) {
+            return res.status(500).json({"Erro":`${error.message}`})
+        }
+    }
+
+    async formulario_atualizar_medidas_padrao_item_pedido(req,res){
+        try {
+            const medida_id = req.params.id
+            const dados = await ServiceItemPedidoMedida.dados_formulario_atualizar(medida_id)
+            // return res.send(dados)
+            return res.render('upMedidaPadraoItemPedido',{
+                stylesheet:'upMedidaPadraoItemPedido.css',
+                script:'upMedidaPadraoItemPedido.js',
+                ...dados,
+                error:req.query.error || null,
+                msg: req.query.msg || null
+            })
+        } catch (error) {
+            return res.status(500).json({"Erro":`${error.message}`})
+        }
+    }
+
     async cadastrar_medida_itemPedido(req,res){
         try {
             const dados = req.body
@@ -166,6 +200,20 @@ class Medida{
             }
             const cadastro = await ServiceItemPedidoMedida.cadastrar(dados)
             return res.json({"msg":"Cadastro com sucesso!"})
+        } catch (error) {
+            return res.status(500).json({"Erro":`${error.message}`})
+        }
+    }
+
+    async atualizar_medida_itemPedido(req,res){
+        try {
+            const dados = req.body
+            const validar_dados = await ValidatorAtualizarMedidaItemPedido(dados,res)
+            if(!validar_dados){
+                return
+            }
+            const atualizar = await ServiceItemPedidoMedida.atualizar(dados)
+            return res.json({"msg":"Medida Atualizada Com Sucesso!"})
         } catch (error) {
             return res.status(500).json({"Erro":`${error.message}`})
         }

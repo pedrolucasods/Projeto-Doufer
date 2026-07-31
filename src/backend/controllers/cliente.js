@@ -76,7 +76,7 @@ class Cliente{
     
     
 // formulario cadastrar cliente
-    formulário_cadastrar(req,res){
+    formulario_cadastrar(req,res){
         try {
             return res.render('addcliente',
                 {
@@ -91,7 +91,7 @@ class Cliente{
     }
 
     // formulario editar cliente
-    async formulário_editar(req,res){
+    async formulario_editar(req,res){
         try {
             let clienteId = req.params.id
             const cliente = await ClienteService.buscarCliente(clienteId)

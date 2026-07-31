@@ -8,7 +8,7 @@ const Item_pedido_medida = db.define('item_pedido_medidas', {
             model: "itens_pedidos",
             key: "id"
         },
-        onDelete: "CASCADe"
+        onDelete: "CASCADE"
     },
     tipo_medida: {
         type: DataTypes.ENUM('padrao', 'sob_medida'),
