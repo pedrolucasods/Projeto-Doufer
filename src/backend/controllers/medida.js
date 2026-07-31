@@ -20,7 +20,7 @@ class Medida{
         }
     }
 
-    formulário_cadastro_medidas_cliente_padrao(req,res){
+    formulario_cadastro_medidas_cliente_padrao(req,res){
         try {
             return res.render('addMedidaPadraoCliente',{
                 stylesheet:'addMedidaPadraoCliente.css',
@@ -33,7 +33,7 @@ class Medida{
         }
     }
 
-    async formulário_atualizar_medidas_cliente_padrao(req,res){
+    async formulario_atualizar_medidas_cliente_padrao(req,res){
         try {
             const medidas = await ServiceMedidaCliente.buscarMedidaPadraoPorId(req.params.id)
             return res.render('upMedidaPadraoCliente',{
@@ -48,7 +48,7 @@ class Medida{
         }
     }
 
-    async formulário_atualizar_medidas_cliente_sob_medida(req,res){
+    async formulario_atualizar_medidas_cliente_sob_medida(req,res){
         try {
             const medidas = await ServiceMedidaCliente.buscarMedidaSobMedidaPorId(req.params.id)
             return res.render('upMedidaSobMedidaCliente',{
@@ -153,6 +153,16 @@ class Medida{
                 error:req.query.error || null,
                 msg: req.query.msg || null
             })
+        } catch (error) {
+            return res.status(500).json({"Erro":`${error.message}`})
+        }
+    }
+
+    async formulario_atualizar_medidas_sob_medida_item_pedido(req,res){
+        try {
+            const medida_id = req.params.id
+            const dados = await ServiceItemPedidoMedida.dados_formulario_atualizar(medida_id)
+            return res.send(dados)
         } catch (error) {
             return res.status(500).json({"Erro":`${error.message}`})
         }

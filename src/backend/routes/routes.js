@@ -26,8 +26,8 @@ clientes.route('/')
 clientes.route('/:id')
     .put(controllers.clientes.editar)
     .delete(controllers.clientes.deletar)
-clientes.get('/cadastro', controllers.clientes.formulário_cadastrar)
-clientes.get('/editar/:id', controllers.clientes.formulário_editar)
+clientes.get('/cadastro', controllers.clientes.formulario_cadastrar)
+clientes.get('/editar/:id', controllers.clientes.formulario_editar)
 clientes.get('/detalhes/:id', controllers.clientes.detalhes)
 router.use('/clientes',clientes)
 
@@ -51,10 +51,10 @@ router.use('/itens-pedidos',itens_pedidos)
 
 // medidas
 medidas.get('/clientes', controllers.medida.formulario_cadastro_medidas_cliente_sob_medida)
-medidas.get('/clientes/padrao', controllers.medida.formulário_cadastro_medidas_cliente_padrao)
+medidas.get('/clientes/padrao', controllers.medida.formulario_cadastro_medidas_cliente_padrao)
 medidas.get('/clientes/listar/:id', controllers.medida.listar_medidas)
-medidas.get('/clientes/:id/padrao', controllers.medida.formulário_atualizar_medidas_cliente_padrao)
-medidas.get('/clientes/:id/SobMedida', controllers.medida.formulário_atualizar_medidas_cliente_sob_medida)
+medidas.get('/clientes/:id/padrao', controllers.medida.formulario_atualizar_medidas_cliente_padrao)
+medidas.get('/clientes/:id/SobMedida', controllers.medida.formulario_atualizar_medidas_cliente_sob_medida)
 medidas.post('/clientes', controllers.medida.cadastrar_medida_cliente)
 medidas.post('/itens-pedidos', controllers.medida.cadastrar_medida_itemPedido)
 medidas.put('/itens-pedidos', controllers.medida.atualizar_medida_itemPedido)
@@ -63,6 +63,9 @@ medidas.delete('/clientes', controllers.medida.deletar_medida_cliente)
 
 medidas.get('/itens-pedidos/:id/padrao', controllers.medida.formulario_cadastro_medidas_padrao_item_pedido)
 medidas.get('/itens-pedidos/:id/SobMedida', controllers.medida.formulario_cadastro_medidas_sob_medida_item_pedido)
+
+medidas.get('/itens-pedidos/:id/atualizar/SobMedida', controllers.medida.formulario_atualizar_medidas_sob_medida_item_pedido)
+
 router.use('/medidas',medidas)
 
 

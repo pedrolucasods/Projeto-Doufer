@@ -140,6 +140,65 @@ class ItemPedidoMedida{
         }
     }
 
+    async dados_formulario_atualizar(medida_id){
+        let dados = await sequelize.query(`
+            WITH TotalUsado AS(
+                SELECT
+                    item_pedido_id,
+                    COALESCE(SUM(quantidade),0) AS quantidade_usada
+                FROM item_pedido_medidas
+                GROUP BY item_pedido_id
+            )
+            SELECT
+                c.nome AS nome_cliente,
+                p.id AS pedido_id,
+                ip.produto AS produto,
+                ip.id AS item_id,
+                ipm.tipo_medida AS tipo_medida,
+                ipm.id AS vinculo_medida_id,
+                ip.quantidade - COALESCE(SUM(t.quantidade_usada),0) + ipm.quantidade AS quantidade_disponivel,
+                ipm.quantidade AS quantidade_medida,
+                CASE 
+                    WHEN ipm.tipo_medida = 'padrao' THEN 
+                        json_object(
+                            'sexo',mp.sexo,
+                            'tamanho',mp.tamanho,
+                            'ajuste',mp.ajuste
+                        )
+                    WHEN ipm.tipo_medida = 'sob_medida' THEN
+                        json_object(
+                            'sexo',msm.sexo,
+                            'busto',msm.busto,
+                            'cintura',msm.cintura,
+                            'quadril',msm.quadril,
+                            'comprimento',msm.comprimento,
+                            'ombro',msm.ombro,
+                            'costas',msm.costas,
+                            'comprimento_da_manga',msm.comprimento_da_manga,
+                            'largura_da_manga',msm.largura_da_manga
+                        ) 
+                END AS medidas
+                FROM item_pedido_medidas ipm
+                    LEFT JOIN medidas_padrao mp ON mp.item_pedido_medida_id = ipm.id
+                    LEFT JOIN medidas_sob_medidas msm ON msm.item_pedido_medida_id = ipm.id
+                    INNER JOIN itens_pedidos ip ON ipm.item_pedido_id = ip.id
+                    INNER JOIN TotalUsado t ON t.item_pedido_id = ip.id
+                    INNER JOIN pedidos p ON ip.id_pedido = p.id
+                    INNER JOIN clientes c ON p.cliente_id = c.id
+                WHERE 
+                    (ipm.tipo_medida = 'padrao' AND mp.id = :id)
+                    OR
+                    (ipm.tipo_medida = 'sob_medida' AND msm.id = :id)`,
+        {
+            replacements: {id:medida_id},
+            type: QueryTypes.SELECT,
+            plain: true
+        })
+
+        dados.medidas = JSON.parse(dados.medidas)
+        return dados
+    }
+
     async atualizar(dados){
         try {
             const dadosQuantidade = parseInt(dados.quantidade)
