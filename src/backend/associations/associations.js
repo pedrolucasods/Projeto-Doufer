@@ -1,4 +1,5 @@
 const cliente = require('../models/cliente')
+const funcionario = require('../models/funcionarios')
 const pedido = require('../models/pedidos')
 const itenspedidos = require('../models/itensPedidos')
 const pagamento = require('../models/pagamento')
@@ -106,3 +107,14 @@ MedidasPadrao.belongsTo(itenspedidos,{
     onDelete:'CASCADE'
 })
 
+cliente.hasMany(funcionario,{
+    foreignKey:"cliente_id",
+    as:"funcionarios",
+    onDelete:"CASCADE"
+})
+
+funcionario.belongsTo(cliente,{
+    foreignKey:"cliente_id",
+    as:"clientes",
+    onDelete:"CASCADE"
+})

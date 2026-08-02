@@ -1,7 +1,6 @@
 const {QueryTypes} = require('sequelize')
 const sequelize = require('../database')
 
-const cliente = require('../controllers/cliente')
 const modelCliente = require('../models/cliente')
 
 class ClienteService{
