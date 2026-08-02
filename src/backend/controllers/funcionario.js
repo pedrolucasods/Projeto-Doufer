@@ -1,4 +1,5 @@
 const FuncionarioService = require('../services/funcionario')
+const {ValidatorCadastroFuncionario} = require('../validators/funcionario/cadastro_funcionarios_validator')
 
 class Funcionario{
     async listar(req,res){
@@ -14,8 +15,20 @@ class Funcionario{
     }
 
     async cadastrar(req,res){
-        const dados = req.body
-        const validar_dados = 
+        try {
+            const dados = req.body
+            const validar_dados = await ValidatorCadastroFuncionario(dados,res)
+            if(!validar_dados){
+                return
+            }
+            const cadastro = await FuncionarioService.cadastrar(dados)
+            return res.json({
+                "msg":"Funcionario Cadastrado!"
+            }) 
+        } catch (error) {
+            return res.status(500).json({"Erro":`${error.message}`})
+        }
+        
     }
 }
 

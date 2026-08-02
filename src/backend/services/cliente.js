@@ -35,6 +35,18 @@ class ClienteService{
                 throw new Error('Cpf ja cadastrado!')
             }
         }
+
+        if(Dados.nome_empresa && tipo_cliente == 'empresa'){
+            const mesma_empresa = await modelCliente.findOne({
+                where:{
+                    nome_empresa:Dados.nome_empresa,
+                    tipo_cliente:"empresa"
+                }
+            })
+            if(mesma_empresa){
+                throw new Error("Empresa Já Cadastrada Com O Mesmo Nome!")
+            }
+        }
         return  modelCliente.create({
                     nome:Dados.nome,
                     telefone: Dados.telefone,
