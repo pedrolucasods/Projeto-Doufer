@@ -14,6 +14,18 @@ class Funcionario{
         }
     }
 
+    async buscar_funcionario(req,res){
+        try {
+            const funcionario = await FuncionarioService.buscar_funcionario_pelo_id(req.params.id)
+            if(!funcionario){
+                throw new Error("Funcionario Não Encontrado!")
+            }
+            return res.send(funcionario)
+        } catch (error) {
+            return res.redirect(`/funcionarios?error=${error.message}`)
+        }
+    }
+
     async cadastrar(req,res){
         try {
             const dados = req.body
@@ -29,6 +41,15 @@ class Funcionario{
             return res.status(500).json({"Erro":`${error.message}`})
         }
         
+    }
+
+    async deletar(req,res){
+        try {
+            const deletar = await FuncionarioService.deletar(req.params.id)
+            return res.json({"msg":"Funcionario Deletado!"})
+        } catch (error) {
+            return res.redirect(`/funcionarios?error=${error.message}`)
+        }
     }
 }
 

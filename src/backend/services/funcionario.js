@@ -8,6 +8,11 @@ class Funcionario{
         return funcionarios
     }
 
+    async buscar_funcionario_pelo_id(id){
+        const funcionario = await modelFuncionario.findOne({where:{id:id}})
+        return funcionario
+    }
+
     async buscar_funcionario_pelo_nome(nome){
         const funcionario = await modelFuncionario.findOne({
             where:{
@@ -36,6 +41,14 @@ class Funcionario{
         })
 
         return funcionario
+    }
+
+    async deletar(id){
+        const funcionario = await modelFuncionario.findOne({where:{id:id}})
+        if(!funcionario){
+            throw new Error("Funcionario Não Encontrado!")
+        }
+        return await funcionario.destroy()
     }
 }
 

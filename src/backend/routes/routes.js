@@ -38,6 +38,10 @@ funcionarios.route('/')
     .get(controllers.funcionarios.listar)
     .post(controllers.funcionarios.cadastrar)
 
+funcionarios.route('/:id')
+    .get(controllers.funcionarios.buscar_funcionario)
+    .delete(controllers.funcionarios.deletar)
+
 router.use('/funcionarios',funcionarios)
 
 // pedidos
