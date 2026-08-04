@@ -37,6 +37,7 @@ router.use('/clientes',clientes)
 funcionarios.route('/')
     .get(controllers.funcionarios.listar)
     .post(controllers.funcionarios.cadastrar)
+    .put(controllers.funcionarios.atualizar)
 
 funcionarios.route('/:id')
     .get(controllers.funcionarios.buscar_funcionario)

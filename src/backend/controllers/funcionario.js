@@ -1,5 +1,6 @@
 const FuncionarioService = require('../services/funcionario')
 const {ValidatorCadastroFuncionario} = require('../validators/funcionario/cadastro_funcionarios_validator')
+const {ValidatorAtualizarFuncionario} = require('../validators/funcionario/atualizar_funcionarios_validator')
 
 class Funcionario{
     async listar(req,res){
@@ -41,6 +42,22 @@ class Funcionario{
             return res.status(500).json({"Erro":`${error.message}`})
         }
         
+    }
+
+    async atualizar(req,res){
+        try {
+            const dados = req.body
+            const validar_dados = await ValidatorAtualizarFuncionario(dados,res)
+            if(!validar_dados){
+                return
+            }
+            const atualizar = await FuncionarioService.atualizar(dados)
+            return res.json({
+                "msg":`${atualizar.nome} foi Atualizado!`
+            })
+        } catch (error) {
+            return res.status(500).json({"Erro":`${error.message}`})
+        }
     }
 
     async deletar(req,res){

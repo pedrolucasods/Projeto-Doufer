@@ -36,7 +36,7 @@ class ClienteService{
             }
         }
 
-        if(Dados.nome_empresa && tipo_cliente == 'empresa'){
+        if(Dados.nome_empresa && Dados.tipo_cliente == 'empresa'){
             const mesma_empresa = await modelCliente.findOne({
                 where:{
                     nome_empresa:Dados.nome_empresa,
