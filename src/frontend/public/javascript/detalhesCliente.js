@@ -8,6 +8,14 @@ function pedidosCliente(id){
     window.location.href = `/pedidos/PedidosCliente/${id}`
 }
 
+function voltar(){
+    window.location.href = "/clientes"
+}
+
+function listarFuncionarios(id){
+    let cliente_id = sessionStorage.setItem('clienteId',id)
+    window.location.href = `/funcionarios/empresa/${id}`
+}
 
 function listarMedidas(id){
     let cliente_id = sessionStorage.setItem('clienteId',id)
