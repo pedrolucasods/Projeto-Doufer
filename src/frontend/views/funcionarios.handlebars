@@ -81,7 +81,7 @@
                                 <button class="btn btn-action btn-edit" onclick="editarFuncionario({{this.id}})" title="Editar Colaborador">
                                     <i class="fas fa-pen"></i>
                                 </button>
-                                <button class="btn btn-action btn-delete" onclick="abrirModalExcluir({{this.id}}, '{{this.nome}}')" title="Excluir Colaborador">
+                                <button class="btn btn-action btn-delete" data-bs-toggle="modal" data-bs-target="#modalExcluirFuncionario" onclick="abrirModalExcluir({{this.id}}, '{{this.nome}}')" title="Excluir Colaborador">
                                     <i class="far fa-trash-alt"></i>
                                 </button>
                             </div>
@@ -124,7 +124,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cancelar</button>
-                <button type="button" class="btn btn-danger" id="btn-confirmar-exclusao">Excluir</button>
+                <button type="button" class="btn btn-danger" id="btn-confirmar-exclusao" onclick="confirmarExclusao()">Excluir</button>
             </div>
         </div>
     </div>

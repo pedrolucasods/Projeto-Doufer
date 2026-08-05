@@ -45,7 +45,7 @@ class Pedido{
                 msg: req.query.msg || null})
 
         } catch (error) {
-            return res.status(500).json({"Erro":`${error}`})
+            return res.status(500).json({"erro":`${error}`})
         }
     }
 
@@ -111,7 +111,7 @@ class Pedido{
             }) 
         } catch (error) {
             console.log(error)
-            return res.status(500).json({"Erro":`${error.message}`})
+            return res.status(500).json({"erro":`${error.message}`})
         }
     }
 

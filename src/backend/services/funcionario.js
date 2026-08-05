@@ -58,7 +58,7 @@ class Funcionario{
 
         const funcionario_mesmo_nome = await this.buscar_funcionario_pelo_nome_e_clienteId(dados.nome,dados.cliente_id)
         if(funcionario_mesmo_nome){
-            throw new Error("Funcionario da Mesma Empresa com Mesmo Nome Encontrado!")
+            throw new Error("Funcionario com Mesmo Nome Encontrado!")
         }
 
         dados.telefone = dados.telefone.replace(/\D/g, '')

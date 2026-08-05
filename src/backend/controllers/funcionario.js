@@ -41,7 +41,7 @@ class Funcionario{
                 msg: req.query.msg || null
             })
         } catch (error) {
-            return res.redirect(`/funcionarios?error=${error.message}`)
+            return res.status(500).json({"erro":`${error.message}`})
         }
     }
 
@@ -57,7 +57,7 @@ class Funcionario{
                 "msg":`Funcionario Cadastrado Com Sucesso!`
             })
         } catch (error) {
-            return res.status(500).json({"Erro":`${error.message}`})
+            return res.status(500).json({"erro":`${error.message}`})
         }
         
     }
@@ -73,7 +73,7 @@ class Funcionario{
                 msg: req.query.msg || null
             })
         } catch (error) {
-            return res.status(500).json({"Erro":`${error.message}`})
+            return res.status(500).json({"erro":`${error.message}`})
         }
     }
 
@@ -89,7 +89,7 @@ class Funcionario{
                 "msg":`${atualizar.nome} foi Atualizado!`
             })
         } catch (error) {
-            return res.status(500).json({"Erro":`${error.message}`})
+            return res.status(500).json({"erro":`${error.message}`})
         }
     }
 
