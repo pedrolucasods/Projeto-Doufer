@@ -1,7 +1,6 @@
 const {QueryTypes} = require('sequelize')
 const sequelize = require('../database')
 
-const cliente = require('../controllers/cliente')
 const modelCliente = require('../models/cliente')
 
 class ClienteService{
@@ -34,6 +33,18 @@ class ClienteService{
             let cpfregister = await this.buscarCliente(Dados.cpf)
             if(cpfregister){
                 throw new Error('Cpf ja cadastrado!')
+            }
+        }
+
+        if(Dados.nome_empresa && Dados.tipo_cliente == 'empresa'){
+            const mesma_empresa = await modelCliente.findOne({
+                where:{
+                    nome_empresa:Dados.nome_empresa,
+                    tipo_cliente:"empresa"
+                }
+            })
+            if(mesma_empresa){
+                throw new Error("Empresa Já Cadastrada Com O Mesmo Nome!")
             }
         }
         return  modelCliente.create({
@@ -90,6 +101,7 @@ class ClienteService{
                 c.telefone,
                 c.cpf,
                 c.nome_empresa,
+                c.tipo_cliente,
                 COUNT(p.id) AS quantidade_pedidos
             FROM pedidos p
             RIGHT JOIN clientes c ON p.cliente_id = c.id

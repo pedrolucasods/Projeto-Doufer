@@ -16,7 +16,7 @@ class Medida{
                 msg: req.query.msg || null
             })
         } catch (error) {
-            res.status(500).json({"Erro":`${error}`})
+            res.status(500).json({"erro":`${error}`})
         }
     }
 
@@ -29,7 +29,7 @@ class Medida{
                 msg: req.query.msg || null
             })
         } catch (error) {
-            res.status(500).json({"Erro":`${error}`})
+            res.status(500).json({"erro":`${error}`})
         }
     }
 
@@ -44,7 +44,7 @@ class Medida{
                 msg: req.query.msg || null
             })
         } catch (error) {
-            res.status(500).json({"Erro":`${error.message}`})
+            res.status(500).json({"erro":`${error.message}`})
         }
     }
 
@@ -59,7 +59,7 @@ class Medida{
                 msg: req.query.msg || null
             })
         } catch (error) {
-            res.status(500).json({"Erro":`${error.message}`})
+            res.status(500).json({"erro":`${error.message}`})
         }
     }
 
@@ -123,7 +123,7 @@ class Medida{
                 msg: req.query.msg || null
             })
         } catch (error) {
-            return res.status(500).json({"Erro":`${error}`})
+            return res.status(500).json({"erro":`${error}`})
         }
     }
 
@@ -139,7 +139,7 @@ class Medida{
                 msg: req.query.msg || null
             })
         } catch (error) {
-            return res.status(500).json({"Erro":`${error.message}`})
+            return res.status(500).json({"erro":`${error.message}`})
         }
     }
     async formulario_cadastro_medidas_sob_medida_item_pedido(req,res){
@@ -154,7 +154,7 @@ class Medida{
                 msg: req.query.msg || null
             })
         } catch (error) {
-            return res.status(500).json({"Erro":`${error.message}`})
+            return res.status(500).json({"erro":`${error.message}`})
         }
     }
 
@@ -170,7 +170,7 @@ class Medida{
                 msg: req.query.msg || null
             })
         } catch (error) {
-            return res.status(500).json({"Erro":`${error.message}`})
+            return res.status(500).json({"erro":`${error.message}`})
         }
     }
 
@@ -187,7 +187,7 @@ class Medida{
                 msg: req.query.msg || null
             })
         } catch (error) {
-            return res.status(500).json({"Erro":`${error.message}`})
+            return res.status(500).json({"erro":`${error.message}`})
         }
     }
 
@@ -201,7 +201,7 @@ class Medida{
             const cadastro = await ServiceItemPedidoMedida.cadastrar(dados)
             return res.json({"msg":"Cadastro com sucesso!"})
         } catch (error) {
-            return res.status(500).json({"Erro":`${error.message}`})
+            return res.status(500).json({"erro":`${error.message}`})
         }
     }
 
@@ -215,7 +215,7 @@ class Medida{
             const atualizar = await ServiceItemPedidoMedida.atualizar(dados)
             return res.json({"msg":"Medida Atualizada Com Sucesso!"})
         } catch (error) {
-            return res.status(500).json({"Erro":`${error.message}`})
+            return res.status(500).json({"erro":`${error.message}`})
         }
     }
 }

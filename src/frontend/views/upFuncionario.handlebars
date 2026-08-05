@@ -1,0 +1,89 @@
+<!-- Botão Voltar Fixo -->
+<button id="back" type="button" onclick="voltar()" title="Voltar">
+    <i class="fas fa-arrow-left"></i>
+</button>
+
+<!-- Mensagens de Alerta (Toast) -->
+{{#if msg}}
+<div id="msg" class="d-flex gap-3 alert alert-success alert-dismissible fade show position-fixed">
+    <i class="bi bi-check-square-fill text-success"></i>
+    <p class="fw-bold mb-0">{{msg}}</p>
+</div>
+{{/if}}
+
+{{#if error}}
+<div id="errordiv" class="d-flex gap-3 alert alert-danger alert-dismissible fade show position-fixed">
+    <i class="bi bi-x-square-fill text-danger"></i>
+    <p class="fw-bold mb-0">{{error}}</p>
+</div>
+{{/if}}
+
+<div class="page-layout">
+    <div id="container-form">
+        
+        <!-- Cabeçalho do Formulário -->
+        <header class="form-header">
+            <div class="header-icon">
+                <i class="fas fa-user-plus"></i>
+            </div>
+            <div>
+                <h1 class="title-form">Atualização</h1>
+                <span class="subtitle-page">Preencha as informações para atualizar este funcionario!</span>
+            </div>
+        </header>
+
+        <!-- Formulário de Cadastro -->
+        <form id="form-cadastro">
+            <div class="form-body">
+                
+                <!-- Campo Nome -->
+                <div class="form-group">
+                    <label for="nome" class="form-label">
+                        <i class="fas fa-user"></i> Nome Completo
+                    </label>
+                    <div class="input-wrapper">
+                        <input 
+                            type="text" 
+                            id="nome" 
+                            name="nome" 
+                            class="form-control" 
+                            placeholder="Digite o nome completo"
+                            value="{{funcionario.nome}}"
+                            required
+                        />
+                    </div>
+                </div>
+
+                <!-- Campo Telefone -->
+                <div class="form-group">
+                    <label for="telefone" class="form-label">
+                        <i class="fas fa-phone-alt"></i> Telefone / WhatsApp
+                    </label>
+                    <div class="input-wrapper">
+                        <input 
+                            type="tel" 
+                            id="telefone" 
+                            name="telefone" 
+                            class="form-control" 
+                            placeholder="(00) 00000-0000"
+                            value="{{funcionario.telefone}}"
+                            required
+                        />
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Rodapé com Ações -->
+            <footer class="form-actions">
+                <button type="button" class="btn btn-cancel" onclick="voltar()">
+                    Cancelar
+                </button>
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-check me-2"></i> Atualizar
+                </button>
+            </footer>
+        </form>
+
+    </div>
+</div>

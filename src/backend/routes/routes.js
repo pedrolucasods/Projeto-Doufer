@@ -1,6 +1,7 @@
 const express = require('express')
 const home = express.Router()
 const clientes = express.Router()
+const funcionarios = express.Router()
 const pedidos = express.Router()
 const itens_pedidos = express.Router()
 const medidas = express.Router()
@@ -9,6 +10,7 @@ const controllers = require('../controllers/index')
 
 const ROUTES = {
     CLIENTES: '/clientes',
+    FUNCIONARIOS: '/funcionarios',
     PEDIDOS: '/pedidos',
     MEDIDAS: '/medidas',
     ITEM_PEDIDOS: '/itens-pedido'
@@ -31,6 +33,21 @@ clientes.get('/editar/:id', controllers.clientes.formulario_editar)
 clientes.get('/detalhes/:id', controllers.clientes.detalhes)
 router.use('/clientes',clientes)
 
+// funcionarios
+funcionarios.get("/empresa/:id",controllers.funcionarios.listar)
+
+funcionarios.route('/')
+    .post(controllers.funcionarios.cadastrar)
+    .put(controllers.funcionarios.atualizar)
+
+funcionarios.get('/cadastro',controllers.funcionarios.formulario_cadastrar_funcionario)
+funcionarios.get('/atualizar/:id',controllers.funcionarios.formulario_atualizar_funcionario)
+
+funcionarios.route('/:id')
+    .get(controllers.funcionarios.buscar_funcionario)
+    .delete(controllers.funcionarios.deletar)
+
+router.use('/funcionarios',funcionarios)
 
 // pedidos
 pedidos.route('/')

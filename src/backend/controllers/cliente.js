@@ -37,7 +37,7 @@ class Cliente{
             }) 
         
         } catch (error) {
-            return res.status(500).json({"Erro":`${error.message}`})
+            return res.status(500).json({"erro":`${error.message}`})
         }
     }
 
@@ -56,7 +56,7 @@ class Cliente{
                 "msg":"Cliente editado!"
             }) 
         } catch (error) {
-            return res.status(500).json({"Erro":`${error.message}`})
+            return res.status(500).json({"erro":`${error.message}`})
         }
     }
 
@@ -69,7 +69,7 @@ class Cliente{
                 "msg":"Cliente deletado!"
             }) 
         } catch (error) {
-            return res.status(500).json({"Erro":`${error.message}`})
+            return res.status(500).json({"erro":`${error.message}`})
         }
     }
 

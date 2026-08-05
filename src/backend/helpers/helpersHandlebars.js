@@ -43,6 +43,19 @@ class Helpers{
         return dataBrail
     }
 
+    telefone(telefone_grudado){
+        let telefone_formatado = ''
+        if(!telefone_grudado) return '-'
+        if(telefone_grudado.length == 10){
+            const t = telefone_grudado
+            telefone_formatado = `(${t[0]}${t[1]}) ${t[2]}${t[3]}${t[4]}${t[5]}-${t[6]}${t[7]}${t[8]}${t[9]}`
+        }else{
+            const t = telefone_grudado
+            telefone_formatado = `(${t[0]}${t[1]}) ${t[2]}${t[3]}${t[4]}${t[5]}${t[6]}-${t[7]}${t[8]}${t[9]}${t[10]}`
+        }
+        return telefone_formatado
+    }
+
     subtrair(a,b){
         if(b>0){
             return  parseInt(a)-parseInt(b)
@@ -67,6 +80,7 @@ const objectHelper = {  // adicionado helpers para eq e outros
         json: (context) => helpersInstance.json(context),
         mostrar: (valor) => helpersInstance.mostrar(valor),
         data_brasileira: (dataUSA) => helpersInstance.data_brasileira(dataUSA),
+        telefone:(telefone_grudado) => helpersInstance.telefone(telefone_grudado),
         subtrair: (a,b)=> helpersInstance.subtrair(a,b)
     }
 module.exports = objectHelper
