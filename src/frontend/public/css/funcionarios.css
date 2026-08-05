@@ -84,6 +84,41 @@ body {
     border-bottom: 1px solid var(--border-light);
 }
 
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.search-funcionario-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: #f8fafc;
+    border: 1px solid var(--border-light);
+    border-radius: 10px;
+    padding: 0.7rem 0.9rem;
+    min-width: 260px;
+}
+
+.search-icon {
+    color: var(--text-muted);
+}
+
+.search-funcionario-input {
+    border: none;
+    background: transparent;
+    outline: none;
+    width: 100%;
+    color: var(--text-dark);
+    font-size: 0.95rem;
+}
+
+.search-funcionario-input::placeholder {
+    color: #94a3b8;
+}
+
 .header-main-info {
     display: flex;
     align-items: center;
@@ -336,6 +371,17 @@ body {
     .page-header-empresa {
         flex-direction: column;
         align-items: flex-start;
+    }
+
+    .header-actions {
+        width: 100%;
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .search-funcionario-wrapper {
+        width: 100%;
+        min-width: auto;
     }
 
     .btn-add-funcionario {

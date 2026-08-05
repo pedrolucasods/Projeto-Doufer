@@ -33,18 +33,24 @@
                 </div>
             </div>
 
-            <!-- Botão para Cadastrar Novo Funcionário -->
-            <button class="btn btn-primary btn-add-funcionario" onclick="cadastrarFuncionario()">
-                <i class="fas fa-user-plus"></i> Novo Funcionário
-            </button>
+            <div class="header-actions">
+                <div class="search-funcionario-wrapper">
+                    <i class="fas fa-search search-icon"></i>
+                    <input type="text" id="search-funcionario" class="search-funcionario-input" placeholder="Pesquisar por nome ou ID">
+                </div>
+
+                <button class="btn btn-primary btn-add-funcionario" onclick="cadastrarFuncionario()">
+                    <i class="fas fa-user-plus"></i> Novo Funcionário
+                </button>
+            </div>
         </header>
 
         <!-- Grid de Funcionários -->
         <main class="content-funcionarios">
             {{#if funcionarios.length}}
-                <div class="grid-funcionarios">
+                <div class="grid-funcionarios" id="grid-funcionarios">
                     {{#each funcionarios}}
-                    <article class="card-funcionario">
+                    <article class="card-funcionario" data-nome="{{this.nome}}" data-id="{{this.id}}">
                         
                         <!-- Topo do Card com Info do Colaborador -->
                         <div class="funcionario-header">
@@ -89,6 +95,14 @@
 
                     </article>
                     {{/each}}
+                </div>
+
+                <div id="empty-state-search" class="empty-state search-empty-state" style="display: none;">
+                    <div class="empty-icon">
+                        <i class="fas fa-search"></i>
+                    </div>
+                    <h3>Nenhum funcionário encontrado</h3>
+                    <p>Tente pesquisar por outro nome ou ID.</p>
                 </div>
             {{else}}
                 <!-- Estado Vazio (Sem funcionários cadastrados) -->
