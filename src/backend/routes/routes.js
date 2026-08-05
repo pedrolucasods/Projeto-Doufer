@@ -34,8 +34,9 @@ clientes.get('/detalhes/:id', controllers.clientes.detalhes)
 router.use('/clientes',clientes)
 
 // funcionarios
+funcionarios.get("/empresa/:id",controllers.funcionarios.listar)
+
 funcionarios.route('/')
-    .get(controllers.funcionarios.listar)
     .post(controllers.funcionarios.cadastrar)
     .put(controllers.funcionarios.atualizar)
 

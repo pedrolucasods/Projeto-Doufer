@@ -5,11 +5,16 @@ const {ValidatorAtualizarFuncionario} = require('../validators/funcionario/atual
 class Funcionario{
     async listar(req,res){
         try {
-            const funcionarios = await FuncionarioService.listar()
-            if(funcionarios.length == 0){
-                throw new Error("Sem Funcionarios!")
-            }
-            return res.send(funcionarios)
+            const cliente_id = req.params.id
+            const funcionarios = await FuncionarioService.listar(cliente_id)
+            // return res.send(funcionarios)
+            return res.render('funcionarios',{
+                stylesheet:'funcionarios.css',
+                script:'funcionarios.js',
+                ...funcionarios,
+                error:req.query.error || null,
+                msg: req.query.msg || null
+            })
         } catch (error) {
             return res.redirect(`/clientes?error=${error.message}`)
         }

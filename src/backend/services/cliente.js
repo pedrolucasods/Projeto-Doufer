@@ -101,6 +101,7 @@ class ClienteService{
                 c.telefone,
                 c.cpf,
                 c.nome_empresa,
+                c.tipo_cliente,
                 COUNT(p.id) AS quantidade_pedidos
             FROM pedidos p
             RIGHT JOIN clientes c ON p.cliente_id = c.id

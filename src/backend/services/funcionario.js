@@ -3,9 +3,33 @@ const sequelize = require('../database')
 const modelFuncionario = require('../models/funcionarios')
 const ClienteService = require('./cliente')
 class Funcionario{
-    async listar(){
-        const funcionarios = await modelFuncionario.findAll()
-        return funcionarios
+    async listar(cliente_id){
+        const cliente = await ClienteService.buscarCliente(cliente_id)
+        if(!cliente || cliente.tipo_cliente != "empresa"){
+            throw new Error("Empresa Não Encontrada!")
+        }
+        // const funcios = await modelFuncionario.findAll({where:{cliente_id:cliente.id}})
+        let dados = await sequelize.query(`
+            SELECT
+                c.nome_empresa,
+                JSON_GROUP_ARRAY(
+                    JSON_OBJECT(
+                        'id',f.id,
+                        'nome',f.nome,
+                        'telefone',f.telefone
+                    )
+                ) AS funcionarios
+            FROM funcionarios f
+            INNER JOIN clientes c ON f.cliente_id = c.id
+            WHERE c.id = :id;
+        `,{
+            replacements:{id:cliente.id},
+            type:QueryTypes.SELECT,
+            plain:true
+        })
+
+        dados.funcionarios = JSON.parse(dados.funcionarios)
+        return dados
     }
 
     async buscar_funcionario_pelo_id(id){

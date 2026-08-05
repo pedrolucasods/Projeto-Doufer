@@ -1,0 +1,131 @@
+<!-- Botão Voltar Fixo -->
+<button id="back" type="button" onclick="voltar()" title="Voltar">
+    <i class="fas fa-arrow-left"></i>
+</button>
+
+<!-- Mensagens de Alerta (Toast) -->
+{{#if msg}}
+<div id="msg" class="d-flex gap-3 alert alert-success alert-dismissible fade show position-fixed">
+    <i class="bi bi-check-square-fill text-success"></i>
+    <p class="fw-bold mb-0">{{msg}}</p>
+</div>
+{{/if}}
+
+{{#if error}}
+<div id="errordiv" class="d-flex gap-3 alert alert-danger alert-dismissible fade show position-fixed">
+    <i class="bi bi-x-square-fill text-danger"></i>
+    <p class="fw-bold mb-0">{{error}}</p>
+</div>
+{{/if}}
+
+<div class="page-layout">
+    <div id="container-funcionarios">
+        
+        <!-- Cabeçalho Principal -->
+        <header class="page-header-empresa">
+            <div class="header-main-info">
+                <div class="empresa-avatar">
+                    <i class="fas fa-building"></i>
+                </div>
+                <div>
+                    <h1 class="title-empresa">{{nome_empresa}}</h1>
+                    <span class="subtitle-page">Gestão e consulta de colaboradores cadastrados</span>
+                </div>
+            </div>
+
+            <!-- Botão para Cadastrar Novo Funcionário -->
+            <button class="btn btn-primary btn-add-funcionario" onclick="cadastrarFuncionario()">
+                <i class="fas fa-user-plus"></i> Novo Funcionário
+            </button>
+        </header>
+
+        <!-- Grid de Funcionários -->
+        <main class="content-funcionarios">
+            {{#if funcionarios.length}}
+                <div class="grid-funcionarios">
+                    {{#each funcionarios}}
+                    <article class="card-funcionario">
+                        
+                        <!-- Topo do Card com Info do Colaborador -->
+                        <div class="funcionario-header">
+                            <div class="funcionario-avatar">
+                                <i class="fas fa-user"></i>
+                            </div>
+                            <div class="funcionario-info">
+                                <h3 class="funcionario-nome">{{this.nome}}</h3>
+                                <span class="funcionario-id">ID: #{{this.id}}</span>
+                            </div>
+                        </div>
+
+                        <!-- Dados do Colaborador -->
+                        <div class="funcionario-body">
+                            <div class="campo-detalhe">
+                                <span class="label-detalhe"><i class="fas fa-phone-alt"></i> Telefone</span>
+                                <span class="value-detalhe">
+                                    {{#if this.telefone}}
+                                        {{this.telefone}}
+                                    {{else}}
+                                        <span class="text-muted">Não informado</span>
+                                    {{/if}}
+                                </span>
+                            </div>
+                        </div>
+
+                        <!-- Rodapé do Card com Ações Solicitadas -->
+                        <footer class="funcionario-actions">
+                            <button class="btn btn-action btn-medidas" onclick="verMedidas({{this.id}})" title="Medidas do Funcionário">
+                                <i class="fas fa-ruler-combined"></i> Medidas
+                            </button>
+                            
+                            <div class="actions-group-right">
+                                <button class="btn btn-action btn-edit" onclick="editarFuncionario({{this.id}})" title="Editar Colaborador">
+                                    <i class="fas fa-pen"></i>
+                                </button>
+                                <button class="btn btn-action btn-delete" onclick="abrirModalExcluir({{this.id}}, '{{this.nome}}')" title="Excluir Colaborador">
+                                    <i class="far fa-trash-alt"></i>
+                                </button>
+                            </div>
+                        </footer>
+
+                    </article>
+                    {{/each}}
+                </div>
+            {{else}}
+                <!-- Estado Vazio (Sem funcionários cadastrados) -->
+                <div class="empty-state">
+                    <div class="empty-icon">
+                        <i class="fas fa-users-slash"></i>
+                    </div>
+                    <h3>Nenhum funcionário cadastrado</h3>
+                    <p>Esta empresa ainda não possui colaboradores vinculados.</p>
+                    <button class="btn btn-primary" onclick="cadastrarFuncionario()">
+                        <i class="fas fa-plus"></i> Cadastrar Primeiro Funcionário
+                    </button>
+                </div>
+            {{/if}}
+        </main>
+
+    </div>
+</div>
+
+<!-- Modal de Confirmação de Exclusão -->
+<div class="modal fade" id="modalExcluirFuncionario" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content delete-modal">
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    <i class="fas fa-exclamation-triangle text-warning me-2"></i> Excluir Funcionário
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p class="mb-1">Tem certeza que deseja remover o colaborador <strong id="modal-nome-funcionario"></strong>?</p>
+                <small class="text-muted">Todas as medidas e dados vinculados a este funcionário serão removidos.</small>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-danger" id="btn-confirmar-exclusao">Excluir</button>
+            </div>
+        </div>
+    </div>
+</div>
