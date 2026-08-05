@@ -62,6 +62,21 @@ class Funcionario{
         
     }
 
+    async formulario_atualizar_funcionario(req,res){
+        try {
+            const funcionario = await FuncionarioService.buscar_funcionario_pelo_id(req.params.id)
+            return res.render('upFuncionario',{
+                stylesheet:'upFuncionario.css',
+                script:'upFuncionario.js',
+                funcionario,
+                error:req.query.error || null,
+                msg: req.query.msg || null
+            })
+        } catch (error) {
+            return res.status(500).json({"Erro":`${error.message}`})
+        }
+    }
+
     async atualizar(req,res){
         try {
             const dados = req.body

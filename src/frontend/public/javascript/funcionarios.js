@@ -7,6 +7,11 @@ function cadastrarFuncionario(){
     window.location.href = `/funcionarios/cadastro`
 }
 
+function editarFuncionario(id){
+    const funcionario_id = sessionStorage.setItem("funcionarioId",id)
+    window.location.href = `/funcionarios/atualizar/${id}`
+}
+
 setTimeout(() =>{
     const msg = document.getElementById('msg')
     msg.classList.add("fade")

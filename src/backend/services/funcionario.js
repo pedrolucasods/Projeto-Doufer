@@ -34,6 +34,9 @@ class Funcionario{
 
     async buscar_funcionario_pelo_id(id){
         const funcionario = await modelFuncionario.findOne({where:{id:id}})
+        if(!funcionario){
+            throw new Error("Funcionario Não Encontrado!")
+        }
         return funcionario
     }
 
