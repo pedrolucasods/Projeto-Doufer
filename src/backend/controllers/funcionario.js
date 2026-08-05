@@ -32,6 +32,19 @@ class Funcionario{
         }
     }
 
+    async formulario_cadastrar_funcionario(req,res){
+        try {
+            return res.render('addFuncionario',{
+                stylesheet:'addFuncionario.css',
+                script:'addFuncionario.js',
+                error:req.query.error || null,
+                msg: req.query.msg || null
+            })
+        } catch (error) {
+            return res.redirect(`/funcionarios?error=${error.message}`)
+        }
+    }
+
     async cadastrar(req,res){
         try {
             const dados = req.body
@@ -41,8 +54,8 @@ class Funcionario{
             }
             const cadastro = await FuncionarioService.cadastrar(dados)
             return res.json({
-                "msg":"Funcionario Cadastrado!"
-            }) 
+                "msg":`Funcionario Cadastrado Com Sucesso!`
+            })
         } catch (error) {
             return res.status(500).json({"Erro":`${error.message}`})
         }

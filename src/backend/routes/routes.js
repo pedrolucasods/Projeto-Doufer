@@ -40,6 +40,8 @@ funcionarios.route('/')
     .post(controllers.funcionarios.cadastrar)
     .put(controllers.funcionarios.atualizar)
 
+funcionarios.get('/cadastro',controllers.funcionarios.formulario_cadastrar_funcionario)
+
 funcionarios.route('/:id')
     .get(controllers.funcionarios.buscar_funcionario)
     .delete(controllers.funcionarios.deletar)
