@@ -1,3 +1,5 @@
+const cliente = require("../../../backend/services/cliente")
+
 const newpedidobtn = document.getElementById('newpedido')
 let idDeletarPedido = null
 let idEditarPedido = null
@@ -47,6 +49,7 @@ function detalhesPedido(id){
     window.location.href = `/pedidos/detalhes/${id}`
 }
 
-function voltar(cliente_id){
+function voltar(){
+    const cliente_id = sessionStorage.getItem('clienteId')
     window.location.href = `/clientes/detalhes/${cliente_id}`
 }
