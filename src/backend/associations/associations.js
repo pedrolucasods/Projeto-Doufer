@@ -7,6 +7,7 @@ const itempedido_medida = require('../models/item_pedido_medida')
 const MedidasPadrao = require('../models/medidas_padrao')
 const MedidasSobMedida = require('../models/medidas_sob_medida')
 const MedidaSobMedidaMasculina = require('../models/medida_sob_medida_masculina')
+const MedidaSobMedidaFeminina = require('../models/medida_sob_medida_feminina')
 
 cliente.hasMany(pedido,{
     foreignKey:'cliente_id',
@@ -95,6 +96,18 @@ MedidasPadrao.belongsTo(cliente,{
     onDelete:'CASCADE'
 })
 
+funcionario.hasMany(MedidasPadrao,{
+    foreignKey:'funcionario_id',
+    as:'medidas_padrao_funcionario',
+    onDelete:'CASCADE'
+})
+
+MedidasPadrao.belongsTo(funcionario,{
+    foreignKey:'funcionario_id',
+    as:'funcionarios',
+    onDelete:'CASCADE'
+})
+
 
 itempedido_medida.hasMany(MedidasPadrao,{
     foreignKey:'item_pedido_medida_id',
@@ -151,6 +164,42 @@ itempedido_medida.hasMany(MedidaSobMedidaMasculina,{
 })
 
 MedidaSobMedidaMasculina.belongsTo(itenspedidos,{
+    foreignKey:'item_pedido_medida_id',
+    as:'itens_medidas',
+    onDelete:'CASCADE'
+})
+
+cliente.hasMany(MedidaSobMedidaFeminina,{
+    foreignKey:'cliente_id',
+    as:'medida_sob_medidas_femininas',
+    onDelete:'CASCADE'
+})
+
+MedidaSobMedidaFeminina.belongsTo(cliente,{
+    foreignKey:'cliente_id',
+    as:'clientes',
+    onDelete:'CASCADE'
+})
+
+funcionario.hasMany(MedidaSobMedidaFeminina,{
+    foreignKey:'funcionario_id',
+    as:'medida_sob_medidas_femininas',
+    onDelete:'CASCADE'
+})
+
+MedidaSobMedidaFeminina.belongsTo(funcionario,{
+    foreignKey:'funcionario_id',
+    as:'funcionarios',
+    onDelete:'CASCADE'
+})
+
+itempedido_medida.hasMany(MedidaSobMedidaFeminina,{
+    foreignKey:'item_pedido_medida_id',
+    as:'medida_sob_medidas_femininas',
+    onDelete:'CASCADE'
+})
+
+MedidaSobMedidaFeminina.belongsTo(itenspedidos,{
     foreignKey:'item_pedido_medida_id',
     as:'itens_medidas',
     onDelete:'CASCADE'
