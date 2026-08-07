@@ -159,33 +159,17 @@ class MedidasCliente {
         return medidas
     }
     
-
-    // continuar daqui
-    buscarMedidaPadraoPorCliente(clienteId){
-        let medidaPadrao = ServiceMedidaPadrao.buscaPorClienteId(clienteId)
-        return medidaPadrao
-    }
-    buscarMedidaPadraoPorId(medidaId){
-        let medidaPadrao = ServiceMedidaPadrao.buscarporMedidaPadraoId(medidaId)
-        if(!medidaPadrao){
-            throw new Error('Medida não encontrada!')
-        }
-        return medidaPadrao
+    buscarMedidaPorClienteId(dados){
+        const handler = this.obterHandler(dados)
+        const medida = await handler.buscarMedidaPorClienteId(dados.cliente_id)
+        return medida
     }
 
-    buscarMedidaSobMedidaPorCliente(clienteId){
-        let medidaSobMedida = ServiceMedidaSobMedida.buscarMedidaPorClienteId(clienteId)
-        return medidaSobMedida
+    buscarMedidaPorId(dados){
+        const handler = this.obterHandler(dados)
+        const medida = await handler.buscarMedidaPorId(dados.medida_id)
+        return medida
     }
-    
-    buscarMedidaSobMedidaPorId(medidaId){
-        let medidaSobMedida = ServiceMedidaSobMedida.buscarMedidaPorId(medidaId)
-        if(!medidaSobMedida){
-            throw new Error('Medida não encontrada!')
-        }
-        return medidaSobMedida
-    }
-
 
 }
 

@@ -92,7 +92,7 @@ class MedidaPadrao {
         return ModelmedidasPadrao.findOne({where:{id:id,item_pedido_medida_id:itemMedidaId}})
     }
 
-    buscarporMedidaId(medidaPadrao_id){
+    buscarMedidaPorId(medidaPadrao_id){
         return ModelmedidasPadrao.findOne({where:{id:medidaPadrao_id}})
     }
 
