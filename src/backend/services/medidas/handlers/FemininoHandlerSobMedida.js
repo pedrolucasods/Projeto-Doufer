@@ -1,4 +1,4 @@
-const modelMedidaSobMedida = require('../models/medidas_sob_medida')
+const modelMedidaSobMedidaFeminina = require('../../../models/medida_sob_medida_feminina')
 const ServiceCliente = require('./cliente')
 
 class MedidaSobMedida {
@@ -10,9 +10,8 @@ class MedidaSobMedida {
                 if(medidaExistente){
                     throw new Error('Este cliente já tem tamanho Sob Medida Registrado!')
                 }
-                return modelMedidaSobMedida.create({
+                return modelMedidaSobMedidaFeminina.create({
                     cliente_id: dados.cliente_id,
-                    sexo:dados.sexo,
                     busto: dados.busto,
                     cintura:dados.cintura,
                     quadril:dados.quadril,
@@ -23,9 +22,8 @@ class MedidaSobMedida {
                     largura_da_manga:dados.largura_da_manga
                 })
             }else{
-                return modelMedidaSobMedida.create({
+                return modelMedidaSobMedidaFeminina.create({
                     item_pedido_medida_id: dados.item_medida_id,
-                    sexo:dados.sexo,
                     busto: dados.busto,
                     cintura:dados.cintura,
                     quadril:dados.quadril,
@@ -50,7 +48,6 @@ class MedidaSobMedida {
                     throw new Error('Medida não encontrada!')
                 }
                 return buscaMedida.update({
-                    sexo:dados.sexo,
                     busto: dados.busto,
                     cintura:dados.cintura,
                     quadril:dados.quadril,
@@ -67,7 +64,6 @@ class MedidaSobMedida {
                     throw new Error('Medida não encontrada!')
                 }
                 return buscaMedida.update({
-                    sexo:dados.sexo,
                     busto: dados.busto,
                     cintura:dados.cintura,
                     quadril:dados.quadril,
@@ -107,19 +103,25 @@ class MedidaSobMedida {
     }
 
     buscarMedidaPorClienteId(id) {
-        return modelMedidaSobMedida.findOne({ where: { cliente_id: id } })
+        return modelMedidaSobMedidaFeminina.findOne({ where: { cliente_id: id } })
     }
 
     buscarPorItemPedidoMedidaIdEMedidaId(id,itemMedidaId){
-        return modelMedidaSobMedida.findOne({where:{id:id,item_pedido_medida_id:itemMedidaId}})
+        return modelMedidaSobMedidaFeminina.findOne({where:{id:id,item_pedido_medida_id:itemMedidaId}})
+    }
+
+    buscarMedidaPorId(id) {
+        return modelMedidaSobMedidaFeminina.findOne({ where: { id: id } })
     }
 
     buscarMedidaPorItemPedidoId(id) {
-        return modelMedidaSobMedida.findOne({ where: { item_pedido_medida_id: id } })
+        return modelMedidaSobMedidaFeminina.findOne({ where: { item_pedido_medida_id: id } })
     }
-    buscarMedidaPorId(id) {
-        return modelMedidaSobMedida.findOne({ where: { id: id } })
+
+    buscarporMedidaIdEClienteId(medidaPadrao_id,cliente_id){
+        return modelMedidaSobMedidaFeminina.findOne({where:{id:medidaPadrao_id,cliente_id:cliente_id}})
     }
+    
 }
 
 module.exports = new MedidaSobMedida()
