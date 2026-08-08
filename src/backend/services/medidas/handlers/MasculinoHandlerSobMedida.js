@@ -1,5 +1,5 @@
 const modelMedidaSobMedidaFeminina = require('../../../models/medida_sob_medida_feminina')
-const ServiceCliente = require('./cliente')
+const ServiceCliente = require('../../cliente')
 
 class MedidaSobMedida {
     async cadastrar(dados) {

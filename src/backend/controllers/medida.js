@@ -1,5 +1,6 @@
 const ServiceItemPedidoMedida = require('../services/item_pedido_medida')
 const ServiceMedidaCliente = require('../services/medidas_cliente')
+const ServiceMedidaClienteTeste = require('../services/medidas/medidas_clientes')
 const ServiceCliente = require('../services/cliente')
 const {ValidatorCadastroMedidaCliente} = require('../validators/medidas/cadastro_medidas_cliente')
 const {ValidadorCadastroMedidaItemPedido} = require('../validators/medidas/cadastro_medidas_item_pedido')
@@ -22,9 +23,9 @@ class Medida{
 
     formulario_cadastro_medidas_cliente_padrao(req,res){
         try {
-            return res.render('addMedidaPadraoCliente',{
-                stylesheet:'addMedidaPadraoCliente.css',
-                script:'addMedidaPadraoCliente.js',
+            return res.render('./medidas/cliente/padrao/form_cadastro_padrao',{
+                stylesheet:'./medidas/cliente/padrao/form_cadastro_padrao.css',
+                script:'./medidas/cliente/padrao/form_cadastro_padrao.js',
                 error:req.query.error || null,
                 msg: req.query.msg || null
             })
@@ -35,10 +36,11 @@ class Medida{
 
     async formulario_atualizar_medidas_cliente_padrao(req,res){
         try {
-            const medidas = await ServiceMedidaCliente.buscarMedidaPadraoPorId(req.params.id)
-            return res.render('upMedidaPadraoCliente',{
-                stylesheet:'upMedidaPadraoCliente.css',
-                script:'upMedidaPadraoCliente.js',
+            const dados = {tipo_medida:"padrao",medida_id:req.params.id}
+            const medidas = await ServiceMedidaClienteTeste.buscarMedidaPorId(dados)
+            return res.render('./medidas/cliente/padrao/form_atualizar_padrao',{
+                stylesheet:'./medidas/cliente/padrao/form_atualizar_padrao.css',
+                script:'./medidas/cliente/padrao/form_atualizar_padrao.js',
                 medidas,
                 error:req.query.error || null,
                 msg: req.query.msg || null
@@ -70,7 +72,7 @@ class Medida{
             if(!validar_dados){
                 return
             }
-            const cadastroMedidas = await ServiceMedidaCliente.cadastrar_medidas(dados)
+            const cadastroMedidas = await ServiceMedidaClienteTeste.cadastrar_medidas(dados)
             if(!cadastroMedidas){
                 throw new Error(`Falha ao cadastrar medida!`)
             }
@@ -87,7 +89,7 @@ class Medida{
             if(!validar_dados){
                 return
             }
-            const atualizarMedidas = await ServiceMedidaCliente.atualizar(dados)
+            const atualizarMedidas = await ServiceMedidaClienteTeste.atualizar(dados)
             if(!atualizarMedidas){
                 throw new Error(`Falha ao cadastrar medida!`)
             }
@@ -104,7 +106,7 @@ class Medida{
             if(!validar_dados){
                 return
             }
-            const deletarMedida = await ServiceMedidaCliente.deletar(dados)
+            const deletarMedida = await ServiceMedidaClienteTeste.deletar(dados)
             return res.json({'msg':'Medida deletada com sucesso!'})
         } catch (error) {
             return res.status(500).json({"erro":`${error.message}`})

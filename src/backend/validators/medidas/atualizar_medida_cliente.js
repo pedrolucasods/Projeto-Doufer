@@ -14,7 +14,7 @@ function ValidatorAtualizarMedidaCliente(Dados, res) {
         const valores_tamanho_padrao = ['','P','PP','M','G','GG','EXG','SEGUIR MEDIDA']
         const sexos = ['masculino','feminino']
         if (
-            !campos_medidas.includes('medidaPadrao_id') ||
+            !campos_medidas.includes('medida_id') ||
             !campos_medidas.includes('cliente_id') ||
             !campos_medidas.includes('sexo') ||
             !campos_medidas.includes('tamanho') ||
@@ -37,7 +37,7 @@ function ValidatorAtualizarMedidaCliente(Dados, res) {
             return false
         }
         if (
-            !campos_medidas.includes('medidaSobMedida_id') ||
+            !campos_medidas.includes('medida_id') ||
             !campos_medidas.includes('sexo') ||
             !campos_medidas.includes('cliente_id') ||
             !campos_medidas.includes('busto') ||

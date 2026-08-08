@@ -36,7 +36,7 @@ class MedidaPadrao {
     async atualizar(dados){
         try {
             if(dados.cliente_id) {
-                const buscaMedida = await this.buscarporMedidaId(dados.medidaPadrao_id)
+                const buscaMedida = await this.buscarMedidaPorId(dados.medida_id)
                 if(!buscaMedida || buscaMedida.cliente_id != dados.cliente_id){
                     throw new Error('Medida não encontrada!')
                 }
@@ -64,7 +64,7 @@ class MedidaPadrao {
 
     async deletar(dados){
         try {
-            const buscaMedida = await this.buscarporMedidaId(dados.medida_id)
+            const buscaMedida = await this.buscarMedidaPorId(dados.medida_id)
             if(!buscaMedida){
                 throw new Error('Medida não encontrada!')
             }

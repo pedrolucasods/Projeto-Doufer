@@ -1,19 +1,12 @@
 const {QueryTypes} = require('sequelize')
-const sequelize = require('../database')
-
-const ServiceMedidaPadrao = require('./medidaspadrao')
-const ServiceMedidaSobMedida = require('./medidassobmedida')
+const sequelize = require('../../database')
 
 const medidaPadraoHandler = require('./handlers/MedidaPadraoHandler')
 const medidaSobMedidaFemininaHandler = require('./handlers/FemininoHandlerSobMedida')
 const medidaSobMedidaMasculinaHandler = require('./handlers/MasculinoHandlerSobMedida')
 
 class MedidasCliente {
-    constructor(
-        medidaPadraoHandler,
-        medidaSobMedidaFemininaHandler,
-        medidaSobMedidaMasculinaHandler
-    ){
+    constructor(){
         this.medidaPadraoHandler = medidaPadraoHandler
         this.medidaSobMedidaFemininaHandler = medidaSobMedidaFemininaHandler
         this.medidaSobMedidaMasculinaHandler = medidaSobMedidaMasculinaHandler
@@ -36,16 +29,7 @@ class MedidasCliente {
     async cadastrar_medidas(dados) {
         try {
             const handler = this.obterHandler(dados)
-            return await handler.cadastrar(dados)
-
-            // const infoMedidas = dados.medidas[0]
-            // if (dados.tipo_medida == 'padrao') {
-            //     const cadMedidaPadrao = await ServiceMedidaPadrao.cadastrar(infoMedidas)
-            //     return cadMedidaPadrao
-            // } else if (dados.tipo_medida == 'sob_medida') {
-            //     const cadMedidaSobMedida = await ServiceMedidaSobMedida.cadastrar(infoMedidas)
-            //     return cadMedidaSobMedida
-            // }
+            return await handler.cadastrar(dados.medidas[0])
         } catch (error) {
             throw new Error(`${error.message}`)
         }
@@ -54,21 +38,8 @@ class MedidasCliente {
     
     async atualizar(dados){
         try {
-            const infoMedidas = dados.medidas[0]
             const handler = this.obterHandler(dados)
-            return await handler.atualizar(infoMedidas)
-            // const camposMedidas = Object.keys(infoMedidas)
-            // console.log(camposMedidas)
-            // if (dados.tipo_medida == 'padrao') {
-            //     const upMedidaPadrao = await ServiceMedidaPadrao.atualizar(infoMedidas)
-            //     return upMedidaPadrao
-            // } else if (dados.tipo_medida == 'sob_medida') {
-            //     const upMedidaSobMedida = await ServiceMedidaSobMedida.atualizar(infoMedidas)
-            //     return upMedidaSobMedida
-            // }else{
-            //     throw new Error('Tipo inválido!')
-            // }
-
+            return await handler.atualizar(dados.medidas[0])
         } catch (error) {
             throw new Error(`${error.message}`)
         }
@@ -77,15 +48,8 @@ class MedidasCliente {
 
     async deletar(dados){
         try {
-            // let deletarMedida
             const handler = this.obterHandler(dados)
             return await handler.deletar(dados)
-            // if(dados.tipo == 'padrao'){
-            //     deletarMedida = ServiceMedidaPadrao.deletar(dados)
-            // }else if(dados.tipo == 'sob_medida'){
-            //     deletarMedida = ServiceMedidaSobMedida.deletar(dados)
-            // }
-            // return deletarMedida
         } catch (error) {
             throw new Error(`${error.message}`)
         }
@@ -159,13 +123,13 @@ class MedidasCliente {
         return medidas
     }
     
-    buscarMedidaPorClienteId(dados){
+    async buscarMedidaPorClienteId(dados){
         const handler = this.obterHandler(dados)
         const medida = await handler.buscarMedidaPorClienteId(dados.cliente_id)
         return medida
     }
 
-    buscarMedidaPorId(dados){
+    async buscarMedidaPorId(dados){
         const handler = this.obterHandler(dados)
         const medida = await handler.buscarMedidaPorId(dados.medida_id)
         return medida
