@@ -8,11 +8,11 @@ const {ValidatorAtualizarMedidaItemPedido} = require('../validators/medidas/atua
 const {ValidatorAtualizarMedidaCliente} = require('../validators/medidas/atualizar_medida_cliente')
 const {ValidatorDeletarMedidaCliente} = require('../validators/medidas/deletar_medida_cliente')
 class Medida{
-    formulario_cadastro_medidas_cliente_sob_medida(req,res){
+    formulario_cadastro_medidas_cliente_sob_medida_feminina(req,res){
         try {
-            return res.render('addMedidaSobMedidaCliente',{
-                stylesheet:'addMedidaSobMedidaCliente.css',
-                script:'addMedidaSobMedidaCliente.js',
+            return res.render('./medidas/cliente/sob_medida_feminina/form_cadastro_sob_medida_feminina',{
+                stylesheet:'./medidas/cliente/sob_medida_feminina/form_cadastro_sob_medida_feminina.css',
+                script:'./medidas/cliente/sob_medida_feminina/form_cadastro_sob_medida_feminina.js',
                 error:req.query.error || null,
                 msg: req.query.msg || null
             })
@@ -50,12 +50,13 @@ class Medida{
         }
     }
 
-    async formulario_atualizar_medidas_cliente_sob_medida(req,res){
+    async formulario_atualizar_medidas_cliente_sob_medida_feminina(req,res){
         try {
-            const medidas = await ServiceMedidaCliente.buscarMedidaSobMedidaPorId(req.params.id)
-            return res.render('upMedidaSobMedidaCliente',{
-                stylesheet:'upMedidaSobMedidaCliente.css',
-                script:'upMedidaSobMedidaCliente.js',
+            const dados = {tipo_medida:"sob_medida",medidas:[{sexo:"feminino"}],medida_id:req.params.id}
+            const medidas = await ServiceMedidaClienteTeste.buscarMedidaPorId(dados)
+            return res.render('./medidas/cliente/sob_medida_feminina/form_atualizar_sob_medida_feminina',{
+                stylesheet:'./medidas/cliente/sob_medida_feminina/form_atualizar_sob_medida_feminina.css',
+                script:'./medidas/cliente/sob_medida_feminina/form_atualizar_sob_medida_feminina.js',
                 medidas,
                 error:req.query.error || null,
                 msg: req.query.msg || null
@@ -116,11 +117,11 @@ class Medida{
     async listar_medidas(req,res){
         try {
             const clienteId = req.params.id
-            const medidas_cliente = await ServiceMedidaCliente.buscar_medidas_cliente(clienteId)
-            return res.render("medidas",{
-                stylesheet:'medidas.css',
-                script:'medidas.js',
-                cliente:medidas_cliente,
+            const medidas_cliente = await ServiceMedidaClienteTeste.buscar_medidas_cliente(clienteId)
+            return res.render("./medidas/cliente/medidas",{
+                stylesheet:'./medidas/cliente/medidas.css',
+                script:'./medidas/cliente/medidas.js',
+                ...medidas_cliente,
                 error:req.query.error || null,
                 msg: req.query.msg || null
             })

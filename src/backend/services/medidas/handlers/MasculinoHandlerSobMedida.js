@@ -1,4 +1,4 @@
-const modelMedidaSobMedidaFeminina = require('../../../models/medida_sob_medida_feminina')
+const modelMedidaSobMedidaMasculina = require('../../../models/medida_sob_medida_masculina')
 const ServiceCliente = require('../../cliente')
 
 class MedidaSobMedida {
@@ -10,19 +10,19 @@ class MedidaSobMedida {
                 if(medidaExistente){
                     throw new Error('Este cliente já tem tamanho Sob Medida Registrado!')
                 }
-                return modelMedidaSobMedidaFeminina.create({
+                return modelMedidaSobMedidaMasculina.create({
                     cliente_id: dados.cliente_id,
                     circunferencia_torax: dados.circunferencia_torax,
                     circunferencia_abdomen:dados.circunferencia_abdomen,
                     largura_punho:dados.largura_punho,
                     ombro:dados.ombro,
                     costa:dados.costa,
-                    comprimento_da_manga:dados.comprimento_da_manga,
-                    largura_da_manga:dados.largura_da_manga,
+                    comprimento_manga:dados.comprimento_da_manga,
+                    largura_manga:dados.largura_da_manga,
                     comprimento_corpo:dados.comprimento_corpo
                 })
             }else{
-                return modelMedidaSobMedidaFeminina.create({
+                return modelMedidaSobMedidaMasculina.create({
                     item_pedido_medida_id: dados.item_medida_id,
                     circunferencia_torax: dados.circunferencia_torax,
                     circunferencia_abdomen:dados.circunferencia_abdomen,
@@ -103,23 +103,23 @@ class MedidaSobMedida {
     }
 
     buscarMedidaPorClienteId(id) {
-        return modelMedidaSobMedidaFeminina.findOne({ where: { cliente_id: id } })
+        return modelMedidaSobMedidaMasculina.findOne({ where: { cliente_id: id } })
     }
 
     buscarPorItemPedidoMedidaIdEMedidaId(id,itemMedidaId){
-        return modelMedidaSobMedidaFeminina.findOne({where:{id:id,item_pedido_medida_id:itemMedidaId}})
+        return modelMedidaSobMedidaMasculina.findOne({where:{id:id,item_pedido_medida_id:itemMedidaId}})
     }
 
     buscarMedidaPorId(id) {
-        return modelMedidaSobMedidaFeminina.findOne({ where: { id: id } })
+        return modelMedidaSobMedidaMasculina.findOne({ where: { id: id } })
     }
 
     buscarMedidaPorItemPedidoId(id) {
-        return modelMedidaSobMedidaFeminina.findOne({ where: { item_pedido_medida_id: id } })
+        return modelMedidaSobMedidaMasculina.findOne({ where: { item_pedido_medida_id: id } })
     }
 
     buscarporMedidaIdEClienteId(medidaPadrao_id,cliente_id){
-        return modelMedidaSobMedidaFeminina.findOne({where:{id:medidaPadrao_id,cliente_id:cliente_id}})
+        return modelMedidaSobMedidaMasculina.findOne({where:{id:medidaPadrao_id,cliente_id:cliente_id}})
     }
     
 }

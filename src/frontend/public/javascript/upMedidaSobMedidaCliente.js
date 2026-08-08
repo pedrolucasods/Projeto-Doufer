@@ -6,7 +6,7 @@ form.addEventListener('submit', async function (e) {
     e.preventDefault()
     // pegando o id do cliente
     const clienteId = sessionStorage.getItem('clienteId')
-    let medidaId = sessionStorage.getItem('MedidaId_sobMedida')
+    let medidaId = sessionStorage.getItem('medida_id_sob_feminina')
     
     // montando o body
     let sexo = document.getElementById('inputSexo').value

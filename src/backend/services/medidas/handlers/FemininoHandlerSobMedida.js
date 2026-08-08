@@ -42,8 +42,8 @@ class MedidaSobMedida {
 
     async atualizar(dados){
         try {
-            if(dados.cliente){
-                const buscaMedida = await this.buscarMedidaPorId(dados.medidaSobMedida_id)
+            if(dados.cliente_id){
+                const buscaMedida = await this.buscarMedidaPorId(dados.medida_id)
                 if(!buscaMedida){
                     throw new Error('Medida não encontrada!')
                 }

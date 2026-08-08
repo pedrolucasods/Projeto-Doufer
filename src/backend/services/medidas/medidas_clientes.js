@@ -15,9 +15,9 @@ class MedidasCliente {
     obterHandler(dados){
         if(dados.tipo_medida == "padrao"){
             return this.medidaPadraoHandler
-        }else if(dados.tipo_medida == "sob_medida" && dados.sexo == "feminino"){
+        }else if(dados.tipo_medida == "sob_medida" && dados.medidas[0].sexo == "feminino"){
             return this.medidaSobMedidaFemininaHandler
-        }else if(dados.tipo_medida == "sob_medida" && dados.sexo == "feminino"){
+        }else if(dados.tipo_medida == "sob_medida" && dados.medidas[0].sexo == "masculino"){
             return this.medidaSobMedidaMasculinaHandler
         }else{
             throw new Error("Tipo de Medida Inválida!")
@@ -82,35 +82,61 @@ class MedidasCliente {
                 ) AS medida_padrao,
                 json_group_array(
                     CASE
-                        WHEN med_sob.id IS NOT NULL THEN
+                        WHEN msmf.id IS NOT NULL THEN
                             json_object(
-                                'id',med_sob.id,
-                                'sexo',med_sob.sexo,
-                                'busto',med_sob.busto,
-                                'cintura',med_sob.cintura,
-                                'quadril',med_sob.quadril,
-                                'comprimento',med_sob.comprimento,
-                                'ombro',med_sob.ombro,
-                                'costas',med_sob.costas,
-                                'comprimento_da_manga',med_sob.comprimento_da_manga,
-                                'largura_da_manga',med_sob.largura_da_manga,
+                                'id',msmf.id,
+                                'busto',msmf.busto,
+                                'cintura',msmf.cintura,
+                                'quadril',msmf.quadril,
+                                'comprimento',msmf.comprimento,
+                                'ombro',msmf.ombro,
+                                'costas',msmf.costas,
+                                'comprimento_da_manga',msmf.comprimento_da_manga,
+                                'largura_da_manga',msmf.largura_da_manga,
                                 'criacao',json_object(
-                                    'data',DATE(med_sob.createdAt),
-                                    'hora',strftime('%H:%M', med_sob.createdAt, '-4 hours')
+                                    'data',DATE(msmf.createdAt),
+                                    'hora',strftime('%H:%M', msmf.createdAt, '-4 hours')
                                 ),
                                 'atualizacao',json_object(
-                                    'data',DATE(med_sob.updatedAt),
-                                    'hora',strftime('%H:%M', med_sob.updatedAt, '-4 hours')
+                                    'data',DATE(msmf.updatedAt),
+                                    'hora',strftime('%H:%M', msmf.updatedAt, '-4 hours')
                                 )
                             
                             )
                         ELSE
                             NULL
                     END
-                ) AS medida_sob_medida
+                ) AS medida_sob_medida_feminina,
+                json_group_array(
+                    CASE
+                        WHEN msmm.id IS NOT NULL THEN
+                            json_object(
+                                'id',msmm.id,
+                                'ombro',msmm.ombro,
+                                'circunferencia_torax',msmm.circunferencia_torax,
+                                'circunferencia_abdomen',msmm.circunferencia_abdomen,
+                                'costa',msmm.costa,
+                                'comprimento_manga',msmm.comprimento_manga,
+                                'largura_punho',msmm.largura_punho,
+                                'largura_manga',msmm.largura_manga,
+                                'criacao',json_object(
+                                    'data',DATE(msmm.createdAt),
+                                    'hora',strftime('%H:%M', msmm.createdAt, '-4 hours')
+                                ),
+                                'atualizacao',json_object(
+                                    'data',DATE(msmm.updatedAt),
+                                    'hora',strftime('%H:%M', msmm.updatedAt, '-4 hours')
+                                )
+                            
+                            )
+                        ELSE
+                            NULL
+                    END
+                ) AS medida_sob_medida_masculina
             FROM clientes c
             LEFT JOIN medidas_padrao med_p ON c.id = med_p.cliente_id 
-            LEFT JOIN medidas_sob_medidas med_sob ON c.id = med_sob.cliente_id
+            LEFT JOIN medida_sob_medida_femininas msmf ON c.id = msmf.cliente_id
+            LEFT JOIN medida_sob_medida_masculinas msmm ON c.id= msmm.cliente_id
             WHERE c.id = :id;
         `,{
             replacements:{id:id},
@@ -119,7 +145,8 @@ class MedidasCliente {
         })
 
         medidas.medida_padrao = JSON.parse(medidas.medida_padrao)
-        medidas.medida_sob_medida = JSON.parse(medidas.medida_sob_medida)
+        medidas.medida_sob_medida_feminina = JSON.parse(medidas.medida_sob_medida_feminina)
+        medidas.medida_sob_medida_masculina = JSON.parse(medidas.medida_sob_medida_masculina)
         return medidas
     }
     
