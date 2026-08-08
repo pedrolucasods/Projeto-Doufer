@@ -1,0 +1,75 @@
+<button id="back" type="button" onclick="voltar()"><i class="fas fa-home"></i></button>
+{{#if msg}}
+<div id="msg" class="d-flex gap-3 alert alert-success alert-dismissible fade show position-fixed top-0 end-0 me-5 m-3">
+    <i class="bi bi-check-square-fill text-success"></i>
+    <p class="fw-bold mb-0">{{msg}}</p>
+</div>
+{{/if}}
+{{#if error}}
+<div id="errordiv" class="d-flex gap-3 alert alert-danger alert-dismissible fade show position-fixed top-0 end-0 me-5 m-3">
+    <i class="bi bi-x-square-fill text-danger"></i>
+    <p class="fw-bold mb-0">{{error}}</p>
+</div>
+{{/if}}
+
+<section class="page-section py-5 bg-light">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-xl-8 col-lg-10">
+                <div class="card border-0 shadow-sm overflow-hidden add-medida-card">
+                    <div class="card-body p-5">
+                        <div class="d-flex justify-content-between align-items-start mb-4">
+                            <div>
+                                <h1 class="h3 fw-bold mb-2">Medida Padrão do Cliente</h1>
+                                <p class="text-muted mb-0">Cadastre o tamanho e o ajuste padrão para o cliente.</p>
+                            </div>
+                            <span class="badge bg-secondary text-uppercase">Padrão</span>
+                        </div>
+
+                        <form id="formAddMedidaPadrao" class="row g-3">
+                            <input type="hidden" name="tipo_medida" value="padrao">
+                            <input type="hidden" name="medidas[0][cliente_id]" value="{{clienteId}}">
+
+                            <div class="col-12">
+                                <label for="sexo" class="form-label">Sexo</label>
+                                <select class="form-select" id="sexo" name="medidas[0][sexo]" required>
+                                    <option value="">Selecione o sexo</option>
+                                    <option value="masculino">Masculino</option>
+                                    <option value="feminino">Feminino</option>
+                                </select>
+                            </div>
+
+                            <div class="col-12">
+                                <label for="tamanho" class="form-label">Tamanho</label>
+                                <select class="form-select" id="tamanho" name="medidas[0][tamanho]" required>
+                                    <option value="">Selecione o tamanho</option>
+                                    <option value="PP">PP</option>
+                                    <option value="P">P</option>
+                                    <option value="M">M</option>
+                                    <option value="G">G</option>
+                                    <option value="GG">GG</option>
+                                    <option value="EXG">EXG</option>
+                                    <option value="SEGUIR MEDIDA">SEGUIR MEDIDA</option>
+                                </select>
+                            </div>
+
+                            <div class="col-12">
+                                <label for="ajuste" class="form-label">Ajuste</label>
+                                <textarea class="form-control" id="ajuste" name="medidas[0][ajuste]" rows="4" placeholder="Descreva o ajuste desejado" required></textarea>
+                            </div>
+
+                            <div class="col-12">
+                                <label class="form-label">Descrição Rápida</label>
+                                <div class="form-text text-muted">Use esta medida padrão quando o cliente preferir um tamanho fixo e ajuste definido.</div>
+                            </div>
+
+                            <div class="col-12 text-end">
+                                <button type="submit" class="btn btn-primary btn-md px-4">Salvar Medida</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

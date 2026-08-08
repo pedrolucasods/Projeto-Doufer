@@ -40,7 +40,7 @@ function abrirModalpadrao(){
 async function deletarMedidaSobMedida(medida_id){
      try {
         const clienteid = sessionStorage.getItem('clienteId')
-        const dados = {tipo:"sob_medida",medida_id:medida_id,cliente_id:clienteid}
+        const dados = {tipo_medida:"sob_medida",medida_id:medida_id,cliente_id:clienteid}
         const response = await fetch(`/medidas/clientes`,{
             method:"DELETE",
             headers:{
@@ -62,7 +62,7 @@ async function deletarMedidaSobMedida(medida_id){
 async function deletarMedidaPadrao(medidaId) {
     try {
         const clienteid = sessionStorage.getItem('clienteId')
-        const dados = {tipo:"padrao",medida_id:medidaId,cliente_id:clienteid}
+        const dados = {tipo_medida:"padrao",medida_id:medidaId,cliente_id:clienteid}
         const response = await fetch(`/medidas/clientes`,{
             method:"DELETE",
             headers:{
