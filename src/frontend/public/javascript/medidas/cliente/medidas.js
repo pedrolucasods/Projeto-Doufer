@@ -7,6 +7,11 @@ function atualizarMedidasSobMedidaFeminina(id){
     window.location.href = `/medidas/clientes/${id}/sob/feminina`
 }
 
+function atualizarMedidasSobMedidaMasculina(id){
+    let medida_id = sessionStorage.setItem('medida_id_sob_masculina',id)
+    window.location.href = `/medidas/clientes/${id}/sob/masculina`
+}
+
 function atualizarMedidasPadrao(medidaId){
     let medida_id = sessionStorage.setItem('medida_id_padrao',medidaId)
     window.location.href = `/medidas/clientes/${medidaId}/padrao`
@@ -67,6 +72,30 @@ async function deletarMedidaSobMedidaFeminina(medida_id){
         }
         window.location.href = `/medidas/clientes/listar/${clienteid}?msg=${data.msg}`
      } catch (error) {
+        const clienteid = sessionStorage.getItem('clienteId')
+        const erro = error
+        window.location.href= `/medidas/clientes/listar/${clienteid}?error=${erro}`
+     }
+}
+
+async function deletarMedidaSobMedidaMasculina(medida_id){
+     try {
+        const clienteid = sessionStorage.getItem('clienteId')
+        const dados = {tipo_medida:"sob_medida",medida_id:medida_id,cliente_id:clienteid,medidas:[{sexo:"masculino"}]}
+        const response = await fetch(`/medidas/clientes`,{
+            method:"DELETE",
+            headers:{
+                'Content-Type':'application/json'
+            },
+            body:JSON.stringify(dados)
+        })
+        const data = await response.json()
+        if(!response.ok){
+            throw new Error(data.erro)
+        }
+        window.location.href = `/medidas/clientes/listar/${clienteid}?msg=${data.msg}`
+     } catch (error) {
+        const clienteid = sessionStorage.getItem('clienteId')
         const erro = error
         window.location.href= `/medidas/clientes/listar/${clienteid}?error=${erro}`
      }

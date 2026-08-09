@@ -44,12 +44,12 @@
                 
                 <div class="d-flex align-items-center gap-2">
                     <!-- Dropdown Select para alternar/escolher o tipo de medida -->
-                    {{#if medida_sob_medida_feminina.length}}
+                    {{#if medida_sob_medida_feminina.0.id}}
                         <select id="selectTipoSobMedida" class="form-select form-select-sm" onchange="alternarTipoSobMedida(this.value)">
                             <option value="feminina" selected>Feminina</option>
                             <option value="masculina">Masculina</option>
                         </select>
-                    {{else if medida_sob_medida_masculina.length}}
+                    {{else if medida_sob_medida_masculina.0.id}}
                         <select id="selectTipoSobMedida" class="form-select form-select-sm" onchange="alternarTipoSobMedida(this.value)">
                             <option value="feminina">Feminina</option>
                             <option value="masculina" selected>Masculina</option>
@@ -62,9 +62,9 @@
                     {{/if}}
 
                     <span class="header-tag" id="tagTipoSobMedida">
-                        {{#if medida_sob_medida_feminina.length}}
+                        {{#if medida_sob_medida_feminina.0.id}}
                             Feminina
-                        {{else if medida_sob_medida_masculina.length}}
+                        {{else if medida_sob_medida_masculina.0.id}}
                             Masculina
                         {{else}}
                             Personalizada
@@ -74,8 +74,8 @@
             </div>
 
             <div class="card-body-medida">
-                <div id="sob-medida-feminina" style="{{#if medida_sob_medida_feminina.length}}display:block;{{else if medida_sob_medida_masculina.length}}display:none;{{else}}display:block;{{/if}}">
-                    {{#if medida_sob_medida_feminina.length}}
+                <div id="sob-medida-feminina" style="{{#if medida_sob_medida_feminina.0.id}}display:block;{{else if medida_sob_medida_masculina.0.id}}display:none;{{else}}display:block;{{/if}}">
+                    {{#if medida_sob_medida_feminina.0.id}}
                         <div class="bloco-medidas">
                             <h3 class="bloco-title">
                                 <i class="fas fa-female"></i> Medidas do corpo (Feminino)
@@ -135,8 +135,8 @@
                     {{/if}}
                 </div>
 
-                <div id="sob-medida-masculina" style="{{#if medida_sob_medida_feminina.length}}display:none;{{else if medida_sob_medida_masculina.length}}display:block;{{else}}display:none;{{/if}}">
-                    {{#if medida_sob_medida_masculina.length}}
+                <div id="sob-medida-masculina" style="{{#if medida_sob_medida_feminina.0.id}}display:none;{{else if medida_sob_medida_masculina.0.id}}display:block;{{else}}display:none;{{/if}}">
+                    {{#if medida_sob_medida_masculina.0.id}}
                         <div class="bloco-medidas">
                             <h3 class="bloco-title">
                                 <i class="fas fa-male"></i> Medidas do corpo (Masculino)
@@ -195,24 +195,24 @@
 
             <!-- Rodapé Unificado Card 1 -->
             <div id="container-buttons">
-                <div class="card-footer-info" id="info-feminina" style="{{#if medida_sob_medida_feminina.length}}display:flex;{{else if medida_sob_medida_masculina.length}}display:none;{{else}}display:flex;{{/if}}">
+                <div class="card-footer-info" id="info-feminina" style="{{#if medida_sob_medida_feminina.0.id}}display:flex;{{else if medida_sob_medida_masculina.0.id}}display:none;{{else}}display:flex;{{/if}}">
                     <i class="far fa-clock"></i>
-                    {{#if medida_sob_medida_feminina.length}}
+                    {{#if medida_sob_medida_feminina.0.id}}
                         <span>Atualizado em <strong>{{data_brasileira medida_sob_medida_feminina.0.atualizacao.data}} às {{medida_sob_medida_feminina.0.atualizacao.hora}}</strong></span>
                     {{else}}
                         <span><strong>Sem Medida Sob Medida Feminina!</strong></span>
                     {{/if}}
                 </div>
-                <div class="card-footer-info" id="info-masculina" style="{{#if medida_sob_medida_feminina.length}}display:none;{{else if medida_sob_medida_masculina.length}}display:flex;{{else}}display:none;{{/if}}">
+                <div class="card-footer-info" id="info-masculina" style="{{#if medida_sob_medida_feminina.0.id}}display:none;{{else if medida_sob_medida_masculina.0.id}}display:flex;{{else}}display:none;{{/if}}">
                     <i class="far fa-clock"></i>
-                    {{#if medida_sob_medida_masculina.length}}
+                    {{#if medida_sob_medida_masculina.0.id}}
                         <span>Atualizado em <strong>{{data_brasileira medida_sob_medida_masculina.0.atualizacao.data}} às {{medida_sob_medida_masculina.0.atualizacao.hora}}</strong></span>
                     {{else}}
                         <span><strong>Sem Medida Sob Medida Masculina!</strong></span>
                     {{/if}}
                 </div>
-                <div class="card-footer-actions" id="actions-feminina" style="{{#if medida_sob_medida_feminina.length}}display:flex;{{else if medida_sob_medida_masculina.length}}display:none;{{else}}display:flex;{{/if}} gap:0.5rem; flex-wrap: wrap;">
-                    {{#if medida_sob_medida_feminina.length}}
+                <div class="card-footer-actions" id="actions-feminina" style="{{#if medida_sob_medida_feminina.0.id}}display:flex;{{else if medida_sob_medida_masculina.0.id}}display:none;{{else}}display:flex;{{/if}} gap:0.5rem; flex-wrap: wrap;">
+                    {{#if medida_sob_medida_feminina.0.id}}
                         <button class="btn btn-outline-danger" onclick="abrirModalSobMedidaFeminina({{id}})">
                             <i class="far fa-trash-alt"></i> Limpar Feminina
                         </button>
@@ -226,8 +226,8 @@
                         </button>
                     {{/if}}
                 </div>
-                <div class="card-footer-actions" id="actions-masculina" style="{{#if medida_sob_medida_feminina.length}}display:none;{{else if medida_sob_medida_masculina.length}}display:flex;{{else}}display:none;{{/if}} gap:0.5rem; flex-wrap: wrap;">
-                    {{#if medida_sob_medida_masculina.length}}
+                <div class="card-footer-actions" id="actions-masculina" style="{{#if medida_sob_medida_feminina.0.id}}display:none;{{else if medida_sob_medida_masculina.0.id}}display:flex;{{else}}display:none;{{/if}} gap:0.5rem; flex-wrap: wrap;">
+                    {{#if medida_sob_medida_masculina.0.id}}
                         <button class="btn btn-outline-danger" onclick="abrirModalSobMedidaMasculina({{id}})">
                             <i class="far fa-trash-alt"></i> Limpar Masculina
                         </button>
@@ -255,7 +255,7 @@
             </div>
 
             <div class="card-body-medida">
-                {{#if medida_padrao.length}}
+                {{#if medida_padrao.0.id}}
                     <div class="secao-padrao">
                         <div class="campo-padrao-group">
                             <label class="campo-label">Sexo</label>
@@ -308,14 +308,14 @@
             <div id="container-buttons">
                 <div class="card-footer-info">
                     <i class="far fa-clock"></i>
-                    {{#if medida_padrao.length}}
+                    {{#if medida_padrao.0.id}}
                         <span>Atualizado em <strong>{{data_brasileira medida_padrao.0.atualizacao.data}} às {{medida_padrao.0.atualizacao.hora}}</strong></span>
                     {{else}}
                         <span><strong>Sem Medida Padrão!</strong></span>
                     {{/if}}
                 </div>
                 <div class="card-footer-actions">
-                    {{#if medida_padrao.length}}
+                    {{#if medida_padrao.0.id}}
                         <button class="btn btn-outline-danger" onclick="abrirModalpadrao()">
                             <i class="far fa-trash-alt"></i> Limpar
                         </button>

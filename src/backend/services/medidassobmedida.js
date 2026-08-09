@@ -100,7 +100,7 @@ class MedidaSobMedida {
                     throw new Error('Medida não encontrada!')
                 }
             }
-            return await buscaMedida.destrooy()
+            return await buscaMedida.destroy()
         } catch (error) {
             throw new Error(`${error.message}`)
         }

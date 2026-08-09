@@ -21,6 +21,19 @@ class Medida{
         }
     }
 
+    formulario_cadastro_medidas_cliente_sob_medida_masculina(req,res){
+        try {
+            return res.render('./medidas/cliente/sob_medida_masculina/form_cadastro_sob_medida_masculina',{
+                stylesheet:'./medidas/cliente/sob_medida_masculina/form_cadastro_sob_medida_masculina.css',
+                script:'./medidas/cliente/sob_medida_masculina/form_cadastro_sob_medida_masculina.js',
+                error:req.query.error || null,
+                msg: req.query.msg || null
+            })
+        } catch (error) {
+            res.status(500).json({"erro":`${error}`})
+        }
+    }
+
     formulario_cadastro_medidas_cliente_padrao(req,res){
         try {
             return res.render('./medidas/cliente/padrao/form_cadastro_padrao',{
@@ -57,6 +70,22 @@ class Medida{
             return res.render('./medidas/cliente/sob_medida_feminina/form_atualizar_sob_medida_feminina',{
                 stylesheet:'./medidas/cliente/sob_medida_feminina/form_atualizar_sob_medida_feminina.css',
                 script:'./medidas/cliente/sob_medida_feminina/form_atualizar_sob_medida_feminina.js',
+                medidas,
+                error:req.query.error || null,
+                msg: req.query.msg || null
+            })
+        } catch (error) {
+            res.status(500).json({"erro":`${error.message}`})
+        }
+    }
+
+    async formulario_atualizar_medidas_cliente_sob_medida_masculina(req,res){
+        try {
+            const dados = {tipo_medida:"sob_medida",medidas:[{sexo:"masculino"}],medida_id:req.params.id}
+            const medidas = await ServiceMedidaClienteTeste.buscarMedidaPorId(dados)
+            return res.render('./medidas/cliente/sob_medida_masculina/form_atualizar_sob_medida_masculina',{
+                stylesheet:'./medidas/cliente/sob_medida_masculina/form_atualizar_sob_medida_masculina.css',
+                script:'./medidas/cliente/sob_medida_masculina/form_atualizar_sob_medida_masculina.js',
                 medidas,
                 error:req.query.error || null,
                 msg: req.query.msg || null

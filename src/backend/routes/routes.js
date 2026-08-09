@@ -69,6 +69,8 @@ router.use('/itens-pedidos',itens_pedidos)
 // medidas
 medidas.get('/clientes/sob/feminina', controllers.medida.formulario_cadastro_medidas_cliente_sob_medida_feminina)
 medidas.get('/clientes/:id/sob/feminina', controllers.medida.formulario_atualizar_medidas_cliente_sob_medida_feminina)
+medidas.get('/clientes/sob/masculina', controllers.medida.formulario_cadastro_medidas_cliente_sob_medida_masculina)
+medidas.get('/clientes/:id/sob/masculina', controllers.medida.formulario_atualizar_medidas_cliente_sob_medida_masculina)
 medidas.get('/clientes/padrao', controllers.medida.formulario_cadastro_medidas_cliente_padrao)
 medidas.get('/clientes/listar/:id', controllers.medida.listar_medidas)
 medidas.get('/clientes/:id/padrao', controllers.medida.formulario_atualizar_medidas_cliente_padrao)

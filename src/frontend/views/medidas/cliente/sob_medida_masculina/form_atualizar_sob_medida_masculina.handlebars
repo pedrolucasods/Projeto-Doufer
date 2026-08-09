@@ -1,0 +1,58 @@
+<button id="back" type="button" onclick="voltar()"><i class="fas fa-home"></i></button>
+<div class="page-shell">
+    <div class="form-card">
+        <div class="card-body">
+            <h1 class="form-title">Atualizar Sob Medida</h1>
+            <p class="form-subtitle">Atualize as medidas específicas do cliente com o mesmo padrão visual das telas de pedido.</p>
+
+            <form id="form" class="row g-3">
+
+                <div class="col-12 col-md-6">
+                    <label for="inputOmbro" class="form-label">Ombro</label>
+                    <input class="form-control" id="inputOmbro" name="ombro" value="{{medidas.ombro}}">
+                </div>
+
+                <div class="col-12 col-md-6">
+                    <label for="inputCircunferenciaTorax" class="form-label">Circunferencia do Torax</label>
+                    <input class="form-control" id="inputCircunferenciaTorax" name="circunferencia_torax" value="{{medidas.circunferencia_torax}}">
+                </div>
+
+                <div class="col-12 col-md-6">
+                    <label for="inputCircunferenciaAbdomen" class="form-label">Circunferencia do Abdomen</label>
+                    <input class="form-control" id="inputCircunferenciaAbdomen" name="circunferencia_abdomen" value="{{medidas.circunferencia_abdomen}}">
+                </div>
+
+                <div class="col-12 col-md-6">
+                    <label for="inputCosta" class="form-label">Costa</label>
+                    <input class="form-control" id="inputCosta" name="costa" value="{{medidas.costa}}">
+                </div>
+
+                <div class="col-12 col-md-6">
+                    <label for="inputComprimentoManga" class="form-label">Comprimento da Manga</label>
+                    <input class="form-control" id="inputComprimentoManga" name="comprimento_manga" value="{{medidas.comprimento_manga}}">
+                </div>
+
+                <div class="col-12 col-md-6">
+                    <label for="inputLarguraPunho" class="form-label">Largura do Punho</label>
+                    <input class="form-control" id="inputLarguraPunho" name="largura_punho" value="{{medidas.largura_punho}}">
+                </div>
+
+                <div class="col-12 col-md-6">
+                    <label for="inputLarguraManga" class="form-label">Largura do Manga</label>
+                    <input class="form-control" id="inputLarguraManga" name="largura_manga" value="{{medidas.largura_manga}}">
+                </div>
+
+                <div class="col-12 col-md-6">
+                    <label for="inputComprimentoCorpo" class="form-label">Comprimento do Corpo</label>
+                    <input class="form-control" id="inputComprimentoCorpo" name="comprimento_corpo" value="{{medidas.comprimento_corpo}}">
+                </div>
+
+                <input id="medidaId" type="hidden" value="{{medidas.id}}">
+
+                <div class="col-12 text-end">
+                    <button type="submit" class="btn btn-primary">Enviar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
