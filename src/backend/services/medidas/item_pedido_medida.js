@@ -4,18 +4,23 @@ const medidaPadraoHandler = require('./handlers/MedidaPadraoHandler')
 const medidaSobMedidaFemininaHandler = require('./handlers/FemininoHandlerSobMedida')
 const medidaSobMedidaMasculinaHandler = require('./handlers/MasculinoHandlerSobMedida')
 
-const modelItemPedidoMedida = require('../models/item_pedido_medida')
-const modelMedidaPadrao = require('../models/medidas_padrao')
-const modelSobMedida = require('../models/medidas_sob_medida')
-const serviceItemPedido = require('./itenspedido')
-const ServiceMedidaPadrao = require('./medidaspadrao')
-const ServiceMedidaSobMedida = require('./medidassobmedida')
+const modelItemPedidoMedida = require('../../models/item_pedido_medida')
+const modelMedidaPadrao = require('../../models/medidas_padrao')
+const modelSobMedidaFeminina = require('../../models/medida_sob_medida_feminina')
+const modelSobMedidaMasculina = require('../../models/medida_sob_medida_masculina')
+const modelSobMedida = require('../../models/medidas_sob_medida')
+const serviceItemPedido = require('../itenspedido')
+const ServiceMedidaPadrao = require('../medidaspadrao')
+const ServiceMedidaSobMedida = require('../medidassobmedida')
 
 class ItemPedidoMedida{
     constructor(){
         this.medidaPadraoHandler = medidaPadraoHandler
         this.medidaSobMedidaFemininaHandler = medidaSobMedidaFemininaHandler
         this.medidaSobMedidaMasculinaHandler = medidaSobMedidaMasculinaHandler
+        this.model_padrao = modelMedidaPadrao
+        this.model_sob_feminina = modelSobMedidaFeminina
+        this.model_sob_masculina = modelSobMedidaMasculina
     }
 
     obterHandler(dados){
@@ -29,6 +34,20 @@ class ItemPedidoMedida{
             throw new Error("Tipo de Medida Inválida!")
         }
         
+    }
+
+    obterModel(tipo,dados){
+        if(tipo == "padrao"){
+            return [this.model_padrao,dados,"medidas_padrao_item"]
+        }else if(tipo == "sob_medida" && dados.sexo == "feminino"){
+            delete dados.sexo
+            return [this.model_sob_feminina,dados,"medida_sob_medidas_femininas"]
+        }else if(tipo == "sob_medida" && dados.sexo == "masculino"){
+            delete dados.sexo
+            return [this.model_sob_masculina,dados,"medida_sob_medidas_masculinas"]
+        }else{
+            throw new Error("Tipo Inválido de Medida")
+        }
     }
 
     async buscar(id){
@@ -71,6 +90,7 @@ class ItemPedidoMedida{
 
     async cadastrar(dados){
         try {
+            const handler = this.obterHandler(dados)
             const dadosQuantidade = parseInt(dados.quantidade)
             const itemPedido = await serviceItemPedido.buscaritem(dados.item_pedido_id)
 
@@ -82,82 +102,32 @@ class ItemPedidoMedida{
                 
             }
 
-            
+            let medida = {}
+            medida = dados.medidas[0]
+            const item_com_mesma_medida = await this.buscarPorMedidasDoMesmoItem_ComMesmaMedida(dados.item_pedido_id,medida,dados.tipo_medida)
+            let valorbool = item_com_mesma_medida?'1':null
+            if(valorbool){
+                const quantidade_Antiga = parseInt(item_com_mesma_medida.quantidade)
+                let novaquantidade = dadosQuantidade+quantidade_Antiga
+                let updateQuantidade = await this.editar_quantidade(novaquantidade,item_com_mesma_medida.id)
+                return updateQuantidade
+            }else{
+                // cadastro do item pedido medida
+                const cadastro = await sequelize.transaction(async(t)=>{
+                    const item_medida = await modelItemPedidoMedida.create({
+                        item_pedido_id:dados.item_pedido_id,
+                        tipo_medida:dados.tipo_medida,
+                        quantidade:dadosQuantidade
+                    },{transaction:t})
 
-            // se for medida padrão faz isso
-            if(dados.tipo_medida=='padrao'){
-                let medidaPadrao = {}
-                for(const valores of dados.medidas){
-                    medidaPadrao = {
-                        sexo: valores.sexo,tamanho: valores.tamanho, ajuste: valores.ajuste
-                    }
-                }
+                    medida.item_medida_id = item_medida.id
+                    medida.transacao = t
+                    const cadastro_medida = await handler.cadastrar(medida)
+                    return {medida:item_medida}
+                })
+                return cadastro
+            }
 
-                const item_com_mesma_medida = await this.buscarPorMedidasDoMesmoItem_ComMesmaMedida(dados.item_pedido_id,medidaPadrao,'padrao')
-                let valorbool = item_com_mesma_medida?'1':null
-                if(valorbool){
-                    const quantidade_Antiga = parseInt(item_com_mesma_medida.quantidade)
-                    let novaquantidade = dadosQuantidade+quantidade_Antiga
-                    let updateQuantidade = await this.editar_quantidade(novaquantidade,item_com_mesma_medida.id)
-                    return updateQuantidade
-                }else{
-                    // cadastro do item pedido medida
-                    const cadastro = await sequelize.transaction(async(t)=>{
-                        const medida = await modelItemPedidoMedida.create({
-                            item_pedido_id:dados.item_pedido_id,
-                            tipo_medida:dados.tipo_medida,
-                            quantidade:dadosQuantidade
-                        },{transaction:t})
-
-                        medidaPadrao.item_medida_id = medida.id
-                        medidaPadrao.transacao = t
-                        const cadMedidaSobMedida = await ServiceMedidaPadrao.cadastrar(medidaPadrao)
-                        return {medida:medida}
-                    })
-                    return cadastro
-                }
-
-            }else if(dados.tipo_medida=='sob_medida'){
-                let medidasobMedida = {}
-                for(const valores of dados.medidas){
-                    medidasobMedida={
-                        sexo:valores.sexo,
-                        busto: valores.busto,
-                        cintura:valores.cintura,
-                        quadril:valores.quadril,
-                        comprimento:valores.comprimento,
-                        ombro:valores.ombro,
-                        costas:valores.costas,
-                        comprimento_da_manga:valores.comprimento_da_manga,
-                        largura_da_manga:valores.largura_da_manga
-                    }
-                }
-                const item_com_mesma_medida = await this.buscarPorMedidasDoMesmoItem_ComMesmaMedida(dados.item_pedido_id,medidasobMedida,'sobmedida')
-                let valorbool = item_com_mesma_medida?'1':null
-                if(valorbool){
-                    const quantidade_Antiga = parseInt(item_com_mesma_medida.quantidade)
-                    let novaquantidade = dadosQuantidade+quantidade_Antiga
-                    let updateQuantidade = await this.editar_quantidade(novaquantidade,item_com_mesma_medida.id)
-                    return updateQuantidade
-                }else{
-                        // cadastro do item pedido medida
-                        const cadastro = await sequelize.transaction(async(t)=>{
-                            const medida = await modelItemPedidoMedida.create({
-                                item_pedido_id:dados.item_pedido_id,
-                                tipo_medida:dados.tipo_medida,
-                                quantidade:dadosQuantidade
-                            },{transaction:t})
-
-                            medidasobMedida.item_medida_id = medida.id
-                            medidasobMedida.transacao = t
-                            const cadMedidaSobMedida = await ServiceMedidaSobMedida.cadastrar(medidasobMedida)
-                            return {medida:medida}
-                        })
-                        
-                        return cadastro
-                    }
-                
-            } 
         } catch (error) {
             throw new Error(`${error.message}`)
         }
@@ -368,52 +338,19 @@ class ItemPedidoMedida{
 
     // consulta para procurar mesmo tamanho padrao para o mesmo item
     async buscarPorMedidasDoMesmoItem_ComMesmaMedida(id,medida,tipo){
-        if(tipo == 'padrao'){
-            const consulta = await modelItemPedidoMedida.findOne({
+        const [model,dados,alias] = this.obterModel(tipo,medida)
+        const consulta = await modelItemPedidoMedida.findOne({
             where:{
                 item_pedido_id:id
             },attibutes:['id','quantidade'],
             include:[{
-                model:modelMedidaPadrao,
-                as: 'medidas_padrao_item',
+                model:model,
+                as: alias,
                 required: true,
-                where:{
-                    sexo:medida.sexo,
-                    tamanho:medida.tamanho,
-                    ajuste:medida.ajuste
-                },
-                    attibutes: ['tamanho']
+                where:dados
                 }]
             })
-            return consulta
-        }
-        else if(tipo =='sobmedida'){
-            const consulta = await modelItemPedidoMedida.findOne({
-                where:{
-                    item_pedido_id:id
-                },attibutes:['id','quantidade'],
-                include:[{
-                    model:modelSobMedida,
-                    as: 'medidas_sob_medida',
-                    required: true,
-                    where:{
-                        sexo:medida.sexo,
-                        busto: medida.busto,
-                        cintura:medida.cintura,
-                        quadril:medida.quadril,
-                        comprimento:medida.comprimento,
-                        ombro:medida.ombro,
-                        costas:medida.costas,
-                        comprimento_da_manga:medida.comprimento_da_manga,
-                        largura_da_manga:medida.largura_da_manga
-                    },
-                        attibutes: ['busto','cintura','quadril','comprimento','ombro','costas','comprimento_da_manga','largura_da_manga']
-
-                }]
-            })
-            return consulta
-        }
-        
+        return consulta
     }
 }
 

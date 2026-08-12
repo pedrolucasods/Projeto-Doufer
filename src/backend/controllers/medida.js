@@ -1,5 +1,6 @@
 const ServiceItemPedidoMedida = require('../services/item_pedido_medida')
 const ServiceMedidaCliente = require('../services/medidas_cliente')
+const ServiceItemPedidoMedidaTeste = require('../services/medidas/item_pedido_medida')
 const ServiceMedidaClienteTeste = require('../services/medidas/medidas_clientes')
 const ServiceCliente = require('../services/cliente')
 const {ValidatorCadastroMedidaCliente} = require('../validators/medidas/cadastro_medidas_cliente')
@@ -230,7 +231,7 @@ class Medida{
             if(!validar_dados){
                 return
             }
-            const cadastro = await ServiceItemPedidoMedida.cadastrar(dados)
+            const cadastro = await ServiceItemPedidoMedidaTeste.cadastrar(dados)
             return res.json({"msg":"Cadastro com sucesso!"})
         } catch (error) {
             return res.status(500).json({"erro":`${error.message}`})
