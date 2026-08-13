@@ -62,9 +62,9 @@ function ValidadorCadastroMedidaItemPedido(Dados,res){
                 !campos_medidas.includes('circunferencia_torax') ||
                 !campos_medidas.includes('circunferencia_abdomen') ||
                 !campos_medidas.includes('costa') ||
-                !campos_medidas.includes('comprimento_da_manga') ||
+                !campos_medidas.includes('comprimento_manga') ||
                 !campos_medidas.includes('largura_punho') ||
-                !campos_medidas.includes('largura_da_manga') ||
+                !campos_medidas.includes('largura_manga') ||
                 !campos_medidas.includes('comprimento_corpo')
             ) {
                 res.status(400).json({'erro':'Erro ao cadastrar medida!'})
