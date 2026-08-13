@@ -1,6 +1,40 @@
+// {
+//   "version": "0.2.0",
+//   "configurations": [
+//     {
+//       "type": "node",
+//       "request": "attach",
+//       "name": "Debug Backend",
+//       "port": 9229,
+//       "restart": true,
+//       "preLaunchTask": "npm: dev",
+//       "skipFiles": [
+//         "<node_internals>/**",
+//         "${workspaceFolder}/node_modules/**"
+//       ],
+//       "autoAttachChildProcesses": false
+//     }
+//   ]
+// }
+
 {
   "version": "0.2.0",
   "configurations": [
+    {
+      "type": "node",
+      "request": "attach",
+      "name": "Debug Backend no Docker",
+      "port": 9229,
+      "address": "localhost",
+      "localRoot": "${workspaceFolder}",
+      "remoteRoot": "/usr/src/app",
+      "restart": true,
+      "timeout": 30000, 
+      "skipFiles": [
+        "<node_internals>/**",
+        "${workspaceFolder}/node_modules/**"
+      ]
+    },
     {
       "type": "node",
       "request": "attach",

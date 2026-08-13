@@ -5,7 +5,7 @@
   "scripts": {
     "start": "electron",
     "dev": "npm run server",
-    "server": "nodemon --inspect=9229 src/backend/server.js"
+    "server": "nodemon --legacy-watch --exec \"node --inspect=0.0.0.0:9229\" src/backend/server.js"
   },
   "keywords": [],
   "author": "",
