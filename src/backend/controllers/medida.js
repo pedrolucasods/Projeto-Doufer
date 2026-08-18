@@ -245,7 +245,7 @@ class Medida{
             if(!validar_dados){
                 return
             }
-            const atualizar = await ServiceItemPedidoMedida.atualizar(dados)
+            const atualizar = await ServiceItemPedidoMedidaTeste.atualizar(dados)
             return res.json({"msg":"Medida Atualizada Com Sucesso!"})
         } catch (error) {
             return res.status(500).json({"erro":`${error.message}`})

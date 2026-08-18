@@ -196,6 +196,7 @@ class ItemPedidoMedida{
 
     async atualizar(dados){
         try {
+            const handler = this.obterHandler(dados)
             const dadosQuantidade = parseInt(dados.quantidade)
             const vinculo_medida = await this.buscar(dados.item_pedido_medida_id)
             if(!vinculo_medida){
@@ -213,96 +214,128 @@ class ItemPedidoMedida{
                 throw new Error('Quantidade inválida!')
             }
 
-            
+            const busca_medida = await handler.buscarPorItemPedidoMedidaIdEMedidaId(dados.medida_id,vinculo_medida.id)
+            if(!busca_medida){
+                throw new Error('Medida Não Encontrada!')
+            }
+            let medida = {}
+            medida = dados.medidas[0]
+
+            const item_com_mesma_medida = await this.buscarPorMedidasDoMesmoItem_ComMesmaMedida(vinculo_medida.item_pedido_id,medida,dados.tipo_medida)
+            let valorbool = item_com_mesma_medida?'1':null
+            if(valorbool){
+                let novaquantidade = dadosQuantidade
+                if(item_com_mesma_medida.id != vinculo_medida.id){
+                    await this.deletar(vinculo_medida.id)
+                    const quantidade_Antiga = parseInt(item_com_mesma_medida.quantidade)
+                    novaquantidade=dadosQuantidade+quantidade_Antiga
+                }
+                let updateQuantidade = await this.editar_quantidade(novaquantidade,item_com_mesma_medida.id)
+                return updateQuantidade
+            }else{
+                // cadastro do item pedido medida
+                const atualizacao = await sequelize.transaction(async(t)=>{
+                    await vinculo_medida.update({
+                        quantidade:dadosQuantidade
+                    },{transaction:t})
+
+                    medida.medida_id = dados.medida_id
+                    medida.transacao = t
+                    medida.item_medida_id = vinculo_medida.id
+                    const atualizar_medida = await handler.atualizar(medida)
+                    return {medida:vinculo_medida}
+                })
+                return atualizacao
+            }
 
             // se for medida padrão faz isso
-            if(dados.tipo_medida=='padrao'){
-                const busca_medida = await ServiceMedidaPadrao.buscarPorItemPedidoMedidaIdEMedidaId(dados.medida_id,vinculo_medida.id)
-                if(!busca_medida){
-                    throw new Error('Medida Não Encontrada!')
-                }
-                let medidaPadrao = {}
-                for(const valores of dados.medidas){
-                    medidaPadrao = {
-                        sexo: valores.sexo,tamanho: valores.tamanho, ajuste: valores.ajuste
-                    }
-                }
+            // if(dados.tipo_medida=='padrao'){
+            //     const busca_medida = await ServiceMedidaPadrao.buscarPorItemPedidoMedidaIdEMedidaId(dados.medida_id,vinculo_medida.id)
+            //     if(!busca_medida){
+            //         throw new Error('Medida Não Encontrada!')
+            //     }
+            //     let medidaPadrao = {}
+            //     for(const valores of dados.medidas){
+            //         medidaPadrao = {
+            //             sexo: valores.sexo,tamanho: valores.tamanho, ajuste: valores.ajuste
+            //         }
+            //     }
 
-                const item_com_mesma_medida = await this.buscarPorMedidasDoMesmoItem_ComMesmaMedida(vinculo_medida.item_pedido_id,medidaPadrao,'padrao')
-                let valorbool = item_com_mesma_medida?'1':null
-                if(valorbool){
-                    let novaquantidade = dadosQuantidade
-                    if(item_com_mesma_medida.id != vinculo_medida.id){
-                        await this.deletar(vinculo_medida.id)
-                        const quantidade_Antiga = parseInt(item_com_mesma_medida.quantidade)
-                        novaquantidade=dadosQuantidade+quantidade_Antiga
-                    }
-                    let updateQuantidade = await this.editar_quantidade(novaquantidade,item_com_mesma_medida.id)
-                    return updateQuantidade
-                }else{
-                    // cadastro do item pedido medida
-                    const atualizacao = await sequelize.transaction(async(t)=>{
-                        await vinculo_medida.update({
-                            quantidade:dadosQuantidade
-                        },{transaction:t})
+            //     const item_com_mesma_medida = await this.buscarPorMedidasDoMesmoItem_ComMesmaMedida(vinculo_medida.item_pedido_id,medidaPadrao,'padrao')
+            //     let valorbool = item_com_mesma_medida?'1':null
+            //     if(valorbool){
+            //         let novaquantidade = dadosQuantidade
+            //         if(item_com_mesma_medida.id != vinculo_medida.id){
+            //             await this.deletar(vinculo_medida.id)
+            //             const quantidade_Antiga = parseInt(item_com_mesma_medida.quantidade)
+            //             novaquantidade=dadosQuantidade+quantidade_Antiga
+            //         }
+            //         let updateQuantidade = await this.editar_quantidade(novaquantidade,item_com_mesma_medida.id)
+            //         return updateQuantidade
+            //     }else{
+            //         // cadastro do item pedido medida
+            //         const atualizacao = await sequelize.transaction(async(t)=>{
+            //             await vinculo_medida.update({
+            //                 quantidade:dadosQuantidade
+            //             },{transaction:t})
 
-                        medidaPadrao.medida_id = dados.medida_id
-                        medidaPadrao.transacao = t
-                        medidaPadrao.item_medida_id = vinculo_medida.id
-                        const atualizar_medida = await ServiceMedidaPadrao.atualizar(medidaPadrao)
-                        return {medida:vinculo_medida}
-                    })
-                    return atualizacao
-                }
+            //             medidaPadrao.medida_id = dados.medida_id
+            //             medidaPadrao.transacao = t
+            //             medidaPadrao.item_medida_id = vinculo_medida.id
+            //             const atualizar_medida = await ServiceMedidaPadrao.atualizar(medidaPadrao)
+            //             return {medida:vinculo_medida}
+            //         })
+            //         return atualizacao
+            //     }
 
-            }else if(dados.tipo_medida=='sob_medida'){
-                const busca_medida = await ServiceMedidaSobMedida.buscarPorItemPedidoMedidaIdEMedidaId(dados.medida_id,vinculo_medida.id)
-                if(!busca_medida){
-                    throw new Error('Medida Não Encontrada!')
-                }
-                let medidasobMedida = {}
-                for(const valores of dados.medidas){
-                    medidasobMedida={
-                        sexo:valores.sexo,
-                        busto: valores.busto,
-                        cintura:valores.cintura,
-                        quadril:valores.quadril,
-                        comprimento:valores.comprimento,
-                        ombro:valores.ombro,
-                        costas:valores.costas,
-                        comprimento_da_manga:valores.comprimento_da_manga,
-                        largura_da_manga:valores.largura_da_manga
-                    }
-                }
-                const item_com_mesma_medida = await this.buscarPorMedidasDoMesmoItem_ComMesmaMedida(vinculo_medida.item_pedido_id,medidasobMedida,'sobmedida')
-                let valorbool = item_com_mesma_medida?'1':null
-                if(valorbool){
-                    let novaquantidade = dadosQuantidade
-                    if(item_com_mesma_medida.id != vinculo_medida.id){
-                        await this.deletar(vinculo_medida.id)
-                        const quantidade_Antiga = parseInt(item_com_mesma_medida.quantidade)
-                        novaquantidade=dadosQuantidade+quantidade_Antiga
-                    }
-                    let updateQuantidade = await this.editar_quantidade(novaquantidade,item_com_mesma_medida.id)
-                    return updateQuantidade
-                }else{
-                        // cadastro do item pedido medida
-                        const atualizacao = await sequelize.transaction(async(t)=>{
-                            await vinculo_medida.update({
-                            quantidade:dadosQuantidade
-                        },{transaction:t})
+            // }else if(dados.tipo_medida=='sob_medida'){
+            //     const busca_medida = await ServiceMedidaSobMedida.buscarPorItemPedidoMedidaIdEMedidaId(dados.medida_id,vinculo_medida.id)
+            //     if(!busca_medida){
+            //         throw new Error('Medida Não Encontrada!')
+            //     }
+            //     let medidasobMedida = {}
+            //     for(const valores of dados.medidas){
+            //         medidasobMedida={
+            //             sexo:valores.sexo,
+            //             busto: valores.busto,
+            //             cintura:valores.cintura,
+            //             quadril:valores.quadril,
+            //             comprimento:valores.comprimento,
+            //             ombro:valores.ombro,
+            //             costas:valores.costas,
+            //             comprimento_da_manga:valores.comprimento_da_manga,
+            //             largura_da_manga:valores.largura_da_manga
+            //         }
+            //     }
+            //     const item_com_mesma_medida = await this.buscarPorMedidasDoMesmoItem_ComMesmaMedida(vinculo_medida.item_pedido_id,medidasobMedida,'sobmedida')
+            //     let valorbool = item_com_mesma_medida?'1':null
+            //     if(valorbool){
+            //         let novaquantidade = dadosQuantidade
+            //         if(item_com_mesma_medida.id != vinculo_medida.id){
+            //             await this.deletar(vinculo_medida.id)
+            //             const quantidade_Antiga = parseInt(item_com_mesma_medida.quantidade)
+            //             novaquantidade=dadosQuantidade+quantidade_Antiga
+            //         }
+            //         let updateQuantidade = await this.editar_quantidade(novaquantidade,item_com_mesma_medida.id)
+            //         return updateQuantidade
+            //     }else{
+            //             // cadastro do item pedido medida
+            //             const atualizacao = await sequelize.transaction(async(t)=>{
+            //                 await vinculo_medida.update({
+            //                 quantidade:dadosQuantidade
+            //             },{transaction:t})
 
-                            medidasobMedida.medida_id = dados.medida_id
-                            medidasobMedida.item_medida_id = vinculo_medida.id
-                            medidasobMedida.transacao = t
-                            const cadMedidaSobMedida = await ServiceMedidaSobMedida.atualizar(medidasobMedida)
-                            return {medida:vinculo_medida}
-                        })
+            //                 medidasobMedida.medida_id = dados.medida_id
+            //                 medidasobMedida.item_medida_id = vinculo_medida.id
+            //                 medidasobMedida.transacao = t
+            //                 const cadMedidaSobMedida = await ServiceMedidaSobMedida.atualizar(medidasobMedida)
+            //                 return {medida:vinculo_medida}
+            //             })
                         
-                        return atualizacao
-                    }
+            //             return atualizacao
+            //         }
                 
-            } 
+            // } 
         } catch (error) {
             throw new Error(`${error.message}`)
         }

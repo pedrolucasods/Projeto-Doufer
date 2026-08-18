@@ -37,26 +37,43 @@ function ValidatorAtualizarMedidaItemPedido(Dados,res){
     }else if(Dados.tipo_medida == 'sob_medida'){
         const sexos = ['masculino','feminino']
         if (campos_medidas.length != 9) {
-            res.status(400).json({'erro':'Erro ao atualizar medida!'})
-            return false
-        }
-        if (
-            !campos_medidas.includes('sexo') ||
-            !campos_medidas.includes('busto') ||
-            !campos_medidas.includes('cintura') ||
-            !campos_medidas.includes('quadril') ||
-            !campos_medidas.includes('comprimento') ||
-            !campos_medidas.includes('ombro') ||
-            !campos_medidas.includes('costas') ||
-            !campos_medidas.includes('comprimento_da_manga') ||
-            !campos_medidas.includes('largura_da_manga')
-        ) {
-            res.status(400).json({'erro':'Erro ao atualizar medida!'})
+            res.status(400).json({'erro':'Erro ao cadastrar medida!'})
             return false
         }
         if(!sexos.includes(Dados.medidas[0].sexo)){
-            res.status(400).json({'erro':'Erro ao atualizar medida!'})
+            res.status(400).json({'erro':'Erro ao cadastrar medida!'})
             return false
+        }
+        if(Dados.medidas[0].sexo == "feminino"){
+            if (
+                !campos_medidas.includes('sexo') ||
+                !campos_medidas.includes('busto') ||
+                !campos_medidas.includes('cintura') ||
+                !campos_medidas.includes('quadril') ||
+                !campos_medidas.includes('comprimento') ||
+                !campos_medidas.includes('ombro') ||
+                !campos_medidas.includes('costas') ||
+                !campos_medidas.includes('comprimento_da_manga') ||
+                !campos_medidas.includes('largura_da_manga')
+            ) {
+                res.status(400).json({'erro':'Erro ao cadastrar medida!'})
+                return false
+            }
+        }else{
+            if (
+                !campos_medidas.includes('sexo') ||
+                !campos_medidas.includes('ombro') ||
+                !campos_medidas.includes('circunferencia_torax') ||
+                !campos_medidas.includes('circunferencia_abdomen') ||
+                !campos_medidas.includes('costa') ||
+                !campos_medidas.includes('comprimento_manga') ||
+                !campos_medidas.includes('largura_punho') ||
+                !campos_medidas.includes('largura_manga') ||
+                !campos_medidas.includes('comprimento_corpo')
+            ) {
+                res.status(400).json({'erro':'Erro ao cadastrar medida!'})
+                return false
+            }
         }
     }else{
         res.status(400).json({'erro':'Tipo de medida inválida!'})
