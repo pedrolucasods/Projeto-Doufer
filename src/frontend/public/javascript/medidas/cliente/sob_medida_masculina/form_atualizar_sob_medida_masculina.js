@@ -15,9 +15,9 @@ form.addEventListener('submit', async function (e) {
         circunferencia_torax : document.getElementById('inputCircunferenciaTorax').value,
         circunferencia_abdomen : document.getElementById('inputCircunferenciaAbdomen').value,
         costa : document.getElementById('inputCosta').value,
-        comprimento_da_manga : document.getElementById('inputComprimentoManga').value,
+        comprimento_manga : document.getElementById('inputComprimentoManga').value,
         largura_punho : document.getElementById('inputLarguraPunho').value,
-        largura_da_manga : document.getElementById('inputLarguraManga').value,
+        largura_manga : document.getElementById('inputLarguraManga').value,
         comprimento_corpo : document.getElementById('inputComprimentoCorpo').value
     }
 

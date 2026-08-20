@@ -53,8 +53,8 @@ class MedidaSobMedida {
                     largura_punho:dados.largura_punho,
                     ombro:dados.ombro,
                     costa:dados.costa,
-                    comprimento_da_manga:dados.comprimento_da_manga,
-                    largura_da_manga:dados.largura_da_manga,
+                    comprimento_manga:dados.comprimento_manga,
+                    largura_manga:dados.largura_manga,
                     comprimento_corpo:dados.comprimento_corpo
                 })
             }
@@ -69,8 +69,8 @@ class MedidaSobMedida {
                     largura_punho:dados.largura_punho,
                     ombro:dados.ombro,
                     costa:dados.costa,
-                    comprimento_da_manga:dados.comprimento_da_manga,
-                    largura_da_manga:dados.largura_da_manga,
+                    comprimento_manga:dados.comprimento_manga,
+                    largura_manga:dados.largura_manga,
                     comprimento_corpo:dados.comprimento_corpo
                 },{transaction:dados.transacao})
             }
