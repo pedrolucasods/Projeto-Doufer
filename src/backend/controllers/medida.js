@@ -163,9 +163,9 @@ class Medida{
         try {
             const item_id = req.params.id
             const dados = await ServiceItemPedidoMedida.dados_formulario_cadastro_medidas_item_pedido(item_id)
-            return res.render('addMedidaPadraoItemPedido',{
-                stylesheet:'addMedidaPadraoItemPedido.css',
-                script:'addMedidaPadraoItemPedido.js',
+            return res.render('./medidas/item_pedido/padrao/form_cadastro_padrao',{
+                stylesheet:'./medidas/item_pedido/padrao/form_cadastro_padrao.css',
+                script:'./medidas/item_pedido/padrao/form_cadastro_padrao.js',
                 ...dados,
                 error:req.query.error || null,
                 msg: req.query.msg || null
