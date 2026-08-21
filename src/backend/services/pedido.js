@@ -6,7 +6,6 @@ const modelPedido = require('../models/pedidos')
 const modelItensPedido = require('../models/itensPedidos')
 const ClienteService = require('./cliente')
 const ItemPedidoService = require('./itenspedido')
-const ItemPedidoMedidaService = require('./item_pedido_medida')
 class Pedido{
 
     // listar e formatar
