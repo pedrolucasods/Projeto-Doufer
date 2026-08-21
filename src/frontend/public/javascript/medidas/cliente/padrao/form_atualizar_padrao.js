@@ -1,13 +1,13 @@
 document.addEventListener('DOMContentLoaded',()=>{
     const form = document.getElementById('formUpMedidaPadrao')
     const clienteId = sessionStorage.getItem('clienteId')
-    const medidaId = sessionStorage.getItem('MedidaId_padrao')
+    const medidaId = sessionStorage.getItem('medida_id_padrao')
     form.addEventListener('submit',(e)=>{
         e.preventDefault()
         let dados = {
             tipo_medida:"padrao",
             medidas:[{
-                medidaPadrao_id:medidaId,
+                medida_id:medidaId,
                 cliente_id:clienteId,
                 sexo:document.getElementById('sexo').value,
                 tamanho:document.getElementById('tamanho').value,

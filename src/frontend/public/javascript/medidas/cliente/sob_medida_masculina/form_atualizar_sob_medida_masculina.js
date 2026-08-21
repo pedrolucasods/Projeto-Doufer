@@ -6,42 +6,32 @@ form.addEventListener('submit', async function (e) {
     e.preventDefault()
     // pegando o id do cliente
     const clienteId = sessionStorage.getItem('clienteId')
-    let medidaId = sessionStorage.getItem('MedidaId_sobMedida')
-    
-    // montando o body
-    let sexo = document.getElementById('inputSexo').value
-    let busto = document.getElementById('inputBusto').value
-    let cintura = document.getElementById('inputCintura').value
-    let quadril = document.getElementById('inputQuadril').value
-    let comprimento = document.getElementById('inputComprimento').value
-    let ombro = document.getElementById('inputOmbro').value
-    let costas = document.getElementById('inputCostas').value
-    let comprimento_da_manga = document.getElementById('inputCManga').value
-    let largura_da_manga = document.getElementById('inputLManga').value
+    let medidaId = sessionStorage.getItem('medida_id_sob_masculina')
+    console.log(medidaId)
 
-    const Medidas = {
-        sexo: (sexo != null) ? sexo : null,
-        busto: (busto != null) ? busto : null,
-        cintura: (cintura != null) ? cintura : null,
-        quadril: (quadril != null) ? quadril : null,
-        comprimento: (comprimento != null) ? comprimento : null,
-        ombro: (ombro != null) ? ombro : null,
-        costas: (costas != null) ? costas : null,
-        comprimento_da_manga: (comprimento_da_manga != null) ? comprimento_da_manga : null,
-        largura_da_manga: (largura_da_manga != null) ? largura_da_manga : null
+    let Medidas = {
+        sexo: "masculino",
+        ombro : document.getElementById('inputOmbro').value,
+        circunferencia_torax : document.getElementById('inputCircunferenciaTorax').value,
+        circunferencia_abdomen : document.getElementById('inputCircunferenciaAbdomen').value,
+        costa : document.getElementById('inputCosta').value,
+        comprimento_manga : document.getElementById('inputComprimentoManga').value,
+        largura_punho : document.getElementById('inputLarguraPunho').value,
+        largura_manga : document.getElementById('inputLarguraManga').value,
+        comprimento_corpo : document.getElementById('inputComprimentoCorpo').value
     }
 
-    
+    console.log(Medidas)
     let contatador_medidas_vazias = 0
     Object.values(Medidas).forEach( valor =>{
         if(valor == ""){
             contatador_medidas_vazias += 1
         }
     })
-    if(contatador_medidas_vazias == 8){
+    if(contatador_medidas_vazias == 7){
         deletarMedidaSobMedida(medidaId,clienteId)
-    }else if(contatador_medidas_vazias < 8){
-        Medidas.medidaSobMedida_id = medidaId
+    }else if(contatador_medidas_vazias < 7){
+        Medidas.medida_id = medidaId
         Medidas.cliente_id = clienteId
         const dados = {
             tipo_medida:"sob_medida",
@@ -88,36 +78,34 @@ async function atualizarMedida(dados,clienteId){
         }
         window.location.href = `/medidas/clientes/listar/${clienteId}?msg=${data.msg}`
     } catch (error) {
-        window.location.href = `/medidas/clientes/padrao?error=${error}`
+        window.location.href = `/medidas/clientes/${dados.medidas[0].medida_id}/sob/masculina?error=${error}`
     }
 }
 
 function mascaras(){
-    let inputBusto = document.getElementById('inputBusto')
-    mask(inputBusto)
-    
-    
-
-    const inputCintura = document.getElementById('inputCintura')
-    mask(inputCintura)
-
-    const inputQuadril = document.getElementById('inputQuadril')
-    mask(inputQuadril)
-
-    const inputComprimento = document.getElementById('inputComprimento')
-    mask(inputComprimento)
-
     const inputOmbro = document.getElementById('inputOmbro')
     mask(inputOmbro)
+    
+    const inputCircunferenciaTorax = document.getElementById('inputCircunferenciaTorax')
+    mask(inputCircunferenciaTorax)
 
-    const inputCostas = document.getElementById('inputCostas')
-    mask(inputCostas)
+    const inputCircunferenciaAbdomen = document.getElementById('inputCircunferenciaAbdomen')
+    mask(inputCircunferenciaAbdomen)
 
-    const inputCManga = document.getElementById('inputCManga')
-    mask(inputCManga)
+    const inputCosta = document.getElementById('inputCosta')
+    mask(inputCosta)
 
-    const inputLManga = document.getElementById('inputLManga')
-    mask(inputLManga)
+    const inputComprimentoManga = document.getElementById('inputComprimentoManga')
+    mask(inputComprimentoManga)
+
+    const inputLarguraPunho = document.getElementById('inputLarguraPunho')
+    mask(inputLarguraPunho)
+
+    const inputLarguraManga = document.getElementById('inputLarguraManga')
+    mask(inputLarguraManga)
+
+    const inputComprimentoCorpo = document.getElementById('inputComprimentoCorpo')
+    mask(inputComprimentoCorpo)
 }
 
 

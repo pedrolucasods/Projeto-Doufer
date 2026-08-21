@@ -18,6 +18,8 @@ body {
     color: var(--text-dark);
     margin: 0;
     padding: 2rem;
+    overflow-y: scroll;
+    overflow-x: hidden;
 }
 
 .page-layout {
@@ -149,6 +151,12 @@ body {
 .card-body-medida {
     padding: 1.5rem;
     flex: 1;
+    min-height: 420px;
+}
+
+#sob-medida-feminina,
+#sob-medida-masculina {
+    min-height: 100%;
 }
 
 .bloco-title {
@@ -324,8 +332,8 @@ body {
 }
 
 #container-buttons {
-    display: flex;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
     align-items: center;
     gap: 0.75rem;
     padding: 1rem 1.5rem;
@@ -341,6 +349,7 @@ body {
     gap: 0.4rem;
     font-size: 0.78rem;
     color: var(--text-muted);
+    min-width: 0;
 }
 
 .card-footer-info i {
@@ -355,6 +364,24 @@ body {
     display: flex;
     align-items: center;
     gap: 0.75rem;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    min-width: 0;
+    justify-self: end;
+}
+
+@media (max-width: 768px) {
+    #container-buttons {
+        grid-template-columns: 1fr;
+    }
+
+    .card-footer-actions {
+        justify-self: start;
+    }
+}
+
+.card-footer-actions button {
+    white-space: nowrap;
 }
 
 .btn {
@@ -447,3 +474,13 @@ body {
     overflow-wrap: anywhere;
     max-width: 100%;
 }   
+
+.empty-state-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 200px;
+    text-align: center;
+    padding: 2rem;
+}

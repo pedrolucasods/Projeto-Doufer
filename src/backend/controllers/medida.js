@@ -1,5 +1,6 @@
-const ServiceItemPedidoMedida = require('../services/item_pedido_medida')
-const ServiceMedidaCliente = require('../services/medidas_cliente')
+
+const ServiceItemPedidoMedida = require('../services/medidas/item_pedido_medida')
+const ServiceMedidaCliente = require('../services/medidas/medidas_clientes')
 const ServiceCliente = require('../services/cliente')
 const {ValidatorCadastroMedidaCliente} = require('../validators/medidas/cadastro_medidas_cliente')
 const {ValidadorCadastroMedidaItemPedido} = require('../validators/medidas/cadastro_medidas_item_pedido')
@@ -7,11 +8,24 @@ const {ValidatorAtualizarMedidaItemPedido} = require('../validators/medidas/atua
 const {ValidatorAtualizarMedidaCliente} = require('../validators/medidas/atualizar_medida_cliente')
 const {ValidatorDeletarMedidaCliente} = require('../validators/medidas/deletar_medida_cliente')
 class Medida{
-    formulario_cadastro_medidas_cliente_sob_medida(req,res){
+    formulario_cadastro_medidas_cliente_sob_medida_feminina(req,res){
         try {
-            return res.render('addMedidaSobMedidaCliente',{
-                stylesheet:'addMedidaSobMedidaCliente.css',
-                script:'addMedidaSobMedidaCliente.js',
+            return res.render('./medidas/cliente/sob_medida_feminina/form_cadastro_sob_medida_feminina',{
+                stylesheet:'./medidas/cliente/sob_medida_feminina/form_cadastro_sob_medida_feminina.css',
+                script:'./medidas/cliente/sob_medida_feminina/form_cadastro_sob_medida_feminina.js',
+                error:req.query.error || null,
+                msg: req.query.msg || null
+            })
+        } catch (error) {
+            res.status(500).json({"erro":`${error}`})
+        }
+    }
+
+    formulario_cadastro_medidas_cliente_sob_medida_masculina(req,res){
+        try {
+            return res.render('./medidas/cliente/sob_medida_masculina/form_cadastro_sob_medida_masculina',{
+                stylesheet:'./medidas/cliente/sob_medida_masculina/form_cadastro_sob_medida_masculina.css',
+                script:'./medidas/cliente/sob_medida_masculina/form_cadastro_sob_medida_masculina.js',
                 error:req.query.error || null,
                 msg: req.query.msg || null
             })
@@ -22,9 +36,9 @@ class Medida{
 
     formulario_cadastro_medidas_cliente_padrao(req,res){
         try {
-            return res.render('addMedidaPadraoCliente',{
-                stylesheet:'addMedidaPadraoCliente.css',
-                script:'addMedidaPadraoCliente.js',
+            return res.render('./medidas/cliente/padrao/form_cadastro_padrao',{
+                stylesheet:'./medidas/cliente/padrao/form_cadastro_padrao.css',
+                script:'./medidas/cliente/padrao/form_cadastro_padrao.js',
                 error:req.query.error || null,
                 msg: req.query.msg || null
             })
@@ -35,10 +49,11 @@ class Medida{
 
     async formulario_atualizar_medidas_cliente_padrao(req,res){
         try {
-            const medidas = await ServiceMedidaCliente.buscarMedidaPadraoPorId(req.params.id)
-            return res.render('upMedidaPadraoCliente',{
-                stylesheet:'upMedidaPadraoCliente.css',
-                script:'upMedidaPadraoCliente.js',
+            const dados = {tipo_medida:"padrao",medida_id:req.params.id}
+            const medidas = await ServiceMedidaCliente.buscarMedidaPorId(dados)
+            return res.render('./medidas/cliente/padrao/form_atualizar_padrao',{
+                stylesheet:'./medidas/cliente/padrao/form_atualizar_padrao.css',
+                script:'./medidas/cliente/padrao/form_atualizar_padrao.js',
                 medidas,
                 error:req.query.error || null,
                 msg: req.query.msg || null
@@ -48,12 +63,29 @@ class Medida{
         }
     }
 
-    async formulario_atualizar_medidas_cliente_sob_medida(req,res){
+    async formulario_atualizar_medidas_cliente_sob_medida_feminina(req,res){
         try {
-            const medidas = await ServiceMedidaCliente.buscarMedidaSobMedidaPorId(req.params.id)
-            return res.render('upMedidaSobMedidaCliente',{
-                stylesheet:'upMedidaSobMedidaCliente.css',
-                script:'upMedidaSobMedidaCliente.js',
+            const dados = {tipo_medida:"sob_medida",medidas:[{sexo:"feminino"}],medida_id:req.params.id}
+            const medidas = await ServiceMedidaCliente.buscarMedidaPorId(dados)
+            return res.render('./medidas/cliente/sob_medida_feminina/form_atualizar_sob_medida_feminina',{
+                stylesheet:'./medidas/cliente/sob_medida_feminina/form_atualizar_sob_medida_feminina.css',
+                script:'./medidas/cliente/sob_medida_feminina/form_atualizar_sob_medida_feminina.js',
+                medidas,
+                error:req.query.error || null,
+                msg: req.query.msg || null
+            })
+        } catch (error) {
+            res.status(500).json({"erro":`${error.message}`})
+        }
+    }
+
+    async formulario_atualizar_medidas_cliente_sob_medida_masculina(req,res){
+        try {
+            const dados = {tipo_medida:"sob_medida",medidas:[{sexo:"masculino"}],medida_id:req.params.id}
+            const medidas = await ServiceMedidaCliente.buscarMedidaPorId(dados)
+            return res.render('./medidas/cliente/sob_medida_masculina/form_atualizar_sob_medida_masculina',{
+                stylesheet:'./medidas/cliente/sob_medida_masculina/form_atualizar_sob_medida_masculina.css',
+                script:'./medidas/cliente/sob_medida_masculina/form_atualizar_sob_medida_masculina.js',
                 medidas,
                 error:req.query.error || null,
                 msg: req.query.msg || null
@@ -115,10 +147,10 @@ class Medida{
         try {
             const clienteId = req.params.id
             const medidas_cliente = await ServiceMedidaCliente.buscar_medidas_cliente(clienteId)
-            return res.render("medidas",{
-                stylesheet:'medidas.css',
-                script:'medidas.js',
-                cliente:medidas_cliente,
+            return res.render("./medidas/cliente/medidas",{
+                stylesheet:'./medidas/cliente/medidas.css',
+                script:'./medidas/cliente/medidas.js',
+                ...medidas_cliente,
                 error:req.query.error || null,
                 msg: req.query.msg || null
             })
@@ -131,9 +163,9 @@ class Medida{
         try {
             const item_id = req.params.id
             const dados = await ServiceItemPedidoMedida.dados_formulario_cadastro_medidas_item_pedido(item_id)
-            return res.render('addMedidaPadraoItemPedido',{
-                stylesheet:'addMedidaPadraoItemPedido.css',
-                script:'addMedidaPadraoItemPedido.js',
+            return res.render('./medidas/item_pedido/padrao/form_cadastro_padrao',{
+                stylesheet:'./medidas/item_pedido/padrao/form_cadastro_padrao.css',
+                script:'./medidas/item_pedido/padrao/form_cadastro_padrao.js',
                 ...dados,
                 error:req.query.error || null,
                 msg: req.query.msg || null
