@@ -1,0 +1,127 @@
+<main class="padrao-page">
+	{{#if msg}}
+		<div id="msg" class="alert alert-success alert-dismissible fade show" role="alert">
+			<i class="bi bi-check-square-fill"></i><span>{{msg}}</span>
+			<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Fechar"></button>
+		</div>
+	{{/if}}
+	{{#if error}}
+		<div id="errordiv" class="alert alert-danger alert-dismissible fade show" role="alert">
+			<i class="bi bi-x-square-fill"></i><span>{{error}}</span>
+			<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Fechar"></button>
+		</div>
+	{{/if}}
+
+	<header class="padrao-header">
+		<button id="back" type="button" class="icon-button" onclick="voltar({{item_id}})" title="Voltar" aria-label="Voltar">
+			<i class="fas fa-arrow-left"></i>
+		</button>
+		<div class="header-copy">
+			<span class="eyebrow"><i class="fas fa-ruler-combined"></i> Item do pedido #{{item_id}}</span>
+			<h1>Medidas padrão</h1>
+			<p>{{produto}} <span aria-hidden="true">/</span> {{cor}} <span aria-hidden="true">/</span> {{cliente_nome}}</p>
+		</div>
+		<div class="quantity-summary">
+			<span>Disponíveis</span><strong>{{quantidade_disponivel}}</strong><small>de {{quantidade_produto}} peças</small>
+		</div>
+	</header>
+
+	<section class="padrao-toolbar" aria-label="Resumo e filtros das medidas">
+		<div class="toolbar-heading">
+			<span class="section-kicker">Grade cadastrada</span>
+			<h2>{{quantidade_medidas}} medidas padrão</h2>
+		</div>
+		<div class="toolbar-controls">
+			<label class="search-wrapper" for="buscar-medida-padrao">
+				<i class="fas fa-search" aria-hidden="true"></i>
+				<input type="search" id="buscar-medida-padrao" placeholder="Pesquisar tamanho ou ajuste" autocomplete="off">
+			</label>
+			<label class="filter-wrapper" for="filtro-sexo-medida">
+				<span class="visually-hidden">Filtrar por sexo</span>
+				<select id="filtro-sexo-medida" aria-label="Filtrar por sexo">
+					<option value="todos">Todos</option>
+					<option value="masculino">Masculino</option>
+					<option value="feminino">Feminino</option>
+				</select>
+			</label>
+			{{#if quantidade_disponivel}}
+				<button type="button" class="add-button" data-action="adicionar-medida-padrao" data-item-id="{{item_id}}" onclick="cadastrar({{item_id}})">
+					<i class="fas fa-plus"></i><span>Adicionar medida padrão</span>
+				</button>
+			{{/if}}
+		</div>
+	</section>
+
+	{{#if medida.length}}
+		<section class="medidas-grid" aria-label="Medidas padrão cadastradas">
+			{{#each medida}}
+				<article class="medida-card" data-sexo="{{sexo}}" data-tamanho="{{tamanho}}" data-ajuste="{{ajuste}}">
+					<div class="card-ribbon" aria-hidden="true"></div>
+					<div class="medida-card-top">
+						<span class="measure-number">{{@index}}</span>
+						<div class="card-badges">
+							<span class="quantity-badge"><i class="fas fa-layer-group"></i> {{quantidade}} un.</span>
+							<span class="sex-badge"><i class="fas fa-user"></i> {{mostrar sexo}}</span>
+						</div>
+					</div>
+					<div class="size-display"><span class="field-label">Tamanho</span><strong>{{mostrar tamanho}}</strong></div>
+					<div class="adjustment-display">
+						<div class="adjustment-heading">
+							<span class="field-label"><i class="fas fa-sliders-h"></i> Ajuste</span>
+							<button type="button" class="btn-ajuste-modal" data-bs-toggle="modal" data-bs-target="#modalAjustePadrao" data-ajuste="{{ajuste}}" title="Visualizar ajuste detalhado" aria-label="Visualizar ajuste detalhado">
+								<i class="fas fa-file-alt"></i>
+							</button>
+						</div>
+						{{#if ajuste}}<p title="{{ajuste}}">{{~mostrar ajuste~}}</p>{{else}}<p class="empty-value">Nenhum ajuste informado.</p>{{/if}}
+					</div>
+					<div class="medida-card-footer">
+						<small><i class="far fa-clock"></i> {{#if atualizacao.data}}Atualizada em {{data_brasileira atualizacao.data}} às {{atualizacao.hora}}{{else}}Medida cadastrada{{/if}}</small>
+						<div class="card-actions">
+							<button type="button" class="card-action edit-action" data-action="editar-medida-padrao" data-medida-id="{{id}}" title="Editar medida" aria-label="Editar medida" onclick="atualizar({{id}})"><i class="fas fa-pencil-alt"></i></button>
+							<button type="button" class="card-action delete-action" data-bs-toggle="modal" data-bs-target="#modalExcluirMedidaPadrao" data-medida-id="{{id}}" title="Excluir medida" aria-label="Excluir medida"><i class="fas fa-trash-alt"></i></button>
+						</div>
+					</div>
+				</article>
+			{{/each}}
+		</section>
+		<section id="empty-search-state" class="empty-search-state" hidden>
+			<i class="fas fa-search"></i>
+			<h2>Nenhuma medida encontrada</h2>
+			<p>Tente pesquisar por outro tamanho ou ajuste, ou altere o filtro de sexo.</p>
+		</section>
+	{{else}}
+		<section class="empty-measures" aria-live="polite">
+			<div class="empty-mark"><i class="fas fa-ruler-horizontal"></i></div>
+			<span class="section-kicker">Nenhum registro ainda</span>
+			<h2>Este item ainda não tem medida padrão</h2>
+			<p>Cadastre uma medida para definir o tamanho e o ajuste usados neste item do pedido.</p>
+			{{#if quantidade_disponivel}}
+				<button type="button" class="add-button" data-action="adicionar-medida-padrao" data-item-id="{{item_id}}" onclick="cadastrar({{item_id}})"><i class="fas fa-plus"></i><span>Adicionar medida padrão</span></button>
+			{{else}}
+				<button type="button" class="add-button" disabled title="Não há quantidade disponível para cadastrar uma medida"><i class="fas fa-lock"></i><span>Quantidade esgotada</span></button>
+			{{/if}}
+		</section>
+	{{/if}}
+</main>
+
+<div class="modal fade" id="modalExcluirMedidaPadrao" tabindex="-1" aria-labelledby="modalExcluirMedidaPadraoLabel" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered"><div class="modal-content delete-modal">
+		<div class="modal-header"><div class="modal-title-wrap"><span class="modal-warning"><i class="fas fa-trash-alt"></i></span><h2 class="modal-title" id="modalExcluirMedidaPadraoLabel">Excluir medida padrão?</h2></div><button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button></div>
+		<div class="modal-body"><p>Esta medida será removida do item do pedido.</p><small>Essa ação não poderá ser desfeita.</small></div>
+		<div class="modal-footer"><button type="button" class="cancel-button" data-bs-dismiss="modal">Cancelar</button><button type="button" class="confirm-delete-button" data-action="excluir-medida-padrao"><i class="fas fa-trash-alt"></i> Excluir medida</button></div>
+	</div></div>
+</div>
+
+<div class="modal fade" id="modalAjustePadrao" tabindex="-1" aria-labelledby="modalAjustePadraoLabel" aria-hidden="true">
+	<div class="modal-dialog modal-lg modal-dialog-centered">
+		<div class="modal-content ajuste-modal">
+			<div class="modal-header">
+				<h2 class="modal-title" id="modalAjustePadraoLabel"><i class="fas fa-file-alt"></i> Ajuste da medida</h2>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+			</div>
+			<div class="modal-body">
+				<div id="textoAjustePadrao" class="texto-ajuste-modal">Nenhum ajuste informado.</div>
+			</div>
+		</div>
+	</div>
+</div>

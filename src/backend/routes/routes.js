@@ -80,8 +80,9 @@ medidas.put('/itens-pedidos', controllers.medida.atualizar_medida_itemPedido)
 medidas.put('/clientes', controllers.medida.atualizar_medida_cliente)
 medidas.delete('/clientes', controllers.medida.deletar_medida_cliente)
 
-medidas.get('/itens-pedidos/:id/padrao', controllers.medida.formulario_cadastro_medidas_padrao_item_pedido)
-medidas.get('/itens-pedidos/:id/SobMedida', controllers.medida.formulario_cadastro_medidas_sob_medida_item_pedido)
+medidas.get('/itens-pedidos/:id/padrao', controllers.medida.listar_medidas_item_pedido_padrao)
+medidas.get('/itens-pedidos/:id/cadastro/padrao', controllers.medida.formulario_cadastro_medidas_padrao_item_pedido)
+medidas.get('/itens-pedidos/:id/cadastro/SobMedida', controllers.medida.formulario_cadastro_medidas_sob_medida_item_pedido)
 
 medidas.get('/itens-pedidos/:id/atualizar/SobMedida', controllers.medida.formulario_atualizar_medidas_sob_medida_item_pedido)
 medidas.get('/itens-pedidos/:id/atualizar/padrao', controllers.medida.formulario_atualizar_medidas_padrao_item_pedido)
