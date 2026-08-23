@@ -23,6 +23,7 @@ document.addEventListener('DOMContentLoaded',()=>{
 
 async function atualizar_medidas(dados){
     try {
+        const item_id = sessionStorage.getItem("item_id")
         if(dados.quantidade<0){
             throw new Error('Quantidade Inválido ou Superior a Disponivel!')
         }
@@ -43,14 +44,14 @@ async function atualizar_medidas(dados){
             throw new Error(data.erro)
         }
 
-        window.location.href = `/pedidos?msg=${data.msg}`
+        window.location.href = `/medidas/itens-pedidos/${item_id}/padrao?msg=${data.msg}`
     } catch (error) {
         window.location.href = `/medidas/itens-pedidos/${dados.medidas_id}/atualizar/padrao?error=${error}`
     }
 }
 
 function voltar(id){
-    window.location.href = `/pedidos/detalhes/${id}`
+    window.location.href = `/medidas/itens-pedidos/${id}/padrao`
 }
 
 setTimeout(() =>{

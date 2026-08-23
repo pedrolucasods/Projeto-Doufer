@@ -42,14 +42,14 @@ async function adicionarMedidas(dados){
             throw new Error(data.erro)
         }
 
-        window.location.href = `/pedidos?msg=${data.msg}`
+        window.location.href = `/medidas/itens-pedidos/${dados.item_pedido_id}/padrao?msg=${data.msg}`
     } catch (error) {
-        window.location.href = `/medidas/itens-pedidos/${dados.item_pedido_id}/padrao?error=${error}`
+        window.location.href = `/medidas/itens-pedidos/${dados.item_pedido_id}/cadastro/padrao?error=${error}`
     }
 }
 
 function voltar(id){
-    window.location.href = `/pedidos/detalhes/${id}`
+    window.location.href = `/medidas/itens-pedidos/${id}/padrao`
 }
 
 setTimeout(() =>{

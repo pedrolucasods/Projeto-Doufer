@@ -3,6 +3,7 @@ function voltar(){
 }
 
 function detalhes_item(id){
+    sessionStorage.setItem("item_id",id)
     window.location.href=`/itens-pedidos/detalhes/${id}`
 }
 
