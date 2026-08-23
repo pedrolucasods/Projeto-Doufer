@@ -1,8 +1,11 @@
+const {QueryTypes} = require('sequelize')
+const sequelize = require('../../../database')
 const ModelmedidasPadrao = require('../../../models/medidas_padrao')
 const modelItensPedido = require('../../../models/itensPedidos')
 const { where } = require('sequelize')
 const ServiceCliente = require('../../cliente')
 const ServiceItens = require('../../itenspedido')
+const { query } = require('../../../routes/routes')
 
 class MedidaPadrao {
     async cadastrar(dados) {
@@ -96,7 +99,40 @@ class MedidaPadrao {
         return ModelmedidasPadrao.findOne({where:{id:medidaPadrao_id}})
     }
 
-    buscarMedidaPorItemPedidoId(id) {
+    async buscarMedidaPorItemId(id){
+        let dados = await sequelize.query(`
+                SELECT
+                    json_group_array(
+                        json_object(
+                            'id',mp.id,
+                            'quantidade',ipm.quantidade,
+                            'tamanho',mp.tamanho,
+                            'ajuste',mp.ajuste,
+                            'sexo',mp.sexo,
+                            'criacao',json_object(
+                                'data',DATE(mp.createdAt),
+                                'hora',strftime('%H:%M', mp.createdAt, '-4 hours')
+                            ),
+                            'atualizacao',json_object(
+                                'data',DATE(mp.updatedAt),
+                                'hora',strftime('%H:%M', mp.updatedAt, '-4 hours')
+                            )
+                        )
+                    ) AS medidas
+                FROM medidas_padrao mp
+                INNER JOIN item_pedido_medidas ipm ON mp.item_pedido_medida_id = ipm.id
+                INNER JOIN itens_pedidos ip ON  ipm.item_pedido_id = ip.id
+                WHERE ip.id = :id;
+        `,{
+            replacements:{id:id},
+            type:QueryTypes.SELECT,
+            plain:true
+        })
+        dados = JSON.parse(dados.medidas)
+        return dados
+    }
+
+    buscarMedidaPorItemPedidoMedidaId(id) {
         return ModelmedidasPadrao.findOne({ where: { item_pedido_medida_id: id } })
     }
 
