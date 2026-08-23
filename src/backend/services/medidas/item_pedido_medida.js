@@ -64,6 +64,34 @@ class ItemPedidoMedida{
         return pedidoMedida
     }
 
+    async listar_medidas_item_pedido(dados){
+        const handler = this.obterHandler(dados)
+        const medidas = await handler.buscarMedidaPorItemId(dados.item_id)
+        let resultado = await sequelize.query(`
+            SELECT
+                p.id AS pedido_id,
+                c.nome AS cliente_nome,
+                ip.id AS item_id,
+                ip.produto AS produto,
+                ip.cor AS cor,
+                ip.quantidade AS quantidade_produto,
+                ip.quantidade - SUM(coalesce(ipm.quantidade,0)) AS quantidade_disponivel
+            FROM itens_pedidos ip 
+            LEFT JOIN item_pedido_medidas ipm ON ipm.item_pedido_id = ip.id
+            INNER JOIN pedidos p ON ip.id_pedido = p.id
+            INNER JOIN clientes c ON p.cliente_id = c.id
+            WHERE ip.id=:id
+            GROUP BY p.id; 
+        `,{
+            replacements:{id:dados.item_id},
+            type:QueryTypes.SELECT,
+            plain:true
+        })
+        resultado.quantidade_medidas = medidas.map(med=>med.quantidade).reduce((soma,quantiade)=>soma+quantiade,0)
+        resultado.medida = medidas
+        return resultado
+    }
+
     async dados_formulario_cadastro_medidas_item_pedido(item_id){
         const dados = await sequelize.query(`
             SELECT
@@ -80,7 +108,7 @@ class ItemPedidoMedida{
             INNER JOIN clientes c ON p.cliente_id = c.id
             WHERE ip.id = :item_id;
         `,{
-            replacements: {item_id,item_id},
+            replacements: {item_id:item_id},
             type: QueryTypes.SELECT,
             plain: true
         })
