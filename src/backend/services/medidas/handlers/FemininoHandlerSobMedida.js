@@ -114,7 +114,43 @@ class MedidaSobMedida {
         return modelMedidaSobMedidaFeminina.findOne({ where: { id: id } })
     }
 
-    buscarMedidaPorItemPedidoId(id) {
+    async buscarMedidaPorItemId(id){
+        const medidas = await sequelize.query(`
+                SELECT
+                    json_group_object(
+                        json_object(
+                            'id',msmf.id,
+                            'busto',msmf.busto,
+                            'cintura',msmf.cintura,
+                            'quadril',msmf.quadril,
+                            'comprimento',msmf.comprimento,
+                            'ombro',msmf.ombro,
+                            'costas',msmf.costas,
+                            'comprimento_da_manga',msmf.comprimento_da_manga,
+                            'largura_da_manga',msmf.largura_da_manga,
+                            'criacao',json_object(
+                                'data',DATE(mp.createdAt),
+                                'hora',strftime('%H:%M', mp.createdAt, '-4 hours')
+                            ),
+                            'atualizacao',json_object(
+                                'data',DATE(mp.updatedAt),
+                                'hora',strftime('%H:%M', mp.updatedAt, '-4 hours')
+                            )
+                        )
+                    )
+                FROM medida_sob_medida_femininas msmf
+                INNER JOIN item_pedido_medidas ipm ON msmf.item_pedido_medida_id = ipm.id
+                INNER JOIN itens_pedidos ip ON ipm.item_pedido_id = ip.id
+                WHERE ip.id = :id;
+        `,{
+            replacements:{id:id},
+            type:QueryTypes.SELECT,
+            plain:true
+        })
+        return medidas
+    }
+
+    buscarMedidaPorItemPedidoMedidaId(id) {
         return modelMedidaSobMedidaFeminina.findOne({ where: { item_pedido_medida_id: id } })
     }
 

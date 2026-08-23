@@ -278,7 +278,7 @@
                             <div class="ajuste-wrapper">
                                 <div class="ajuste-box-limited" title="{{medida_padrao.0.ajuste}}">
                                     {{#if medida_padrao.0.ajuste}}
-                                        {{mostrar medida_padrao.0.ajuste}}
+                                        {{~mostrar medida_padrao.0.ajuste~}}
                                     {{else}}
                                         <span class="text-muted">Nenhum ajuste informado.</span>
                                     {{/if}}
@@ -406,7 +406,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cancelar</button>
-                    <button type="button" class="btn btn-danger" onclick="deletarMedidaPadrao({{medida_padrao.0.id}})">Excluir</button>
+                    <button type="button" class="btn btn-danger" onclick="deletarMedidaPadrao({{medida_padrao.0.id}}, '{{medida_padrao.0.sexo}}')">Excluir</button>
                 </div>
             </div>
         </div>
@@ -422,7 +422,7 @@
                 <div class="modal-body">
                     <div class="texto-ajuste-modal">
                         {{#if medida_padrao.0.ajuste}}
-                            {{mostrar medida_padrao.0.ajuste}}
+                            {{~mostrar medida_padrao.0.ajuste~}}
                         {{else}}
                             <span class="text-muted">Nenhum ajuste informado.</span>
                         {{/if}}

@@ -101,10 +101,10 @@ async function deletarMedidaSobMedidaMasculina(medida_id){
      }
 }
 
-async function deletarMedidaPadrao(medidaId) {
+async function deletarMedidaPadrao(medidaId,sexo) {
     try {
         const clienteid = sessionStorage.getItem('clienteId')
-        const dados = {tipo_medida:"padrao",medida_id:medidaId,cliente_id:clienteid}
+        const dados = {tipo_medida:"padrao",medida_id:medidaId,cliente_id:clienteid,medidas:[{sexo:sexo}]}
         const response = await fetch(`/medidas/clientes`,{
             method:"DELETE",
             headers:{

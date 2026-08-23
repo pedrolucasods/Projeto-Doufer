@@ -114,7 +114,7 @@ class MedidaSobMedida {
         return modelMedidaSobMedida.findOne({where:{id:id,item_pedido_medida_id:itemMedidaId}})
     }
 
-    buscarMedidaPorItemPedidoId(id) {
+    buscarMedidaPorItemPedidoMedidaId(id) {
         return modelMedidaSobMedida.findOne({ where: { item_pedido_medida_id: id } })
     }
     buscarMedidaPorId(id) {

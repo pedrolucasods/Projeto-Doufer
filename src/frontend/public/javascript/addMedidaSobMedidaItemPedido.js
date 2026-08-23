@@ -56,7 +56,7 @@ async function adicionarMedidas(dados){
 
         window.location.href = `/pedidos?msg=${data.msg}`
     } catch (error) {
-        window.location.href = `/medidas/itens-pedidos/${dados.item_pedido_id}/SobMedida?error=${error}`
+        window.location.href = `/medidas/itens-pedidos/${dados.item_pedido_id}/cadastro/SobMedida?error=${error}`
     }
 }
 

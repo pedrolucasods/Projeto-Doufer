@@ -159,6 +159,22 @@ class Medida{
         }
     }
 
+    async listar_medidas_item_pedido_padrao(req,res){
+        try {
+            const dados = {tipo_medida:"padrao",item_id:req.params.id}
+            const medidas = await ServiceItemPedidoMedida.listar_medidas_item_pedido(dados)
+            return res.render('./medidas/item_pedido/padrao/listar_padrao',{
+                stylesheet:'./medidas/item_pedido/padrao/listar_padrao.css',
+                script:'./medidas/item_pedido/padrao/listar_padrao.js',
+                ...medidas,
+                error:req.query.error || null,
+                msg: req.query.msg || null
+            })
+        } catch (error) {
+            return res.status(500).json({"erro":`${error}`})
+        }
+    }
+
     async formulario_cadastro_medidas_padrao_item_pedido(req,res){
         try {
             const item_id = req.params.id
@@ -211,9 +227,9 @@ class Medida{
             const medida_id = req.params.id
             const dados = await ServiceItemPedidoMedida.dados_formulario_atualizar(medida_id)
             // return res.send(dados)
-            return res.render('upMedidaPadraoItemPedido',{
-                stylesheet:'upMedidaPadraoItemPedido.css',
-                script:'upMedidaPadraoItemPedido.js',
+            return res.render('./medidas/item_pedido/padrao/form_atualizar_padrao',{
+                stylesheet:'./medidas/item_pedido/padrao/form_atualizar_padrao.css',
+                script:'./medidas/item_pedido/padrao/form_atualizar_padrao.js',
                 ...dados,
                 error:req.query.error || null,
                 msg: req.query.msg || null
