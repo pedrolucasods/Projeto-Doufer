@@ -10,16 +10,61 @@
   />
     <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="/icons/bootstrap-icons.css">
+    <script>
+        if (localStorage.getItem('doufer-sidebar-collapsed') === 'true' && window.matchMedia('(min-width: 768px)').matches) {
+            document.documentElement.classList.add('sidebar-precollapsed');
+        }
+    </script>
+    <link rel="stylesheet" href="/css/sidebar.css">
     {{#if stylesheet}}
         <link rel="stylesheet"  href="/css/{{stylesheet}}">
     {{/if}}
 </head>
 <body>
-    {{{body}}}
+    <aside class="sidebar" id="sidebar" aria-label="Navegação principal">
+        <div class="sidebar-header">
+            <a class="sidebar-brand" href="/" aria-label="Ir para a página inicial">
+                <span class="sidebar-brand-mark">D</span>
+                <span class="sidebar-label">Doufer</span>
+            </a>
+            <button class="sidebar-toggle" id="sidebar-toggle" type="button" aria-label="Recolher menu" aria-expanded="true" title="Recolher menu">
+                <i class="fas fa-chevron-left" aria-hidden="true"></i>
+            </button>
+        </div>
+
+        <nav class="sidebar-nav">
+            <a class="sidebar-link" href="/pedidos" data-route="/pedidos">
+                <i class="fas fa-receipt" aria-hidden="true"></i>
+                <span class="sidebar-label">Pedidos</span>
+            </a>
+            <a class="sidebar-link" href="/clientes" data-route="/clientes">
+                <i class="fas fa-users" aria-hidden="true"></i>
+                <span class="sidebar-label">Clientes</span>
+            </a>
+            <a class="sidebar-link" href="/orcamentos" data-route="/orcamentos">
+                <i class="fas fa-file-invoice-dollar" aria-hidden="true"></i>
+                <span class="sidebar-label">Orçamentos</span>
+            </a>
+            <a class="sidebar-link" href="/funcionarios" data-route="/funcionarios">
+                <i class="fas fa-user-tie" aria-hidden="true"></i>
+                <span class="sidebar-label">Funcionários</span>
+            </a>
+        </nav>
+
+        <a class="sidebar-home" href="/">
+            <i class="fas fa-house" aria-hidden="true"></i>
+            <span class="sidebar-label">Início</span>
+        </a>
+    </aside>
+    <div class="sidebar-backdrop" id="sidebar-backdrop"></div>
+    <main class="app-content">
+        {{{body}}}
+    </main>
     
 
     <script src="https://unpkg.com/imask"></script>
     <script src="/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="/javascript/sidebar.js"></script>
 
     {{#if script}}
         <script src="/javascript/{{script}}"></script>
