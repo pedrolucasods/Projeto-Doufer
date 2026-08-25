@@ -11,8 +11,12 @@
     }
 
     const setCollapsed = (collapsed) => {
-        document.documentElement.classList.remove('sidebar-precollapsed');
-        body.classList.toggle('sidebar-collapsed', collapsed);
+        // Toggling the same class on the same element (<html>) that the
+        // inline pre-paint script already set makes this a no-op when the
+        // state already matches, instead of swapping to a different class
+        // on <body> (which was a real DOM mutation that could snap/jump
+        // the layout on every page navigation even without an animation).
+        document.documentElement.classList.toggle('sidebar-collapsed', collapsed);
         toggle.setAttribute('aria-expanded', String(!collapsed));
         toggle.setAttribute('aria-label', collapsed ? 'Expandir menu' : 'Recolher menu');
         toggle.setAttribute('title', collapsed ? 'Expandir menu' : 'Recolher menu');
@@ -30,6 +34,15 @@
         setCollapsed(localStorage.getItem(storageKey) === 'true');
     }
 
+    // Enable the sidebar's CSS transitions only after its initial state has
+    // been applied, so the load-time sync above never gets animated (which
+    // read as the sidebar quickly opening/closing on every page navigation).
+    requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+            body.classList.add('sidebar-ready');
+        });
+    });
+
     toggle.addEventListener('click', () => {
         if (mobileQuery.matches) {
             body.classList.toggle('sidebar-open');
@@ -40,7 +53,7 @@
             return;
         }
 
-        setCollapsed(!body.classList.contains('sidebar-collapsed'));
+        setCollapsed(!document.documentElement.classList.contains('sidebar-collapsed'));
     });
 
     backdrop.addEventListener('click', closeMobileMenu);
@@ -56,7 +69,7 @@
 
     mobileQuery.addEventListener('change', (event) => {
         if (event.matches) {
-            body.classList.remove('sidebar-collapsed');
+            document.documentElement.classList.remove('sidebar-collapsed');
         } else {
             closeMobileMenu();
             setCollapsed(localStorage.getItem(storageKey) === 'true');

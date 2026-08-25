@@ -338,7 +338,7 @@ body {
     gap: 0.75rem;
     padding: 1rem 1.5rem;
     border-top: 1px solid var(--border-light);
-    background-color: #ffffff;
+    background-color: var(--theme-surface, #ffffff);
     border-bottom-left-radius: var(--border-radius-card);
     border-bottom-right-radius: var(--border-radius-card);
 }
@@ -407,7 +407,7 @@ body {
 }
 
 .btn-outline-danger {
-    background-color: #ffffff;
+    background-color: var(--theme-surface, #ffffff);
     border: 1px solid #fca5a5;
     color: var(--danger-red);
 }
@@ -417,7 +417,8 @@ body {
 }
 
 .info-banner-card {
-    background: #ffffff;
+    background: var(--theme-surface, #ffffff);
+    color: var(--theme-text, inherit);
     border: 1px solid var(--border-light);
     border-radius: var(--border-radius-card);
     padding: 1.25rem 1.5rem;

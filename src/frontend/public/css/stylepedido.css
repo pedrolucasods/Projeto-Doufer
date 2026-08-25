@@ -305,11 +305,12 @@ body{
 
     margin-bottom: 10px;
 
-    border: 1px solid #e5e5e5;
+    border: 1px solid var(--theme-border, #e5e5e5);
 
     border-radius: 10px;
 
-    background-color: white;
+    background-color: var(--theme-surface, white);
+    color: var(--theme-text, inherit);
 
     box-shadow: 0 1px 3px rgba(0,0,0,0.03);
 
@@ -317,7 +318,7 @@ body{
 }
 
 .item-row:hover{
-    background-color: #f8fbff;
+    background-color: color-mix(in srgb, var(--theme-primary, #0d6efd) 6%, var(--theme-surface, #f8fbff));
 
     box-shadow: 0 2px 8px rgba(0,0,0,0.06);
 }
