@@ -48,9 +48,9 @@ body {
     flex-direction: column;
     gap: 0.25rem;
     padding: 1rem 1.1rem;
-    background: #ffffff;
+    background: var(--theme-surface, #ffffff);
     border-radius: 1rem;
-    border: 1px solid #e7eefc;
+    border: 1px solid var(--theme-border, #e7eefc);
 }
 
 .summary-item .label {
@@ -58,11 +58,11 @@ body {
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.04em;
-    color: #6c757d;
+    color: var(--theme-muted, #6c757d);
 }
 
 .summary-item strong {
-    color: #23304a;
+    color: var(--theme-text, #23304a);
 }
 
 .highlight-summary {

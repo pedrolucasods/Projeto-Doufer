@@ -179,9 +179,9 @@ body{
 
     padding: 18px;
 
-    background-color: #fff;
+    background-color: var(--theme-surface, #fff);
 
-    border: 1px solid #ddd;
+    border: 1px solid var(--theme-border, #ddd);
 
     border-radius: 10px;
 
