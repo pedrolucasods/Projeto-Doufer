@@ -179,14 +179,13 @@ class Medida{
         try {
             const dados = {tipo_medida:"sob_medida",medidas:[{sexo:"feminino"}],item_id:req.params.id}
             const medidas = await ServiceItemPedidoMedida.listar_medidas_item_pedido(dados)
-            return res.send(medidas)
-            // return res.render('./medidas/item_pedido/sob_medida_feminina/listar_sob_medida_feminina',{
-            //     stylesheet:'./medidas/item_pedido/sob_medida_feminina/listar_sob_medida_feminina.css',
-            //     script:'./medidas/item_pedido/sob_medida_feminina/listar_sob_medida_feminina.js',
-            //     ...medidas,
-            //     error:req.query.error || null,
-            //     msg: req.query.msg || null
-            // })
+            return res.render('./medidas/item_pedido/sob_medida_feminina/listar_sob_medida_feminina',{
+                stylesheet:'./medidas/item_pedido/sob_medida_feminina/listar_sob_medida_feminina.css',
+                script:'./medidas/item_pedido/sob_medida_feminina/listar_sob_medida_feminina.js',
+                ...medidas,
+                error:req.query.error || null,
+                msg: req.query.msg || null
+            })
         } catch (error) {
             return res.status(500).json({"erro":`${error}`})
         }
