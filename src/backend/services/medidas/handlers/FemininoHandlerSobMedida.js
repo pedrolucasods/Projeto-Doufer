@@ -1,3 +1,5 @@
+const {QueryTypes} = require('sequelize')
+const sequelize = require('../../../database')
 const modelMedidaSobMedidaFeminina = require('../../../models/medida_sob_medida_feminina')
 const ServiceCliente = require('../../cliente')
 
@@ -115,11 +117,12 @@ class MedidaSobMedida {
     }
 
     async buscarMedidaPorItemId(id){
-        const medidas = await sequelize.query(`
+        let dados = await sequelize.query(`
                 SELECT
-                    json_group_object(
+                    json_group_array(
                         json_object(
                             'id',msmf.id,
+                            'quantidade',ipm.quantidade,
                             'busto',msmf.busto,
                             'cintura',msmf.cintura,
                             'quadril',msmf.quadril,
@@ -129,15 +132,15 @@ class MedidaSobMedida {
                             'comprimento_da_manga',msmf.comprimento_da_manga,
                             'largura_da_manga',msmf.largura_da_manga,
                             'criacao',json_object(
-                                'data',DATE(mp.createdAt),
-                                'hora',strftime('%H:%M', mp.createdAt, '-4 hours')
+                                'data',DATE(msmf.createdAt),
+                                'hora',strftime('%H:%M', msmf.createdAt, '-4 hours')
                             ),
                             'atualizacao',json_object(
-                                'data',DATE(mp.updatedAt),
-                                'hora',strftime('%H:%M', mp.updatedAt, '-4 hours')
+                                'data',DATE(msmf.updatedAt),
+                                'hora',strftime('%H:%M', msmf.updatedAt, '-4 hours')
                             )
                         )
-                    )
+                    ) AS medidas
                 FROM medida_sob_medida_femininas msmf
                 INNER JOIN item_pedido_medidas ipm ON msmf.item_pedido_medida_id = ipm.id
                 INNER JOIN itens_pedidos ip ON ipm.item_pedido_id = ip.id
@@ -147,7 +150,8 @@ class MedidaSobMedida {
             type:QueryTypes.SELECT,
             plain:true
         })
-        return medidas
+        dados = JSON.parse(dados.medidas)
+        return dados
     }
 
     buscarMedidaPorItemPedidoMedidaId(id) {
