@@ -57,12 +57,32 @@ class ItensPedido{
 
     async detalhes(id){
         const dados = await sequelize.query(`
+            WITH TotalMedidaSobMedidaFeminina AS (
+                SELECT
+                    item_pedido_medida_id,
+                    SUM(coalesce(ipm.quantidade,0)) AS quantidade_feminina
+                FROM medida_sob_medida_femininas msmf
+                RIGHT JOIN item_pedido_medidas ipm ON msmf.item_pedido_medida_id = ipm.id
+                WHERE ipm.item_pedido_id = :id
+                GROUP BY ipm.id
+            ),
+            TotalMedidaSobMedidaMasculina AS (
+                SELECT
+                    item_pedido_medida_id,
+                    SUM(coalesce(ipm.quantidade,0)) AS quantidade_masculina
+                FROM medida_sob_medida_masculinas msmm
+                RIGHT JOIN item_pedido_medidas ipm ON msmm.item_pedido_medida_id = ipm.id
+                WHERE ipm.item_pedido_id = :id
+                GROUP BY ipm.id
+            )
             SELECT
                 p.id AS pedido_id,
                 c.nome,
                 COALESCE(SUM(ipm.quantidade),0) AS quantidade_com_medidas,
                 SUM(CASE WHEN ipm.tipo_medida = 'padrao' THEN ipm.quantidade ELSE 0 END) AS quantidade_medidas_padrao,
                 SUM(CASE WHEN ipm.tipo_medida = 'sob_medida' THEN ipm.quantidade ELSE 0 END) AS quantidade_medidas_sob_medida,
+                COALESCE(SUM(tmf.quantidade_feminina), 0) AS quantidade_feminina,
+                COALESCE(SUM(tmm.quantidade_masculina), 0) AS quantidade_masculina,
                 json_object(
                     'id',ip.id,
                     'preco',ip.preco,
@@ -77,6 +97,8 @@ class ItensPedido{
                     'complemento',ip.complemento
                 )AS item
             FROM item_pedido_medidas ipm
+            LEFT JOIN TotalMedidaSobMedidaFeminina tmf ON ipm.id = tmf.item_pedido_medida_id
+            LEFT JOIN TotalMedidaSobMedidaMasculina tmm ON ipm.id = tmm.item_pedido_medida_id
             RIGHT JOIN itens_pedidos ip ON ipm.item_pedido_id = ip.id
             INNER JOIN pedidos p ON ip.id_pedido = p.id
             INNER JOIN clientes c ON p.cliente_id = c.id
