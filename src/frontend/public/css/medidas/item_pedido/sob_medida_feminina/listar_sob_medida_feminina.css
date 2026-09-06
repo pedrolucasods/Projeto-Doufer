@@ -1,11 +1,15 @@
 :root {
-  --sob-bg: var(--theme-background, #f8fafc);
+  --sob-bg: var(--theme-page-bg, #f8fafc);
   --sob-surface: var(--theme-surface, #ffffff);
   --sob-text: var(--theme-text, #0f172a);
-  --sob-muted: var(--theme-text-muted, #64748b);
+  --sob-muted: var(--theme-muted, #64748b);
   --sob-border: var(--theme-border, #e2e8f0);
   --sob-primary: var(--theme-primary, #3b82f6);
-  --sob-primary-soft: var(--theme-primary-soft, #eff6ff);
+  --sob-primary-soft: color-mix(
+    in srgb,
+    var(--sob-primary) 12%,
+    var(--sob-surface)
+  );
   --sob-danger: #ef4444;
 }
 
@@ -21,6 +25,7 @@ body {
   max-width: 1200px;
   margin: 0 auto;
 }
+
 #msg,
 #errordiv {
   position: fixed;
@@ -29,37 +34,42 @@ body {
   z-index: 9999;
   max-width: 400px;
   border-radius: 12px;
-  box-shadow: 0 10px 25px rgba(15, 23, 42, 0.15);
+  box-shadow: 0 10px 25px color-mix(in srgb, var(--sob-text) 18%, transparent);
 }
+
 .sob-medida-header {
   display: flex;
   align-items: center;
   gap: 1.5rem;
   margin-bottom: 2rem;
 }
+
 .icon-button {
   position: fixed;
   top: 24px;
   left: 24px;
   z-index: 10;
   display: grid;
-  place-items: center;
   width: 46px;
   height: 46px;
+  place-items: center;
   border: 1px solid var(--sob-border);
   border-radius: 12px;
   background: var(--sob-surface);
   color: var(--sob-text);
-  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.06);
+  box-shadow: 0 1px 3px color-mix(in srgb, var(--sob-text) 10%, transparent);
   text-decoration: none;
 }
+
 .icon-button:hover {
   background: var(--sob-primary-soft);
   color: var(--sob-primary);
 }
+
 .header-copy {
   flex: 1;
 }
+
 .eyebrow,
 .section-kicker {
   color: var(--sob-primary);
@@ -68,18 +78,22 @@ body {
   letter-spacing: 0.04em;
   text-transform: uppercase;
 }
+
 .eyebrow i {
   margin-right: 0.35rem;
 }
+
 .header-copy h1 {
   margin: 0.35rem 0 0.25rem;
   font-size: 1.6rem;
 }
+
 .header-copy p {
   margin: 0;
   color: var(--sob-muted);
   font-size: 0.95rem;
 }
+
 .quantity-summary {
   min-width: 145px;
   padding: 0.85rem 1rem;
@@ -88,18 +102,21 @@ body {
   border-radius: 12px;
   background: var(--sob-surface);
 }
+
 .quantity-summary span,
 .quantity-summary small {
   display: block;
   color: var(--sob-muted);
   font-size: 0.75rem;
 }
+
 .quantity-summary strong {
   display: block;
   color: var(--sob-primary);
   font-size: 2rem;
   line-height: 1.1;
 }
+
 .sob-medida-toolbar {
   display: flex;
   align-items: end;
@@ -107,11 +124,13 @@ body {
   gap: 1rem;
   margin-bottom: 1.25rem;
 }
+
 .sob-medida-toolbar h2,
 .empty-measures h2 {
   margin: 0.25rem 0 0;
   font-size: 1.25rem;
 }
+
 .add-button,
 .confirm-delete-button,
 .cancel-button {
@@ -126,6 +145,7 @@ body {
     background 0.2s ease,
     transform 0.2s ease;
 }
+
 .add-button {
   display: inline-flex;
   align-items: center;
@@ -133,20 +153,24 @@ body {
   background: var(--sob-primary);
   color: #fff;
 }
+
 .add-button:hover {
-  background: color-mix(in srgb, var(--sob-primary), #000 15%);
+  background: var(--theme-primary-dark, var(--sob-primary));
   color: #fff;
   transform: translateY(-1px);
 }
+
 .add-button:disabled {
-  background: #cbd5e1;
-  color: #64748b;
+  background: color-mix(in srgb, var(--sob-muted) 45%, var(--sob-surface));
+  color: var(--sob-muted);
   cursor: not-allowed;
 }
+
 .sob-medidas-list {
   display: grid;
   gap: 1rem;
 }
+
 .sob-medida-card {
   position: relative;
   overflow: hidden;
@@ -154,21 +178,24 @@ body {
   border: 1px solid var(--sob-border);
   border-radius: 16px;
   background: var(--sob-surface);
-  box-shadow: 0 4px 10px rgba(15, 23, 42, 0.04);
+  box-shadow: 0 4px 10px color-mix(in srgb, var(--sob-text) 6%, transparent);
   transition:
     transform 0.2s ease,
     box-shadow 0.2s ease;
 }
+
 .sob-medida-card:hover {
   transform: translateY(-2px);
-  box-shadow: 0 10px 20px rgba(15, 23, 42, 0.09);
+  box-shadow: 0 10px 20px color-mix(in srgb, var(--sob-text) 12%, transparent);
 }
+
 .card-accent {
   position: absolute;
   inset: 0 auto 0 0;
   width: 4px;
   background: var(--sob-primary);
 }
+
 .sob-card-heading,
 .sob-card-footer {
   display: flex;
@@ -176,19 +203,23 @@ body {
   justify-content: space-between;
   gap: 1rem;
 }
+
 .measure-number {
   color: var(--sob-muted);
   font-size: 0.75rem;
   font-weight: 700;
   text-transform: uppercase;
 }
+
 .sob-card-heading h3 {
   margin: 0.25rem 0 0;
   font-size: 1.2rem;
 }
+
 .quantity-badge {
   padding: 0.35rem 0.7rem;
-  border: 1px solid color-mix(in srgb, var(--sob-primary), #fff 65%);
+  border: 1px solid
+    color-mix(in srgb, var(--sob-primary), var(--sob-surface) 65%);
   border-radius: 8px;
   background: var(--sob-primary-soft);
   color: var(--sob-primary);
@@ -196,15 +227,18 @@ body {
   font-weight: 600;
   white-space: nowrap;
 }
+
 .quantity-badge i {
   margin-right: 0.25rem;
 }
+
 .fields-grid {
   display: grid;
   grid-template-columns: repeat(8, minmax(90px, 1fr));
   gap: 0.65rem;
   margin: 1.25rem 0;
 }
+
 .measure-field {
   min-width: 0;
   padding: 0.7rem 0.75rem;
@@ -212,6 +246,7 @@ body {
   border-radius: 9px;
   background: color-mix(in srgb, var(--sob-bg), var(--sob-surface) 45%);
 }
+
 .measure-field span {
   display: block;
   overflow: hidden;
@@ -222,6 +257,7 @@ body {
   text-transform: uppercase;
   white-space: nowrap;
 }
+
 .measure-field strong {
   display: block;
   overflow: hidden;
@@ -231,42 +267,51 @@ body {
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+
 .sob-card-footer {
   padding-top: 0.85rem;
   border-top: 1px solid var(--sob-border);
 }
+
 .sob-card-footer small {
   color: var(--sob-muted);
   font-size: 0.68rem;
 }
+
 .card-actions {
   display: flex;
   gap: 0.5rem;
 }
+
 .card-action {
   display: grid;
-  place-items: center;
   width: 36px;
   height: 36px;
+  place-items: center;
   border: 1px solid var(--sob-border);
   border-radius: 8px;
   background: var(--sob-surface);
   text-decoration: none;
   cursor: pointer;
 }
+
 .edit-action {
   color: var(--sob-primary);
 }
+
 .delete-action {
   color: var(--sob-danger);
 }
+
 .edit-action:hover {
   background: var(--sob-primary-soft);
 }
+
 .delete-action:hover {
-  background: #fef2f2;
-  border-color: #fca5a5;
+  background: color-mix(in srgb, var(--sob-danger) 12%, var(--sob-surface));
+  border-color: color-mix(in srgb, var(--sob-danger), var(--sob-surface) 55%);
 }
+
 .empty-measures {
   display: flex;
   min-height: 360px;
@@ -279,56 +324,66 @@ body {
   background: var(--sob-surface);
   text-align: center;
 }
+
 .empty-mark {
   display: grid;
-  place-items: center;
   width: 68px;
   height: 68px;
   margin-bottom: 1.25rem;
+  place-items: center;
   border-radius: 16px;
   background: var(--sob-primary-soft);
   color: var(--sob-primary);
   font-size: 1.7rem;
 }
+
 .empty-measures p {
   max-width: 430px;
   margin: 0.6rem auto 1.5rem;
   color: var(--sob-muted);
   line-height: 1.5;
 }
+
 .delete-modal {
+  overflow: hidden;
   border: 0;
   border-radius: 12px;
-  overflow: hidden;
 }
+
 .modal-title-wrap {
   display: flex;
   align-items: center;
   gap: 0.7rem;
 }
+
 .modal-title {
   margin: 0;
   font-size: 1.1rem;
 }
+
 .modal-warning {
   display: grid;
-  place-items: center;
   width: 36px;
   height: 36px;
+  place-items: center;
   border-radius: 10px;
-  background: #fef2f2;
+  background: color-mix(in srgb, var(--sob-danger) 12%, var(--sob-surface));
   color: var(--sob-danger);
 }
+
 .modal-body p {
   margin-bottom: 0.25rem;
 }
+
 .modal-body small {
   color: var(--sob-muted);
 }
+
 .cancel-button {
-  background: #f1f5f9;
+  background: color-mix(in srgb, var(--sob-bg), var(--sob-surface) 60%);
   color: var(--sob-text);
 }
+
 .confirm-delete-button {
   background: var(--sob-danger);
   color: #fff;
@@ -339,35 +394,42 @@ body {
     grid-template-columns: repeat(4, minmax(110px, 1fr));
   }
 }
+
 @media (max-width: 650px) {
   body {
     padding: 1rem;
   }
+
   .sob-medida-header,
   .sob-medida-toolbar {
     align-items: flex-start;
     flex-direction: column;
   }
+
   .header-copy {
     width: 100%;
     padding-left: 2.5rem;
   }
-  .quantity-summary {
-    width: 100%;
-    box-sizing: border-box;
-  }
+
+  .quantity-summary,
   .add-button {
     width: 100%;
-    justify-content: center;
     box-sizing: border-box;
   }
+
+  .add-button {
+    justify-content: center;
+  }
+
   .fields-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
+
   .sob-card-footer {
     align-items: flex-start;
     flex-direction: column;
   }
+
   .sob-card-footer small {
     max-width: 100%;
   }

@@ -1,161 +1,141 @@
-<button id="back" type="button" onclick="voltar({{pedido_id}})"><i class="fas fa-home"></i></button>
+<a
+  id="back"
+  href="/pedidos/detalhes/{{pedido_id}}"
+  title="Voltar para o pedido"
+  aria-label="Voltar para o pedido"
+>
+  <i class="fas fa-arrow-left"></i>
+</a>
 
 {{#if msg}}
-<div id="msg" class="d-flex gap-3 alert alert-success alert-dismissible fade show position-fixed top-0 end-0 me-5 m-3">
-    <i class="bi bi-check-square-fill text-success"></i>
-    <p class="fw-bold mb-0">{{msg}}</p>
-</div>
+  <div
+    id="msg"
+    class="alert alert-success alert-dismissible fade show"
+    role="alert"
+  >
+    <i class="bi bi-check-square-fill"></i><span>{{msg}}</span>
+    <button
+      type="button"
+      class="btn-close"
+      data-bs-dismiss="alert"
+      aria-label="Fechar"
+    ></button>
+  </div>
 {{/if}}
 
 {{#if error}}
-<div id="errordiv" class="d-flex gap-3 alert alert-danger alert-dismissible fade show position-fixed top-0 end-0 me-5 m-3">
-    <i class="bi bi-x-square-fill text-danger"></i>
-    <p class="fw-bold mb-0">{{error}}</p>
-</div>
+  <div
+    id="errordiv"
+    class="alert alert-danger alert-dismissible fade show"
+    role="alert"
+  >
+    <i class="bi bi-x-square-fill"></i><span>{{error}}</span>
+    <button
+      type="button"
+      class="btn-close"
+      data-bs-dismiss="alert"
+      aria-label="Fechar"
+    ></button>
+  </div>
 {{/if}}
 
-<section class="page-section py-5 bg-light">
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-xl-9 col-lg-10">
-                <div class="card border-0 shadow-sm overflow-hidden add-medida-card">
-                    <div class="card-body p-5">
-                        <div class="d-flex justify-content-between align-items-start mb-4">
-                            <div>
-                                <h1 class="h3 fw-bold mb-2">Detalhes do Item do Pedido</h1>
-                                <p class="text-muted mb-0">Resumo do item, quantidade e informações das medidas cadastradas.</p>
-                            </div>
-                            <span class="badge bg-secondary text-uppercase">Item</span>
-                        </div>
-
-                        <div class="summary-panel mb-4">
-                            <div class="row g-3">
-                                <div class="col-md-4">
-                                    <div class="summary-item">
-                                        <span class="label">Pedido</span>
-                                        <strong>#{{pedido_id}}</strong>
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="summary-item">
-                                        <span class="label">Cliente</span>
-                                        <strong>{{nome}}</strong>
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="summary-item">
-                                        <span class="label">Item</span>
-                                        <strong>#{{item.id}}</strong>
-                                    </div>
-                                </div>
-                                <div class="col-12">
-                                    <div class="summary-item highlight-summary">
-                                        <span class="label">Quantidade total com medidas</span>
-                                        <strong>{{quantidade_com_medidas}}</strong>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="info-panel mb-4">
-                            <div class="row g-3">
-                                <div class="col-md-6">
-                                    <div class="info-item">
-                                        <span class="label">Produto</span>
-                                        <strong>{{item.produto}}</strong>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="info-item">
-                                        <span class="label">Modelo</span>
-                                        <strong>{{item.modelo_produto}}</strong>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="info-item">
-                                        <span class="label">Cor</span>
-                                        <strong>{{item.cor}}</strong>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="info-item">
-                                        <span class="label">Tecido</span>
-                                        <strong>{{item.tecido}}</strong>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="info-item">
-                                        <span class="label">Tamanho</span>
-                                        <strong>{{item.tamanho}}</strong>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="info-item">
-                                        <span class="label">Quantidade</span>
-                                        <strong>{{item.quantidade}}</strong>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="info-item">
-                                        <span class="label">Preço</span>
-                                        <strong>R$ {{item.preco}}</strong>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="info-item">
-                                        <span class="label">Preço unitário</span>
-                                        <strong>R$ {{item.preco_unitario}}</strong>
-                                    </div>
-                                </div>
-                                <div class="col-12">
-                                    <div class="info-item">
-                                        <span class="label">Detalhes</span>
-                                        <strong>{{item.detalhes}}</strong>
-                                    </div>
-                                </div>
-                                <div class="col-12">
-                                    <div class="info-item">
-                                        <span class="label">Complemento</span>
-                                        <strong>{{item.complemento}}</strong>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="medidas-section mt-4">
-                            <div class="section-title">Medidas cadastradas</div>
-
-                            <div class="row g-3">
-                                <div class="col-lg-6">
-                                    <div class="medida-card d-flex flex-column">
-                                        <div class="medida-card-header">
-                                            <h3>Medida padrão</h3>
-                                            <span class="badge bg-primary">{{quantidade_medidas_padrao}}</span>
-                                        </div>
-                                        <p class="medida-description">Quantidade registrada para medidas padrão deste item.</p>
-                                        <div class="mt-auto">
-                                            <a class="btn btn-primary w-100" onclick="medidas_padrao({{item.id}})">Ver medidas padrão</a>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-6">
-                                    <div class="medida-card d-flex flex-column">
-                                        <div class="medida-card-header">
-                                            <h3>Sob medida</h3>
-                                            <span class="badge bg-secondary">{{quantidade_medidas_sob_medida}}</span>
-                                        </div>
-                                        <p class="medida-description">Quantidade registrada para medidas sob medida deste item.</p>
-                                        <div class="mt-auto">
-                                            <a class="btn btn-outline-primary w-100" >Ver medidas sob medida</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+<main class="item-details-page">
+  <header class="item-details-header">
+    <div>
+      <span class="eyebrow"><i class="fas fa-box-open"></i>
+        Pedido #{{pedido_id}}
+        / Item #{{item.id}}</span>
+      <h1>Detalhes do item</h1>
+      <p>{{item.produto}}
+        <span aria-hidden="true">/</span>
+        {{item.cor}}
+        <span aria-hidden="true">/</span>
+        {{nome}}</p>
     </div>
-</section>
+    <div class="total-summary">
+      <span>Com medidas</span>
+      <strong>{{quantidade_com_medidas}}</strong>
+      <small>de {{item.quantidade}} peças</small>
+    </div>
+  </header>
+
+  <section class="item-overview" aria-label="Resumo do item">
+    <div class="overview-heading">
+      <span class="section-kicker">Produto</span>
+      <h2>Informações do item</h2>
+    </div>
+    <div class="detail-grid">
+      <div class="detail-item detail-item-featured"><span>Produto</span><strong
+        >{{item.produto}}</strong></div>
+      <div class="detail-item"><span>Modelo</span><strong
+        >{{item.modelo_produto}}</strong></div>
+      <div class="detail-item"><span>Cor</span><strong
+        >{{item.cor}}</strong></div>
+      <div class="detail-item"><span>Tecido</span><strong
+        >{{item.tecido}}</strong></div>
+      <div class="detail-item"><span>Tamanho</span><strong
+        >{{item.tamanho}}</strong></div>
+      <div class="detail-item"><span>Quantidade</span><strong
+        >{{item.quantidade}}</strong></div>
+      <div class="detail-item"><span>Preço total</span><strong>R$
+          {{item.preco}}</strong></div>
+      <div class="detail-item"><span>Preço unitário</span><strong>R$
+          {{item.preco_unitario}}</strong></div>
+      <div class="detail-item detail-item-wide"><span>Detalhes</span><strong
+        >{{item.detalhes}}</strong></div>
+      <div class="detail-item detail-item-wide"><span>Complemento</span><strong
+        >{{item.complemento}}</strong></div>
+    </div>
+  </section>
+
+  <section class="measurements-section" aria-label="Medidas do item">
+    <div class="section-heading">
+      <div><span class="section-kicker">Organização</span><h2>Medidas
+          cadastradas</h2></div>
+      <span class="section-total"><strong>{{quantidade_com_medidas}}</strong>
+        peças distribuídas</span>
+    </div>
+
+    <div class="measurement-grid">
+      <article class="measurement-card standard-card">
+        <div class="measurement-icon"><i
+            class="fas fa-ruler-combined"
+          ></i></div>
+        <div class="measurement-copy"><span
+            class="measurement-label"
+          >Grade</span><h3>Medidas padrão</h3><p>Tamanhos e ajustes padronizados
+            para este item.</p></div>
+        <strong class="measurement-count">{{quantidade_medidas_padrao}}<small
+          >un.</small></strong>
+        <a
+          class="measurement-link"
+          href="/medidas/itens-pedidos/{{item.id}}/padrao"
+        >Ver medidas padrão <i class="fas fa-arrow-right"></i></a>
+      </article>
+
+      <article class="measurement-card female-card">
+        <div class="measurement-icon"><i class="fas fa-venus"></i></div>
+        <div class="measurement-copy"><span class="measurement-label">Sob medida</span><h3
+          >Feminino</h3><p>Medidas personalizadas para modelagem feminina.</p></div>
+        <strong class="measurement-count">{{quantidade_feminina}}<small
+          >un.</small></strong>
+        <a
+          class="measurement-link"
+          href="/medidas/itens-pedidos/{{item.id}}/SobMedida/feminina"
+        >Ver medidas femininas <i class="fas fa-arrow-right"></i></a>
+      </article>
+
+      <article class="measurement-card male-card">
+        <div class="measurement-icon"><i class="fas fa-mars"></i></div>
+        <div class="measurement-copy"><span class="measurement-label">Sob medida</span><h3
+          >Masculino</h3><p>Medidas personalizadas para modelagem masculina.</p></div>
+        <strong class="measurement-count">{{quantidade_masculina}}<small
+          >un.</small></strong>
+        <a
+          class="measurement-link"
+          href="/medidas/itens-pedidos/{{item.id}}/SobMedida/masculina"
+        >Ver medidas masculinas <i class="fas fa-arrow-right"></i></a>
+      </article>
+    </div>
+  </section>
+</main>
