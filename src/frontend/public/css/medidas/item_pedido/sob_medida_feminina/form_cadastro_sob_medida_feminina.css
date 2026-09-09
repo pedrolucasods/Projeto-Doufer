@@ -1,19 +1,19 @@
 :root {
-    --form-bg: #f5f7fb;
-    --form-surface: #ffffff;
-    --form-text: #182338;
-    --form-muted: #68758a;
-    --form-border: #dfe5ef;
-    --form-primary: #b24f78;
-    --form-primary-dark: #8d3d5e;
-    --form-primary-soft: #f9edf2;
+    --form-bg: var(--theme-page-bg, #f5f7fb);
+    --form-surface: var(--theme-surface, #ffffff);
+    --form-text: var(--theme-text, #182338);
+    --form-muted: var(--theme-muted, #68758a);
+    --form-border: var(--theme-border, #dfe5ef);
+    --form-primary: var(--theme-primary, #b24f78);
+    --form-primary-dark: var(--theme-primary-dark, #8d3d5e);
+    --form-primary-soft: color-mix(in srgb, var(--form-primary) 12%, var(--form-surface));
     --form-shadow: 0 18px 45px rgba(24, 35, 56, 0.09);
 }
 
 body {
     margin: 0;
     padding: 2rem;
-    background: linear-gradient(135deg, #f9fbff 0%, var(--form-bg) 55%, #fff5f8 100%);
+    background: linear-gradient(135deg, var(--form-bg), var(--form-bg) 55%, color-mix(in srgb, var(--form-primary) 8%, var(--form-bg)) 100%);
     color: var(--form-text);
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 }
@@ -80,7 +80,7 @@ body {
 .summary-heading { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; margin-bottom: 1rem; }
 .summary-heading h2 { margin: .25rem 0 0; font-size: 1.25rem; }
 .summary-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .7rem; }
-.summary-field { min-width: 0; padding: .75rem .85rem; border: 1px solid var(--form-border); border-radius: 10px; background: #fbfcfe; }
+.summary-field { min-width: 0; padding: .75rem .85rem; border: 1px solid var(--form-border); border-radius: 10px; background: color-mix(in srgb, var(--form-surface) 92%, var(--form-primary)); }
 .summary-field span, .field-group small { display: block; color: var(--form-muted); font-size: .72rem; }
 .summary-field span { margin-bottom: .25rem; font-weight: 700; text-transform: uppercase; letter-spacing: .04em; }
 .summary-field strong { display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
@@ -94,7 +94,7 @@ body {
 .section-heading h2 { margin: .2rem 0 0; font-size: 1.15rem; }
 .measurement-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; }
 .field-group label { display: block; margin-bottom: .4rem; color: var(--form-text); font-size: .86rem; font-weight: 700; }
-.form-control { width: 100%; box-sizing: border-box; min-height: 3rem; padding: .7rem .85rem; border: 1px solid var(--form-border); border-radius: 10px; background: #fcfdff; color: var(--form-text); box-shadow: inset 0 1px 2px rgba(24, 35, 56, .03); }
+.form-control { width: 100%; box-sizing: border-box; min-height: 3rem; padding: .7rem .85rem; border: 1px solid var(--form-border); border-radius: 10px; background: var(--form-surface); color: var(--form-text); box-shadow: inset 0 1px 2px rgba(24, 35, 56, .03); }
 .form-control:focus { outline: 0; border-color: var(--form-primary); box-shadow: 0 0 0 3px rgba(178, 79, 120, .14); }
 .quantity-field { max-width: 360px; }
 .field-group small { margin-top: .4rem; }
