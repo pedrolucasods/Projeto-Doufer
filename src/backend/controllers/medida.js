@@ -195,7 +195,7 @@ class Medida{
         try {
             const dados = {tipo_medida:"sob_medida",medidas:[{sexo:"masculino"}],item_id:req.params.id}
             const medidas = await ServiceItemPedidoMedida.listar_medidas_item_pedido(dados)
-            return res.send(medidas)
+            // return res.send(medidas)
             return res.render('./medidas/item_pedido/sob_medida_masculina/listar_sob_medida_masculina',{
                 stylesheet:'./medidas/item_pedido/sob_medida_masculina/listar_sob_medida_masculina.css',
                 script:'./medidas/item_pedido/sob_medida_masculina/listar_sob_medida_masculina.js',
@@ -259,7 +259,7 @@ class Medida{
         try {
             const medida_id = req.params.id
             const dados = await ServiceItemPedidoMedida.dados_formulario_atualizar(medida_id)
-            // return res.send(dados)
+            return res.send(dados)
             return res.render('./medidas/item_pedido/padrao/form_atualizar_padrao',{
                 stylesheet:'./medidas/item_pedido/padrao/form_atualizar_padrao.css',
                 script:'./medidas/item_pedido/padrao/form_atualizar_padrao.js',
