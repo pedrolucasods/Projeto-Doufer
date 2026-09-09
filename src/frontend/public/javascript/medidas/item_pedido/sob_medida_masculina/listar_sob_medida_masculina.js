@@ -1,5 +1,5 @@
 function cadastrar(item_id){
-    window.location.href = `/medidas/itens-pedidos/${item_id}/cadastro/SobMedida`
+    window.location.href = `/medidas/itens-pedidos/${item_id}/cadastro/SobMedida/masculina`
 }
 
 function atualizar(medida_id){

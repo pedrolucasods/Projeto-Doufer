@@ -1,0 +1,31 @@
+@import "../sob_medida_feminina/form_cadastro_sob_medida_feminina.css";
+
+:root {
+	--form-primary: #4169a8;
+	--form-primary-dark: #2f4f82;
+	--form-primary-soft: #edf3fc;
+}
+
+body {
+	background: linear-gradient(135deg, #f8fbff 0%, #f1f5fb 55%, #eef4ff 100%);
+}
+
+.gender-badge {
+	background: var(--form-primary-soft);
+	color: var(--form-primary-dark);
+}
+
+.summary-available {
+	border-color: #bfd0eb;
+	background: var(--form-primary-soft);
+}
+
+.section-icon {
+	background: var(--form-primary-soft);
+	color: var(--form-primary);
+}
+
+.form-control:focus {
+	border-color: var(--form-primary);
+	box-shadow: 0 0 0 3px rgba(65, 105, 168, .14);
+}
