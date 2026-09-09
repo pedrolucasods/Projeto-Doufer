@@ -1,0 +1,72 @@
+<main class="measurement-form-page">
+	{{#if msg}}
+		<div id="msg" class="alert alert-success alert-dismissible fade show form-alert" role="alert">
+			<i class="bi bi-check-circle-fill"></i><span>{{msg}}</span>
+			<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Fechar"></button>
+		</div>
+	{{/if}}
+	{{#if error}}
+		<div id="errordiv" class="alert alert-danger alert-dismissible fade show form-alert" role="alert">
+			<i class="bi bi-exclamation-circle-fill"></i><span>{{error}}</span>
+			<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Fechar"></button>
+		</div>
+	{{/if}}
+
+	<header class="measurement-form-header">
+		<button id="back" type="button" onclick="voltar({{item_id}})" title="Voltar" aria-label="Voltar"><i class="fas fa-arrow-left"></i></button>
+		<div>
+			<span class="form-eyebrow"><i class="fas fa-ruler-combined"></i> Item do pedido #{{item_id}}</span>
+			<h1>Nova medida sob medida feminina</h1>
+			<p>Registre as proporções específicas para este item.</p>
+		</div>
+		<span class="gender-badge"><i class="fas fa-female"></i> Feminina</span>
+	</header>
+
+	<section class="item-summary" aria-label="Dados do item do pedido">
+		<div class="summary-heading"><span class="section-kicker">Item selecionado</span><h2>{{produto}}</h2></div>
+		<div class="summary-grid">
+			<div class="summary-field"><span>Cliente</span><strong>{{cliente}}</strong></div>
+			<div class="summary-field"><span>Pedido</span><strong>#{{pedido_id}}</strong></div>
+			<div class="summary-field"><span>Item</span><strong>#{{item_id}}</strong></div>
+			<div class="summary-field"><span>Modelo</span><strong>{{modelo_produto}}</strong></div>
+			<div class="summary-field"><span>Cor</span><strong>{{cor}}</strong></div>
+			<div class="summary-field summary-available"><span>Quantidade disponível</span><strong>{{quantidade_disponivel}}</strong></div>
+		</div>
+	</section>
+
+	<form id="formAddMedidaSobMedidaItemPedido" class="measurement-form">
+		<input type="hidden" name="tipo_medida" value="sob_medida">
+		<input type="hidden" name="item_pedido_id" value="{{item_id}}">
+
+		<section class="form-section" aria-labelledby="quantity-title">
+			<div class="section-heading"><div class="section-icon"><i class="fas fa-layer-group"></i></div><div><span class="section-kicker">Produção</span><h2 id="quantity-title">Quantidade</h2></div></div>
+			<div class="field-group quantity-field">
+				<label for="quantidade">Quantidade de peças</label>
+				<input class="form-control" type="number" id="quantidade" name="quantidade" min="1" max="{{quantidade_disponivel}}" value="1" required>
+				<small>Até {{quantidade_disponivel}} peça(s) disponíveis para este item.</small>
+			</div>
+		</section>
+
+		<section class="form-section" aria-labelledby="body-title">
+			<div class="section-heading"><div class="section-icon"><i class="fas fa-female"></i></div><div><span class="section-kicker">Proporções</span><h2 id="body-title">Medidas do corpo</h2></div></div>
+			<div class="measurement-grid">
+				<div class="field-group"><label for="busto">Busto</label><input class="form-control" id="busto" name="medidas[0][busto]" required></div>
+				<div class="field-group"><label for="cintura">Cintura</label><input class="form-control" id="cintura" name="medidas[0][cintura]" required></div>
+				<div class="field-group"><label for="quadril">Quadril</label><input class="form-control" id="quadril" name="medidas[0][quadril]" required></div>
+				<div class="field-group"><label for="comprimento">Comprimento</label><input class="form-control" id="comprimento" name="medidas[0][comprimento]" required></div>
+				<div class="field-group"><label for="ombro">Ombro</label><input class="form-control" id="ombro" name="medidas[0][ombro]" required></div>
+				<div class="field-group"><label for="costas">Costas</label><input class="form-control" id="costas" name="medidas[0][costas]" required></div>
+			</div>
+		</section>
+
+		<section class="form-section" aria-labelledby="sleeve-title">
+			<div class="section-heading"><div class="section-icon"><i class="fas fa-ruler-vertical"></i></div><div><span class="section-kicker">Acabamento</span><h2 id="sleeve-title">Medidas da manga</h2></div></div>
+			<div class="measurement-grid">
+				<div class="field-group"><label for="comprimento_da_manga">Comprimento da manga</label><input class="form-control" id="comprimento_da_manga" name="medidas[0][comprimento_da_manga]" required></div>
+				<div class="field-group"><label for="largura_da_manga">Largura da manga</label><input class="form-control" id="largura_da_manga" name="medidas[0][largura_da_manga]" required></div>
+			</div>
+		</section>
+
+		<footer class="form-actions"><p><i class="fas fa-info-circle"></i> Preencha as medidas usadas para confeccionar este item.</p><button type="submit" class="save-button"><i class="fas fa-check"></i> Salvar medida</button></footer>
+	</form>
+</main>

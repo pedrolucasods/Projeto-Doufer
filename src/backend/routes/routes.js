@@ -82,8 +82,10 @@ medidas.delete('/clientes', controllers.medida.deletar_medida_cliente)
 
 medidas.get('/itens-pedidos/:id/padrao', controllers.medida.listar_medidas_item_pedido_padrao)
 medidas.get('/itens-pedidos/:id/SobMedida/feminina', controllers.medida.listar_medidas_item_pedido_sob_medida_feminina)
+medidas.get('/itens-pedidos/:id/SobMedida/masculina', controllers.medida.listar_medidas_item_pedido_sob_medida_masculina)
 medidas.get('/itens-pedidos/:id/cadastro/padrao', controllers.medida.formulario_cadastro_medidas_padrao_item_pedido)
-medidas.get('/itens-pedidos/:id/cadastro/SobMedida', controllers.medida.formulario_cadastro_medidas_sob_medida_item_pedido)
+medidas.get('/itens-pedidos/:id/cadastro/SobMedida/feminina', controllers.medida.formulario_cadastro_medidas_sob_medida_item_pedido_feminina)
+medidas.get('/itens-pedidos/:id/cadastro/SobMedida/masculina', controllers.medida.formulario_cadastro_medidas_sob_medida_item_pedido_masculina)
 
 medidas.get('/itens-pedidos/:id/atualizar/SobMedida', controllers.medida.formulario_atualizar_medidas_sob_medida_item_pedido)
 medidas.get('/itens-pedidos/:id/atualizar/padrao', controllers.medida.formulario_atualizar_medidas_padrao_item_pedido)

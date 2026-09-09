@@ -11,15 +11,15 @@ document.addEventListener('DOMContentLoaded',()=>{
             quantidade:document.getElementById('quantidade').value,
             tipo_medida:"sob_medida",
             medidas:[{
-                sexo:document.getElementById('sexo').value,
-                busto:document.getElementById('busto').value,
-                cintura:document.getElementById('cintura').value,
-                quadril:document.getElementById('quadril').value,
-                comprimento:document.getElementById('comprimento').value,
+                sexo:'masculino',
                 ombro:document.getElementById('ombro').value,
-                costas:document.getElementById('costas').value,
-                comprimento_da_manga:document.getElementById('comprimento_da_manga').value,
-                largura_da_manga:document.getElementById('largura_da_manga').value
+                circunferencia_torax:document.getElementById('circunferencia_torax').value,
+                circunferencia_abdomen:document.getElementById('circunferencia_abdomen').value,
+                costa:document.getElementById('costa').value,
+                comprimento_manga:document.getElementById('comprimento_manga').value,
+                largura_punho:document.getElementById('largura_punho').value,
+                largura_manga:document.getElementById('largura_manga').value,
+                comprimento_corpo:document.getElementById('comprimento_corpo').value
             }]
         }
         adicionarMedidas(dados)
@@ -54,14 +54,14 @@ async function adicionarMedidas(dados){
             throw new Error(data.erro)
         }
 
-        window.location.href = `/pedidos?msg=${data.msg}`
+        window.location.href = `/medidas/itens-pedidos/${dados.item_pedido_id}/SobMedida/masculina?msg=${data.msg}`
     } catch (error) {
-        window.location.href = `/medidas/itens-pedidos/${dados.item_pedido_id}/cadastro/SobMedida?error=${error}`
+        window.location.href = `/medidas/itens-pedidos/${dados.item_pedido_id}/cadastro/SobMedida/masculina?error=${error}`
     }
 }
 
 function voltar(id){
-    window.location.href = `/pedidos/detalhes/${id}`
+    window.location.href = `/medidas/itens-pedidos/${id}/SobMedida/masculina`
 }
 
 setTimeout(() =>{

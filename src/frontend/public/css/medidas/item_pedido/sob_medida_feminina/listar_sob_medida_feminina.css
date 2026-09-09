@@ -64,6 +64,7 @@ body {
 .icon-button:hover {
   background: var(--sob-primary-soft);
   color: var(--sob-primary);
+  cursor: pointer;
 }
 
 .header-copy {
@@ -250,6 +251,7 @@ body {
 .measure-field span {
   display: block;
   overflow: hidden;
+  cursor: help;
   color: var(--sob-muted);
   font-size: 0.68rem;
   font-weight: 700;

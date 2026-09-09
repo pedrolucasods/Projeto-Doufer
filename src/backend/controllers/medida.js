@@ -191,6 +191,23 @@ class Medida{
         }
     }
 
+    async listar_medidas_item_pedido_sob_medida_masculina(req,res){
+        try {
+            const dados = {tipo_medida:"sob_medida",medidas:[{sexo:"masculino"}],item_id:req.params.id}
+            const medidas = await ServiceItemPedidoMedida.listar_medidas_item_pedido(dados)
+            // return res.send(medidas)
+            return res.render('./medidas/item_pedido/sob_medida_masculina/listar_sob_medida_masculina',{
+                stylesheet:'./medidas/item_pedido/sob_medida_masculina/listar_sob_medida_masculina.css',
+                script:'./medidas/item_pedido/sob_medida_masculina/listar_sob_medida_masculina.js',
+                ...medidas,
+                error:req.query.error || null,
+                msg: req.query.msg || null
+            })
+        } catch (error) {
+            return res.status(500).json({"erro":`${error}`})
+        }
+    }
+
     async formulario_cadastro_medidas_padrao_item_pedido(req,res){
         try {
             const item_id = req.params.id
@@ -206,13 +223,30 @@ class Medida{
             return res.status(500).json({"erro":`${error.message}`})
         }
     }
-    async formulario_cadastro_medidas_sob_medida_item_pedido(req,res){
+
+    async formulario_cadastro_medidas_sob_medida_item_pedido_feminina(req,res){
         try {
             const item_id = req.params.id
             const dados = await ServiceItemPedidoMedida.dados_formulario_cadastro_medidas_item_pedido(item_id)
-            return res.render('addMedidaSobMedidaItemPedido',{
-                stylesheet:'addMedidaSobMedidaItemPedido.css',
-                script:'addMedidaSobMedidaItemPedido.js',
+            return res.render('./medidas/item_pedido/sob_medida_feminina/form_cadastro_sob_medida_feminina',{
+                stylesheet:'./medidas/item_pedido/sob_medida_feminina/form_cadastro_sob_medida_feminina.css',
+                script:'./medidas/item_pedido/sob_medida_feminina/form_cadastro_sob_medida_feminina.js',
+                ...dados,
+                error:req.query.error || null,
+                msg: req.query.msg || null
+            })
+        } catch (error) {
+            return res.status(500).json({"erro":`${error.message}`})
+        }
+    }
+
+    async formulario_cadastro_medidas_sob_medida_item_pedido_masculina(req,res){
+        try {
+            const item_id = req.params.id
+            const dados = await ServiceItemPedidoMedida.dados_formulario_cadastro_medidas_item_pedido(item_id)
+            return res.render('./medidas/item_pedido/sob_medida_masculina/form_cadastro_sob_medida_masculina',{
+                stylesheet:'./medidas/item_pedido/sob_medida_masculina/form_cadastro_sob_medida_masculina.css',
+                script:'./medidas/item_pedido/sob_medida_masculina/form_cadastro_sob_medida_masculina.js',
                 ...dados,
                 error:req.query.error || null,
                 msg: req.query.msg || null
@@ -242,7 +276,7 @@ class Medida{
         try {
             const medida_id = req.params.id
             const dados = await ServiceItemPedidoMedida.dados_formulario_atualizar(medida_id)
-            // return res.send(dados)
+            return res.send(dados)
             return res.render('./medidas/item_pedido/padrao/form_atualizar_padrao',{
                 stylesheet:'./medidas/item_pedido/padrao/form_atualizar_padrao.css',
                 script:'./medidas/item_pedido/padrao/form_atualizar_padrao.js',
