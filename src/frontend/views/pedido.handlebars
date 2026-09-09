@@ -1,336 +1,125 @@
-<a href="/">
-    <button id="back">
-        <i class="fas fa-home"></i>
-    </button>
-</a>
-
-{{#if msg}}
-<div id="msg" class="d-flex gap-3 alert alert-success alert-dismissible fade show position-fixed top-0 end-0 me-5 m-3">
-    <i class="bi bi-check-square-fill text-success"></i>
-    <p class="fw-bold mb-0">{{msg}}</p>
-</div>
-{{/if}}
-
-{{#if error}}
-<div id="errordiv" class="d-flex gap-3 alert alert-danger alert-dismissible fade show position-fixed top-0 end-0 me-5 m-3">
-    <i class="bi bi-x-square-fill text-danger"></i>
-    <p class="fw-bold mb-0">{{error}}</p>
-</div>
-{{/if}}
-
-<div id="container">
-
-    <div id="pedidos-wrapper">
-
-        <div class="header-page">
-
-            <div>
-                <h1 id="title">Pedidos</h1>
-
-                <p class="subtitle">
-                    Gerenciamento e acompanhamento de pedidos
-                </p>
-            </div>
-
-            <button class="btn btn-primary" onclick="abrirModalTipoCliente()">
-                <i class="fas fa-cart-plus"></i>
-                Novo Pedido
-            </button>
-
-        </div>
-
-        <div id="search-container">
-
-            <select id="fieldsearch">
-
-                <option value="id">ID do Pedido</option>
-                <option value="cliente">Cliente</option>
-                <option value="data">Data de Entrega</option>
-                <option value="status">Status</option>
-
-            </select>
-
-            <input
-                id="inputsearch"
-                type="search"
-                placeholder="Digite o termo da busca..."
-            >
-
-            <button id="btnsearch">
-                <i class="fas fa-search"></i>
-            </button>
-
-        </div>
-
-        <hr>
-
-        {{#if pedidos.length}}
-
-        <div class="pedidos-grid">
-
-            {{#each pedidos}}
-
-            <div class="pedido-card">
-
-                <!-- HEADER -->
-
-                <div class="pedido-header">
-
-                    <div>
-
-                        <div class="pedido-id-row">
-
-                            <span class="pedido-id-badge">
-                                Pedido #{{id}}
-                            </span>
-
-                        </div>
-
-                        <p class="cliente">
-                            {{nome}}
-                        </p>
-
-                    </div>
-
-                    <span class="status {{status}}">
-                        {{status}}
-                    </span>
-
-                </div>
-
-                <!-- INFO -->
-
-                <div class="pedido-info">
-
-                    <div class="info-box">
-
-                        <span class="label">
-                            Entrega
-                        </span>
-
-                        <strong>
-                            {{data_brasileira data}}
-                        </strong>
-
-                    </div>
-
-                    <div class="info-box">
-
-                        <span class="label">
-                            Total
-                        </span>
-
-                        <strong class="total-value">
-                            R$ {{total}}
-                        </strong>
-
-                    </div>
-
-                    <div class="info-box">
-
-                        <span class="label">
-                            Itens
-                        </span>
-
-                        <strong>
-                            {{itens.length}}
-                        </strong>
-
-                    </div>
-
-                </div>
-
-                <!-- ITENS -->
-
-                <div class="itens-section">
-
-                    <div class="itens-header">
-
-                        <h4>
-                            Itens do Pedido
-                        </h4>
-
-                    </div>
-
-                    <div class="lista-itens-scroll">
-
-                        {{#each itens}}
-
-                        <div class="item-row">
-
-                            <div class="item-top-row">
-
-                                <div class="item-produto">
-
-                                    <strong>
-                                        {{quantidade}}x {{produto}}
-                                    </strong>
-
-                                </div>
-
-                                <div class="item-badge">
-
-                                    {{#if modelo_produto}}
-
-                                        <span class="modelo-badge">
-                                            {{modelo_produto}}
-                                        </span>
-
-                                    {{else}}
-
-                                        <span class="modelo-badge vazio">
-                                            Sem modelo
-                                        </span>
-
-                                    {{/if}}
-
-                                </div>
-
-                            </div>
-
-                        </div>
-
-                        {{/each}}
-
-                    </div>
-
-                </div>
-
-                <!-- ACTIONS -->
-
-                <div class="pedido-actions">
-
-                    <button
-                        id="deletar"
-                        class="btn btn-danger"
-                        onclick="deletarPedido({{id}})"
-                    >
-                        Excluir
-                    </button>
-
-                    <button
-                        id="editar"
-                        class="btn btn-outline-primary"
-                        onclick="editarPedido({{id}})"
-                    >
-                        Editar
-                    </button>
-
-                    <button
-                        id="detalhes"
-                        class="btn btn-primary"
-                        onclick="detalhesPedido({{id}})"
-                    >
-                        Detalhes
-                    </button>
-
-                </div>
-
-            </div>
-
-            {{/each}}
-
-        </div>
-
-        {{else}}
-
-        <div class="empty-state">
-
-            <h2>
-                Você ainda não registrou nenhum pedido!
-            </h2>
-
-        </div>
-
-        {{/if}}
-
-    </div>
-
+<main class="orders-page">
+	<a href="/" class="back-button" title="Voltar para o início" aria-label="Voltar para o início">
+		<i class="fas fa-home"></i>
+	</a>
+
+	{{#if msg}}
+		<div id="msg" class="alert alert-success alert-dismissible fade show order-alert" role="alert">
+			<i class="bi bi-check-circle-fill"></i><span>{{msg}}</span>
+			<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Fechar"></button>
+		</div>
+	{{/if}}
+	{{#if error}}
+		<div id="errordiv" class="alert alert-danger alert-dismissible fade show order-alert" role="alert">
+			<i class="bi bi-exclamation-circle-fill"></i><span>{{error}}</span>
+			<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Fechar"></button>
+		</div>
+	{{/if}}
+
+	<div id="container">
+		<div id="pedidos-wrapper">
+			<header class="orders-header">
+				<div>
+					<span class="orders-eyebrow"><i class="fas fa-clipboard-list"></i> Gestão comercial</span>
+					<h1 id="title">Pedidos</h1>
+					<p class="subtitle">Gerencie e acompanhe todos os pedidos registrados.</p>
+				</div>
+				<button class="new-order-button" onclick="abrirModalTipoCliente()">
+					<i class="fas fa-cart-plus"></i><span>Novo pedido</span>
+				</button>
+			</header>
+
+			<section id="search-container" aria-label="Buscar pedidos">
+				<div class="search-heading"><span class="section-kicker">Consulta rápida</span><strong>Encontre um pedido</strong></div>
+				<div class="search-controls">
+					<select id="fieldsearch" aria-label="Campo da busca">
+						<option value="id">ID do Pedido</option>
+						<option value="cliente">Cliente</option>
+						<option value="data">Data de Entrega</option>
+						<option value="status">Status</option>
+					</select>
+					<input id="inputsearch" type="search" placeholder="Digite o termo da busca..." aria-label="Termo da busca">
+					<button id="btnsearch" type="button" title="Buscar" aria-label="Buscar"><i class="fas fa-search"></i></button>
+				</div>
+			</section>
+
+			{{#if pedidos.length}}
+				<div class="orders-section-heading">
+					<div><span class="section-kicker">Visão geral</span><h2>Pedidos registrados</h2></div>
+					<span class="orders-count">{{pedidos.length}} pedido(s)</span>
+				</div>
+				<div class="pedidos-grid">
+					{{#each pedidos}}
+						<article class="pedido-card">
+							<header class="pedido-header">
+								<div>
+									<span class="pedido-id-badge"><i class="fas fa-hashtag"></i> Pedido #{{id}}</span>
+									<p class="cliente">{{nome}}</p>
+								</div>
+								<span class="status {{status}}">{{status}}</span>
+							</header>
+
+							<div class="pedido-info">
+								<div class="info-box"><span class="label"><i class="far fa-calendar-alt"></i> Entrega</span><strong>{{data_brasileira data}}</strong></div>
+								<div class="info-box"><span class="label"><i class="fas fa-wallet"></i> Total</span><strong class="total-value">R$ {{total}}</strong></div>
+								<div class="info-box"><span class="label"><i class="fas fa-boxes"></i> Itens</span><strong>{{itens.length}}</strong></div>
+							</div>
+
+							<section class="itens-section" aria-label="Itens do pedido">
+								<div class="itens-header"><h4>Itens do pedido</h4><span>{{itens.length}}</span></div>
+								<div class="lista-itens-scroll">
+									{{#each itens}}
+										<div class="item-row">
+											<div class="item-top-row">
+												<div class="item-produto"><strong>{{quantidade}}x {{produto}}</strong></div>
+												<div class="item-badge">
+													{{#if modelo_produto}}
+														<span class="modelo-badge">{{modelo_produto}}</span>
+													{{else}}
+														<span class="modelo-badge vazio">Sem modelo</span>
+													{{/if}}
+												</div>
+											</div>
+										</div>
+									{{/each}}
+								</div>
+							</section>
+
+							<footer class="pedido-actions">
+								<button id="deletar" class="btn btn-danger" onclick="deletarPedido({{id}})"><i class="fas fa-trash-alt"></i><span>Excluir</span></button>
+								<button id="editar" class="btn btn-outline-primary" onclick="editarPedido({{id}})"><i class="fas fa-pen"></i><span>Editar</span></button>
+								<button id="detalhes" class="btn btn-primary" onclick="detalhesPedido({{id}})"><i class="fas fa-arrow-right"></i><span>Detalhes</span></button>
+							</footer>
+						</article>
+					{{/each}}
+				</div>
+			{{else}}
+				<section class="empty-state" aria-live="polite">
+					<div class="empty-mark"><i class="fas fa-clipboard-list"></i></div>
+					<span class="section-kicker">Nenhum registro</span>
+					<h2>Você ainda não registrou nenhum pedido.</h2>
+					<p>Comece criando um pedido para acompanhar seus itens e medidas.</p>
+					<button class="new-order-button" onclick="abrirModalTipoCliente()"><i class="fas fa-cart-plus"></i><span>Novo pedido</span></button>
+				</section>
+			{{/if}}
+		</div>
+	</div>
+</main>
+
+<div id="modalConfirm" role="dialog" aria-modal="true" aria-labelledby="modalMensagem">
+	<div class="modal-box">
+		<span class="modal-warning"><i class="fas fa-trash-alt"></i></span>
+		<h2 id="modalMensagem">Tem certeza que deseja excluir este pedido?</h2>
+		<div class="modal-actions"><button id="btnConfirmar" onclick="confirmarExclusao()">Sim, excluir</button><button id="btnCancelar" onclick="fecharModal()">Cancelar</button></div>
+	</div>
 </div>
 
-<!-- MODAL -->
-
-<div id="modalConfirm">
-
-    <div class="modal-box">
-
-        <h2 id="modalMensagem">
-            Tem certeza que deseja excluir este item?
-        </h2>
-
-        <div class="modal-actions">
-
-            <button id="btnConfirmar" onclick="confirmarExclusao()">
-                Sim
-            </button>
-
-            <button id="btnCancelar" onclick="fecharModal()">
-                Cancelar
-            </button>
-
-        </div>
-
-    </div>
-
-</div>
-
-<!-- MODAL TIPO CLIENTE -->
-
-<div class="modal" tabindex="-1" id="modaltipocliente">
-
-    <div class="modal-dialog modal-dialog-centered">
-
-        <div class="modal-content">
-
-            <div class="modal-header">
-
-                <h5 class="modal-title">
-                    Selecione o Tipo de Cliente
-                </h5>
-
-                <button
-                    type="button"
-                    class="btn-close"
-                    data-bs-dismiss="modal"
-                    aria-label="Close"
-                ></button>
-
-            </div>
-
-            <div class="modal-body">
-
-                <p>
-                    Escolha o tipo de cliente para criar um novo pedido:
-                </p>
-
-            </div>
-
-            <div class="modal-footer d-flex justify-content-center gap-2">
-
-                <button
-                    type="button"
-                    class="btn btn-primary"
-                    data-bs-dismiss="modal"
-                    onclick="selecionarTipoCliente('pessoa')"
-                >
-                    <i class="fas fa-user"></i>
-                    Padrão
-                </button>
-
-                <button
-                    type="button"
-                    class="btn btn-info"
-                    data-bs-dismiss="modal"
-                    onclick="selecionarTipoCliente('empresa')"
-                >
-                    <i class="fas fa-building"></i>
-                    Empresa
-                </button>
-
-            </div>
-
-        </div>
-
-    </div>
-
+<div class="modal fade" tabindex="-1" id="modaltipocliente" aria-labelledby="tipoClienteTitulo" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered">
+		<div class="modal-content">
+			<div class="modal-header"><div><span class="section-kicker">Novo registro</span><h2 class="modal-title" id="tipoClienteTitulo">Selecione o tipo de cliente</h2></div><button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button></div>
+			<div class="modal-body"><p>Escolha o tipo de cliente para criar um novo pedido:</p></div>
+			<div class="modal-footer client-type-actions"><button type="button" class="client-type-button person" data-bs-dismiss="modal" onclick="selecionarTipoCliente('pessoa')"><i class="fas fa-user"></i><span>Padrão</span></button><button type="button" class="client-type-button company" data-bs-dismiss="modal" onclick="selecionarTipoCliente('empresa')"><i class="fas fa-building"></i><span>Empresa</span></button></div>
+		</div>
+	</div>
 </div>
