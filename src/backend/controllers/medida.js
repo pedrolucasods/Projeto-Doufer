@@ -191,6 +191,23 @@ class Medida{
         }
     }
 
+    async listar_medidas_item_pedido_sob_medida_masculina(req,res){
+        try {
+            const dados = {tipo_medida:"sob_medida",medidas:[{sexo:"masculino"}],item_id:req.params.id}
+            const medidas = await ServiceItemPedidoMedida.listar_medidas_item_pedido(dados)
+            return res.send(medidas)
+            return res.render('./medidas/item_pedido/sob_medida_masculina/listar_sob_medida_masculina',{
+                stylesheet:'./medidas/item_pedido/sob_medida_masculina/listar_sob_medida_masculina.css',
+                script:'./medidas/item_pedido/sob_medida_masculina/listar_sob_medida_masculina.js',
+                ...medidas,
+                error:req.query.error || null,
+                msg: req.query.msg || null
+            })
+        } catch (error) {
+            return res.status(500).json({"erro":`${error}`})
+        }
+    }
+
     async formulario_cadastro_medidas_padrao_item_pedido(req,res){
         try {
             const item_id = req.params.id
