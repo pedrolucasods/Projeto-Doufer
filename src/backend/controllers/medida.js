@@ -276,7 +276,6 @@ class Medida{
         try {
             const medida_id = req.params.id
             const dados = await ServiceItemPedidoMedida.dados_formulario_atualizar(medida_id)
-            return res.send(dados)
             return res.render('./medidas/item_pedido/padrao/form_atualizar_padrao',{
                 stylesheet:'./medidas/item_pedido/padrao/form_atualizar_padrao.css',
                 script:'./medidas/item_pedido/padrao/form_atualizar_padrao.js',

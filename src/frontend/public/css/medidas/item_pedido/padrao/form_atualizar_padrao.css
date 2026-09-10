@@ -21,6 +21,16 @@ body {
     background: #ffffff;
 }
 
+#msg, 
+#errordiv {
+    z-index: 9999 !important;
+    top: 24px !important;
+    right: 24px !important;
+    max-width: 400px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+    border-radius: 12px;
+}
+
 .add-medida-card .card-body {
     padding: 3rem 2.5rem;
 }

@@ -8,6 +8,7 @@ const MedidasPadrao = require('../models/medidas_padrao')
 const MedidasSobMedida = require('../models/medidas_sob_medida')
 const MedidaSobMedidaMasculina = require('../models/medida_sob_medida_masculina')
 const MedidaSobMedidaFeminina = require('../models/medida_sob_medida_feminina')
+const ItemPedidoMedidaFuncionario = require('../models/item_pedido_medida_funcionarios')
 
 cliente.hasMany(pedido,{
     foreignKey:'cliente_id',
@@ -203,4 +204,60 @@ MedidaSobMedidaFeminina.belongsTo(itenspedidos,{
     foreignKey:'item_pedido_medida_id',
     as:'itens_medidas',
     onDelete:'CASCADE'
+})
+
+itempedido_medida.hasMany(ItemPedidoMedidaFuncionario,{
+    foreignKey:'item_pedido_medida_id',
+    as:'item_pedido_medida_funcionarios',
+    onDelete:'CASCADE'
+})
+ItemPedidoMedidaFuncionario.belongsTo(itempedido_medida,{
+    foreignKey:"item_pedido_medida_id",
+    as:"itens_medidas",
+    onDelete:"CASCADE"
+})
+
+ItemPedidoMedidaFuncionario.hasMany(funcionario,{
+    foreignKey:'funcionario_id',
+    as:'funcionarios',
+    onDelete:'CASCADE'
+})
+funcionario.belongsTo(ItemPedidoMedidaFuncionario,{
+    foreignKey:"funcionario_id",
+    as:"item_pedido_medida_funcionarios",
+    onDelete:"CASCADE"
+})
+
+
+MedidasPadrao.hasMany(ItemPedidoMedidaFuncionario,{
+    foreignKey:'medida_padrao_id',
+    as:'item_pedido_medida_funcionarios',
+    onDelete:'CASCADE'
+})
+ItemPedidoMedidaFuncionario.belongsTo(MedidasPadrao,{
+    foreignKey:"medida_padrao_id",
+    as:"item_pedido_medida_funcionarios",
+    onDelete:"CASCADE"
+})
+
+MedidaSobMedidaFeminina.hasMany(ItemPedidoMedidaFuncionario,{
+    foreignKey:'medida_sob_medida_feminina_id',
+    as:'item_pedido_medida_funcionarios',
+    onDelete:'CASCADE'
+})
+ItemPedidoMedidaFuncionario.belongsTo(MedidaSobMedidaFeminina,{
+    foreignKey:"medida_sob_medida_feminina_id",
+    as:"medida_sob_medida_feminina",
+    onDelete:"CASCADE"
+})
+
+MedidaSobMedidaMasculina.hasMany(ItemPedidoMedidaFuncionario,{
+    foreignKey:'medida_sob_medida_masculina_id',
+    as:"item_pedido_medida_funcionarios",
+    onDelete:'CASCADE'
+})
+ItemPedidoMedidaFuncionario.belongsTo(MedidaSobMedidaMasculina,{
+    foreignKey:"medida_sob_medida_masculina_id",
+    as:'medida_sob_medida_masculina',
+    onDelete:"CASCADE"
 })
