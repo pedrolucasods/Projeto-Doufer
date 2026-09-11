@@ -217,14 +217,14 @@ ItemPedidoMedidaFuncionario.belongsTo(itempedido_medida,{
     onDelete:"CASCADE"
 })
 
-ItemPedidoMedidaFuncionario.hasMany(funcionario,{
+funcionario.hasMany(ItemPedidoMedidaFuncionario,{
     foreignKey:'funcionario_id',
-    as:'funcionarios',
+    as:"item_pedido_medida_funcionarios",
     onDelete:'CASCADE'
 })
-funcionario.belongsTo(ItemPedidoMedidaFuncionario,{
+ItemPedidoMedidaFuncionario.belongsTo(funcionario,{
     foreignKey:"funcionario_id",
-    as:"item_pedido_medida_funcionarios",
+    as:"funcionarios",
     onDelete:"CASCADE"
 })
 
