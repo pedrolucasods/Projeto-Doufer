@@ -4,6 +4,7 @@ const ModelmedidasPadrao = require('../../../models/medidas_padrao')
 const modelItensPedido = require('../../../models/itensPedidos')
 const { where } = require('sequelize')
 const ServiceCliente = require('../../cliente')
+const ServiceFuncionario = require('../../funcionario')
 const ServiceItens = require('../../itenspedido')
 const { query } = require('../../../routes/routes')
 
@@ -19,6 +20,18 @@ class MedidaPadrao {
                 return ModelmedidasPadrao.create({
                     cliente_id: dados.cliente_id,
                     sexo:dados.sexo,
+                    tamanho: dados.tamanho,
+                    ajuste: dados.ajuste
+                })
+            }else if(dados.funcionario_id) {
+                const buscaFuncionario = await ServiceFuncionario.buscar_funcionario_pelo_id(dados.funcionario_id)
+                const buscaMedida = await this.buscarMedidaPorFuncionarioId(dados.funcionario_id)
+                if(buscaMedida){
+                    throw new Error('Ja existe uma medida cadastrada!')
+                }
+                return ModelmedidasPadrao.create({
+                    funcionario_id: dados.funcionario_id,
+                    sexo: dados.sexo,
                     tamanho: dados.tamanho,
                     ajuste: dados.ajuste
                 })
@@ -91,6 +104,10 @@ class MedidaPadrao {
         return ModelmedidasPadrao.findOne({where:{cliente_id:cliente_id}})
     }
 
+    buscarMedidaPorFuncionarioId(funcionario_id){
+        return ModelmedidasPadrao.findOne({where:{funcionario_id:funcionario_id}})
+    }
+
     buscarPorItemPedidoMedidaIdEMedidaId(id,itemMedidaId){
         return ModelmedidasPadrao.findOne({where:{id:id,item_pedido_medida_id:itemMedidaId}})
     }
@@ -138,6 +155,10 @@ class MedidaPadrao {
 
     buscarporMedidaIdEClienteId(medidaPadrao_id,cliente_id){
         return ModelmedidasPadrao.findOne({where:{id:medidaPadrao_id,cliente_id:cliente_id}})
+    }
+
+    buscarporMedidaIdEFuncionarioId(medidaPadrao_id,funcionario_id){
+        return ModelmedidasPadrao.findOne({where:{id:medidaPadrao_id,funcionario_id:funcionario_id}})
     }
 
 }

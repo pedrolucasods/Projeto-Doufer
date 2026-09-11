@@ -2,6 +2,7 @@ const {QueryTypes} = require('sequelize')
 const sequelize = require('../../../database')
 const modelMedidaSobMedidaFeminina = require('../../../models/medida_sob_medida_feminina')
 const ServiceCliente = require('../../cliente')
+const ServiceFuncionario = require('../../funcionario')
 
 class MedidaSobMedida {
     async cadastrar(dados) {
@@ -14,6 +15,23 @@ class MedidaSobMedida {
                 }
                 return modelMedidaSobMedidaFeminina.create({
                     cliente_id: dados.cliente_id,
+                    busto: dados.busto,
+                    cintura:dados.cintura,
+                    quadril:dados.quadril,
+                    comprimento:dados.comprimento,
+                    ombro:dados.ombro,
+                    costas:dados.costas,
+                    comprimento_da_manga:dados.comprimento_da_manga,
+                    largura_da_manga:dados.largura_da_manga
+                })
+            }else if(dados.funcionario_id){
+                const funcionario = await ServiceFuncionario.buscar_funcionario_pelo_id(dados.funcionario_id)
+                const medidaExistente = await this.buscarMedidaPorFuncionarioId(dados.funcionario_id)
+                if(medidaExistente){
+                    throw new Error('Este cliente já tem tamanho Sob Medida Registrado!')
+                }
+                return modelMedidaSobMedidaFeminina.create({
+                    funcionario_id: dados.funcionario_id,
                     busto: dados.busto,
                     cintura:dados.cintura,
                     quadril:dados.quadril,
@@ -108,6 +126,10 @@ class MedidaSobMedida {
         return modelMedidaSobMedidaFeminina.findOne({ where: { cliente_id: id } })
     }
 
+    buscarMedidaPorFuncionarioId(funcionario_id){
+        return modelMedidaSobMedidaFeminina.findOne({where:{funcionario_id:funcionario_id}})
+    }
+
     buscarPorItemPedidoMedidaIdEMedidaId(id,itemMedidaId){
         return modelMedidaSobMedidaFeminina.findOne({where:{id:id,item_pedido_medida_id:itemMedidaId}})
     }
@@ -158,8 +180,12 @@ class MedidaSobMedida {
         return modelMedidaSobMedidaFeminina.findOne({ where: { item_pedido_medida_id: id } })
     }
 
-    buscarporMedidaIdEClienteId(medidaPadrao_id,cliente_id){
-        return modelMedidaSobMedidaFeminina.findOne({where:{id:medidaPadrao_id,cliente_id:cliente_id}})
+    buscarporMedidaIdEClienteId(medidaSob_id,cliente_id){
+        return modelMedidaSobMedidaFeminina.findOne({where:{id:medidaSob_id,cliente_id:cliente_id}})
+    }
+
+    buscarporMedidaIdEFuncionarioId(medidaSob_id,funcionario_id){
+        return modelMedidaSobMedidaFeminina.findOne({where:{id:medidaSob_id,funcionario_id:funcionario_id}})
     }
     
 }
